@@ -4,3 +4,8 @@ pre-commit:
     lint:
       glob: '*.{ts,tsx}'
       run: yarn eslint {staged_files}
+
+commit-msg:
+  commands:
+    lint-commit:
+      run: 'npx commitlint --edit'
