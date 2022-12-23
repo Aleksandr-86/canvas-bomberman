@@ -17,9 +17,11 @@
     "packages/*"
   ],
   "engines": {
-    "node": ">=15"
+    "node": ">=16"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
     "@evilmartians/lefthook": "^1.1.1",
     "lerna": "^5.4.3"
   }
