@@ -3044,6 +3044,11 @@ combined-stream@^1.0.8:
   dependencies:
     delayed-stream "~1.0.0"
 
+commitlint-plugin-selective-scope@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/commitlint-plugin-selective-scope/-/commitlint-plugin-selective-scope-1.0.1.tgz#ed94f2060cd39d6f888f2c752c2fd53bec3e7b67"
+  integrity sha512-GG9NpByCO9mUkIVg7mEdCgrZ6pTn990xC1SdLRm5R8VEaXN6m4TFExDgAUJtaiFeJ1InQHH1/OXMFbzJPwHoEw==
+
 common-ancestor-path@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/common-ancestor-path/-/common-ancestor-path-1.0.1.tgz"
