@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { Container, Game } from '../../features/game/game'
 
 const GameScreen = () => {
   const gameRef = useRef<null | HTMLCanvasElement>(null)
@@ -7,25 +6,15 @@ const GameScreen = () => {
   useEffect(() => {
     const canvas = gameRef.current
 
-    if (!canvas) {
-      return
-    }
+    if (!canvas) return
 
-    const game = new Game({
-      root: canvas,
-      backgroundColor: 'grey',
-      width: 1280,
-      heigth: 720,
-    })
+    canvas.style.backgroundColor = 'gray'
 
-    const box = new Container({ x: 20, y: 20 }, { x: 40, y: 40 })
-    game.add(box)
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
 
-    game.start()
-
-    window.addEventListener('keydown', () => {
-      box.move({ x: 20, y: 0 })
-    })
+    ctx.fillStyle = 'yellow'
+    ctx.fillRect(20, 20, 60, 60)
   })
 
   return <canvas ref={gameRef} width={1280} height={720} />
