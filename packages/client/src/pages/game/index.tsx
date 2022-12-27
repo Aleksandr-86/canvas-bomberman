@@ -1,4 +1,4 @@
-import { GameScreen } from '../../widgets'
+import { GameScreen } from '../../components'
 
 const Game = () => {
   return (

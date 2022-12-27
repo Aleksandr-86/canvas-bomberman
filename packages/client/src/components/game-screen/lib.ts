@@ -1,3 +1,5 @@
+import { KeyboardEventHandler, useEffect } from 'react'
+
 const setCanvasBackground = (canvas: HTMLCanvasElement, color: string) => {
   const { width, height } = canvas
   const ctx = canvas.getContext('2d')
@@ -11,19 +13,14 @@ const setCanvasBackground = (canvas: HTMLCanvasElement, color: string) => {
   ctx.fillStyle = ''
 }
 
-type Coord = {
+type Vec2 = {
   x: number
   y: number
 }
 
-type Offset = {
-  top: number
-  left: number
-}
-
 type MakeRectCfg = {
-  position: Coord
-  offset: Offset
+  position: Vec2
+  offset: Vec2
   color: string
 }
 
@@ -36,15 +33,13 @@ const drawRect = (canvas: HTMLCanvasElement, config: MakeRectCfg) => {
 
   ctx.fillStyle = config.color
   ctx.fillRect(
-    config.offset.top,
-    config.offset.left,
+    config.offset.y,
+    config.offset.x,
     config.position.x,
     config.position.y
   )
   ctx.fillStyle = ''
 }
-
-import { KeyboardEvent, KeyboardEventHandler, useEffect } from 'react'
 
 type CanvasKeyboardHandler = KeyboardEventHandler<HTMLCanvasElement>
 

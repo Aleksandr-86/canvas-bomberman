@@ -1,9 +1,8 @@
 import { NavLink } from 'react-router-dom'
 import { useEffect } from 'react'
 import { AppRouting } from '../pages'
-import { withProviders } from './providers'
+import { withProviders } from '../hocs/withProviders'
 import styles from './app.module.css'
-import 'bulma/css/bulma.min.css'
 
 const App = withProviders(() => {
   useEffect(() => {
@@ -21,7 +20,7 @@ const App = withProviders(() => {
     <>
       <NavLink to="/" className={styles.navLink}>
         Home
-      </NavLink>
+      </NavLink>{' '}
       {' | '}
       <NavLink to="/sign-in">SignIn</NavLink> {' | '}
       <NavLink to="/game">Game</NavLink> {' | '}
