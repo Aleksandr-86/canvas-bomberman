@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.9.1",
+    "bulma": "0.9.4",
     "dotenv": "16.0.2",
     "react": "18.2.0",
+    "react-bulma-components": "4.1.0",
     "react-dom": "18.2.0",
     "react-redux": "8.0.5",
     "react-router-dom": "6.6.0"
@@ -35,6 +37,7 @@
     "jest-environment-jsdom": "^28",
     "lefthook": "1.1.1",
     "prettier": "2.7.1",
+    "sass": "1.57.1",
     "ts-jest": "28.0.8",
     "typescript": "4.8.2",
     "vite": "3.0.7"

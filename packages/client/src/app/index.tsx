@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { AppRouting } from '../pages'
 import { withProviders } from './providers'
 import styles from './app.module.css'
+import 'bulma/css/bulma.min.css'
 
 const App = withProviders(() => {
   useEffect(() => {
@@ -18,10 +19,13 @@ const App = withProviders(() => {
 
   return (
     <>
-      <NavLink to="/" children="home" className={styles.navLink} /> {' | '}
-      <NavLink to="/sign-in" children="signin" /> {' | '}
-      <NavLink to="/game" children="game" /> {' | '}
-      <NavLink to="/forum" children="forum" />
+      <NavLink to="/" className={styles.navLink}>
+        Home
+      </NavLink>
+      {' | '}
+      <NavLink to="/sign-in">SignIn</NavLink> {' | '}
+      <NavLink to="/game">Game</NavLink> {' | '}
+      <NavLink to="/forum">Forum</NavLink>
       <AppRouting />
     </>
   )
