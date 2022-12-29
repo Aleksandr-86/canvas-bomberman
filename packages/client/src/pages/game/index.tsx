@@ -1,4 +1,4 @@
-import { GameDisplay } from '../../components/GameDisplay'
+import { GameDisplay } from '../../components/game-display'
 
 const Game = () => {
   return (
