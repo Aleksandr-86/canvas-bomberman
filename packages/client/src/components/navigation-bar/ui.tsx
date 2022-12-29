@@ -4,7 +4,7 @@ import styles from './navigation-bar.module.css'
 const NavigationBar = () => {
   return (
     <nav>
-      <NavLink to="/" className={styles['nav-link']}>
+      <NavLink to="/" className={styles.navLink}>
         Home
       </NavLink>
       {' | '}
