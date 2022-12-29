@@ -24,7 +24,6 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
-    'react/display-name': 0,
     'no-console': 'warn'
   },
 }
