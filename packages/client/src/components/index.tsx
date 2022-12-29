@@ -1,3 +1,3 @@
-import { GameDisplay } from './TheGame'
+import { GameDisplay } from './GameDisplay'
 
 export { GameDisplay }
