@@ -20,7 +20,7 @@ const App = withProviders(() => {
     <>
       <NavLink to="/" className={styles.navLink}>
         Home
-      </NavLink>{' '}
+      </NavLink>
       {' | '}
       <NavLink to="/sign-in">SignIn</NavLink> {' | '}
       <NavLink to="/game">Game</NavLink> {' | '}

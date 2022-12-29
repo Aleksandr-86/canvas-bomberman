@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-const GameScreen = () => {
+const GameDisplay = () => {
   const gameRef = useRef<null | HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -20,4 +20,4 @@ const GameScreen = () => {
   return <canvas ref={gameRef} width={1280} height={720} />
 }
 
-export { GameScreen }
+export { GameDisplay }
