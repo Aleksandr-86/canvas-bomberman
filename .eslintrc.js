@@ -16,6 +16,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 11,
   },
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
