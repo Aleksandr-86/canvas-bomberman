@@ -50,30 +50,8 @@
 }
 
 .landing__button {
-  padding: 10px 50px;
-  border: 5px solid black;
-  border-radius: 15px;
-  background: hsl(29deg 6% 89%);
   font-size: 40px;
-  /* stylelint-disable-next-line */
-  font-family: 'Rubik Bubbles';
   text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s linear;
-}
-
-.landing__button:hover {
-  background: hsl(29deg 6% 74%);
-}
-
-.landing__button:active {
-  background: hsl(30deg 76% 64%);
-}
-
-.landing__img-wrapper {
-  display: flex;
-  justify-content: flex-end;
-  width: 1446px;
 }
 
 .landing__hero-img {

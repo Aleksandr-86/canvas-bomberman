@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 
+import { Button } from '../../components/button/button'
+
 import styles from './landing.module.css'
 
 export const Landing = () => {
@@ -8,7 +10,7 @@ export const Landing = () => {
 
   let content: JSX.Element
 
-  if (isAuth) {
+  if (!isAuth) {
     content = (
       <>
         <div className={styles.landing__description_top}>
@@ -25,7 +27,7 @@ export const Landing = () => {
         </div>
 
         <Link to="/game">
-          <button className={styles.landing__button}>Погнали</button>
+          <Button class={styles.landing__button} title="Погнали" />
         </Link>
       </>
     )
@@ -84,6 +86,7 @@ export const Landing = () => {
           draggable="false"
         />
       </div>
+      <Button title="lsdfkjlajf" />
     </div>
   )
 }
