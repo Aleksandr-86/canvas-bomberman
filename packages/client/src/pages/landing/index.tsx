@@ -65,7 +65,8 @@ export const Landing = () => {
         <img
           className={styles.landing__logo}
           src="src/assets/images/bomberman-logo.png"
-          alt="bomberman-log"
+          alt="bomberman-logo"
+          draggable="false"
         />
         {content}
         <div className={styles.landing__description_bottom}>
@@ -76,7 +77,12 @@ export const Landing = () => {
         </div>
       </div>
       <div className={styles['landing__img-wrapper']}>
-        <img className="landing__hero-img" src="src/assets/images/hero.png" />
+        <img
+          className="landing__hero-img"
+          src="src/assets/images/hero.png"
+          alt="hero-img"
+          draggable="false"
+        />
       </div>
     </div>
   )
