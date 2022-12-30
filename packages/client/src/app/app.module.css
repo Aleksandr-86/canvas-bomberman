@@ -21,15 +21,16 @@
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
+  overflow: hidden;
   width: 100vw;
   height: 100vh;
-  font-family: Rubik Bubbles;
-  background: hsl(40, 5%, 89%);
-  overflow: hidden;
+  background: hsl(40deg 5% 89%);
+  /* stylelint-disable-next-line */
+  font-family: 'Rubik Bubbles';
 }
