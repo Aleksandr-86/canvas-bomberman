@@ -25,7 +25,7 @@
 .landing__description_bottom {
   width: 1260px;
   text-align: center;
-  font-family: RubikBubbles;
+  font-family: Rubik Bubbles;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -55,7 +55,7 @@
   border: 5px solid black;
   border-radius: 15px;
   background: hsl(29, 6%, 89%);
-  font-family: RubikBubbles;
+  font-family: Rubik Bubbles;
   font-size: 40px;
   text-transform: uppercase;
   cursor: pointer;
