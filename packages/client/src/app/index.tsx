@@ -1,5 +1,5 @@
 import { AppRouting } from '../pages'
-import { NavigationBar } from '../components/navigation-bar'
+// import { NavigationBar } from '../components/navigation-bar'
 import { Provider as StoreProvider } from 'react-redux'
 import { store } from '../store'
 import { BrowserRouter } from 'react-router-dom'
@@ -9,7 +9,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <StoreProvider store={store}>
-        <NavigationBar />
+        {/* <NavigationBar /> */}
         <AppRouting />
       </StoreProvider>
     </BrowserRouter>
