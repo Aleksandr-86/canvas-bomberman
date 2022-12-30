@@ -8,11 +8,11 @@ interface Props {
 export const Button = (props: Props) => {
   const { title = 'Кнопка' } = props
 
-  if (props.class === '') {
-    return <button className={styles.button}>{title}</button>
-  } else {
+  if (props.class) {
     return (
       <button className={`${styles.button} ${props.class}`}>{title}</button>
     )
+  } else {
+    return <button className={styles.button}>{title}</button>
   }
 }

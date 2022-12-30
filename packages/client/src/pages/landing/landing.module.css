@@ -54,6 +54,12 @@
   text-transform: uppercase;
 }
 
+.landing__img-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 1446px;
+}
+
 .landing__hero-img {
   width: 253px;
   height: 191px;

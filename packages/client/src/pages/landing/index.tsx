@@ -10,7 +10,7 @@ export const Landing = () => {
 
   let content: JSX.Element
 
-  if (!isAuth) {
+  if (isAuth) {
     content = (
       <>
         <div className={styles.landing__description_top}>
@@ -48,13 +48,11 @@ export const Landing = () => {
 
         <div className={styles['landing__button-wrapper']}>
           <Link to="/sign-in">
-            <button className={styles.landing__button}>Войти</button>
+            <Button class={styles.landing__button} title="Войти" />
           </Link>
 
           <Link to="/sign-up">
-            <button className={styles.landing__button}>
-              Зарегистрироваться
-            </button>
+            <Button class={styles.landing__button} title="Зарегистрироваться" />
           </Link>
         </div>
       </>
@@ -86,7 +84,6 @@ export const Landing = () => {
           draggable="false"
         />
       </div>
-      <Button title="lsdfkjlajf" />
     </div>
   )
 }
