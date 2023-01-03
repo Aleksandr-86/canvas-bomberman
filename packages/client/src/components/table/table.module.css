@@ -64,5 +64,5 @@
 }
 
 .table__row:hover {
-  background: wheat;
+  background: hsl(29deg 6% 74%);
 }
