@@ -23,7 +23,10 @@ const headers = [
 ]
 
 export const Table = (props: Props) => {
-  const { items, requestSort, sortConfig } = useSortableData(props.userStats)
+  const { items, requestSort, sortConfig } = useSortableData(props.userStats, {
+    key: 'place',
+    direction: 'ascending',
+  })
 
   let key = ''
   let direction = ''

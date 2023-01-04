@@ -9,8 +9,15 @@ interface SortConfig {
   direction: string
 }
 
-export const useSortableData = (items: Items[]) => {
-  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null)
+/**
+ * Сортирует переданный массив объектов.
+ * items - массив объектов.
+ * config - фильтр по умолчанию, где: key - имя
+ * колонки для сортировки, direction - порядок сортировки
+ * (ascending - восходящий, descending - нисходящий).
+ */
+export const useSortableData = (items: Items[], config: SortConfig) => {
+  const [sortConfig, setSortConfig] = useState<SortConfig>(config)
 
   const sortedItems = useMemo(() => {
     const sortableItems = [...items]
@@ -35,9 +42,11 @@ export const useSortableData = (items: Items[]) => {
   const requestSort = (key: string) => {
     let direction = 'ascending'
 
-    if (!sortConfig) {
-      direction = 'descending'
-    } else if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === 'ascending'
+    ) {
       direction = 'descending'
     }
 
