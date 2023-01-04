@@ -25,13 +25,20 @@ const headers = [
 export const Table = (props: Props) => {
   const { items, requestSort, sortConfig } = useSortableData(props.userStats)
 
+  let key = ''
+  let direction = ''
+
   const getClassNamesFor = (name: string) => {
     if (!sortConfig) {
-      return styles.table__head
+      key = 'place'
+      direction = 'ascending'
+    } else {
+      key = sortConfig.key
+      direction = sortConfig.direction
     }
 
-    if (sortConfig.key === name) {
-      return `${styles.table__head} ${styles[sortConfig.direction]}`
+    if (key === name) {
+      return `${styles.table__head} ${styles[direction]}`
     } else {
       return styles.table__head
     }

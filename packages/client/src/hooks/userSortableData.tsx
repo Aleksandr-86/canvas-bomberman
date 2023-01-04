@@ -35,11 +35,9 @@ export const useSortableData = (items: Items[]) => {
   const requestSort = (key: string) => {
     let direction = 'ascending'
 
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === 'ascending'
-    ) {
+    if (!sortConfig) {
+      direction = 'descending'
+    } else if (sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending'
     }
 
