@@ -7,13 +7,13 @@
 .table__caption {
   font-size: 40px;
   text-transform: uppercase;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .table__head {
   text-align: center;
   cursor: pointer;
-  border-bottom: 2px solid black;
+  border-bottom: 5px solid black;
   padding-bottom: 10px;
 }
 
@@ -35,7 +35,7 @@
 .table__column_games,
 .table__column_totalTime {
   padding: 10px 0 10px 0;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 2px solid #cccccc;
 }
 
 .table__column_place {
@@ -65,4 +65,5 @@
 
 .table__row:hover {
   background: hsl(29deg 6% 74%);
+  transition: all 0.2s linear;
 }
