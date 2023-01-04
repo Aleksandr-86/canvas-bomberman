@@ -1,0 +1,32 @@
+.leaderboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  user-select: none;
+}
+
+.leaderboard__wrapper {
+  display: flex;
+  position: relative;
+  width: 1250px;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+.leaderboard__button {
+  width: fit-content;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+.leaderboard__hero-img {
+  position: absolute;
+  right: -98px;
+  bottom: -137px;
+  width: 253px;
+  height: 191px;
+}
