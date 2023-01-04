@@ -5,7 +5,7 @@ interface Items {
 }
 
 interface SortConfig {
-  key: string | number
+  key: string
   direction: string
 }
 
