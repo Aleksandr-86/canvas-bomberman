@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { Game } from './game'
-import { Landing } from './landing'
+import { Landing } from './landing/landing'
 import { SignIn } from './sign-in'
 import { SignUp } from './sign-up'
 import { Leaderboard } from './leaderboard'
