@@ -1,18 +1,23 @@
 import styles from './button.module.css'
 
 interface Props {
-  title: string
-  class?: string
+  children: string
+  className?: string
+  [index: string]:
+    | undefined
+    | string
+    | (() => unknown)
+    | ((e: Event) => unknown)
 }
 
 export const Button = (props: Props) => {
-  const { title = 'Кнопка' } = props
+  const { children = 'Кнопка', className } = props
 
-  if (props.class) {
-    return (
-      <button className={`${styles.button} ${props.class}`}>{title}</button>
-    )
-  } else {
-    return <button className={styles.button}>{title}</button>
-  }
+  const classes = className ? `${styles.button} ${className}` : styles.button
+
+  return (
+    <button {...props} className={classes}>
+      {children}
+    </button>
+  )
 }
