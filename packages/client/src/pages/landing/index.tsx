@@ -8,56 +8,54 @@ export const Landing = () => {
   const isAuth = false
   const displayName = 'Алекс'
 
-  let content: JSX.Element
-
-  if (isAuth) {
-    content = (
-      <>
-        <div className={styles.landing__description_top}>
-          Привет {displayName}! <br />
-          Спешим напомнить, что ты в любой момент можешь освежить свои знания по
-          игре, перечитав{' '}
-          <Link className={styles.landing__link} to="/rules">
-            правила
-          </Link>{' '}
-          и посмотреть{' '}
-          <Link className={styles.landing__link} to="/leaderboard">
-            таблицу лидеров!
-          </Link>
-        </div>
-
-        <Link to="/game">
-          <Button class={styles.landing__button} title="Погнали" />
+  const LoggedInView = () => (
+    <>
+      <div className={styles.landing__description_top}>
+        Привет {displayName}! <br />
+        Спешим напомнить, что ты в любой момент можешь освежить свои знания по
+        игре, перечитав{' '}
+        <Link className={styles.landing__link} to="/rules">
+          правила
+        </Link>{' '}
+        и посмотреть{' '}
+        <Link className={styles.landing__link} to="/leaderboard">
+          таблицу лидеров!
         </Link>
-      </>
-    )
-  } else {
-    content = (
-      <>
-        <div className={styles.landing__description_top}>
-          Привет, мы рады приветствовать тебя! <br />
-          Прежде чем ты начнёшь взрывать всё вокруг, загляни в{' '}
-          <Link className={styles.landing__link} to="/rules">
-            правила
-          </Link>
-          . Уверены, это поможет тебе возглавить нашу{' '}
-          <Link className={styles.landing__link} to="/leaderboard">
-            таблицу лидеров!
-          </Link>
-        </div>
+      </div>
 
-        <div className={styles['landing__button-wrapper']}>
-          <Link to="/sign-in">
-            <Button class={styles.landing__button} title="Войти" />
-          </Link>
+      <Link to="/game">
+        <Button>Погнали</Button>
+      </Link>
+    </>
+  )
 
-          <Link to="/sign-up">
-            <Button class={styles.landing__button} title="Зарегистрироваться" />
-          </Link>
-        </div>
-      </>
-    )
-  }
+  const NotLoggedInView = () => (
+    <>
+      <div className={styles.landing__description_top}>
+        Привет, мы рады приветствовать тебя! <br />
+        Прежде чем ты начнёшь взрывать всё вокруг, загляни в{' '}
+        <Link className={styles.landing__link} to="/rules">
+          правила
+        </Link>
+        . Уверены, это поможет тебе возглавить нашу{' '}
+        <Link className={styles.landing__link} to="/leaderboard">
+          таблицу лидеров!
+        </Link>
+      </div>
+
+      <div className={styles['landing__button-wrapper']}>
+        <Link to="/sign-in">
+          <Button>Войти</Button>
+        </Link>
+
+        <Link to="/sign-up">
+          <Button>Зарегистрироваться</Button>
+        </Link>
+      </div>
+    </>
+  )
+
+  const content = isAuth ? <LoggedInView /> : <NotLoggedInView />
 
   return (
     <div className={styles.landing}>
@@ -68,7 +66,9 @@ export const Landing = () => {
           alt="bomberman-logo"
           draggable="false"
         />
+
         {content}
+
         <div className={styles.landing__description_bottom}>
           Есть вопросы? Скорее переходи к нам на{' '}
           <Link className={styles.landing__link} to="/forum">
@@ -76,6 +76,7 @@ export const Landing = () => {
           </Link>
         </div>
       </div>
+
       <div className={styles['landing__img-wrapper']}>
         <img
           className="landing__hero-img"

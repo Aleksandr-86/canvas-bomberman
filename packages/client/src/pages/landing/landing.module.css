@@ -49,11 +49,6 @@
   align-items: center;
 }
 
-.landing__button {
-  font-size: 40px;
-  text-transform: uppercase;
-}
-
 .landing__img-wrapper {
   display: flex;
   justify-content: flex-end;
