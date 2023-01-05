@@ -31,6 +31,5 @@ body {
   width: 100vw;
   height: 100vh;
   background: hsl(40deg 5% 89%);
-  /* stylelint-disable-next-line */
-  font-family: 'Rubik Bubbles';
+  font-family: 'Rubik Bubbles', fantasy;
 }
