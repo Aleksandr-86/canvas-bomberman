@@ -2,13 +2,17 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 1920px;
-  height: 1080px;
+  height: 1000px;
   user-select: none;
 }
 
 .landing__nav-bar {
+  position: absolute;
+  top: 10px;
+  left: 0;
   display: flex;
   gap: 30px;
   align-content: flex-start;
@@ -18,11 +22,6 @@
   padding: 10px 25px 0 0;
   font-size: 40px;
   text-decoration: none;
-}
-
-.landing__nav-bar_reservation {
-  width: inherit;
-  height: 70px;
 }
 
 .landing__user-avatar {
@@ -73,7 +72,7 @@
 
 .landing__hero-img {
   position: absolute;
-  top: 700px;
+  top: 800px;
   right: 300px;
   width: 253px;
   height: 191px;
