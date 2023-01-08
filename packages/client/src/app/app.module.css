@@ -35,3 +35,25 @@ body {
   background: hsl(40deg 5% 89%);
   font-family: 'Rubik Bubbles', fantasy;
 }
+
+.link_button {
+  padding: 10px 50px;
+  border: 5px solid black;
+  border-radius: 15px;
+  background: hsl(29deg 6% 89%);
+  color: black;
+  font-size: 40px;
+  font-family: 'Rubik Bubbles', fantasy;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+.link_button:hover {
+  background: hsl(29deg 6% 74%);
+}
+
+.link_button:active {
+  background: hsl(30deg 76% 64%);
+}
