@@ -78,12 +78,7 @@ export const Landing = () => {
     </>
   )
 
-  const navBar = isAuth ? (
-    <NavBarLogged />
-  ) : (
-    <div className={styles['landing__nav-bar_reservation']}></div>
-  )
-
+  const navBar = isAuth ? <NavBarLogged /> : null
   const content = isAuth ? <ContentLogged /> : <ContentNotLogged />
 
   return (
