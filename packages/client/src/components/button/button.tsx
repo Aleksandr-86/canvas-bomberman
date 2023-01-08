@@ -1,18 +1,13 @@
 import styles from './button.module.css'
 
-interface Props {
-  title: string
-  class?: string
-}
+export const Button = (props: React.ComponentPropsWithoutRef<'button'>) => {
+  const { children = 'Кнопка', className } = props
 
-export const Button = (props: Props) => {
-  const { title = 'Кнопка' } = props
+  const classes = className ? `${styles.button} ${className}` : styles.button
 
-  if (props.class) {
-    return (
-      <button className={`${styles.button} ${props.class}`}>{title}</button>
-    )
-  } else {
-    return <button className={styles.button}>{title}</button>
-  }
+  return (
+    <button {...props} className={classes}>
+      {children}
+    </button>
+  )
 }

@@ -3,8 +3,9 @@
   border: 5px solid black;
   border-radius: 15px;
   background: hsl(29deg 6% 89%);
-  /* stylelint-disable-next-line */
-  font-family: 'Rubik Bubbles';
+  font-size: 40px;
+  font-family: 'Rubik Bubbles', fantasy;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s linear;
 }

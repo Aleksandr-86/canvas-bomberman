@@ -1,10 +1,11 @@
 import { Routes, Route } from 'react-router-dom'
-import { Game } from './game'
-import { Landing } from './landing'
+import { Landing } from './landing/landing'
 import { SignIn } from './sign-in'
 import { SignUp } from './sign-up'
+import { Profile } from './profile/profile'
 import { Leaderboard } from './leaderboard'
 import { Forum } from './forum'
+import { Game } from './game'
 
 const AppRouting = () => {
   return (
@@ -12,7 +13,7 @@ const AppRouting = () => {
       <Route path="/" element={<Landing />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
-      <Route path="/user" element={<Landing />} />
+      <Route path="/profile" element={<Profile/>} />
       <Route path="/leaderboard" element={<Leaderboard />} />
       <Route path="/forum" element={<Forum />} />
       <Route path="/game" element={<Game />} />
