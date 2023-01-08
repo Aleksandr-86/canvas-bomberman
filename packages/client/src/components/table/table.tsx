@@ -28,17 +28,12 @@ export const Table = (props: Props) => {
     direction: 'ascending',
   })
 
-  let key = ''
-  let direction = ''
-
   const getClassNamesFor = (name: string) => {
     if (!sortConfig) {
-      key = 'place'
-      direction = 'ascending'
-    } else {
-      key = sortConfig.key
-      direction = sortConfig.direction
+      return
     }
+
+    const { key, direction } = sortConfig
 
     if (key === name) {
       return `${styles.table__head} ${styles[direction]}`
