@@ -1,5 +1,5 @@
 import styles from './profile.module.css'
 
-export const Landing = () => {
+export const Profile = () => {
   return <div className={styles.profile}>Страница профиля пользователя</div>
 }
