@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Table } from '../../components/table/table'
@@ -50,12 +51,40 @@ const tableData = [
 ]
 
 export const Leaderboard = () => {
+  const displayName = 'Алекс'
+  const [isAuth, setIsAuth] = useState(true)
+
+  // Навигационная панель
+  const NavBarLogged = () => (
+    <div className={styles['leaderboard__nav-bar']}>
+      <img
+        src="src/assets/images/avatar.png"
+        alt="user-avatar"
+        draggable="false"
+      />
+      <Link className={styles.leaderboard__link} to="/profile">
+        {displayName}
+      </Link>
+      <Link
+        className={styles.leaderboard__link}
+        to="/"
+        onClick={() => setIsAuth(false)}>
+        Выйти
+      </Link>
+    </div>
+  )
+
+  const navBar = isAuth ? <NavBarLogged /> : null
+
   return (
     <div className={styles.leaderboard}>
+      {navBar}
+
       <div className={styles.leaderboard__wrapper}>
         <Table caption="Таблица лидеров" userStats={tableData} />
+
         <Link to="/">
-          <Button class={styles.leaderboard__button} title="На главную" />
+          <Button className={styles.leaderboard__button}>На главную</Button>
         </Link>
 
         <img
