@@ -108,14 +108,12 @@ export const Landing = () => {
         </div>
       </div>
 
-      <div className={styles['landing__img-wrapper']}>
-        <img
-          className="landing__hero-img"
-          src="src/assets/images/hero.png"
-          alt="hero-img"
-          draggable="false"
-        />
-      </div>
+      <img
+        className={styles['landing__hero-img']}
+        src="src/assets/images/hero.png"
+        alt="hero-img"
+        draggable="false"
+      />
     </div>
   )
 }
