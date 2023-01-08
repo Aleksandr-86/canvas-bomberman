@@ -40,12 +40,12 @@ body {
   padding: 10px 50px;
   border: 5px solid black;
   border-radius: 15px;
-  color: black;
   background: hsl(29deg 6% 89%);
+  color: black;
   font-size: 40px;
   font-family: 'Rubik Bubbles', fantasy;
-  text-transform: uppercase;
   text-decoration: none;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s linear;
 }
