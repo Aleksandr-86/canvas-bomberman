@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Table } from '../../components/table/table'
-import { Button } from '../../components/button/button'
 
+import baseStyles from '../../app/app.module.css'
 import styles from './leaderboard.module.css'
 
 // Заглушка
@@ -83,8 +83,8 @@ export const Leaderboard = () => {
       <div className={styles.leaderboard__wrapper}>
         <Table caption="Таблица лидеров" userStats={tableData} />
 
-        <Link to="/">
-          <Button className={styles.leaderboard__button}>На главную</Button>
+        <Link className={baseStyles.link_button} to="/">
+          На главную
         </Link>
 
         <img
