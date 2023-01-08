@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { Button } from '../../components/button/button'
 
+import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
 
 export const Landing = () => {
@@ -45,8 +46,8 @@ export const Landing = () => {
         </Link>
       </div>
 
-      <Link to="/game">
-        <Button>Погнали</Button>
+      <Link className={baseStyles.link_button} to="/game">
+        Погнали
       </Link>
     </>
   )
@@ -67,12 +68,12 @@ export const Landing = () => {
       </div>
 
       <div className={styles['landing__button-wrapper']}>
-        <Link to="/sign-in">
-          <Button>Войти</Button>
+        <Link className={baseStyles.link_button} to="/sign-in">
+          Войти
         </Link>
 
-        <Link to="/sign-up">
-          <Button>Зарегистрироваться</Button>
+        <Link className={baseStyles.link_button} to="/sign-up">
+          Зарегистрироваться
         </Link>
       </div>
     </>
