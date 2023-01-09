@@ -1,30 +1,19 @@
-import { NavLink } from 'react-router-dom'
-import { useEffect } from 'react'
 import { AppRouting } from '../pages'
-import { withProviders } from './providers'
-import styles from './app.module.css'
+import { NavigationBar } from '../components/navigation-bar'
+import { Provider as StoreProvider } from 'react-redux'
+import { store } from '../store'
+import { BrowserRouter } from 'react-router-dom'
+import './app.module.css'
 
-const App = withProviders(() => {
-  useEffect(() => {
-    const fetchServerData = async () => {
-      const url = `http://localhost:${__SERVER_PORT__}`
-      const response = await fetch(url)
-      const data = await response.json()
-      console.log(data)
-    }
-
-    fetchServerData()
-  }, [])
-
+const App = () => {
   return (
-    <>
-      <NavLink to="/" children="home" className={styles.navLink} /> {' | '}
-      <NavLink to="/sign-in" children="signin" /> {' | '}
-      <NavLink to="/game" children="game" /> {' | '}
-      <NavLink to="/forum" children="forum" />
-      <AppRouting />
-    </>
+    <BrowserRouter>
+      <StoreProvider store={store}>
+        <NavigationBar />
+        <AppRouting />
+      </StoreProvider>
+    </BrowserRouter>
   )
-})
+}
 
 export { App }
