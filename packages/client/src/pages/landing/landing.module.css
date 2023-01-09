@@ -24,10 +24,6 @@
   text-decoration: none;
 }
 
-.landing__user-avatar {
-  background: red;
-}
-
 .landing__wrapper {
   display: flex;
   flex-direction: column;
