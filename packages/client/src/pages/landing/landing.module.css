@@ -24,10 +24,6 @@
   text-decoration: none;
 }
 
-.landing__user-avatar {
-  background: red;
-}
-
 .landing__wrapper {
   display: flex;
   flex-direction: column;
@@ -72,8 +68,8 @@
 
 .landing__hero-img {
   position: absolute;
-  top: 800px;
-  right: 300px;
+  top: 780px;
+  right: 200px;
   width: 253px;
   height: 191px;
 }
