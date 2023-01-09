@@ -1,0 +1,8 @@
+.form__input {
+  /* stylelint-disable-next-line */
+  font-family: 'Rubik Bubbles';
+  cursor: pointer;
+  margin-bottom: 30px;
+  display: block;
+  width: 100%;
+}

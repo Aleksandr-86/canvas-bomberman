@@ -1,0 +1,13 @@
+.table {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.table__title {
+        /* stylelint-disable-next-line */
+        font-family: 'Rubik Bubbles';
+        font-weight: 400;
+        font-size: 40px;
+        line-height: 47px;
+        text-align: center;
+}
