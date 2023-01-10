@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
-import { RootState } from '../../store'
 
+import { RootState } from '../../store'
 import { NavigationBar } from '../../components/navigation-bar/navigation-bar'
 import { Link } from 'react-router-dom'
 
