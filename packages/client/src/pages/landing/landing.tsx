@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAuthFalse } from '../../store/userSlice'
+import { RootState } from '../../store'
+
 import { Link } from 'react-router-dom'
 
 import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
 
 export const Landing = () => {
-  const displayName = 'Алекс'
-  const [isAuth, setIsAuth] = useState(true)
+  const dispatch = useDispatch()
+  const { isAuth, displayName } = useSelector((state: RootState) => state.user)
 
   // Навигационная панель
   const NavBarLogged = () => (
@@ -16,13 +19,15 @@ export const Landing = () => {
         alt="user-avatar"
         draggable="false"
       />
+
       <Link className={styles.landing__link} to="/profile">
         {displayName}
       </Link>
+
       <Link
         className={styles.landing__link}
         to="/"
-        onClick={() => setIsAuth(false)}>
+        onClick={() => dispatch(setAuthFalse())}>
         Выйти
       </Link>
     </div>
