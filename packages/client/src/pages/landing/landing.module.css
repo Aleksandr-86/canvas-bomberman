@@ -9,21 +9,6 @@
   user-select: none;
 }
 
-.landing__nav-bar {
-  position: absolute;
-  top: 10px;
-  left: 0;
-  display: flex;
-  gap: 30px;
-  align-content: flex-start;
-  justify-content: flex-end;
-  align-items: center;
-  width: inherit;
-  padding: 10px 25px 0 0;
-  font-size: 40px;
-  text-decoration: none;
-}
-
 .landing__wrapper {
   display: flex;
   flex-direction: column;
