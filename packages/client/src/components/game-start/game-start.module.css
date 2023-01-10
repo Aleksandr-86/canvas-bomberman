@@ -1,0 +1,12 @@
+.gameStart {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  justify-content: center;
+  align-items: center;
+  width: 1280px;
+  height: 720px;
+  color: white;
+  font-size: 50px;
+  line-height: 1.2em;
+}
