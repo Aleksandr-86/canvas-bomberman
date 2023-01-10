@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom'
 import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
 
-export const Landing = () => {
-  const { isAuth, displayName } = useSelector((state: RootState) => state.user)
+// Содержание для авторизованных пользователей
+const ContentLogged = () => {
+  const { displayName } = useSelector((state: RootState) => state.user)
 
-  // Содержание для авторизованных пользователей
-  const ContentLogged = () => (
+  return (
     <>
       <div className={styles.landing__description_top}>
         Привет {displayName}! <br />
@@ -31,33 +31,37 @@ export const Landing = () => {
       </Link>
     </>
   )
+}
 
-  // Содержание для неавторизованных пользователей
-  const ContentNotLogged = () => (
-    <>
-      <div className={styles.landing__description_top}>
-        Привет, мы рады приветствовать тебя! <br />
-        Прежде чем ты начнёшь взрывать всё вокруг, загляни в{' '}
-        <Link className={styles.landing__link} to="/rules">
-          правила
-        </Link>
-        . Уверены, это поможет тебе возглавить нашу{' '}
-        <Link className={styles.landing__link} to="/leaderboard">
-          таблицу лидеров!
-        </Link>
-      </div>
+// Содержание для неавторизованных пользователей
+const ContentNotLogged = () => (
+  <>
+    <div className={styles.landing__description_top}>
+      Привет, мы рады приветствовать тебя! <br />
+      Прежде чем ты начнёшь взрывать всё вокруг, загляни в{' '}
+      <Link className={styles.landing__link} to="/rules">
+        правила
+      </Link>
+      . Уверены, это поможет тебе возглавить нашу{' '}
+      <Link className={styles.landing__link} to="/leaderboard">
+        таблицу лидеров!
+      </Link>
+    </div>
 
-      <div className={styles['landing__button-wrapper']}>
-        <Link className={baseStyles.link_button} to="/sign-in">
-          Войти
-        </Link>
+    <div className={styles['landing__button-wrapper']}>
+      <Link className={baseStyles.link_button} to="/sign-in">
+        Войти
+      </Link>
 
-        <Link className={baseStyles.link_button} to="/sign-up">
-          Зарегистрироваться
-        </Link>
-      </div>
-    </>
-  )
+      <Link className={baseStyles.link_button} to="/sign-up">
+        Зарегистрироваться
+      </Link>
+    </div>
+  </>
+)
+
+export const Landing = () => {
+  const { isAuth } = useSelector((state: RootState) => state.user)
 
   const navBar = isAuth ? <NavigationBar /> : null
   const content = isAuth ? <ContentLogged /> : <ContentNotLogged />
