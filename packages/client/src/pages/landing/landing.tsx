@@ -1,5 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux'
-// import { setAuthFalse } from '../../store/userSlice'
+import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 
 import { NavigationBar } from '../../components/navigation-bar/navigation-bar'
@@ -9,30 +8,7 @@ import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
 
 export const Landing = () => {
-  // const dispatch = useDispatch()
   const { isAuth, displayName } = useSelector((state: RootState) => state.user)
-
-  // // Навигационная панель
-  // const NavBarLogged = () => (
-  //   <div className={styles['landing__nav-bar']}>
-  //     <img
-  //       src="src/assets/images/avatar.png"
-  //       alt="user-avatar"
-  //       draggable="false"
-  //     />
-
-  //     <Link className={styles.landing__link} to="/profile">
-  //       {displayName}
-  //     </Link>
-
-  //     <Link
-  //       className={styles.landing__link}
-  //       to="/"
-  //       onClick={() => dispatch(setAuthFalse())}>
-  //       Выйти
-  //     </Link>
-  //   </div>
-  // )
 
   // Содержание для авторизованных пользователей
   const ContentLogged = () => (
