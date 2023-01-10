@@ -25,7 +25,6 @@ const ContentLogged = () => {
           таблицу лидеров!
         </Link>
       </div>
-
       <Link className={baseStyles.link_button} to="/game">
         Погнали
       </Link>
@@ -47,12 +46,10 @@ const ContentNotLogged = () => (
         таблицу лидеров!
       </Link>
     </div>
-
     <div className={styles['landing__button-wrapper']}>
       <Link className={baseStyles.link_button} to="/sign-in">
         Войти
       </Link>
-
       <Link className={baseStyles.link_button} to="/sign-up">
         Зарегистрироваться
       </Link>
@@ -69,7 +66,6 @@ export const Landing = () => {
   return (
     <div className={styles.landing}>
       {navBar}
-
       <div className={styles.landing__wrapper}>
         <img
           className={styles.landing__logo}
@@ -77,9 +73,7 @@ export const Landing = () => {
           alt="bomberman-logo"
           draggable="false"
         />
-
         {content}
-
         <div className={styles.landing__description_bottom}>
           Есть вопросы? Скорее переходи к нам на{' '}
           <Link className={styles.landing__link} to="/forum">
@@ -87,7 +81,6 @@ export const Landing = () => {
           </Link>
         </div>
       </div>
-
       <img
         className={styles['landing__hero-img']}
         src="src/assets/images/hero.png"
