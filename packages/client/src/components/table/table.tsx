@@ -3,8 +3,7 @@ import { useSortableData } from '../../hooks/userSortableData'
 import styles from './table.module.css'
 
 interface Props {
-  caption: string
-  userStats: {
+  playersStats: {
     id: number
     place: number
     name: string
@@ -23,10 +22,13 @@ const headers = [
 ]
 
 export const Table = (props: Props) => {
-  const { items, requestSort, sortConfig } = useSortableData(props.userStats, {
-    key: 'place',
-    direction: 'ascending',
-  })
+  const { items, requestSort, sortConfig } = useSortableData(
+    props.playersStats,
+    {
+      key: 'place',
+      direction: 'ascending',
+    }
+  )
 
   const getClassNamesFor = (name: string) => {
     if (!sortConfig) {
@@ -44,8 +46,6 @@ export const Table = (props: Props) => {
 
   return (
     <table className={styles.table}>
-      <caption className={styles.table__caption}>{props.caption}</caption>
-
       <thead>
         <tr>
           {headers.map((header, index) => (
