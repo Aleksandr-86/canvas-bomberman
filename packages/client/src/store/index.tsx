@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
+import userReducer from './userSlice'
 
-// стор-заглушка без редьюсеров
-const store = configureStore({
-  reducer: {},
+export const store = configureStore({
+  reducer: { user: userReducer },
 })
 
-export { store }
+export type RootState = ReturnType<typeof store.getState>
