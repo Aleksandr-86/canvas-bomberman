@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../store/hooks'
 
 import { RootState } from '../../store'
 import { NavigationBar } from '../../components/navigation-bar/navigation-bar'
@@ -9,7 +9,7 @@ import styles from './landing.module.css'
 
 // Содержание для авторизованных пользователей
 const ContentLogged = () => {
-  const { displayName } = useSelector((state: RootState) => state.user)
+  const { displayName } = useAppSelector(state => state.user)
 
   return (
     <>
@@ -58,7 +58,7 @@ const ContentNotLogged = () => (
 )
 
 export const Landing = () => {
-  const { isAuth } = useSelector((state: RootState) => state.user)
+  const { isAuth } = useAppSelector((state: RootState) => state.user)
 
   const navBar = isAuth ? <NavigationBar /> : null
   const content = isAuth ? <ContentLogged /> : <ContentNotLogged />

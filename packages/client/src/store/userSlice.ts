@@ -10,7 +10,7 @@ interface UserState {
   phone: string
 }
 
-const initialState = {
+const initialState: UserState = {
   isAuth: true,
   firstName: '',
   secondName: '',
@@ -18,7 +18,7 @@ const initialState = {
   login: '',
   email: '',
   phone: '',
-} as UserState
+}
 
 const userSlice = createSlice({
   name: 'user',
