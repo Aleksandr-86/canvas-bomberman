@@ -1,32 +1,14 @@
-import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
+
+import { NavigationBar } from '../../components/navigation-bar/navigation-bar'
 import { Link } from 'react-router-dom'
 
 import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
 
 export const Landing = () => {
-  const displayName = 'Алекс'
-  const [isAuth, setIsAuth] = useState(true)
-
-  // Навигационная панель
-  const NavBarLogged = () => (
-    <div className={styles['landing__nav-bar']}>
-      <img
-        src="src/assets/images/avatar.png"
-        alt="user-avatar"
-        draggable="false"
-      />
-      <Link className={styles.landing__link} to="/profile">
-        {displayName}
-      </Link>
-      <Link
-        className={styles.landing__link}
-        to="/"
-        onClick={() => setIsAuth(false)}>
-        Выйти
-      </Link>
-    </div>
-  )
+  const { isAuth, displayName } = useSelector((state: RootState) => state.user)
 
   // Содержание для авторизованных пользователей
   const ContentLogged = () => (
@@ -77,7 +59,7 @@ export const Landing = () => {
     </>
   )
 
-  const navBar = isAuth ? <NavBarLogged /> : null
+  const navBar = isAuth ? <NavigationBar /> : null
   const content = isAuth ? <ContentLogged /> : <ContentNotLogged />
 
   return (

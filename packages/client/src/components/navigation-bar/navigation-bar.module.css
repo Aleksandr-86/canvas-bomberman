@@ -1,4 +1,18 @@
-.navLink {
-  color: 'teal';
-  font-family: "Rubik Bubbles", fantasy;
+.navigation-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  gap: 30px;
+  align-content: flex-start;
+  justify-content: flex-end;
+  align-items: center;
+  width: inherit;
+  padding: 10px 25px 0 0;
+  font-size: 40px;
+  text-decoration: none;
+}
+
+.navigation-bar__link {
+  text-decoration: none;
 }
