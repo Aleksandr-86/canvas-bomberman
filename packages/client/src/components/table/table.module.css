@@ -4,10 +4,9 @@
 }
 
 .table__title {
-        /* stylelint-disable-next-line */
-        font-family: 'Rubik Bubbles';
-        font-weight: 400;
-        font-size: 40px;
-        line-height: 47px;
-        text-align: center;
+    font-family: 'Rubik Bubbles', fantasy;    
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 47px;
+    text-align: center;
 }

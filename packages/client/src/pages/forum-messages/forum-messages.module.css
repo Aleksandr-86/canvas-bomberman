@@ -11,8 +11,7 @@
 }
 
 .forum__title {
-    /* stylelint-disable-next-line */
-    font-family: 'Rubik Bubbles';
+    font-family: 'Rubik Bubbles', fantasy;    
     font-weight: 400;
     font-size: 44px;
     line-height: 49px;
@@ -26,8 +25,7 @@
     border: 5px solid black;
     border-radius: 15px;
     background: hsl(29deg 6% 89%);
-    /* stylelint-disable-next-line */
-    font-family: 'Rubik Bubbles';
+    font-family: 'Rubik Bubbles', fantasy;    
     cursor: pointer;
     margin-bottom: 30px;
     transition: all 0.2s linear;

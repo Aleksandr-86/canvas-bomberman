@@ -1,6 +1,5 @@
 .form__input {
-  /* stylelint-disable-next-line */
-  font-family: 'Rubik Bubbles';
+  font-family: 'Rubik Bubbles', fantasy;    
   cursor: pointer;
   margin-bottom: 30px;
   display: block;
