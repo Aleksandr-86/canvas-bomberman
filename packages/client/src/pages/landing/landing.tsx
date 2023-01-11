@@ -1,8 +1,7 @@
-import { useAppSelector } from '../../store/hooks'
-
-import { RootState } from '../../store'
-import { NavigationBar } from '../../components/navigation-bar/navigation-bar'
 import { Link } from 'react-router-dom'
+
+import { useAppSelector } from '../../store/hooks'
+import { NavigationBar } from '../../components/navigation-bar/navigation-bar'
 
 import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
@@ -58,7 +57,7 @@ const ContentNotLogged = () => (
 )
 
 export const Landing = () => {
-  const { isAuth } = useAppSelector((state: RootState) => state.user)
+  const { isAuth } = useAppSelector(state => state.user)
 
   const navBar = isAuth ? <NavigationBar /> : null
   const content = isAuth ? <ContentLogged /> : <ContentNotLogged />
