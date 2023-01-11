@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import classes from './forum-new-message.module.css'
 import { Input } from "../../components/input/input"
 
-const ForumNewMessage = () => {
+export const ForumNewMessage = () => {
   return (<div className={classes.forum}>
     <h2 className={classes.forum__title}>Новое сообщение</h2>
 
@@ -17,5 +17,3 @@ const ForumNewMessage = () => {
     </div>
   </div>)
 }
-
-export { ForumNewMessage }

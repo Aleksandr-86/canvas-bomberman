@@ -7,7 +7,7 @@ interface Props {
     type?: string
 }
 
-const Button = (props: Props) => {
+export const Button = (props: Props) => {
     const { title = 'Кнопка' } = props
 
     if (props.class) {
@@ -18,5 +18,3 @@ const Button = (props: Props) => {
         return <button className={classes.forum__btn}>{title}</button>
     }
 }
-
-export { Button }

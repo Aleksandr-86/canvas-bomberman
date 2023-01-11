@@ -7,7 +7,7 @@ interface Props {
     type: string
 }
 
-const Input = (props: Props) => {
+export const Input = (props: Props) => {
     const { placeholder = 'Инпут' } = props
 
     if (props.class) {
@@ -24,5 +24,3 @@ const Input = (props: Props) => {
         )
     }
 }
-
-export { Input }

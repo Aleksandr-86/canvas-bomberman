@@ -17,7 +17,7 @@ const ForumData = {
     },
   ]
 }
-const Forum = () => {
+export const Forum = () => {
   return (<div className={classes.forum}>
     <h2 className={classes.forum__title}>Форум</h2>
     <Table posts={ForumData} />
@@ -27,5 +27,3 @@ const Forum = () => {
     </div>
   </div>)
 }
-
-export { Forum }

@@ -11,7 +11,7 @@ interface Props {
     }[],
 }
 
-const Table = (props: { posts: Props }) => {
+export const Table = (props: { posts: Props }) => {
     const { headers, rows } = props.posts
     if (rows) {
         return (
@@ -36,5 +36,3 @@ const Table = (props: { posts: Props }) => {
         return (<h1>Нет Постов</h1>)
     }
 }
-
-export { Table }

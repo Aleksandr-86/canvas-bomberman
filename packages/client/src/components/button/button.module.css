@@ -1,20 +1,19 @@
 .forum__btn {
-    padding: 10px 50px;
-    border: 5px solid black;
-    border-radius: 15px;
-    background: hsl(29deg 6% 89%);
-    /* stylelint-disable-next-line */
-    font-family: 'Rubik Bubbles';
-    cursor: pointer;
-    margin-bottom: 30px;
-    transition: all 0.2s linear;
-    text-transform: uppercase;
-  }
+  padding: 10px 50px;
+  border: 5px solid black;
+  border-radius: 15px;
+  background: hsl(29deg 6% 89%);
+  font-family: 'Rubik Bubbles', fantasy;    
+  cursor: pointer;
+  margin-bottom: 30px;
+  transition: all 0.2s linear;
+  text-transform: uppercase;
+}
   
-  .forum__btn:hover {
-    background: hsl(29deg 6% 74%);
-  }
+.forum__btn:hover {
+  background: hsl(29deg 6% 74%);
+}
   
-  .forum__btn:active {
-    background: hsl(30deg 76% 64%);
-  }
+.forum__btn:active {
+  background: hsl(30deg 76% 64%);
+}

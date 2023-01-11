@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import classes from './forum-new-post.module.css'
 import { Input } from "../../components/input/input"
 
-const ForumNewPost = () => {
+export const ForumNewPost = () => {
   return (<div className={classes.forum}>
     <h2 className={classes.forum__title}>Новая тема</h2>
 
@@ -17,5 +17,3 @@ const ForumNewPost = () => {
     </div>
   </div>)
 }
-
-export { ForumNewPost }

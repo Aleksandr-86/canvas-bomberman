@@ -32,7 +32,7 @@ const ForumPostData = {
     },
   ]
 }
-const ForumMessages = () => {
+export const ForumMessages = () => {
 
 
   return (<div className={classes.forum}>
@@ -43,5 +43,3 @@ const ForumMessages = () => {
     </div>
   </div>)
 }
-
-export { ForumMessages }
