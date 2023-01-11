@@ -48,12 +48,12 @@ export const Table = (props: Props) => {
     <table className={styles.table}>
       <thead>
         <tr>
-          {headers.map((header, index) => (
+          {headers.map(([headerName, headerTitle], index) => (
             <th
               key={index}
-              onClick={() => requestSort(header[0])}
-              className={getClassNamesFor(header[0])}>
-              {header[1]}
+              onClick={() => requestSort(headerName)}
+              className={getClassNamesFor(headerName)}>
+              {headerTitle}
             </th>
           ))}
         </tr>
