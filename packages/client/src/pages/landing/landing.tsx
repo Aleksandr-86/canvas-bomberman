@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { useAppSelector } from '../../store/hooks'
+import { getUser } from '../../store/selectors'
 import { NavigationBar } from '../../components/navigation-bar/navigation-bar'
 
 import baseStyles from '../../app/app.module.css'
@@ -8,7 +9,7 @@ import styles from './landing.module.css'
 
 // Содержание для авторизованных пользователей
 const ContentLogged = () => {
-  const { displayName } = useAppSelector(state => state.user)
+  const { displayName } = useAppSelector(getUser)
 
   return (
     <>
