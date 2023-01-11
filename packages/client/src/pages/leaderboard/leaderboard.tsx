@@ -5,6 +5,7 @@ import { getUser } from '../../store/selectors'
 import { getPlayersStats } from '../../store/selectors'
 import { NavigationBar } from '../../components/navigation-bar/navigation-bar'
 import { Table } from '../../components/table/table'
+import heroImg from '../../assets/images/hero.png'
 
 import baseStyles from '../../app/app.module.css'
 import styles from './leaderboard.module.css'
@@ -28,7 +29,7 @@ export const Leaderboard = () => {
         </Link>
         <img
           className={styles['leaderboard__hero-img']}
-          src="src/assets/images/hero.png"
+          src={heroImg}
           alt="hero-img"
           draggable="false"
         />
