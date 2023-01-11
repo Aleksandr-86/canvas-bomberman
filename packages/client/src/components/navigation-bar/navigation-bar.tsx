@@ -1,15 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
+import { useAppSelector } from '../../store/hooks'
 import { setAuthFalse } from '../../store/userSlice'
-import { RootState } from '../../store'
+import { getUser } from '../../store/selectors'
+import { Link } from 'react-router-dom'
 import avatarImg from '../../assets/images/avatar.png'
 
 import styles from './navigation-bar.module.css'
 
 export const NavigationBar = () => {
   const dispatch = useDispatch()
-  const { displayName } = useSelector((state: RootState) => state.user)
+  const { displayName } = useAppSelector(getUser)
 
   return (
     <nav className={styles['navigation-bar']}>

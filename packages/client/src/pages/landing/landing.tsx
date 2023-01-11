@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
 import { NavigationBar } from '../../components/navigation-bar/navigation-bar'
+import bombermanLogoImg from '../../assets/images/bomberman-logo.png'
+import heroImg from '../../assets/images/hero.png'
 
 import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
@@ -69,7 +71,7 @@ export const Landing = () => {
       <div className={styles.landing__wrapper}>
         <img
           className={styles.landing__logo}
-          src="src/assets/images/bomberman-logo.png"
+          src={bombermanLogoImg}
           alt="bomberman-logo"
           draggable="false"
         />
@@ -83,7 +85,7 @@ export const Landing = () => {
       </div>
       <img
         className={styles['landing__hero-img']}
-        src="src/assets/images/hero.png"
+        src={heroImg}
         alt="hero-img"
         draggable="false"
       />
