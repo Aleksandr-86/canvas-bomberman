@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
+
 import { setAuthFalse } from '../../store/userSlice'
 import { RootState } from '../../store'
-
 import { Link } from 'react-router-dom'
+import avatarImg from '../../assets/images/avatar.png'
 
 import styles from './navigation-bar.module.css'
 
@@ -12,16 +13,10 @@ export const NavigationBar = () => {
 
   return (
     <nav className={styles['navigation-bar']}>
-      <img
-        src="src/assets/images/avatar.png"
-        alt="user-avatar"
-        draggable="false"
-      />
-
+      <img src={avatarImg} alt="user-avatar" draggable="false" />
       <Link className={styles['navigation-bar__link']} to="/profile">
         {displayName}
       </Link>
-
       <Link
         className={styles['navigation-bar__link']}
         to="/"
