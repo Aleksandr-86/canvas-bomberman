@@ -3,7 +3,7 @@ import { Landing } from './landing/landing'
 import { SignIn } from './sign-in'
 import { SignUp } from './sign-up'
 import { Profile } from './profile/profile'
-import { Leaderboard } from './leaderboard'
+import { Leaderboard } from './leaderboard/leaderboard'
 import { Forum } from './forum'
 import { Game } from './game'
 

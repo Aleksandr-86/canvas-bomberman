@@ -11,7 +11,7 @@ declare interface PlayerStats {
 
 type PlayersStatsState = Array<PlayerStats>
 
-const initialState = [
+const initialState: PlayersStatsState = [
   {
     id: 1,
     place: 1,
@@ -52,7 +52,7 @@ const initialState = [
     games: 3,
     totalTime: 19,
   },
-] as PlayersStatsState
+]
 
 const playersStatsSlice = createSlice({
   name: 'playersStats',
