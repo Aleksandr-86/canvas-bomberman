@@ -9,7 +9,9 @@ export default {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
   moduleNameMapper: {
-    '\\.css$': 'identity-obj-proxy',
-    '\\.(jpg|jpeg|png)$': 'identity-obj-proxy',
-  },
+    "\\.css$": "identity-obj-proxy",
+    "\\.png$": "identity-obj-proxy",
+    "\\.svg$": "identity-obj-proxy",
+    "\\.jpg$": "identity-obj-proxy",
+  }
 }
