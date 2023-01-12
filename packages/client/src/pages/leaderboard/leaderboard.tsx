@@ -4,7 +4,7 @@ import { useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
 import { getPlayersStats } from '../../store/selectors'
 import { NavigationBar } from '../../components/navigationBar/navigationBar'
-import { Table } from '../../components/table/table'
+import { Table } from '../../components/leaderboardTable/table'
 import heroImg from '../../assets/images/hero.png'
 
 import baseStyles from '../../app/app.module.css'
