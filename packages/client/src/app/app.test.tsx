@@ -1,4 +1,4 @@
-import { App } from '.'
+import { App } from './app'
 import { render, screen } from '@testing-library/react'
 
 const appContent = 'Есть вопросы?'

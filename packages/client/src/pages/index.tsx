@@ -1,11 +1,12 @@
 import { Routes, Route } from 'react-router-dom'
+
 import { Landing } from './landing/landing'
-import { SignIn } from './sign-in'
-import { SignUp } from './sign-up'
+import { SignIn } from './signIn/signIn'
+import { SignUp } from './signUp/signUp'
 import { Profile } from './profile/profile'
 import { Leaderboard } from './leaderboard/leaderboard'
-import { Forum } from './forum'
-import { Game } from './game'
+import { Forum } from './forum/forum'
+import { Game } from './game/game'
 
 const AppRouting = () => {
   return (

@@ -9,7 +9,7 @@
   user-select: none;
 }
 
-.landing__wrapper {
+.wrapper {
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -17,41 +17,41 @@
   margin-top: 50px;
 }
 
-.landing__logo {
+.logo {
   bottom: 0;
   width: 1046px;
   height: 267px;
 }
 
-.landing__description_top,
-.landing__description_bottom {
+.descriptionTop,
+.descriptionBottom {
   width: 1260px;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
 }
 
-.landing__description_top {
+.descriptionTop {
   font-size: 40px;
   line-height: 47.4px;
 }
 
-.landing__description_bottom {
+.descriptionBottom {
   font-size: 20px;
 }
 
-.landing__link {
+.link {
   text-decoration: none;
 }
 
-.landing__button-wrapper {
+.buttonWrapper {
   display: flex;
   gap: 50px;
   justify-content: center;
   align-items: center;
 }
 
-.landing__hero-img {
+.heroImg {
   position: absolute;
   top: 780px;
   right: 200px;
