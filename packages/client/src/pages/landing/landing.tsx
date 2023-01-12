@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
 import { NavigationBar } from '../../components/navigationBar/navigationBar'
-import bombermanLogoImg from '../../assets/images/bomberman-logo.png'
+import bombermanLogoImg from '../../assets/images/bombermanLogo.png'
 import heroImg from '../../assets/images/hero.png'
 
 import baseStyles from '../../app/app.module.css'
