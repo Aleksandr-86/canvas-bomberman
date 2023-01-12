@@ -1,4 +1,4 @@
-.navigation-bar {
+.navigationBar {
   position: absolute;
   top: 0;
   left: 0;
@@ -13,6 +13,6 @@
   text-decoration: none;
 }
 
-.navigation-bar__link {
+.link {
   text-decoration: none;
 }

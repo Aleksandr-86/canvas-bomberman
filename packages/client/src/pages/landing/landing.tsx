@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 import { useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
-import { NavigationBar } from '../../components/navigation-bar/navigation-bar'
+import { NavigationBar } from '../../components/navigationBar/navigationBar'
 import bombermanLogoImg from '../../assets/images/bomberman-logo.png'
 import heroImg from '../../assets/images/hero.png'
 
@@ -15,19 +15,19 @@ const ContentLogged = () => {
 
   return (
     <>
-      <div className={styles.landing__description_top}>
+      <div className={styles.descriptionTop}>
         Привет {displayName}! <br />
         Спешим напомнить, что ты в любой момент можешь освежить свои знания по
         игре, перечитав{' '}
-        <Link className={styles.landing__link} to="/rules">
+        <Link className={styles.link} to="/rules">
           правила
         </Link>{' '}
         и посмотреть{' '}
-        <Link className={styles.landing__link} to="/leaderboard">
+        <Link className={styles.link} to="/leaderboard">
           таблицу лидеров!
         </Link>
       </div>
-      <Link className={baseStyles.link_button} to="/game">
+      <Link className={baseStyles.linkButton} to="/game">
         Погнали
       </Link>
     </>
@@ -37,22 +37,22 @@ const ContentLogged = () => {
 // Содержание для неавторизованных пользователей
 const ContentNotLogged = () => (
   <>
-    <div className={styles.landing__description_top}>
+    <div className={styles.descriptionTop}>
       Привет, мы рады приветствовать тебя! <br />
       Прежде чем ты начнёшь взрывать всё вокруг, загляни в{' '}
-      <Link className={styles.landing__link} to="/rules">
+      <Link className={styles.link} to="/rules">
         правила
       </Link>
       . Уверены, это поможет тебе возглавить нашу{' '}
-      <Link className={styles.landing__link} to="/leaderboard">
+      <Link className={styles.link} to="/leaderboard">
         таблицу лидеров!
       </Link>
     </div>
-    <div className={styles['landing__button-wrapper']}>
-      <Link className={baseStyles.link_button} to="/sign-in">
+    <div className={styles.buttonWrapper}>
+      <Link className={baseStyles.linkButton} to="/sign-in">
         Войти
       </Link>
-      <Link className={baseStyles.link_button} to="/sign-up">
+      <Link className={baseStyles.linkButton} to="/sign-up">
         Зарегистрироваться
       </Link>
     </div>
@@ -60,7 +60,7 @@ const ContentNotLogged = () => (
 )
 
 export const Landing = () => {
-  const { isAuth } = useAppSelector(state => state.user)
+  const { isAuth } = useAppSelector(getUser)
 
   const navBar = isAuth ? <NavigationBar /> : null
   const content = isAuth ? <ContentLogged /> : <ContentNotLogged />
@@ -68,23 +68,23 @@ export const Landing = () => {
   return (
     <div className={styles.landing}>
       {navBar}
-      <div className={styles.landing__wrapper}>
+      <div className={styles.wrapper}>
         <img
-          className={styles.landing__logo}
+          className={styles.logo}
           src={bombermanLogoImg}
           alt="bomberman-logo"
           draggable="false"
         />
         {content}
-        <div className={styles.landing__description_bottom}>
+        <div className={styles.descriptionBottom}>
           Есть вопросы? Скорее переходи к нам на{' '}
-          <Link className={styles.landing__link} to="/forum">
+          <Link className={styles.link} to="/forum">
             форум
           </Link>
         </div>
       </div>
       <img
-        className={styles['landing__hero-img']}
+        className={styles['landingHeroImg']}
         src={heroImg}
         alt="hero-img"
         draggable="false"
