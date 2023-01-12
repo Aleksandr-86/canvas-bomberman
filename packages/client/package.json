@@ -6,7 +6,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . && stylelint \"**/*.{css,scss}\" && yarn check-types",
+    "lint": "eslint . && yarn stylelint && yarn check-types",
+    "stylelint": "stylelint \"**/*.{css,scss}\"",
+    "stylelint:fix": "stylelint \"**/*.{css,scss}\" --fix",
     "check-types": "tsc --project ./tsconfig.json --noEmit",
     "format": "prettier --write .",
     "test": "jest ./"
