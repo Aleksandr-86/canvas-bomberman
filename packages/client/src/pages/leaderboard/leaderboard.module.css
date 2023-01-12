@@ -9,12 +9,7 @@
   user-select: none;
 }
 
-.leaderboard__table-caption {
-  font-size: 40px;
-  text-transform: uppercase;
-}
-
-.leaderboard__wrapper {
+.wrapper {
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -22,13 +17,19 @@
   width: 1250px;
 }
 
-.leaderboard__button {
+.tableCaption {
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+
+.button {
   width: fit-content;
   font-size: 40px;
   text-transform: uppercase;
 }
 
-.leaderboard__hero-img {
+.heroImg {
   position: absolute;
   top: 780px;
   right: 200px;

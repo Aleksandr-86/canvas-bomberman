@@ -4,13 +4,13 @@
   user-select: none;
 }
 
-.table__caption {
+.caption {
   margin-bottom: 30px;
   font-size: 40px;
   text-transform: uppercase;
 }
 
-.table__head {
+.head {
   padding-bottom: 10px;
   border-bottom: 5px solid black;
   text-align: center;
@@ -29,41 +29,41 @@
   margin-left: 10px;
 }
 
-.table__column_place,
-.table__column_name,
-.table__column_score,
-.table__column_games,
-.table__column_totalTime {
+.columnPlace,
+.columnName,
+.columnScore,
+.columnGames,
+.columnTotalTime {
   padding: 10px 0;
   border-bottom: 2px solid #ccc;
 }
 
-.table__column_place {
+.columnPlace {
   width: 200px;
   text-align: center;
 }
 
-.table__column_name {
+.columnName {
   width: 350px;
   text-align: left;
 }
 
-.table__column_score {
+.columnScore {
   width: 200px;
   text-align: center;
 }
 
-.table__column_games {
+.columnGames {
   width: 150px;
   text-align: center;
 }
 
-.table__column_totalTime {
+.columnTotalTime {
   width: 350px;
   text-align: center;
 }
 
-.table__row:hover {
+.row:hover {
   background: hsl(29deg 6% 74%);
   transition: all 0.2s linear;
 }

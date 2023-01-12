@@ -19,16 +19,14 @@ export const Leaderboard = () => {
   return (
     <div className={styles.leaderboard}>
       {navBar}
-      <div className={styles.leaderboard__wrapper}>
-        <div className={styles['leaderboard__table-caption']}>
-          Таблица лидеров
-        </div>
+      <div className={styles.wrapper}>
+        <div className={styles.tableCaption}>Таблица лидеров</div>
         <Table playersStats={playersStatsState} />
-        <Link className={baseStyles.link_button} to="/">
+        <Link className={baseStyles.linkButton} to="/">
           На главную
         </Link>
         <img
-          className={styles['leaderboard__hero-img']}
+          className={styles.heroImg}
           src={heroImg}
           alt="hero-img"
           draggable="false"

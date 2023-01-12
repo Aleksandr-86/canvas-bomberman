@@ -38,9 +38,9 @@ export const Table = (props: Props) => {
     const { key, direction } = sortConfig
 
     if (key === name) {
-      return `${styles.table__head} ${styles[direction]}`
+      return `${styles.head} ${styles[direction]}`
     } else {
-      return styles.table__head
+      return styles.head
     }
   }
 
@@ -61,12 +61,12 @@ export const Table = (props: Props) => {
 
       <tbody>
         {items.map(item => (
-          <tr className={styles.table__row} key={item.id}>
-            <td className={styles.table__column_place}>{item.place}</td>
-            <td className={styles.table__column_name}>{item.name}</td>
-            <td className={styles.table__column_score}>{item.score}</td>
-            <td className={styles.table__column_games}>{item.games}</td>
-            <td className={styles.table__column_totalTime}>{item.totalTime}</td>
+          <tr className={styles.row} key={item.id}>
+            <td className={styles.columnPlace}>{item.place}</td>
+            <td className={styles.columnName}>{item.name}</td>
+            <td className={styles.columnScore}>{item.score}</td>
+            <td className={styles.columnGames}>{item.games}</td>
+            <td className={styles.columnTotalTime}>{item.totalTime}</td>
           </tr>
         ))}
       </tbody>
