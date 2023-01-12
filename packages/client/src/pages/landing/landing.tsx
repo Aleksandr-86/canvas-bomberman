@@ -84,7 +84,7 @@ export const Landing = () => {
         </div>
       </div>
       <img
-        className={styles['landingHeroImg']}
+        className={styles.heroImg}
         src={heroImg}
         alt="hero-img"
         draggable="false"
