@@ -1,21 +1,10 @@
-import type { ReactNode } from 'react'
-
 import styles from './button.module.css'
 
-interface Props {
-  onButtonClick?: () => void
-  children?: ReactNode
-  className?: string
-}
-
-export const Button = (props: Props) => {
-  const {
-    onButtonClick = () => undefined,
-    children = `Кнопка`,
-    className = ``,
-  } = props
+export const Button = (props: React.ComponentPropsWithoutRef<'button'>) => {
+  const { children = 'Кнопка', className } = props
+  const classes = className ? `${styles.button} ${className}` : styles.button
   return (
-    <button className={`${styles.button} ${className}`} onClick={onButtonClick}>
+    <button {...props} className={classes}>
       {children}
     </button>
   )

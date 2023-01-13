@@ -1,11 +1,19 @@
 .button {
   padding: 10px 50px;
-  border: 5px solid #fff;
+  border: 5px solid black;
   border-radius: 15px;
-  background: transparent;
-  color: #fff;
-  font: inherit;
-  font-size: 32px;
-  line-height: 1.2em;
+  background: hsl(29deg 6% 89%);
+  font-size: 40px;
+  font-family: 'Rubik Bubbles', fantasy;
+  text-transform: uppercase;
   cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+.button:hover {
+  background: hsl(29deg 6% 74%);
+}
+
+.button:active {
+  background: hsl(30deg 76% 64%);
 }
