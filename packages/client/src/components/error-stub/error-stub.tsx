@@ -5,12 +5,12 @@ import styles from './error-stub.module.css'
 export const ErrorStub = () => {
   return (
     <div className={styles.errorStub}>
-      <p className={styles[`errorStub__text`]}>
-        <span className={styles[`errorStub__text_danger`]}>БАААБАААХ!</span> И
-        ВСЁ СЛОМАЛОСЬ!
+      <p className={styles.errorStubText}>
+        <span className={styles.errorStubTextDanger}>БАААБАААХ!</span> И ВСЁ
+        СЛОМАЛОСЬ!
       </p>
       <HeroBomb />
-      <p className={styles[`errorStub__text`]}>НО МЫ УЖЕ ЧИНИМ!</p>
+      <p className={styles.errorStubText}>НО МЫ УЖЕ ЧИНИМ!</p>
     </div>
   )
 }
