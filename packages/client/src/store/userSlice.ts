@@ -37,4 +37,4 @@ const userSlice = createSlice({
 })
 
 export const { setAuthTrue, setAuthFalse, toggleAuth } = userSlice.actions
-export default userSlice.reducer
+export const userReducer = userSlice.reducer

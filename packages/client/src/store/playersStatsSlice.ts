@@ -60,4 +60,4 @@ const playersStatsSlice = createSlice({
   reducers: {},
 })
 
-export default playersStatsSlice.reducer
+export const playersStatsReducer = playersStatsSlice.reducer
