@@ -1,4 +1,4 @@
-import heroBomb from '../../assets/images/hero-bomb.png'
+import heroBomb from '../../assets/images/heroBomb.png'
 
 export const HeroBomb = () => {
   return (

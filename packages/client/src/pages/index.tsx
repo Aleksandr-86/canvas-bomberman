@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom'
 import { Game } from './game'
 import { Landing } from './landing'
-import { SignIn } from './sign-in'
-import { SignUp } from './sign-up'
+import { SignIn } from './signIn'
+import { SignUp } from './signUp'
 import { Leaderboard } from './leaderboard'
 import { Forum } from './forum'
 

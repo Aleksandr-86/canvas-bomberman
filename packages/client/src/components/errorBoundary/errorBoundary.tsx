@@ -1,6 +1,6 @@
 import { Component, ReactNode } from 'react'
 
-import { ErrorStub } from '../error-stub/error-stub'
+import { ErrorStub } from '../errorStub/errorStub'
 
 interface Props {
   children?: ReactNode

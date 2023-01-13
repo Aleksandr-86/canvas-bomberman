@@ -1,6 +1,6 @@
-import { HeroBomb } from '../hero-bomb/hero-bomb'
+import { HeroBomb } from '../heroBomb/heroBomb'
 
-import styles from './error-stub.module.css'
+import styles from './errorStub.module.css'
 
 export const ErrorStub = () => {
   return (
