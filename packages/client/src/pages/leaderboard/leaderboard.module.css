@@ -22,13 +22,6 @@
   text-transform: uppercase;
 }
 
-
-.button {
-  width: fit-content;
-  font-size: 40px;
-  text-transform: uppercase;
-}
-
 .heroImg {
   position: absolute;
   top: 780px;
