@@ -18,15 +18,15 @@ export class CanvasRenderer {
   }
 
   sas() {
-                  console.log('test')
-                  console.log('test')
-                  console.log('test')
-                  console.log('test')
-                  console.log('test')
-                  console.log('test')
-                  console.log('test')
-                  console.log('test')
-                  console.log('test')
+    console.log('test')
+    console.log('test')
+    console.log('test')
+    console.log('test')
+    console.log('test')
+    console.log('test')
+    console.log('test')
+    console.log('test')
+    console.log('test')
   }
 
   image(
