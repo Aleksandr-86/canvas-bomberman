@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-declare interface PlayerStats {
+interface PlayerStats {
   id: number
   place: number
   name: string
