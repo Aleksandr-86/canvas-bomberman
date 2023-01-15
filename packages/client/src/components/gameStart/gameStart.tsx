@@ -1,6 +1,6 @@
 import { Button } from '../button/button'
 
-import styles from './game-start.module.css'
+import styles from './gameStart.module.css'
 
 import keyboard from '../../assets/images/keyboard.png'
 
@@ -21,7 +21,9 @@ export const GameStart = (props: Props) => {
         alt="Клавиатура"
         draggable={false}
       />
-      <Button onClick={onButtonClick}>ПОНЯЛ, ПОГНАЛИ!</Button>
+      <Button className={styles.gameStartButton} onClick={onButtonClick}>
+        ПОНЯЛ, ПОГНАЛИ!
+      </Button>
     </div>
   )
 }

@@ -10,3 +10,9 @@
   font-size: 50px;
   line-height: 1.2em;
 }
+
+.gameStartButton {
+  border-color: #fff;
+  background-color: transparent;
+  color: #fff;
+}
