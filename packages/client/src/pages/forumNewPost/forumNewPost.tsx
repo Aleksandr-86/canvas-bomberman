@@ -11,14 +11,14 @@ export const ForumNewPost = () => {
       <div className={classes.forum__wrapper}>
         <form>
           <Input type="text" placeholder="Название темы" />
-          <Button
-            type="submit"
-            className="forum__btn--create">создать тему</Button>
+          <Button type="submit" className="forum__btn--create">
+            создать тему
+          </Button>
         </form>
         <Link to="/forum" className={classes.forum__link}>
           назад
         </Link>
       </div>
-    </div >
+    </div>
   )
 }

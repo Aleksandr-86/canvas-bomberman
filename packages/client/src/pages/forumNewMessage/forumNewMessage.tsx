@@ -11,9 +11,9 @@ export const ForumNewMessage = () => {
       <div className={classes.forum__wrapper}>
         <form>
           <Input type="text" placeholder="Введите сообщение" />
-          <Button
-            type="submit"
-            className="forum__btn--create">сохранить</Button>
+          <Button type="submit" className="forum__btn--create">
+            сохранить
+          </Button>
         </form>
         <Link to="/forum" className={classes.forum__link}>
           назад
