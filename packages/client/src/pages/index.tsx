@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom'
-import { Game } from './game'
-import { Landing } from './landing'
-import { SignIn } from './sign-in'
-import { SignUp } from './sign-up'
-import { Leaderboard } from './leaderboard'
-import { Forum } from './forum'
+import { Game } from './game/game'
+import { Landing } from './landing/landing'
+import { SignIn } from './signIn/signIn'
+import { SignUp } from './signUp/signUp'
+import { Leaderboard } from './leaderboard/leaderboard'
+import { Forum } from './forum/forum'
 
 const AppRouting = () => {
   return (
