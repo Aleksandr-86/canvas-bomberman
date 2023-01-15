@@ -4,7 +4,7 @@ import { useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
 import { getPlayersStats } from '../../store/selectors'
 import { NavigationBar } from '../../components/navigationBar/navigationBar'
-import { Table } from '../../components/leaderboardTable/table'
+import { LeaderboardTable } from '../../components/leaderboardTable/leaderboardTable'
 import heroImg from '../../assets/images/hero.png'
 
 import baseStyles from '../../app/app.module.css'
@@ -21,7 +21,7 @@ export const Leaderboard = () => {
       {navBar}
       <div className={styles.wrapper}>
         <div className={styles.tableCaption}>Таблица лидеров</div>
-        <Table playersStats={playersStatsState} />
+        <LeaderboardTable playersStats={playersStatsState} />
         <Link className={baseStyles.linkButton} to="/">
           На главную
         </Link>

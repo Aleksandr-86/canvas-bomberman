@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-interface Items {
+interface tableRow {
   [index: string]: string | number
 }
 
@@ -11,42 +11,36 @@ interface SortConfig {
 
 /**
  * Сортирует переданный массив объектов.
- * items - массив объектов.
+ * tablesRows - массив объектов с данными для заполнения строк таблицы.
  * config - фильтр по умолчанию, где: key - имя
  * колонки для сортировки, direction - порядок сортировки
  * (ascending - восходящий, descending - нисходящий).
  */
-export const useSortableData = (items: Items[], config: SortConfig) => {
+export const useSortableData = (tableRows: tableRow[], config: SortConfig) => {
   const [sortConfig, setSortConfig] = useState<SortConfig>(config)
 
   const sortedItems = useMemo(() => {
-    const sortableItems = [...items]
+    const sortableItems = [...tableRows]
 
-    if (sortConfig !== null) {
-      sortableItems.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? -1 : 1
-        }
+    sortableItems.sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === 'ascending' ? -1 : 1
+      }
 
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? 1 : -1
-        }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === 'ascending' ? 1 : -1
+      }
 
-        return 0
-      })
-    }
+      return 0
+    })
 
     return sortableItems
-  }, [items, sortConfig])
+  }, [tableRows, sortConfig])
 
   const requestSort = (key: string) => {
     let direction = 'ascending'
 
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === 'ascending'
-    ) {
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending'
     }
 

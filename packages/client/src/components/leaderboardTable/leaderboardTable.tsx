@@ -1,6 +1,6 @@
 import { useSortableData } from '../../hooks/userSortableData'
 
-import styles from './table.module.css'
+import styles from './leaderboardTable.module.css'
 
 interface Props {
   playersStats: {
@@ -13,15 +13,15 @@ interface Props {
   }[]
 }
 
-const headers = [
-  ['place', 'Место'],
-  ['name', 'Имя игрока'],
-  ['score', 'Очки'],
-  ['games', 'Игр'],
-  ['totalTime', 'Время (мин)'],
+const HEADERS: { name: string; title: string }[] = [
+  { name: 'place', title: 'Место' },
+  { name: 'name', title: 'Имя игрока' },
+  { name: 'score', title: 'Очки' },
+  { name: 'games', title: 'Игр' },
+  { name: 'totalTime', title: 'Время (мин)' },
 ]
 
-export const Table = (props: Props) => {
+export const LeaderboardTable = (props: Props) => {
   const { items, requestSort, sortConfig } = useSortableData(
     props.playersStats,
     {
@@ -48,12 +48,12 @@ export const Table = (props: Props) => {
     <table className={styles.table}>
       <thead>
         <tr>
-          {headers.map(([headerName, headerTitle], index) => (
+          {HEADERS.map(({name, title}, index) => (
             <th
               key={index}
-              onClick={() => requestSort(headerName)}
-              className={getClassNamesFor(headerName)}>
-              {headerTitle}
+              onClick={() => requestSort(name)}
+              className={getClassNamesFor(name)}>
+              {title}
             </th>
           ))}
         </tr>

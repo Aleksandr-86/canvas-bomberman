@@ -9,7 +9,7 @@ interface PlayerStats {
   totalTime: number
 }
 
-type PlayersStatsState = Array<PlayerStats>
+type PlayersStatsState = PlayerStats[] 
 
 const initialState: PlayersStatsState = [
   {
