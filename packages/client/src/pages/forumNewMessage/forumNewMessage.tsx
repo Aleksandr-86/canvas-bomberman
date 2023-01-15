@@ -6,16 +6,16 @@ import { Input } from '../../components/input/input'
 export const ForumNewMessage = () => {
   return (
     <div className={classes.forum}>
-      <h2 className={classes.forum__title}>Новое сообщение</h2>
+      <h2 className={classes.forumTitle}>Новое сообщение</h2>
 
-      <div className={classes.forum__wrapper}>
+      <div className={classes.forumWrapper}>
         <form>
           <Input type="text" placeholder="Введите сообщение" />
-          <Button type="submit" className="forum__btn--create">
+          <Button type="submit" className="forumBtnCreate">
             сохранить
           </Button>
         </form>
-        <Link to="/forum" className={classes.forum__link}>
+        <Link to="/forum" className={classes.forumLink}>
           назад
         </Link>
       </div>

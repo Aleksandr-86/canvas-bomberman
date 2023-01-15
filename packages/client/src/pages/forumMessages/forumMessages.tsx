@@ -38,11 +38,11 @@ export const ForumMessages = () => {
   return (
     <div className={classes.forum}>
       <Table posts={ForumPostData} />
-      <div className={classes.forum__wrapper}>
-        <Link to="/forum-new-message" className={classes.forum__link}>
+      <div className={classes.forumWrapper}>
+        <Link to="/forum-new-message" className={classes.forumLink}>
           Создать сообщение
         </Link>
-        <Link to="/" className={classes.forum__link}>
+        <Link to="/" className={classes.forumLink}>
           назад
         </Link>
       </div>

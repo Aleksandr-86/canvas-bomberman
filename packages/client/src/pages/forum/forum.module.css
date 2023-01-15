@@ -5,12 +5,12 @@
   align-items: center;
 }
 
-.forum__wrapper {
+.forumWrapper {
   display: flex;
   flex-direction: column;
 }
 
-.forum__title {
+.forumTitle {
   font-family: 'Rubik Bubbles', fantasy;
   font-weight: 400;
   font-size: 44px;
@@ -18,7 +18,7 @@
   text-align: center;
 }
 
-.forum__link {
+.forumLink {
   max-width: 250px;
   color: black;
   padding: 10px 50px;

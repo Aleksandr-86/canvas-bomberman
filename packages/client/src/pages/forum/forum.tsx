@@ -21,13 +21,13 @@ const ForumData = {
 export const Forum = () => {
   return (
     <div className={classes.forum}>
-      <h2 className={classes.forum__title}>Форум</h2>
+      <h2 className={classes.forumTitle}>Форум</h2>
       <Table posts={ForumData} />
-      <div className={classes.forum__wrapper}>
-        <Link to="/forum-new-post" className={classes.forum__link}>
+      <div className={classes.forumWrapper}>
+        <Link to="/forum-new-post" className={classes.forumLink}>
           Создать тему
         </Link>
-        <Link to="/" className={classes.forum__link}>
+        <Link to="/" className={classes.forumLink}>
           на главную
         </Link>
       </div>
