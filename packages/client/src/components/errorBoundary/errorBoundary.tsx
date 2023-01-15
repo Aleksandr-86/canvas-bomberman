@@ -11,15 +11,15 @@ interface State {
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
+  state: State = {
     hasError: false,
   }
 
-  public static getDerivedStateFromError(): State {
+  static getDerivedStateFromError(): State {
     return { hasError: true }
   }
 
-  public render() {
+  render() {
     if (this.state.hasError) {
       return <ErrorStub />
     }
