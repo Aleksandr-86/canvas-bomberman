@@ -1,4 +1,4 @@
-import { TableRow } from '../table-row/table-row'
+import { TableRow } from '../tableRow/tableRow'
 import classes from './table.module.css'
 
 interface Props {
@@ -18,9 +18,9 @@ export const Table = (props: { posts: Props }) => {
       <table className={classes.table}>
         <thead>
           <tr>
-            <th className={classes.table__title}>{headers[0]}</th>
-            <th className={classes.table__title}>{headers[1]}</th>
-            <th className={classes.table__title}>{headers[2]}</th>
+            <th className={classes.tableTitle}>{headers[0]}</th>
+            <th className={classes.tableTitle}>{headers[1]}</th>
+            <th className={classes.tableTitle}>{headers[2]}</th>
           </tr>
         </thead>
         <tbody>
