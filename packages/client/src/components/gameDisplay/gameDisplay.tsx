@@ -1,12 +1,10 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
-import { Overlay } from '../overlay/overlay'
-import { GameStart } from '../game-start/game-start'
+import { GameOverlay } from '../gameOverlay/gameOverlay'
 
-import styles from './game-display.module.css'
+import styles from './gameDisplay.module.css'
 
-const GameDisplay = () => {
-  const [isStart, setIsStart] = useState(true)
+const GameDisplay: React.FC = () => {
   const gameRef = useRef<null | HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -26,11 +24,7 @@ const GameDisplay = () => {
   return (
     <div className={styles.gameDisplay}>
       <canvas ref={gameRef} width={1280} height={720} />
-      {isStart && (
-        <Overlay>
-          <GameStart onButtonClick={() => setIsStart(false)} />
-        </Overlay>
-      )}
+      <GameOverlay />
     </div>
   )
 }
