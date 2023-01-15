@@ -1,0 +1,60 @@
+.landing {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1920px;
+  height: 1000px;
+  user-select: none;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.logo {
+  bottom: 0;
+  width: 1046px;
+  height: 267px;
+}
+
+.descriptionTop,
+.descriptionBottom {
+  width: 1260px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.descriptionTop {
+  font-size: 40px;
+  line-height: 47.4px;
+}
+
+.descriptionBottom {
+  font-size: 20px;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.buttonWrapper {
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+  align-items: center;
+}
+
+.heroImg {
+  position: absolute;
+  top: 780px;
+  right: 200px;
+  width: 253px;
+  height: 191px;
+}

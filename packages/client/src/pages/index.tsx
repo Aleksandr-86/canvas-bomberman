@@ -1,13 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
-import { Game } from './game'
-import { Landing } from './landing'
-import { SignIn } from './sign-in'
-import { SignUp } from './sign-up'
-import { Leaderboard } from './leaderboard'
+import { Game } from './game/game'
+import { Landing } from './landing/landing'
+import { SignIn } from './signIn/signIn'
+import { SignUp } from './signUp/signUp'
+import { Leaderboard } from './leaderboard/leaderboard'
 import { Forum } from './forum/forum'
-import { ForumMessages } from './forum-messages/forum-messages'
-import { ForumNewPost } from './forum-new-post/forum-new-post'
-import { ForumNewMessage } from './forum-new-message/forum-new-message'
+import { ForumMessages } from './forumMessages/forumMessages'
+import { ForumNewPost } from './forumNewPost/forumNewPost'
+import { ForumNewMessage } from './forumNewMessage/forumNewMessage'
 
 const AppRouting = () => {
   return (

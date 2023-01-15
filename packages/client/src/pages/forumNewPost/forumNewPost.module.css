@@ -10,14 +10,6 @@
   flex-direction: column;
 }
 
-.forum__title {
-  font-family: 'Rubik Bubbles', fantasy;
-  font-weight: 400;
-  font-size: 44px;
-  line-height: 49px;
-  text-align: center;
-}
-
 .forum__link {
   max-width: 250px;
   color: black;
@@ -30,4 +22,12 @@
   margin-bottom: 30px;
   transition: all 0.2s linear;
   text-transform: uppercase;
+}
+
+.forum__title {
+  font-family: 'Rubik Bubbles', fantasy;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 49px;
+  text-align: center;
 }
