@@ -1,0 +1,13 @@
+.errorStub {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: center;
+  padding: 140px 0;
+  font-size: 40px;
+  line-height: 1.2em;
+}
+
+.errorStubTextDanger {
+  color: #960101;
+}
