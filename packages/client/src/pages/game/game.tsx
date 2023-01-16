@@ -1,6 +1,6 @@
 import { GameDisplay } from '../../components/gameDisplay/gameDisplay'
 
-const Game = () => {
+export const Game = () => {
   return (
     <>
       <h2>Game page</h2>
@@ -8,5 +8,3 @@ const Game = () => {
     </>
   )
 }
-
-export { Game }

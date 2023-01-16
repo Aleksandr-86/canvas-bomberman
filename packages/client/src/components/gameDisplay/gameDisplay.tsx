@@ -4,7 +4,7 @@ import { GameOverlay } from '../gameOverlay/gameOverlay'
 
 import styles from './gameDisplay.module.css'
 
-const GameDisplay: React.FC = () => {
+export const GameDisplay: React.FC = () => {
   const gameRef = useRef<null | HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -28,5 +28,3 @@ const GameDisplay: React.FC = () => {
     </div>
   )
 }
-
-export { GameDisplay }
