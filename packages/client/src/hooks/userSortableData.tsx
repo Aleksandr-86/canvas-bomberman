@@ -9,6 +9,9 @@ interface SortConfig {
   direction: string
 }
 
+// Регулирует однократный вывод сообщения об ошибке
+let keyPropError = false
+
 /**
  * Сортирует переданный массив объектов.
  * tablesRows - массив объектов с данными для заполнения строк таблицы.
@@ -21,6 +24,24 @@ export const useSortableData = (tableRows: tableRow[], config: SortConfig) => {
 
   const sortedItems = useMemo(() => {
     const sortableItems = [...tableRows]
+
+    /**
+     * Проверяет наличие переданных в sortConfig ключей
+     * в объектах массива tableRows
+     */
+    for (let i = 0; i < sortableItems.length; i++) {
+      const item = sortableItems[i]
+
+      if (!keyPropError && !(sortConfig.key in item)) {
+        console.error(
+          new Error(
+            `Ключ "${sortConfig.key}" отсутствует в ключах объектов массива tableRows`
+          )
+        )
+
+        keyPropError = true
+      }
+    }
 
     sortableItems.sort((a, b) => {
       if (a[sortConfig.key] < b[sortConfig.key]) {
