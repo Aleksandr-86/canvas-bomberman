@@ -1,16 +1,12 @@
+import React from 'react'
+
 import { useSortableData } from '../../hooks/userSortableData'
+import { PlayerStats } from '../../store/playersStatsSlice'
 
 import styles from './leaderboardTable.module.css'
 
 interface Props {
-  playersStats: {
-    id: number
-    place: number
-    name: string
-    score: number
-    games: number
-    totalTime: number
-  }[]
+  playersStats: PlayerStats[]
 }
 
 const HEADERS: { name: string; title: string }[] = [
@@ -21,7 +17,7 @@ const HEADERS: { name: string; title: string }[] = [
   { name: 'totalTime', title: 'Время (мин)' },
 ]
 
-export const LeaderboardTable = (props: Props) => {
+export const LeaderboardTable: React.FC<Props> = props => {
   const { items, requestSort, sortConfig } = useSortableData(
     props.playersStats,
     {
@@ -48,7 +44,7 @@ export const LeaderboardTable = (props: Props) => {
     <table className={styles.table}>
       <thead>
         <tr>
-          {HEADERS.map(({name, title}, index) => (
+          {HEADERS.map(({ name, title }, index) => (
             <th
               key={index}
               onClick={() => requestSort(name)}
@@ -73,3 +69,18 @@ export const LeaderboardTable = (props: Props) => {
     </table>
   )
 }
+
+LeaderboardTable.defaultProps = {
+  playersStats: [],
+}
+
+// LeaderboardTable.propTypes = {
+//   playersStats: {
+//     id: number
+//   place: number
+//   name: string
+//   score: number
+//   games: number
+//   totalTime: number
+//   }[]
+// }

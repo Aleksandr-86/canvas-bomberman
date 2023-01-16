@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-interface PlayerStats {
+export type PlayerStats = {
   id: number
   place: number
   name: string
@@ -9,7 +9,7 @@ interface PlayerStats {
   totalTime: number
 }
 
-type PlayersStatsState = PlayerStats[] 
+type PlayersStatsState = PlayerStats[]
 
 const initialState: PlayersStatsState = [
   {
