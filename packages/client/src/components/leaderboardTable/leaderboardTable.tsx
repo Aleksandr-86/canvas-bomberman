@@ -73,14 +73,3 @@ export const LeaderboardTable: React.FC<Props> = props => {
 LeaderboardTable.defaultProps = {
   playersStats: [],
 }
-
-// LeaderboardTable.propTypes = {
-//   playersStats: {
-//     id: number
-//   place: number
-//   name: string
-//   score: number
-//   games: number
-//   totalTime: number
-//   }[]
-// }
