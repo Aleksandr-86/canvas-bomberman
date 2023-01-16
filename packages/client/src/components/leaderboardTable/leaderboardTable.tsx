@@ -69,7 +69,3 @@ export const LeaderboardTable: React.FC<Props> = props => {
     </table>
   )
 }
-
-LeaderboardTable.defaultProps = {
-  playersStats: [],
-}
