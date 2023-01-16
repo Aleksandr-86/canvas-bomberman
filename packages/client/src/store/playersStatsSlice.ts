@@ -11,7 +11,7 @@ export type PlayerStats = {
 
 type PlayersStatsState = PlayerStats[]
 
-const initialState: PlayersStatsState = [
+const INITIAL_STATE: PlayersStatsState = [
   {
     id: 1,
     place: 1,
@@ -56,7 +56,7 @@ const initialState: PlayersStatsState = [
 
 const playersStatsSlice = createSlice({
   name: 'playersStats',
-  initialState,
+  initialState: INITIAL_STATE,
   reducers: {},
 })
 
