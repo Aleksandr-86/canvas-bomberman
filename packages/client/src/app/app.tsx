@@ -1,4 +1,5 @@
 import { AppRouting } from '../pages'
+
 import { Provider as StoreProvider } from 'react-redux'
 import { store } from '../store'
 import { BrowserRouter } from 'react-router-dom'
