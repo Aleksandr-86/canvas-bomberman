@@ -1,6 +1,10 @@
 import { useEffect, useRef } from 'react'
 
-export const GameDisplay = () => {
+import { GameOverlay } from '../gameOverlay/gameOverlay'
+
+import styles from './gameDisplay.module.css'
+
+export const GameDisplay: React.FC = () => {
   const gameRef = useRef<null | HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -15,7 +19,12 @@ export const GameDisplay = () => {
 
     ctx.fillStyle = 'yellow'
     ctx.fillRect(20, 20, 60, 60)
-  })
+  }, [])
 
-  return <canvas ref={gameRef} width={1280} height={720} />
+  return (
+    <div className={styles.gameDisplay}>
+      <canvas ref={gameRef} width={1280} height={720} />
+      <GameOverlay />
+    </div>
+  )
 }
