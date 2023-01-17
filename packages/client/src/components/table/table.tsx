@@ -1,5 +1,6 @@
 import { TableRow } from '../tableRow/tableRow'
 import classes from './table.module.css'
+import React from 'react'
 
 interface Props {
   headers: string[]
@@ -11,8 +12,8 @@ interface Props {
   }[]
 }
 
-export const Table = (props: { posts: Props }) => {
-  const { headers, rows } = props.posts
+export const Table: React.FC<Props> = props => {
+  const { headers, rows } = props
   if (rows) {
     return (
       <table className={classes.table}>

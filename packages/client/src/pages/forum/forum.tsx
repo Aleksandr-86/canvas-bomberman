@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import classes from './forum.module.css'
 import { Table } from '../../components/table/table'
-const ForumData = {
+const FORUM_DATA = {
   headers: ['Автор', 'Тема', 'Дата'],
   rows: [
     {
@@ -22,7 +22,7 @@ export const Forum = () => {
   return (
     <div className={classes.forum}>
       <h2 className={classes.forumTitle}>Форум</h2>
-      <Table posts={ForumData} />
+      <Table {...FORUM_DATA} />
       <div className={classes.forumWrapper}>
         <Link to="/forum-new-post" className={classes.forumLink}>
           Создать тему

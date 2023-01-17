@@ -8,26 +8,16 @@ interface Props {
 
 export const Input = (props: Props) => {
   const { placeholder = 'Инпут' } = props
-
-  if (props.class) {
-    return (
-      <label>
-        <input
-          className={`${classes.form__input} ${props.class}`}
-          type={props.type}
-          placeholder={placeholder}
-        />
-      </label>
-    )
-  } else {
-    return (
-      <label>
-        <input
-          className={classes.form__input}
-          type={props.type}
-          placeholder={placeholder}
-        />
-      </label>
-    )
-  }
+  const inputClasses = props.class
+    ? `${classes.form__input} ${props.class}`
+    : classes.form__input
+  return (
+    <label>
+      <input
+        className={inputClasses}
+        type={props.type}
+        placeholder={placeholder}
+      />
+    </label>
+  )
 }

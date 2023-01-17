@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import classes from './forumMessages.module.css'
 import { Table } from '../../components/table/table'
-const ForumPostData = {
+const FORUM_MESSAGES = {
   headers: ['Автор', 'Тема', 'Дата'],
   rows: [
     {
@@ -37,7 +37,7 @@ const ForumPostData = {
 export const ForumMessages = () => {
   return (
     <div className={classes.forum}>
-      <Table posts={ForumPostData} />
+      <Table {...FORUM_MESSAGES} />
       <div className={classes.forumWrapper}>
         <Link to="/forum-new-message" className={classes.forumLink}>
           Создать сообщение
