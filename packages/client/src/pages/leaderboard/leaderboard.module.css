@@ -1,0 +1,31 @@
+.leaderboard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1920px;
+  height: 1000px;
+  user-select: none;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: center;
+  width: 1250px;
+}
+
+.tableCaption {
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+.heroImg {
+  position: absolute;
+  top: 780px;
+  right: 200px;
+  width: 253px;
+  height: 191px;
+}
