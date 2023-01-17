@@ -1,12 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
-
+import { Game } from './game/game'
 import { Landing } from './landing/landing'
 import { SignIn } from './signIn/signIn'
 import { SignUp } from './signUp/signUp'
-import { Profile } from './profile/profile'
 import { Leaderboard } from './leaderboard/leaderboard'
 import { Forum } from './forum/forum'
-import { Game } from './game/game'
+import { ForumMessages } from './forumMessages/forumMessages'
+import { ForumNewPost } from './forumNewPost/forumNewPost'
+import { ForumNewMessage } from './forumNewMessage/forumNewMessage'
 
 const AppRouting = () => {
   return (
@@ -17,6 +18,9 @@ const AppRouting = () => {
       <Route path="/profile" element={<Profile />} />
       <Route path="/leaderboard" element={<Leaderboard />} />
       <Route path="/forum" element={<Forum />} />
+      <Route path="/forum-messages" element={<ForumMessages />} />
+      <Route path="/forum-new-post" element={<ForumNewPost />} />
+      <Route path="/forum-new-message" element={<ForumNewMessage />} />
       <Route path="/game" element={<Game />} />
     </Routes>
   )
