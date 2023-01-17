@@ -1,13 +1,15 @@
 import { Routes, Route } from 'react-router-dom'
-import { Game } from './game/game'
+
 import { Landing } from './landing/landing'
 import { SignIn } from './signIn/signIn'
 import { SignUp } from './signUp/signUp'
+import { Profile } from './profile/profile'
 import { Leaderboard } from './leaderboard/leaderboard'
 import { Forum } from './forum/forum'
 import { ForumMessages } from './forumMessages/forumMessages'
 import { ForumNewPost } from './forumNewPost/forumNewPost'
 import { ForumNewMessage } from './forumNewMessage/forumNewMessage'
+import { Game } from './game/game'
 
 const AppRouting = () => {
   return (
