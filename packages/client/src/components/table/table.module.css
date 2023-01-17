@@ -4,9 +4,9 @@
 }
 
 .tableTitle {
-  font-family: 'Rubik Bubbles', fantasy;
   font-weight: 400;
   font-size: 40px;
+  font-family: 'Rubik Bubbles', fantasy;
   line-height: 47px;
   text-align: center;
 }

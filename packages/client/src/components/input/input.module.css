@@ -1,7 +1,7 @@
 .form__input {
-  font-family: 'Rubik Bubbles', fantasy;
-  cursor: pointer;
-  margin-bottom: 30px;
   display: block;
   width: 100%;
+  margin-bottom: 30px;
+  font-family: 'Rubik Bubbles', fantasy;
+  cursor: pointer;
 }
