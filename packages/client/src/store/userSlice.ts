@@ -10,7 +10,7 @@ interface UserState {
   phone: string
 }
 
-const initialState: UserState = {
+const INITIAL_STATE: UserState = {
   isAuth: true,
   firstName: '',
   secondName: '',
@@ -22,7 +22,7 @@ const initialState: UserState = {
 
 const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: INITIAL_STATE,
   reducers: {
     setAuthTrue(state) {
       state.isAuth = true
@@ -37,4 +37,4 @@ const userSlice = createSlice({
 })
 
 export const { setAuthTrue, setAuthFalse, toggleAuth } = userSlice.actions
-export default userSlice.reducer
+export const userReducer = userSlice.reducer

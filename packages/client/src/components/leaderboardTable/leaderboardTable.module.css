@@ -1,0 +1,69 @@
+.table {
+  border-collapse: collapse;
+  font-size: 40px;
+  user-select: none;
+}
+
+.caption {
+  margin-bottom: 30px;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+.head {
+  padding-bottom: 10px;
+  border-bottom: 5px solid black;
+  text-align: center;
+  cursor: pointer;
+}
+
+.ascending::after {
+  content: '▲';
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.descending::after {
+  content: '▼';
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.columnPlace,
+.columnName,
+.columnScore,
+.columnGames,
+.columnTotalTime {
+  padding: 10px 0;
+  border-bottom: 2px solid #ccc;
+}
+
+.columnPlace {
+  width: 200px;
+  text-align: center;
+}
+
+.columnName {
+  width: 350px;
+  text-align: left;
+}
+
+.columnScore {
+  width: 200px;
+  text-align: center;
+}
+
+.columnGames {
+  width: 150px;
+  text-align: center;
+}
+
+.columnTotalTime {
+  width: 350px;
+  text-align: center;
+}
+
+.row:hover {
+  background: hsl(29deg 6% 74%);
+  transition: all 0.2s linear;
+}
