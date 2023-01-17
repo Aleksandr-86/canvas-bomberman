@@ -1,12 +1,11 @@
-import { BrowserRouter } from 'react-router-dom'
-import { Provider as StoreProvider } from 'react-redux'
-
 import { AppRouting } from '../pages'
-import { store } from '../store'
 
+import { Provider as StoreProvider } from 'react-redux'
+import { store } from '../store'
+import { BrowserRouter } from 'react-router-dom'
 import './app.module.css'
 
-export const App = () => {
+const App = () => {
   return (
     <BrowserRouter>
       <StoreProvider store={store}>
@@ -15,3 +14,5 @@ export const App = () => {
     </BrowserRouter>
   )
 }
+
+export { App }

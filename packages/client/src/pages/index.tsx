@@ -14,7 +14,7 @@ const AppRouting = () => {
       <Route path="/" element={<Landing />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
-      <Route path="/profile" element={<Profile/>} />
+      <Route path="/profile" element={<Profile />} />
       <Route path="/leaderboard" element={<Leaderboard />} />
       <Route path="/forum" element={<Forum />} />
       <Route path="/game" element={<Game />} />
