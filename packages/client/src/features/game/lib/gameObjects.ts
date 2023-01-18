@@ -23,3 +23,20 @@ export class Sprite implements Drawable {
     ctx.drawImage(this.texture, this.x, this.y, this.width, this.height)
   }
 }
+
+export class Rect implements Drawable {
+  constructor(
+    public color: string,
+    public x: number,
+    public y: number,
+    public width: number,
+    public height: number,
+    public id: string = uid()
+  ) {}
+  exec(ctx: CanvasRenderingContext2D) {
+    ctx.save()
+    ctx.fillStyle = this.color
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+    ctx.restore()
+  }
+}

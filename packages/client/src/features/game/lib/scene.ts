@@ -23,8 +23,7 @@ export class Scene {
     const obj = this.objects.get(id)
 
     if (!obj) {
-      console.error('object with given id not found')
-      return
+      throw new Error('object with given id not found')
     }
 
     return obj
