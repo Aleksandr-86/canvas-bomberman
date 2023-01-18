@@ -1,27 +1,27 @@
 .profileImgSmall {
-    width: 37px;
-    height: 37px;
+  width: 37px;
+  height: 37px;
 }
 
 .profileImgMedium {
-    width: 47px;
-    height: 47px;
+  width: 47px;
+  height: 47px;
 }
 
 .profileImgLarge {
-    width: 57px;
-    height: 57px;
+  width: 57px;
+  height: 57px;
 }
 
 .profileImgGargantuan {
-    width: 150px;
-    height: 150px;
+  width: 150px;
+  height: 150px;
 }
 
 .profileImg {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .clicable {
-    cursor: pointer;
+  cursor: pointer;
 }

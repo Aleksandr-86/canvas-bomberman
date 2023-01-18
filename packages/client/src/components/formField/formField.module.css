@@ -1,29 +1,29 @@
 .field {
-    margin: 10px 0;
-    padding: 0 10px;
+  margin: 10px 0;
+  padding: 0 10px;
 }
 
 .label {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .input {
-    max-width: 250px;
-    background-color: transparent;
-    border: 0;
-    outline: none;
-    text-align: center;
-    padding-bottom: 5px;
-    border-bottom: 5px solid black;
-    font-size: 25px;
-    line-height: 30px;
-    font-family: 'Rubik Bubbles', fantasy;
+  max-width: 250px;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  text-align: center;
+  padding-bottom: 5px;
+  border-bottom: 5px solid black;
+  font-size: 25px;
+  line-height: 30px;
+  font-family: 'Rubik Bubbles', fantasy;
 }
 
 .error {
-    color: red;
-    text-align: center;
-    height: 20px;
-    font-size: .75rem;
-    margin-top: .25rem;
+  color: red;
+  text-align: center;
+  height: 20px;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
 }
