@@ -1,13 +1,14 @@
+import React from 'react'
 import styles from './avatar.module.css'
 
-interface AvatarProps {
+interface Props {
   src: string
   size?: 'Small' | 'Medium' | 'Large' | 'Gargantuan'
   onAvatarClick?: () => void
   disabled?: boolean
 }
 
-export const Avatar = (props: AvatarProps) => {
+export const Avatar: React.FC<Props> = props => {
   const { src, size = 'Medium', disabled = true, onAvatarClick } = props
 
   const handleClick = () => {
@@ -23,7 +24,7 @@ export const Avatar = (props: AvatarProps) => {
       className={
         disabled
           ? styles.profilePicture
-          : `${styles.profilePicture} ${styles.clicable}`
+          : `${styles.profilePicture} ${styles.clickable}`
       }>
       <img
         src={src}

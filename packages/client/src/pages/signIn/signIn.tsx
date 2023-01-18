@@ -15,7 +15,7 @@ type FormType = {
   password: string
 }
 
-export const SignIn = () => {
+export const SignIn: React.FC = () => {
   const [validations, setValidations] = useState<Validations<FormType>>()
 
   useEffect(() => {
@@ -28,7 +28,6 @@ export const SignIn = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log(name)
   }
 
   return (

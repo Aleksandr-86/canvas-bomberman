@@ -1,12 +1,13 @@
+import React from 'react'
 import styles from './modal.module.css'
 
-interface ModalProps {
+interface Props {
   isActive?: boolean
   setActive?: any
   children?: any
 }
 
-export const Modal = (props: ModalProps) => {
+export const Modal: React.FC<Props> = props => {
   const { children, isActive, setActive } = props
 
   const handleChange = () => {

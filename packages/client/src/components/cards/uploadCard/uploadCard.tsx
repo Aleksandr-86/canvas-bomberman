@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from '../../button/button'
 import { Modal } from '../../modal/modal'
 
@@ -6,12 +6,12 @@ import cardStyles from '../card.module.css'
 import inputStyles from '../../formField/formField.module.css'
 import uploadStyles from './uploadCard.module.css'
 
-interface UploadCardProps {
+interface Props {
   isActive?: boolean
   setActive?: any
 }
 
-export const UploadCard = (props: UploadCardProps) => {
+export const UploadCard: React.FC<Props> = props => {
   const [label, setLabel] = useState('No file selected')
   const [file, setFile] = useState({} as File | null)
 
@@ -41,10 +41,8 @@ export const UploadCard = (props: UploadCardProps) => {
     const _file = new FormData()
     _file.append('avatar', file)
 
-    //UserService.uploadAvatar(_file);
     setFile(null)
     setLabel('No file selected')
-    //UploadCard.hide();
   }
 
   return (

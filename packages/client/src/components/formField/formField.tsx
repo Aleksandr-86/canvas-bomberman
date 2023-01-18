@@ -1,6 +1,7 @@
+import React from 'react'
 import styles from './formField.module.css'
 
-interface FormFieldProps {
+interface Props {
   label?: string
   placeholder?: string
   name: string
@@ -13,7 +14,7 @@ interface FormFieldProps {
   children?: any
 }
 
-export const FormField = (props: FormFieldProps) => {
+export const FormField: React.FC<Props> = (props: Props) => {
   const {
     children,
     label,
