@@ -1,24 +1,36 @@
-import { Rect } from './game-objects'
-import { Player } from './gameObjects'
+import { type Drawable } from './gameObjects'
+import { type Keyboard } from './keyboard'
+
+export interface SceneContext {
+  delta: number
+  scene: Scene
+  kbd: Keyboard
+}
 
 export class Scene {
-  public set player(player: Player) {
-    this.player = player
-  }
-  public get player() {
-    return this.player
+  private objects = new Map<string, Drawable>()
+
+  public add(object: Drawable) {
+    if (this.objects.has(object.id)) {
+      console.error('object with this id already exists, not adding')
+      return
+    }
+
+    this.objects.set(object.id, object)
   }
 
-  public set walls(walls: Rect[]) {
-    this.walls = walls
-  }
+  public getById(id: string) {
+    const obj = this.objects.get(id)
 
-  public get walls() {
-    return this.walls
+    if (!obj) {
+      console.error('object with given id not found')
+      return
+    }
+
+    return obj
   }
 
   public render(ctx: CanvasRenderingContext2D) {
-    this.walls.forEach(wall => wall.exec(ctx))
-    this.player.exec(ctx)
+    this.objects.forEach(o => o.exec(ctx))
   }
 }

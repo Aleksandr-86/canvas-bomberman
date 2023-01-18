@@ -1,6 +1,5 @@
 import { Keyboard } from './keyboard'
-import { loadTextures } from './loadTextures'
-import { Scene } from './scene'
+import { Scene, type SceneContext } from './scene'
 import { Ticker } from './ticker'
 
 interface GameConfig {
@@ -10,12 +9,6 @@ interface GameConfig {
   create: (scene: Scene) => void
   update: (ctx: SceneContext) => void
   backgroundColor: string
-}
-
-export interface SceneContext {
-  delta: number
-  scene: Scene
-  kbd: Keyboard
 }
 
 export class Game {
@@ -29,7 +22,6 @@ export class Game {
   private update: (ctx: SceneContext) => void
   private create: (scene: Scene) => void
   public started = false
-  private textures: Record<string, HTMLImageElement> = {}
 
   constructor({
     root,
@@ -58,10 +50,6 @@ export class Game {
     this.root.style.backgroundColor = backgroundColor
   }
 
-  async init() {
-    this.textures = await loadTextures()
-  }
-
   start() {
     this.create(this.scene)
     this.ticker.add(delta => {
@@ -70,6 +58,8 @@ export class Game {
         kbd: this.kbd,
         scene: this.scene,
       })
+      this.ctx.clearRect(0, 0, this.screenWidth, this.screenHeight)
+      this.scene.render(this.ctx)
     })
 
     this.ticker.start()

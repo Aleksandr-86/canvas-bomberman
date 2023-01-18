@@ -1,2 +1,3 @@
 export * from './game'
-export * from './game-objects'
+export * from './gameObjects'
+export * from './textures'
