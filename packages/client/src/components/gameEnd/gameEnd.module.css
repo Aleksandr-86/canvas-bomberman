@@ -1,0 +1,27 @@
+.gameEnd {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: 1280px;
+  height: 720px;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.gameEndText {
+  font-size: 50px;
+  line-height: 1.2em;
+}
+
+.gameEndButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.gameEndButton {
+  border-color: #fff;
+  background-color: transparent;
+  color: #fff;
+}
