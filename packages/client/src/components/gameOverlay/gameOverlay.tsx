@@ -13,15 +13,13 @@ interface Props {
 export const GameOverlay: React.FC<Props> = props => {
   const { onReloadGame } = props
   const status = useSelector(getGameStatus)
-  const isRender =
-    status === GameStatus.START || status === GameStatus.END ? true : null
+  const shouldRenderOverlay =
+    status === GameStatus.START || status === GameStatus.END
 
-  return (
-    isRender && (
-      <div className={styles.gameOverlay}>
-        {status === GameStatus.START && <GameStart />}
-        {status === GameStatus.END && <GameEnd onReloadGame={onReloadGame} />}
-      </div>
-    )
-  )
+  return shouldRenderOverlay ? (
+    <div className={styles.gameOverlay}>
+      {status === GameStatus.START && <GameStart />}
+      {status === GameStatus.END && <GameEnd onReloadGame={onReloadGame} />}
+    </div>
+  ) : null
 }
