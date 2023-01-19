@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../store/hooks'
 import { Link } from 'react-router-dom'
 import { getCurrentScore } from '../../store/selectors'
 import { Button } from '../button/button'
@@ -12,7 +12,7 @@ interface Props {
 
 export const GameEnd: React.FC<Props> = props => {
   const { onReloadGame } = props
-  const currentScore = useSelector(getCurrentScore)
+  const currentScore = useAppSelector(getCurrentScore)
 
   return (
     <div className={styles.gameEnd}>

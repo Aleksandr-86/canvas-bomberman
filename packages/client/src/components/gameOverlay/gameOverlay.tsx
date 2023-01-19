@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../store/hooks'
 import { GameStart } from '../gameStart/gameStart'
 import { GameEnd } from '../gameEnd/gameEnd'
 import { GameStatus } from '../../store/gameSlice'
@@ -12,7 +12,7 @@ interface Props {
 
 export const GameOverlay: React.FC<Props> = props => {
   const { onReloadGame } = props
-  const status = useSelector(getGameStatus)
+  const status = useAppSelector(getGameStatus)
   const shouldRenderOverlay =
     status === GameStatus.START || status === GameStatus.END
 
