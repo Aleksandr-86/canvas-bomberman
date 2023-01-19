@@ -9,7 +9,13 @@ const PLAYER_VELOCITY = CELL_WIDTH
 
 const tiles: KindToTile = {
   [Kind.Empty]: (x, y) =>
-    new Rect('green', x * CELL_WIDTH, y * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH),
+    new Sprite(
+      Textures.Green,
+      x * CELL_WIDTH,
+      y * CELL_WIDTH,
+      CELL_WIDTH,
+      CELL_WIDTH
+    ),
   [Kind.Player]: (x, y) =>
     new Sprite(
       Textures.White,
@@ -19,7 +25,13 @@ const tiles: KindToTile = {
       CELL_WIDTH
     ),
   [Kind.WallHard]: (x, y) =>
-    new Rect('blue', x * CELL_WIDTH, y * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH),
+    new Sprite(
+      Textures.Blue,
+      x * CELL_WIDTH,
+      y * CELL_WIDTH,
+      CELL_WIDTH,
+      CELL_WIDTH
+    ),
 }
 
 export const bombermanScene = {
