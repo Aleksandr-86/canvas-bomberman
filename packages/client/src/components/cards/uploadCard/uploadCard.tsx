@@ -63,7 +63,9 @@ export const UploadCard: React.FC<Props> = props => {
             />
 
             <label className={inputStyles.label} htmlFor="avatar">
-              <span className={uploadStyles.buttonLink}>Выбрать с компьютера</span>
+              <span className={uploadStyles.buttonLink}>
+                Выбрать с компьютера
+              </span>
             </label>
 
             <p className={inputStyles.error}></p>
