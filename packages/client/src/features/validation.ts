@@ -8,49 +8,49 @@ const validations: ValidationsType = {
   displayName: {
     custom: {
       validation: (value: string) => value.length > 3,
-      message: `Field must be longer than 3 chars`,
+      message: `Поле должно быть длинее 3 символов`,
     },
   },
   firstName: {
     custom: {
       validation: (value: string) => value.length > 2,
-      message: `Field must be longer than 2 chars`,
+      message: `Поле должно быть длинее 2 символов`,
     },
   },
   secondName: {
     custom: {
       validation: (value: string) => value.length > 3,
-      message: `Field must be longer than 3 chars`,
+      message: `Поле должно быть длинее 3 символов`,
     },
   },
   login: {
     custom: {
       validation: (value: string) => value.length > 3,
-      message: `Field must be longer than 3 chars`,
+      message: `Поле должно быть длинее 3 символов`,
     },
   },
   email: {
     pattern: {
       value: '^([A-Za-z0-9_\\-.])+@([A-Za-z0-9_\\-.])+\\.([A-Za-z]{2,4})$',
-      message: 'Email has invalid format',
+      message: 'Неверный формат почты',
     },
   },
   phone: {
     pattern: {
       value: '^((8|\\+7)[- ]?)?(\\(?\\d{3}\\)?[- ]?)?[\\d\\- ]{7,10}$',
-      message: 'Phone has invalid format',
+      message: 'Неверный формат телефона',
     },
   },
   password: {
     custom: {
       validation: (value: string) => value.length > 6,
-      message: 'Field must be longer than 6 chars',
+      message: 'Поле должно быть длинее 6 символов',
     },
   },
   newPassword: {
     custom: {
       validation: (value: string) => value.length > 6,
-      message: 'Field must be longer than 6 chars',
+      message: 'Поле должно быть длинее 6 символов',
     },
   },
 }
