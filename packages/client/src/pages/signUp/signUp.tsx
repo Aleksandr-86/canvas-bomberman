@@ -42,7 +42,7 @@ export const SignUp: React.FC = () => {
       repeatPassword: {
         custom: {
           validation: (value: string) => value === watch('password'),
-          message: `Passwords doesnt match`,
+          message: `Пароли не совпадают`,
         },
       },
     },
@@ -59,41 +59,41 @@ export const SignUp: React.FC = () => {
   return (
     <>
       <form className={styles.signUp} onSubmit={handleSubmit}>
-        <div className={styles.signUpHeader}>Register</div>
+        <div className={styles.signUpHeader}>Регистрация</div>
 
         <div className={styles.signUpContent}>
           <FormField
-            label="Name"
+            label="Логин"
             name="name"
             type="text"
             {...register('displayName')}></FormField>
           <FormField
-            label="First name"
+            label="Имя"
             name="firstName"
             type="text"
             {...register('firstName')}></FormField>
           <FormField
-            label="Second name"
+            label="Фамилия"
             name="secondName"
             type="text"
             {...register('secondName')}></FormField>
           <FormField
-            label="Email"
+            label="Почта"
             name="email"
             type="email"
             {...register('email')}></FormField>
           <FormField
-            label="Phone"
+            label="Телефон"
             name="phone"
             type="tel"
             {...register('phone')}></FormField>
           <FormField
-            label="Password"
+            label="Пароль"
             name="password"
             type="password"
             {...register('password')}></FormField>
           <FormField
-            label="Repeat password"
+            label="Пароль еще раз"
             name="repeatPassword"
             type="password"
             {...register('repeatPassword')}></FormField>
@@ -101,12 +101,12 @@ export const SignUp: React.FC = () => {
 
         <div className={styles.signUpAction}>
           <div className={styles.actionButton}>
-            <Button type="submit">Register</Button>
+            <Button type="submit">Все верно!</Button>
           </div>
 
           <div className={styles.actionButton}>
             <Link className={baseStyles.linkButton} to="/">
-              Back
+              На Главную
             </Link>
           </div>
         </div>
