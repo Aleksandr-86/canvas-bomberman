@@ -29,7 +29,7 @@ export const ChangePassword = () => {
       repeatPassword: {
         custom: {
           validation: (value: string) => value === watch('newPassword'),
-          message: `Passwords doesnt match`,
+          message: `Пароли не совпадают`,
         },
       },
     },
@@ -46,21 +46,21 @@ export const ChangePassword = () => {
   return (
     <>
       <form className={styles.changePassword} onSubmit={handleSubmit}>
-        <div className={styles.changePasswordHeader}>Change Password</div>
+        <div className={styles.changePasswordHeader}>Изменить пароль</div>
 
         <div className={styles.changePasswordContent}>
           <FormField
-            label="Old password"
+            label="Старый пароль"
             name="oldPassword"
             type="password"
             {...register('password')}></FormField>
           <FormField
-            label="New password"
+            label="Новый пароль"
             name="newPssword"
             type="password"
             {...register('newPassword')}></FormField>
           <FormField
-            label="Repeat password"
+            label="Пароль еще раз"
             name="repeatPassword"
             type="password"
             {...register('repeatPassword')}></FormField>
@@ -68,11 +68,11 @@ export const ChangePassword = () => {
 
         <div className={styles.changePasswordAction}>
           <div className={styles.actionButton}>
-            <Button type="submit">Change</Button>
+            <Button type="submit">Сохранить</Button>
           </div>
           <div className={styles.actionButton}>
             <Link className={baseStyles.linkButton} to="/profile">
-              Back
+              Назад
             </Link>
           </div>
         </div>
