@@ -33,7 +33,7 @@ export const SignIn: React.FC = () => {
   return (
     <>
       <form className={styles.signIn} onSubmit={handleSubmit}>
-        <div className={styles.signInHeader}>Login</div>
+        <div className={styles.signInHeader}>Вход</div>
 
         <div className={styles.signInContent}>
           <FormField
@@ -50,12 +50,12 @@ export const SignIn: React.FC = () => {
 
         <div className={styles.signInAction}>
           <div className={styles.actionButton}>
-            <Button type="submit">Login</Button>
+            <Button type="submit">Все верно!</Button>
           </div>
 
           <div className={styles.actionButton}>
             <Link className={baseStyles.linkButton} to="/">
-              Back
+              На Главную
             </Link>
           </div>
         </div>
