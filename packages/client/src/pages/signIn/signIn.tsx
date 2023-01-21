@@ -55,7 +55,7 @@ export const SignIn: React.FC = () => {
 
           <div className={styles.actionButton}>
             <Link className={baseStyles.linkButton} to="/">
-              Назад
+              На Главную
             </Link>
           </div>
         </div>
