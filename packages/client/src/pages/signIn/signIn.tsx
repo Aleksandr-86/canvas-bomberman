@@ -37,12 +37,12 @@ export const SignIn: React.FC = () => {
 
         <div className={styles.signInContent}>
           <FormField
-            label="Name"
+            label="Логин"
             name="name"
             type="text"
             {...register('displayName')}></FormField>
           <FormField
-            label="Password"
+            label="Пароль"
             name="password"
             type="password"
             {...register('password')}></FormField>
