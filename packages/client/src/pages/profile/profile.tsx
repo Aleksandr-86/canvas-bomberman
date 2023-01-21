@@ -88,38 +88,38 @@ export const Profile: React.FC = () => {
 
         <div className={styles.profileContent}>
           <FormField
-            label="Name"
+            label="Псевдоним"
             name="name"
             type="text"
             {...register('displayName')}
             disabled={!isEdit}></FormField>
           <FormField
-            label="Login"
+            label="Логин"
             placeholder="Login"
             name="login"
             type="text"
             {...register('login')}
             disabled={!isEdit}></FormField>
           <FormField
-            label="First name"
+            label="Имя"
             name="firstName"
             type="text"
             {...register('firstName')}
             disabled={!isEdit}></FormField>
           <FormField
-            label="Second name"
+            label="Фамилия"
             name="secondName"
             type="text"
             {...register('secondName')}
             disabled={!isEdit}></FormField>
           <FormField
-            label="Email"
+            label="Почта"
             name="email"
             type="email"
             {...register('email')}
             disabled={!isEdit}></FormField>
           <FormField
-            label="Phone"
+            label="Телефон"
             name="phone"
             type="tel"
             {...register('phone')}
@@ -129,28 +129,28 @@ export const Profile: React.FC = () => {
         {isEdit ? (
           <div className={styles.profileAction}>
             <div className={styles.actionButton}>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit">Сохранить</Button>
             </div>
 
             <div className={styles.actionButton}>
-              <Button onClick={handleEditData}>Cancel</Button>
+              <Button onClick={handleEditData}>Назад</Button>
             </div>
           </div>
         ) : (
           <div className={styles.profileAction}>
             <div className={styles.actionButton}>
-              <Button onClick={handleEditData}>Edit data</Button>
+              <Button onClick={handleEditData}>Изменить данные</Button>
             </div>
 
             <div className={styles.actionButton}>
               <Link className={styles.buttonLink} to="/profile/password">
-                Change password
+                Изменить пароль
               </Link>
             </div>
 
             <div className={styles.actionButton}>
               <Link className={styles.buttonDanger} onClick={handleExit} to="/">
-                Exit
+                Выход
               </Link>
             </div>
           </div>
