@@ -50,12 +50,12 @@ export const SignIn: React.FC = () => {
 
         <div className={styles.signInAction}>
           <div className={styles.actionButton}>
-            <Button type="submit">Войти</Button>
+            <Button type="submit">Все верно!</Button>
           </div>
 
           <div className={styles.actionButton}>
             <Link className={baseStyles.linkButton} to="/">
-              На Главную
+              Назад
             </Link>
           </div>
         </div>
