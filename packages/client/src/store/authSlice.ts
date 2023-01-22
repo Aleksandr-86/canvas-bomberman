@@ -1,11 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { useAuth } from "../hooks/useAuth";
-import { IFormData } from "../hooks/useAuth";
-import { UserState } from "./userSlice";
-
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { useAuth } from '../hooks/useAuth'
+import { IFormData } from '../hooks/useAuth'
+import { UserState } from './userSlice'
 
 export const getAuth = createAsyncThunk(
-  "user/getAuth",
+  'user/getAuth',
   async (FormData: IFormData) => useAuth(FormData)
 )
 
@@ -23,14 +22,13 @@ const state: UserState = {
 }
 
 const authSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: state,
-  reducers: {
-  },
-  extraReducers: (builder) => {
+  reducers: {},
+  extraReducers: builder => {
     // Add reducers for additional action types here, and handle loading state as needed
     builder
-      .addCase(getAuth.pending, (state) => {
+      .addCase(getAuth.pending, state => {
         state.error = false
         state.isAuth = false
         state.isLoading = true
@@ -49,13 +47,13 @@ const authSlice = createSlice({
           state.phone = user.phone
         }
       })
-      .addCase(getAuth.rejected, (state) => {
+      .addCase(getAuth.rejected, state => {
         state.isLoading = false
         state.isAuth = false
         state.error = true
       })
   },
-});
+})
 
-const { reducer } = authSlice;
-export const authReducer = reducer;
+const { reducer } = authSlice
+export const authReducer = reducer
