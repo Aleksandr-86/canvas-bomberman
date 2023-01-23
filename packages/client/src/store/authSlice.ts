@@ -15,7 +15,7 @@ const state: UserState = {
   error: false,
   firstName: '',
   secondName: '',
-  displayName: 'Алекс',
+  displayName: '',
   login: '',
   email: '',
   phone: '',
@@ -47,10 +47,10 @@ const authSlice = createSlice({
           state.phone = user.phone
         }
       })
-      .addCase(getAuth.rejected, state => {
+      .addCase(getAuth.rejected, (state, action) => {
         state.isLoading = false
         state.isAuth = false
-        state.error = true
+        state.error = action.payload
       })
   },
 })
