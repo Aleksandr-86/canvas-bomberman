@@ -1,10 +1,9 @@
-import { AppDispatch } from '../../store'
-import { useDispatch } from 'react-redux'
 import { getAuth } from '../../store/authSlice'
 import { IFormData } from '../../hooks/useAuth'
+import { useAppDispatch } from '../../store/hooks'
 
 export const SignIn = () => {
-  const dispatch: AppDispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
