@@ -11,7 +11,7 @@ import styles from './signUp.module.css'
 import baseStyles from '../../app/app.module.css'
 
 type FormType = {
-  displayName: string
+  login: string
   firstName: string
   secondName: string
   password: string
@@ -26,7 +26,7 @@ export const SignUp: React.FC = () => {
   useEffect(() => {
     setValidations(
       getValidations([
-        'displayName',
+        'login',
         'firstName',
         'secondName',
         'phone',
@@ -52,7 +52,9 @@ export const SignUp: React.FC = () => {
     event.preventDefault()
 
     if (isValid()) {
-      console.log('send')
+      const {repeatPassword, ...data} = values
+      
+      alert(`Данные готовы к отправке: ${JSON.stringify(data, null, 4)}`)
     }
   }
 
@@ -66,7 +68,7 @@ export const SignUp: React.FC = () => {
             label="Логин"
             name="name"
             type="text"
-            {...register('displayName')}></FormField>
+            {...register('login')}></FormField>
           <FormField
             label="Имя"
             name="firstName"
