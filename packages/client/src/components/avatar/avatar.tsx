@@ -1,9 +1,11 @@
 import React from 'react'
 import styles from './avatar.module.css'
 
+type AvatarSize = 'Small' | 'Medium' | 'Large' | 'Gargantuan'
+
 interface Props {
   src: string
-  size?: 'Small' | 'Medium' | 'Large' | 'Gargantuan'
+  size?: AvatarSize
   onAvatarClick?: () => void
   disabled?: boolean
 }
@@ -12,11 +14,7 @@ export const Avatar: React.FC<Props> = props => {
   const { src, size = 'Medium', disabled = true, onAvatarClick } = props
 
   const handleClick = () => {
-    if (disabled || !onAvatarClick) {
-      return
-    }
-
-    onAvatarClick()
+    !disabled && onAvatarClick?.()
   }
 
   return (
