@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
-
+import { bombermanScene } from '../../features/game/bombermanScene'
+import { Game } from '../../features/game/lib'
 import { GameOverlay } from '../gameOverlay/gameOverlay'
-
 import styles from './gameDisplay.module.css'
 
 export const GameDisplay: React.FC = () => {
@@ -12,19 +12,21 @@ export const GameDisplay: React.FC = () => {
 
     if (!canvas) return
 
-    canvas.style.backgroundColor = 'gray'
+    const game = new Game({
+      heigth: 720,
+      width: 1280,
+      backgroundColor: 'teal',
+      root: canvas,
+      ...bombermanScene,
+    })
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    ctx.fillStyle = 'yellow'
-    ctx.fillRect(20, 20, 60, 60)
+    game.start()
   }, [])
 
   return (
     <div className={styles.gameDisplay}>
       <canvas ref={gameRef} width={1280} height={720} />
-      <GameOverlay />
+      <GameOverlay onReloadGame={() => undefined} />
     </div>
   )
 }
