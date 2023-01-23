@@ -7,7 +7,7 @@ export const useFullScreen = <T extends HTMLElement | null>(
 ) => {
   const onKeyDown = useCallback(
     (evt: KeyboardEvent) => {
-      const activeKeyLowerCase = activeKey.toLocaleLowerCase()
+      const activeKeyLowerCase = activeKey.toLowerCase()
       const key = evt.key.toLowerCase()
 
       if (key === activeKeyLowerCase) {
