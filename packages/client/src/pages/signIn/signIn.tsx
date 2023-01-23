@@ -11,7 +11,7 @@ import styles from './signIn.module.css'
 import baseStyles from '../../app/app.module.css'
 
 type FormType = {
-  displayName: string
+  login: string
   password: string
 }
 
@@ -19,7 +19,7 @@ export const SignIn: React.FC = () => {
   const [validations, setValidations] = useState<Validations<FormType>>()
 
   useEffect(() => {
-    setValidations(getValidations(['displayName', 'password']))
+    setValidations(getValidations(['login', 'password']))
   }, [])
 
   const { values, errors, register, watch, isValid } = useForm<FormType>({
@@ -28,6 +28,10 @@ export const SignIn: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    if (isValid()) {
+      alert(`Данные готовы к отправке: ${JSON.stringify(values, null, 4)}`)
+    }
   }
 
   return (
@@ -40,7 +44,7 @@ export const SignIn: React.FC = () => {
             label="Логин"
             name="name"
             type="text"
-            {...register('displayName')}></FormField>
+            {...register('login')}></FormField>
           <FormField
             label="Пароль"
             name="password"
