@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const UploadCard: React.FC<Props> = props => {
-  const [label, setLabel] = useState('No file selected')
+  const [label, setLabel] = useState('Файл не выбран')
   const [file, setFile] = useState({} as File | null)
 
   const { isActive, setActive } = props
@@ -42,14 +42,14 @@ export const UploadCard: React.FC<Props> = props => {
     _file.append('avatar', file)
 
     setFile(null)
-    setLabel('No file selected')
+    setLabel('Файл не выбран')
   }
 
   return (
     <Modal isActive={isActive} setActive={setActive}>
       <form onSubmit={handleSubmit}>
         <div className={`${cardStyles.card} ${cardStyles.cardColumn}`}>
-          <h3 className={cardStyles.cardHeader}>Upload the file</h3>
+          <h3 className={cardStyles.cardHeader}>Загрузить файл</h3>
 
           <div className={cardStyles.cardContent}>
             <div className={inputStyles.label}>{label}</div>
@@ -63,14 +63,16 @@ export const UploadCard: React.FC<Props> = props => {
             />
 
             <label className={inputStyles.label} htmlFor="avatar">
-              <span className={uploadStyles.buttonLink}>Choose from pc</span>
+              <span className={uploadStyles.buttonLink}>
+                Выбрать с компьютера
+              </span>
             </label>
 
             <p className={inputStyles.error}></p>
           </div>
 
           <div className={cardStyles.cardAction}>
-            <Button type="submit">Apply</Button>
+            <Button type="submit">Загрузить</Button>
           </div>
         </div>
       </form>
