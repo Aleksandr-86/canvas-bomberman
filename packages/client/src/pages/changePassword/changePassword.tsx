@@ -39,7 +39,9 @@ export const ChangePassword = () => {
     event.preventDefault()
 
     if (isValid()) {
-      console.log('submit')
+      const { repeatPassword, password, newPassword} = values
+      
+      alert(`Данные готовы к отправке: ${JSON.stringify({ oldPassword: password, newPassword }, null, 4)}`)
     }
   }
 
