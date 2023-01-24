@@ -55,7 +55,7 @@ export const Profile: React.FC = () => {
     event.preventDefault()
 
     if (isValid()) {
-      console.log('submit')
+      alert(`Данные готовы к отправке: ${JSON.stringify(values, null, 4)}`)
     }
   }
 
