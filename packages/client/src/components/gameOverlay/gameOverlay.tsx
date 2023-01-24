@@ -1,15 +1,25 @@
-import { useState } from 'react'
-
+import React from 'react'
+import { useAppSelector } from '../../store/hooks'
 import { GameStart } from '../gameStart/gameStart'
-
+import { GameEnd } from '../gameEnd/gameEnd'
+import { GameStatus } from '../../store/gameSlice'
+import { getGameStatus } from '../../store/selectors'
 import styles from './gameOverlay.module.css'
 
-export const GameOverlay: React.FC = () => {
-  const [isStart, setIsStart] = useState(true)
+interface Props {
+  onReloadGame: () => void
+}
 
-  return isStart ? (
+export const GameOverlay: React.FC<Props> = props => {
+  const { onReloadGame } = props
+  const status = useAppSelector(getGameStatus)
+  const shouldRenderOverlay =
+    status === GameStatus.START || status === GameStatus.END
+
+  return shouldRenderOverlay ? (
     <div className={styles.gameOverlay}>
-      <GameStart onButtonClick={() => setIsStart(false)} />
+      {status === GameStatus.START && <GameStart />}
+      {status === GameStatus.END && <GameEnd onReloadGame={onReloadGame} />}
     </div>
   ) : null
 }
