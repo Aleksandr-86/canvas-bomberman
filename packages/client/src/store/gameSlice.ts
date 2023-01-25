@@ -8,7 +8,7 @@ import {
 import { Kind, type FieldState } from '../features/game/types'
 import { delay, Vec2 } from '../features/game/utils'
 import { fillSoftWalls } from '../features/game/fillSoftWalls'
-import { explodeAdjacentSoftWalls } from '../features/game/explodeSoftWalls'
+import { explodeAdjacentSoftWalls } from '../features/game/explodeAdjacentSoftWalls'
 import { AppDispatch } from './index'
 
 export enum GameStatus {
