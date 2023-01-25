@@ -1,0 +1,8 @@
+{
+  "grass1": { "origin": { "x": 0, "y": 0 }, "width": 32 },
+  "grass2": { "origin": { "x": 288, "y": 0 }, "width": 32 },
+  "grass3": { "origin": { "x": 288, "y": 128 }, "width": 32 },
+  "wall1": { "origin": { "x": 0, "y": 288 }, "width": 32 },
+  "wall2": { "origin": { "x": 128, "y": 288 }, "width": 32 },
+  "wall3": { "origin": { "x": 0, "y": 448 }, "width": 32 }
+}
