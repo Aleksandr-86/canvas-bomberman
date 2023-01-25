@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test component Input Should correct render (with props) 1`] = `
+<label>
+  <input
+    className="form__input mockClass"
+    placeholder="mockPlaceholder"
+    type="text"
+  />
+</label>
+`;

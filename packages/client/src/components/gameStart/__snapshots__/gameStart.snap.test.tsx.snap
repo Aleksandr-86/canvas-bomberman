@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test component GameStart Should correct render (with store) 1`] = `
+<div
+  className="gameStart"
+>
+  <p>
+    Куда жать, чтобы было весело?!
+  </p>
+  <img
+    alt="Клавиатура"
+    draggable={false}
+    height={303}
+    width={720}
+  />
+  <button
+    className="button gameStartButton"
+    onClick={[Function]}
+  >
+    ПОНЯЛ, ПОГНАЛИ!
+  </button>
+</div>
+`;

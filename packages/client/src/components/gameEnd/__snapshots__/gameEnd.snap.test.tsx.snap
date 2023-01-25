@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test component GameEnd Should correct render (with store) 1`] = `
+<div
+  className="gameEnd"
+>
+  <p
+    className="gameEndText"
+  >
+    Игра окончена!
+  </p>
+  <p
+    className="gameEndText"
+  >
+    Количество набранных очков: 
+    100
+  </p>
+  <div
+    className="gameEndButtons"
+  >
+    <a
+      className="linkButton gameEndButton"
+      href="/"
+      onClick={[Function]}
+    >
+      На главную
+    </a>
+    <button
+      className="button gameEndButton"
+      onClick={[Function]}
+    >
+      Сыграть еще раз
+    </button>
+    <a
+      className="linkButton gameEndButton"
+      href="/leaderboard"
+      onClick={[Function]}
+    >
+      Посмотреть таблицу лидеров
+    </a>
+  </div>
+</div>
+`;

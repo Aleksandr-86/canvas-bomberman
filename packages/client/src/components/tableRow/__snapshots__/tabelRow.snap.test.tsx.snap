@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test component TableRow Should correct render (with props) 1`] = `
+<tr>
+  <td
+    className="tableRow"
+  >
+    Kan88
+  </td>
+  <td
+    className="tableRow"
+  >
+    Как пройти первый уровень
+  </td>
+  <td
+    className="tableRow"
+  >
+    8.01.22'.
+  </td>
+</tr>
+`;

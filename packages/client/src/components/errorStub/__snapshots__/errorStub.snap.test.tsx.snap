@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test component ErrorStub Should correct render (without props) 1`] = `
+<div
+  className="errorStub"
+>
+  <p>
+    <span
+      className="errorStubTextDanger"
+    >
+      БАААБАААХ!
+    </span>
+     И ВСЁ СЛОМАЛОСЬ!
+  </p>
+  <img
+    alt="Герой символизирующий ошибку"
+    draggable={false}
+    height={426}
+    width={426}
+  />
+  <p>
+    НО МЫ УЖЕ ЧИНИМ!
+  </p>
+</div>
+`;

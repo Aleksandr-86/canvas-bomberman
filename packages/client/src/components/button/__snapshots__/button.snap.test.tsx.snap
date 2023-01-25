@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test component Button Should correct render (with props) 1`] = `
+<button
+  className="button mockClass"
+  onClick={[Function]}
+  type="submit"
+>
+  mockChildren
+</button>
+`;
+
+exports[`Snapshot test component Button Should correct render (without props) 1`] = `
+<button
+  className="button"
+>
+  Кнопка
+</button>
+`;
