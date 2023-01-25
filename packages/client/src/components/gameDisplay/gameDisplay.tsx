@@ -1,3 +1,4 @@
+import { GameScore } from '../gameScore'
 import { useEffect, useRef } from 'react'
 import { bombermanScene } from '../../features/game/bombermanScene'
 import { Game } from '../../features/game/lib'
@@ -25,6 +26,7 @@ export const GameDisplay: React.FC = () => {
 
   return (
     <div className={styles.gameDisplay}>
+      <GameScore />
       <canvas ref={gameRef} width={1280} height={720} />
       <GameOverlay onReloadGame={() => undefined} />
     </div>
