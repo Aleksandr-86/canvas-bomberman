@@ -1,6 +1,7 @@
 import { FieldState } from './types'
+import { Vec2 } from './utils/vec2'
 
-export const INITIAL_FIELD_STATE: FieldState = [
+export const EMPTY_FIELD: FieldState = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
   [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
@@ -18,4 +19,5 @@ export const INITIAL_FIELD_STATE: FieldState = [
 export const GRID_WIDTH = 19
 export const GRID_HEIGHT = 13
 export const CELL_WIDTH = 80
-export const PLAYER_START = { x: 1, y: 1 }
+export const PLAYER_STARTING_POSITION = new Vec2(1, 1)
+export const PLAYER_ANIMATION_DURATION = 800

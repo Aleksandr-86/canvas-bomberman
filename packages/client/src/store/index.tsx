@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './userSlice'
 import { playersStatsReducer } from './playersStatsSlice'
 import { gameReducer } from './gameSlice'
+import { serializableMiddleware } from './serializableMiddleware'
 
 export const store = configureStore({
   reducer: {
@@ -9,6 +10,7 @@ export const store = configureStore({
     playersStats: playersStatsReducer,
     game: gameReducer,
   },
+  middleware: [serializableMiddleware],
 })
 
 export type RootState = ReturnType<typeof store.getState>
