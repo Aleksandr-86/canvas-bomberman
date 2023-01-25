@@ -1,5 +1,4 @@
-// coordinate origin is at the top left
-
+/* origin is at the top left */
 export class Vec2 {
   static get Down() {
     return new Vec2(0, 1)
@@ -19,6 +18,14 @@ export class Vec2 {
 
   static add(v1: Vec2, v2: Vec2) {
     return new Vec2(v1.x + v2.x, v1.y + v2.y)
+  }
+
+  static lerp(from: Vec2, to: Vec2, t: number) {
+    return new Vec2(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t)
+  }
+
+  static mul(vec: Vec2, by: number) {
+    return new Vec2(vec.x * by, vec.y * by)
   }
 
   copy() {
