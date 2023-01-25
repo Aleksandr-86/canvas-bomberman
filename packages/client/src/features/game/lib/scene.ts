@@ -1,5 +1,7 @@
 import { type Drawable } from './gameObjects'
 import { type Keyboard } from './keyboard'
+import { getPlayer } from '../gameActions'
+import { CAMERA_HEIGHT, CAMERA_WIDTH, CELL_WIDTH } from '../const'
 
 interface Timestep {
   delta: number
@@ -35,7 +37,27 @@ export class Scene {
     return obj
   }
 
+  public clear() {
+    this.objects.clear()
+  }
+
+  public sort() {
+    this.objects = new Map(
+      [...this.objects.entries()].sort(([_a, { z: za }], [_b, { z: zb }]) => {
+        return za - zb
+      })
+    )
+  }
+
   public render(ctx: CanvasRenderingContext2D, delta: number) {
+    const player = getPlayer()
+
+    ctx.save()
+    ctx.translate(
+      -player.x * CELL_WIDTH + CAMERA_WIDTH / 2,
+      -player.y * CELL_WIDTH + CAMERA_HEIGHT / 2
+    )
     this.objects.forEach(o => o.exec(ctx, delta))
+    ctx.restore()
   }
 }
