@@ -1,3 +1,4 @@
+import { startGame } from '../gameActions'
 import { Keyboard } from './keyboard'
 import { Scene, type SceneContext } from './scene'
 import { Ticker } from './ticker'
@@ -64,6 +65,7 @@ export class Game {
 
     this.ticker.start()
     this.started = true
+    startGame()
   }
 
   stop() {
