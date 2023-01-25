@@ -89,10 +89,12 @@ export const gameStarted = () => (dispatch: AppDispatch) => {
     previousTime = now
     dispatch(timerUpdated(dt))
   }, 1000)
+  dispatch(setStatus(GameStatus.IN_PROGRESS))
 }
 
-export const gameEnded = () => () => {
+export const gameEnded = () => (dispatch: AppDispatch) => {
   clearInterval(gameIntervalId)
+  dispatch(setStatus(GameStatus.END))
 }
 
 export const gameReducer = gameSlice.reducer
