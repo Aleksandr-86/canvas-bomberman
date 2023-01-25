@@ -1,3 +1,5 @@
 export { Sprite } from './sprite'
 export { Rect } from './rect'
+export { Tilemap } from './tilemap'
+export { TiledSprite } from './tiledSprite'
 export { type Drawable } from './types'
