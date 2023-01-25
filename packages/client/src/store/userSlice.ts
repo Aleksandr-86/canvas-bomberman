@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface UserState {
   isLoading: boolean
   isAuth: boolean
-  error?: boolean | string | unknown
-  id?: number | boolean
+  error?: null | string | unknown
+  id?: number | null
   firstName?: string
   secondName?: string
   displayName?: string
@@ -14,8 +14,8 @@ export interface UserState {
 }
 
 const INITIAL_STATE: UserState = {
-  error: false,
-  id: true,
+  error: null,
+  id: null,
   isLoading: false,
   isAuth: true,
   firstName: '',

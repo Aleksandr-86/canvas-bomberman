@@ -11,8 +11,8 @@ export const getAuth = createAsyncThunk(
 const state: UserState = {
   isLoading: false,
   isAuth: false,
-  id: false,
-  error: false,
+  id: null,
+  error: null,
   firstName: '',
   secondName: '',
   displayName: '',
@@ -29,7 +29,7 @@ const authSlice = createSlice({
     // Add reducers for additional action types here, and handle loading state as needed
     builder
       .addCase(getAuth.pending, state => {
-        state.error = false
+        state.error = null
         state.isAuth = false
         state.isLoading = true
       })

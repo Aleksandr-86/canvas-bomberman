@@ -11,12 +11,12 @@ export function useAuth(formData: IFormData) {
   const [user, setUser] = useState<UserState>({
     isLoading: false,
     isAuth: false,
+    id: null,
   })
-  const [error, setError] = useState<string | boolean>(false)
+  const [error, setError] = useState<string | null>(null)
 
   async function fetchUser() {
     try {
-      setError('')
       const response = await axios.post<UserState>(
         'https://alt-f4-bomberman-21.ya-praktikum.tech/user',
         {
