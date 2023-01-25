@@ -1,4 +1,4 @@
-type TickCallback = (delta: number) => void
+type TickCallback = (delta: number, now: number, frameCount: number) => void
 
 export class Ticker {
   public delta = 0
@@ -28,6 +28,6 @@ export class Ticker {
     this.prevTime = now
     this.frameCount += 1
 
-    this.onTickCallbacks.forEach(cb => cb(this.delta))
+    this.onTickCallbacks.forEach(cb => cb(this.delta, now, this.frameCount))
   }
 }

@@ -1,8 +1,14 @@
 import { type Drawable } from './gameObjects'
 import { type Keyboard } from './keyboard'
 
-export interface SceneContext {
+interface Timestep {
   delta: number
+  now: number
+  frameCount: number
+}
+
+export interface SceneContext {
+  time: Timestep
   scene: Scene
   kbd: Keyboard
 }
@@ -29,7 +35,7 @@ export class Scene {
     return obj
   }
 
-  public render(ctx: CanvasRenderingContext2D) {
-    this.objects.forEach(o => o.exec(ctx))
+  public render(ctx: CanvasRenderingContext2D, delta: number) {
+    this.objects.forEach(o => o.exec(ctx, delta))
   }
 }

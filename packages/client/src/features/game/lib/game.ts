@@ -52,20 +52,22 @@ export class Game {
 
   start() {
     this.create(this.scene)
-    this.ticker.add(delta => {
+    this.ticker.add((delta, now, frameCount) => {
       this.update({
-        delta,
+        time: { delta, now, frameCount },
         kbd: this.kbd,
         scene: this.scene,
       })
       this.ctx.clearRect(0, 0, this.screenWidth, this.screenHeight)
-      this.scene.render(this.ctx)
+      this.scene.render(this.ctx, delta)
     })
 
     this.ticker.start()
+    this.started = true
   }
 
   stop() {
     this.ticker.stop()
+    this.started = false
   }
 }
