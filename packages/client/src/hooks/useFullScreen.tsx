@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { type MutableRefObject, useEffect } from 'react'
 import { toggleFullScreen } from '../features/toggleFullScreen/toggleFullScreen'
 import type { KeyboardKeys } from '../env'
@@ -23,5 +22,5 @@ export const useFullScreen = <T extends HTMLElement | null>(
     return () => {
       document.removeEventListener(`keydown`, onKeyDown)
     }
-  }, [ref.current, activeKey])
+  }, [ref, activeKey])
 }
