@@ -10,7 +10,8 @@ export const store = configureStore({
     playersStats: playersStatsReducer,
     game: gameReducer,
   },
-  middleware: [serializableMiddleware],
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().prepend(serializableMiddleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
