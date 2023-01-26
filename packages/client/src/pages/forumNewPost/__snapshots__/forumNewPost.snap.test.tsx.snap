@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test page ForumNewPost Should correct render (without props) 1`] = `
+<div
+  className="forum"
+>
+  <h2
+    className="forumTitle"
+  >
+    Новая тема
+  </h2>
+  <div
+    className="forumWrapper"
+  >
+    <form>
+      <label>
+        <input
+          className="form__input"
+          placeholder="Название темы"
+          type="text"
+        />
+      </label>
+      <button
+        className="button forumBtnCreate"
+        type="submit"
+      >
+        создать тему
+      </button>
+    </form>
+    <a
+      className="forumLink"
+      href="/forum"
+      onClick={[Function]}
+    >
+      назад
+    </a>
+  </div>
+</div>
+`;

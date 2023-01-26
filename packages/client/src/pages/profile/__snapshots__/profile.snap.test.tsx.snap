@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test page Profile Should correct render (without props) 1`] = `
+<div
+  className="profile"
+>
+  Страница профиля пользователя
+</div>
+`;

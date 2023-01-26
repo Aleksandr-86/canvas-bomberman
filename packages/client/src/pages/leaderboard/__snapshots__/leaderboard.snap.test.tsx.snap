@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test page Leaderboard Should correct render (with store) 1`] = `
+<div
+  className="leaderboard"
+>
+  <nav
+    className="navigationBar"
+  >
+    <img
+      alt="user-avatar"
+      draggable="false"
+    />
+    <a
+      className="link"
+      href="/profile"
+      onClick={[Function]}
+    />
+    <a
+      className="link"
+      href="/"
+      onClick={[Function]}
+    >
+      Выйти
+    </a>
+  </nav>
+  <div
+    className="wrapper"
+  >
+    <div
+      className="tableCaption"
+    >
+      Таблица лидеров
+    </div>
+    <table
+      className="table"
+    >
+      <thead>
+        <tr>
+          <th
+            className="head ascending"
+            onClick={[Function]}
+          >
+            Место
+          </th>
+          <th
+            className="head"
+            onClick={[Function]}
+          >
+            Имя игрока
+          </th>
+          <th
+            className="head"
+            onClick={[Function]}
+          >
+            Очки
+          </th>
+          <th
+            className="head"
+            onClick={[Function]}
+          >
+            Игр
+          </th>
+          <th
+            className="head"
+            onClick={[Function]}
+          >
+            Время (мин)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          className="row"
+        >
+          <td
+            className="columnPlace"
+          >
+            1
+          </td>
+          <td
+            className="columnName"
+          >
+            Alex
+          </td>
+          <td
+            className="columnScore"
+          >
+            811
+          </td>
+          <td
+            className="columnGames"
+          >
+            1
+          </td>
+          <td
+            className="columnTotalTime"
+          >
+            23
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a
+      className="linkButton"
+      href="/"
+      onClick={[Function]}
+    >
+      На главную
+    </a>
+    <img
+      alt="hero-img"
+      className="heroImg"
+      draggable="false"
+    />
+  </div>
+</div>
+`;
