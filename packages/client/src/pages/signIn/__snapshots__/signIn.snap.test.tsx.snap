@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test page SignIn Should correct render (without props) 1`] = `
+exports[`Snapshot test page SignIn Should correct render (with store) 1`] = `
 <h2>
   SignIn page
 </h2>

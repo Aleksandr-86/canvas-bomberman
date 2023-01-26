@@ -1,12 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Snapshot test page Game Should correct render (with store - status END) 1`] = `
-Array [
-  <h2>
-    Game page
-  </h2>,
+<div
+  className="gameDisplay"
+>
   <div
-    className="gameDisplay"
+    className="gameDisplayCanvasWrapper"
   >
     <canvas
       height={720}
@@ -54,33 +53,31 @@ Array [
         </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Snapshot test page Game Should correct render (with store - status IN_PROGRESS) 1`] = `
-Array [
-  <h2>
-    Game page
-  </h2>,
+<div
+  className="gameDisplay"
+>
   <div
-    className="gameDisplay"
+    className="gameDisplayCanvasWrapper"
   >
     <canvas
       height={720}
       width={1280}
     />
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`Snapshot test page Game Should correct render (with store - status START) 1`] = `
-Array [
-  <h2>
-    Game page
-  </h2>,
+<div
+  className="gameDisplay"
+>
   <div
-    className="gameDisplay"
+    className="gameDisplayCanvasWrapper"
   >
     <canvas
       height={720}
@@ -109,6 +106,6 @@ Array [
         </button>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;

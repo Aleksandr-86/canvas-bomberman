@@ -4,49 +4,53 @@ exports[`Snapshot test component GameDisplay Should correct render (with store -
 <div
   className="gameDisplay"
 >
-  <canvas
-    height={720}
-    width={1280}
-  />
   <div
-    className="gameOverlay"
+    className="gameDisplayCanvasWrapper"
   >
+    <canvas
+      height={720}
+      width={1280}
+    />
     <div
-      className="gameEnd"
+      className="gameOverlay"
     >
-      <p
-        className="gameEndText"
-      >
-        Игра окончена!
-      </p>
-      <p
-        className="gameEndText"
-      >
-        Количество набранных очков: 
-      </p>
       <div
-        className="gameEndButtons"
+        className="gameEnd"
       >
-        <a
-          className="linkButton gameEndButton"
-          href="/"
-          onClick={[Function]}
+        <p
+          className="gameEndText"
         >
-          На главную
-        </a>
-        <button
-          className="button gameEndButton"
-          onClick={[Function]}
+          Игра окончена!
+        </p>
+        <p
+          className="gameEndText"
         >
-          Сыграть еще раз
-        </button>
-        <a
-          className="linkButton gameEndButton"
-          href="/leaderboard"
-          onClick={[Function]}
+          Количество набранных очков: 
+        </p>
+        <div
+          className="gameEndButtons"
         >
-          Посмотреть таблицу лидеров
-        </a>
+          <a
+            className="linkButton gameEndButton"
+            href="/"
+            onClick={[Function]}
+          >
+            На главную
+          </a>
+          <button
+            className="button gameEndButton"
+            onClick={[Function]}
+          >
+            Сыграть еще раз
+          </button>
+          <a
+            className="linkButton gameEndButton"
+            href="/leaderboard"
+            onClick={[Function]}
+          >
+            Посмотреть таблицу лидеров
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -57,10 +61,14 @@ exports[`Snapshot test component GameDisplay Should correct render (with store -
 <div
   className="gameDisplay"
 >
-  <canvas
-    height={720}
-    width={1280}
-  />
+  <div
+    className="gameDisplayCanvasWrapper"
+  >
+    <canvas
+      height={720}
+      width={1280}
+    />
+  </div>
 </div>
 `;
 
@@ -68,31 +76,35 @@ exports[`Snapshot test component GameDisplay Should correct render (with store -
 <div
   className="gameDisplay"
 >
-  <canvas
-    height={720}
-    width={1280}
-  />
   <div
-    className="gameOverlay"
+    className="gameDisplayCanvasWrapper"
   >
+    <canvas
+      height={720}
+      width={1280}
+    />
     <div
-      className="gameStart"
+      className="gameOverlay"
     >
-      <p>
-        Куда жать, чтобы было весело?!
-      </p>
-      <img
-        alt="Клавиатура"
-        draggable={false}
-        height={303}
-        width={720}
-      />
-      <button
-        className="button gameStartButton"
-        onClick={[Function]}
+      <div
+        className="gameStart"
       >
-        ПОНЯЛ, ПОГНАЛИ!
-      </button>
+        <p>
+          Куда жать, чтобы было весело?!
+        </p>
+        <img
+          alt="Клавиатура"
+          draggable={false}
+          height={303}
+          width={720}
+        />
+        <button
+          className="button gameStartButton"
+          onClick={[Function]}
+        >
+          ПОНЯЛ, ПОГНАЛИ!
+        </button>
+      </div>
     </div>
   </div>
 </div>
