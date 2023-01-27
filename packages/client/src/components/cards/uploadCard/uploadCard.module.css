@@ -1,0 +1,16 @@
+.inputFile {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+.buttonLink {
+  font-size: 30px;
+  font-family: 'Rubik Bubbles', fantasy;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 10px 20px;
+  color: blue;
+  border: none;
+  background: none;
+}
