@@ -1,9 +1,16 @@
+import { MemoryRouter } from 'react-router-dom'
 import * as renderer from 'react-test-renderer'
 import { SignUp } from './signUp'
 
 describe(`<SignUp/> snapshot test cases`, () => {
-  test(`<SignUp/> should render <h2>SignUp page</h2>`, () => {
-    const tree = renderer.create(<SignUp />).toJSON()
+  test(`<SignUp/> should render <form className=signUp> parent with child elements`, () => {
+    const tree = renderer
+      .create(
+        <MemoryRouter initialEntries={[`/signUp`]}>
+          <SignUp />
+        </MemoryRouter>
+      )
+      .toJSON()
     expect(tree).toMatchSnapshot()
   })
 })
