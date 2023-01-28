@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UploadCard/> snapshot test cases <UploadCard/> should render <Modal/> component with child <form> elements 1`] = `
+<div
+  className="modal modalClose"
+  onClick={[Function]}
+>
+  <div
+    className="modalContent"
+    onClick={[Function]}
+  >
+    <form
+      onSubmit={[Function]}
+    >
+      <div
+        className="card cardColumn"
+      >
+        <h3
+          className="cardHeader"
+        >
+          Загрузить файл
+        </h3>
+        <div
+          className="cardContent"
+        >
+          <div
+            className="label"
+          >
+            Файл не выбран
+          </div>
+          <input
+            className="inputFile"
+            id="avatar"
+            name="file"
+            onChange={[Function]}
+            type="file"
+          />
+          <label
+            className="label"
+            htmlFor="avatar"
+          >
+            <span
+              className="buttonLink"
+            >
+              Выбрать с компьютера
+            </span>
+          </label>
+          <p
+            className="error"
+          />
+        </div>
+        <div>
+          <button
+            className="button"
+            type="submit"
+          >
+            Загрузить
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;

@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Avatar/> snapshot test cases <Avatar/> should render <img> with className profileImgLarge (size Gargantuan) 1`] = `
+<div>
+  <img
+    alt="profile picture"
+    className="profileImg profileImgGargantuan"
+    onClick={[Function]}
+    src="mockSrc.png"
+  />
+</div>
+`;
+
+exports[`<Avatar/> snapshot test cases <Avatar/> should render <img> with className profileImgLarge (size Large) 1`] = `
+<div>
+  <img
+    alt="profile picture"
+    className="profileImg profileImgLarge"
+    onClick={[Function]}
+    src="mockSrc.png"
+  />
+</div>
+`;
+
+exports[`<Avatar/> snapshot test cases <Avatar/> should render <img> with className profileImgMedium (default) 1`] = `
+<div>
+  <img
+    alt="profile picture"
+    className="profileImg profileImgMedium"
+    onClick={[Function]}
+    src="mockSrc.png"
+  />
+</div>
+`;
+
+exports[`<Avatar/> snapshot test cases <Avatar/> should render <img> with className profileImgMedium (size Medium) 1`] = `
+<div>
+  <img
+    alt="profile picture"
+    className="profileImg profileImgMedium"
+    onClick={[Function]}
+    src="mockSrc.png"
+  />
+</div>
+`;
+
+exports[`<Avatar/> snapshot test cases <Avatar/> should render <img> with className profileImgSmall (size Small) 1`] = `
+<div>
+  <img
+    alt="profile picture"
+    className="profileImg profileImgSmall"
+    onClick={[Function]}
+    src="mockSrc.png"
+  />
+</div>
+`;
