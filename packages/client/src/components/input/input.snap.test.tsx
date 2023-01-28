@@ -7,8 +7,8 @@ const mockProps = {
   type: `text`,
 }
 
-describe(`Snapshot test component Input`, () => {
-  test(`Should correct render (with props)`, () => {
+describe(`<Input/> snapshot test cases`, () => {
+  test(`<Input/> should render <input>`, () => {
     const tree = renderer.create(<Input {...mockProps} />).toJSON()
     expect(tree).toMatchSnapshot()
   })

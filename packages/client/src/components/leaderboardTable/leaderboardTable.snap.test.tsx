@@ -14,8 +14,8 @@ const mockProps: PlayerStats[] = [
   },
 ]
 
-describe(`Snapshot test component LeaderboardTable`, () => {
-  test(`Should correct render (with props)`, () => {
+describe(`<LeaderboardTable/> snapshot test cases`, () => {
+  test(`<LeaderboardTable/> should render <table className=table> parent with child elements (with mockProps)`, () => {
     const tree = renderer
       .create(<LeaderboardTable playersStats={mockProps} />)
       .toJSON()

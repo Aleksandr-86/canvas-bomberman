@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test component LeaderboardTable Should correct render (with props) 1`] = `
+exports[`<LeaderboardTable/> snapshot test cases <LeaderboardTable/> should render <table className=table> parent with child elements (with mockProps) 1`] = `
 <table
   className="table"
 >

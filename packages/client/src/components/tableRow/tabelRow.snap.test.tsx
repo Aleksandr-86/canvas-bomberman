@@ -8,8 +8,8 @@ const mockProps = {
   date: `8.01.22'.`,
 }
 
-describe(`Snapshot test component TableRow`, () => {
-  test(`Should correct render (with props)`, () => {
+describe(`<TableRow/> snapshot test cases`, () => {
+  test(`<TableRow/> should render <tr> parent with <td className=tableRow> childs (with mockProps)`, () => {
     const tree = renderer.create(<TableRow {...mockProps} />).toJSON()
     expect(tree).toMatchSnapshot()
   })

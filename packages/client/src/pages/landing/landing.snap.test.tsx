@@ -6,8 +6,8 @@ import { MemoryRouter } from 'react-router-dom'
 
 const mockStore = configureStore([])
 
-describe(`Snapshot test page Landing`, () => {
-  test(`Should correct render (with store - isAuth=true)`, () => {
+describe(`<Landing/> snapshot test cases`, () => {
+  test(`<Landing/> should render <div className=landing> parent with child elements (AUTH)`, () => {
     const store = mockStore({ user: { isAuth: true } })
 
     const tree = renderer
@@ -22,7 +22,7 @@ describe(`Snapshot test page Landing`, () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test(`Should correct render (with store - isAuth=false)`, () => {
+  test(`<Landing/> should render <div className=landing> parent with child elements (NO_AUTH)`, () => {
     const store = mockStore({ user: { isAuth: false } })
 
     const tree = renderer

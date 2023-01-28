@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test component GameOverlay Should correct render (with store - status END) 1`] = `
+exports[`<GameOverlay/> snapshot test cases <GameOverlay/> should render <div className=gameOverlay> parent with <GameEND/> child component (status=END) 1`] = `
 <div
   className="gameOverlay"
 >
@@ -45,9 +45,7 @@ exports[`Snapshot test component GameOverlay Should correct render (with store -
 </div>
 `;
 
-exports[`Snapshot test component GameOverlay Should correct render (with store - status IN_PROGRESS) 1`] = `null`;
-
-exports[`Snapshot test component GameOverlay Should correct render (with store - status START) 1`] = `
+exports[`<GameOverlay/> snapshot test cases <GameOverlay/> should render <div className=gameOverlay> parent with <GameStart/> child component (status=START) 1`] = `
 <div
   className="gameOverlay"
 >
@@ -72,3 +70,5 @@ exports[`Snapshot test component GameOverlay Should correct render (with store -
   </div>
 </div>
 `;
+
+exports[`<GameOverlay/> snapshot test cases <GameOverlay/> should render null 1`] = `null`;

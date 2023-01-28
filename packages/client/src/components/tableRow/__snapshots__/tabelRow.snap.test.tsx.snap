@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test component TableRow Should correct render (with props) 1`] = `
+exports[`<TableRow/> snapshot test cases <TableRow/> should render <tr> parent with <td className=tableRow> childs (with mockProps) 1`] = `
 <tr>
   <td
     className="tableRow"

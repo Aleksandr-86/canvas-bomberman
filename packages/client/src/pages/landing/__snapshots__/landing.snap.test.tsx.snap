@@ -1,82 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test page Landing Should correct render (with store - isAuth=false) 1`] = `
-<div
-  className="landing"
->
-  <div
-    className="wrapper"
-  >
-    <img
-      alt="bomberman-logo"
-      className="logo"
-      draggable="false"
-    />
-    <div
-      className="descriptionTop"
-    >
-      Привет, мы рады приветствовать тебя! 
-      <br />
-      Прежде чем ты начнёшь взрывать всё вокруг, загляни в
-       
-      <a
-        className="link"
-        href="/rules"
-        onClick={[Function]}
-      >
-        правила
-      </a>
-      . Уверены, это поможет тебе возглавить нашу
-       
-      <a
-        className="link"
-        href="/leaderboard"
-        onClick={[Function]}
-      >
-        таблицу лидеров!
-      </a>
-    </div>
-    <div
-      className="buttonWrapper"
-    >
-      <a
-        className="linkButton"
-        href="/sign-in"
-        onClick={[Function]}
-      >
-        Войти
-      </a>
-      <a
-        className="linkButton"
-        href="/sign-up"
-        onClick={[Function]}
-      >
-        Зарегистрироваться
-      </a>
-    </div>
-    <div
-      className="descriptionBottom"
-    >
-      Есть вопросы? Скорее переходи к нам на
-       
-      <a
-        className="link"
-        href="/forum"
-        onClick={[Function]}
-      >
-        форум
-      </a>
-    </div>
-  </div>
-  <img
-    alt="hero-img"
-    className="heroImg"
-    draggable="false"
-  />
-</div>
-`;
-
-exports[`Snapshot test page Landing Should correct render (with store - isAuth=true) 1`] = `
+exports[`<Landing/> snapshot test cases <Landing/> should render <div className=landing> parent with child elements (AUTH) 1`] = `
 <div
   className="landing"
 >
@@ -141,6 +65,82 @@ exports[`Snapshot test page Landing Should correct render (with store - isAuth=t
     >
       Погнали
     </a>
+    <div
+      className="descriptionBottom"
+    >
+      Есть вопросы? Скорее переходи к нам на
+       
+      <a
+        className="link"
+        href="/forum"
+        onClick={[Function]}
+      >
+        форум
+      </a>
+    </div>
+  </div>
+  <img
+    alt="hero-img"
+    className="heroImg"
+    draggable="false"
+  />
+</div>
+`;
+
+exports[`<Landing/> snapshot test cases <Landing/> should render <div className=landing> parent with child elements (NO_AUTH) 1`] = `
+<div
+  className="landing"
+>
+  <div
+    className="wrapper"
+  >
+    <img
+      alt="bomberman-logo"
+      className="logo"
+      draggable="false"
+    />
+    <div
+      className="descriptionTop"
+    >
+      Привет, мы рады приветствовать тебя! 
+      <br />
+      Прежде чем ты начнёшь взрывать всё вокруг, загляни в
+       
+      <a
+        className="link"
+        href="/rules"
+        onClick={[Function]}
+      >
+        правила
+      </a>
+      . Уверены, это поможет тебе возглавить нашу
+       
+      <a
+        className="link"
+        href="/leaderboard"
+        onClick={[Function]}
+      >
+        таблицу лидеров!
+      </a>
+    </div>
+    <div
+      className="buttonWrapper"
+    >
+      <a
+        className="linkButton"
+        href="/sign-in"
+        onClick={[Function]}
+      >
+        Войти
+      </a>
+      <a
+        className="linkButton"
+        href="/sign-up"
+        onClick={[Function]}
+      >
+        Зарегистрироваться
+      </a>
+    </div>
     <div
       className="descriptionBottom"
     >

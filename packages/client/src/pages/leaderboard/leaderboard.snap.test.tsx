@@ -19,8 +19,8 @@ const store = mockStore({
   ],
 })
 
-describe(`Snapshot test page Leaderboard`, () => {
-  test(`Should correct render (with store)`, () => {
+describe(`<Leaderboard/> snapshot test cases`, () => {
+  test(`<Leaderboard/> should render <div className=leaderboard> parent with child elements (with store)`, () => {
     const tree = renderer
       .create(
         <Provider store={store}>

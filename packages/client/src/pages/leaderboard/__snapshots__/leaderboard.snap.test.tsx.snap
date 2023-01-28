@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test page Leaderboard Should correct render (with store) 1`] = `
+exports[`<Leaderboard/> snapshot test cases <Leaderboard/> should render <div className=leaderboard> parent with child elements (with store) 1`] = `
 <div
   className="leaderboard"
 >

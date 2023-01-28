@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test component HeroBomb Should correct render (without props) 1`] = `
+exports[`<HeroBomb/> snapshot test cases <HeroBomb/> should render <img> 1`] = `
 <img
   alt="Герой символизирующий ошибку"
   draggable={false}

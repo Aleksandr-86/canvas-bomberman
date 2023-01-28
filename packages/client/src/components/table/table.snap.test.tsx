@@ -19,8 +19,8 @@ const mockProps = {
   ],
 }
 
-describe(`Snapshot test component Table`, () => {
-  test(`Should correct render (with props)`, () => {
+describe(`<Table/> snapshot test cases`, () => {
+  test(`<Table/> should render <table className=table> parent with child elements (with mockProps)`, () => {
     const tree = renderer.create(<Table {...mockProps} />).toJSON()
     expect(tree).toMatchSnapshot()
   })

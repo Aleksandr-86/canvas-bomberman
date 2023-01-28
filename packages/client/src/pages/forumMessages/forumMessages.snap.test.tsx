@@ -2,8 +2,8 @@ import * as renderer from 'react-test-renderer'
 import { ForumMessages } from './forumMessages'
 import { MemoryRouter } from 'react-router-dom'
 
-describe(`Snapshot test page ForumMessages`, () => {
-  test(`Should correct render (without props)`, () => {
+describe(`<ForumMessages/> snapshot test cases`, () => {
+  test(`<ForumMessages/> should render <div className=forum> with child elements`, () => {
     const tree = renderer
       .create(
         <MemoryRouter initialEntries={[`/forum-messages`]}>

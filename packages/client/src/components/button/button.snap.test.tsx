@@ -7,13 +7,13 @@ const mockProps = {
   onClick: () => undefined,
 }
 
-describe(`Snapshot test component Button`, () => {
-  test(`Should correct render (without props)`, () => {
+describe(`<Button/> snapshot test cases`, () => {
+  test(`<Button/> should render <button className=button> with text`, () => {
     const tree = renderer.create(<Button />).toJSON()
     expect(tree).toMatchSnapshot()
   })
 
-  test(`Should correct render (with props)`, () => {
+  test(`<Button/> should render <button className=button mockClass> with mockProps`, () => {
     const tree = renderer
       .create(
         <Button

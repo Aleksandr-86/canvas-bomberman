@@ -7,8 +7,8 @@ import { MemoryRouter } from 'react-router-dom'
 const mockStore = configureStore([])
 const store = mockStore({ game: { currentScore: 100 } })
 
-describe(`Snapshot test component GameEnd`, () => {
-  test(`Should correct render (with store)`, () => {
+describe(`<GameEnd/> snapshot test cases`, () => {
+  test(`<GameEnd/> should render <div className=gameEnd> parent with child elements`, () => {
     const tree = renderer
       .create(
         <Provider store={store}>

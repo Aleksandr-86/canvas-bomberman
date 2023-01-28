@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test component GameStart Should correct render (with store) 1`] = `
+exports[`<GameStart/> snapshot test cases <GameStart/> should render <div className=gameStart> parent with child elements 1`] = `
 <div
   className="gameStart"
 >

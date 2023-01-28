@@ -6,8 +6,8 @@ import { Provider } from 'react-redux'
 const mockStore = configureStore([])
 const store = mockStore({})
 
-describe(`Snapshot test page SignIn`, () => {
-  test(`Should correct render (with store)`, () => {
+describe(`<SignIn/> snapshot test cases`, () => {
+  test(`<SignIn/> should render <h2>SignIn page</h2>`, () => {
     const tree = renderer
       .create(
         <Provider store={store}>

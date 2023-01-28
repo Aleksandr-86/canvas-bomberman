@@ -3,8 +3,8 @@ import { ErrorBoundary } from './errorBoundary'
 
 const mockChildrenElement = <div>mockChildrenElement</div>
 
-describe(`Snapshot test component ErrorBoundary`, () => {
-  test(`Should correct render (with props)`, () => {
+describe(`<ErrorBoundary/> snapshot test cases`, () => {
+  test(`<ErrorBoundary/> should render <div>mockChildrenElement</div>`, () => {
     const tree = renderer
       .create(<ErrorBoundary>{mockChildrenElement}</ErrorBoundary>)
       .toJSON()

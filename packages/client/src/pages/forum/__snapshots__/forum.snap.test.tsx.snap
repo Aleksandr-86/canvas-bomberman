@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test page Forum Should correct render (without props) 1`] = `
+exports[`<Forum/> snapshot test cases <Forum/> should render <div className=forum> parent with child elemets 1`] = `
 <div
   className="forum"
 >

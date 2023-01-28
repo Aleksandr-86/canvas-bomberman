@@ -7,8 +7,8 @@ import { MemoryRouter } from 'react-router-dom'
 
 const mockStore = configureStore([])
 
-describe(`Snapshot test component GameOverlay`, () => {
-  test(`Should correct render (with store - status START)`, () => {
+describe(`<GameOverlay/> snapshot test cases`, () => {
+  test(`<GameOverlay/> should render <div className=gameOverlay> parent with <GameStart/> child component (status=START)`, () => {
     const store = mockStore({ game: { status: GameStatus.START } })
 
     const tree = renderer
@@ -23,7 +23,7 @@ describe(`Snapshot test component GameOverlay`, () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test(`Should correct render (with store - status END)`, () => {
+  test(`<GameOverlay/> should render <div className=gameOverlay> parent with <GameEND/> child component (status=END)`, () => {
     const store = mockStore({ game: { status: GameStatus.END } })
 
     const tree = renderer
@@ -38,7 +38,7 @@ describe(`Snapshot test component GameOverlay`, () => {
     expect(tree).toMatchSnapshot()
   })
 
-  test(`Should correct render (with store - status IN_PROGRESS)`, () => {
+  test(`<GameOverlay/> should render null`, () => {
     const store = mockStore({ game: { status: GameStatus.IN_PROGRESS } })
 
     const tree = renderer

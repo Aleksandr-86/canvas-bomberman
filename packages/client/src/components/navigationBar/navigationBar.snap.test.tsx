@@ -7,8 +7,8 @@ import { MemoryRouter } from 'react-router-dom'
 const mockStore = configureStore([])
 const store = mockStore({ user: { displayName: `Alex` } })
 
-describe(`Snapshot test component NavigationBar`, () => {
-  test(`Should correct render (with store)`, () => {
+describe(`<NavigationBar/> snapshot test cases`, () => {
+  test(`<NavigationBar/> should render <nav className=navigationBar> parent with child elements (with store data)`, () => {
     const tree = renderer
       .create(
         <Provider store={store}>

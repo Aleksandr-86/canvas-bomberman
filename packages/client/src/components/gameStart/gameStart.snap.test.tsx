@@ -6,8 +6,8 @@ import configureStore from 'redux-mock-store'
 const mockStore = configureStore([])
 const store = mockStore({})
 
-describe(`Snapshot test component GameStart`, () => {
-  test(`Should correct render (with store)`, () => {
+describe(`<GameStart/> snapshot test cases`, () => {
+  test(`<GameStart/> should render <div className=gameStart> parent with child elements`, () => {
     const tree = renderer
       .create(
         <Provider store={store}>

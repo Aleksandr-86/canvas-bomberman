@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test component NavigationBar Should correct render (with store) 1`] = `
+exports[`<NavigationBar/> snapshot test cases <NavigationBar/> should render <nav className=navigationBar> parent with child elements (with store data) 1`] = `
 <nav
   className="navigationBar"
 >

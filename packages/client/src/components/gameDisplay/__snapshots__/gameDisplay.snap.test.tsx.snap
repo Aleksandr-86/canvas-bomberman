@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test component GameDisplay Should correct render (with store - status END) 1`] = `
+exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div className=gameDisplay> parent with <GameEND/> child component (status=END) 1`] = `
 <div
   className="gameDisplay"
 >
@@ -57,22 +57,7 @@ exports[`Snapshot test component GameDisplay Should correct render (with store -
 </div>
 `;
 
-exports[`Snapshot test component GameDisplay Should correct render (with store - status IN_PROGRESS) 1`] = `
-<div
-  className="gameDisplay"
->
-  <div
-    className="gameDisplayCanvasWrapper"
-  >
-    <canvas
-      height={720}
-      width={1280}
-    />
-  </div>
-</div>
-`;
-
-exports[`Snapshot test component GameDisplay Should correct render (with store - status START) 1`] = `
+exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div className=gameDisplay> parent with <GameStart/> child component (status=START) 1`] = `
 <div
   className="gameDisplay"
 >
@@ -106,6 +91,21 @@ exports[`Snapshot test component GameDisplay Should correct render (with store -
         </button>
       </div>
     </div>
+  </div>
+</div>
+`;
+
+exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div className=gameDisplay> parent with child elements (status=IN_PROGRESS) 1`] = `
+<div
+  className="gameDisplay"
+>
+  <div
+    className="gameDisplayCanvasWrapper"
+  >
+    <canvas
+      height={720}
+      width={1280}
+    />
   </div>
 </div>
 `;

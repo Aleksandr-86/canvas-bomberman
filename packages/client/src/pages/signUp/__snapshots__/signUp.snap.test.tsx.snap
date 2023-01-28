@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test page SignUp Should correct render (without props) 1`] = `
+exports[`<SignUp/> snapshot test cases <SignUp/> should render <h2>SignUp page</h2> 1`] = `
 <h2>
   SignUp page
 </h2>

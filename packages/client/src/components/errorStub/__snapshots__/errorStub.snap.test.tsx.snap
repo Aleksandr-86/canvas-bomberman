@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test component ErrorStub Should correct render (without props) 1`] = `
+exports[`<ErrorStub/> snapshot test cases <ErrorStub/> should render <div className=errorStub> parent with child elements 1`] = `
 <div
   className="errorStub"
 >

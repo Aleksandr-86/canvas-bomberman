@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Snapshot test component Button Should correct render (with props) 1`] = `
+exports[`<Button/> snapshot test cases <Button/> should render <button className=button mockClass> with mockProps 1`] = `
 <button
   className="button mockClass"
   onClick={[Function]}
@@ -10,7 +10,7 @@ exports[`Snapshot test component Button Should correct render (with props) 1`] =
 </button>
 `;
 
-exports[`Snapshot test component Button Should correct render (without props) 1`] = `
+exports[`<Button/> snapshot test cases <Button/> should render <button className=button> with text 1`] = `
 <button
   className="button"
 >
