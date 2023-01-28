@@ -1,3 +1,5 @@
+import { TickState } from '../ticker'
+
 export interface Drawable {
   id: string
   x: number
@@ -5,5 +7,5 @@ export interface Drawable {
   z: number
   width: number
   height: number
-  exec: (ctx: CanvasRenderingContext2D, delta: number) => void
+  exec: (ctx: CanvasRenderingContext2D, time: TickState) => void
 }

@@ -53,14 +53,14 @@ export class Game {
 
   start() {
     this.create(this.scene)
-    this.ticker.add((delta, now, frameCount) => {
+    this.ticker.add(time => {
       this.update({
-        time: { delta, now, frameCount },
+        time,
         kbd: this.kbd,
         scene: this.scene,
       })
       this.ctx.clearRect(0, 0, this.screenWidth, this.screenHeight)
-      this.scene.render(this.ctx, delta)
+      this.scene.render(this.ctx, time)
     })
 
     this.ticker.start()

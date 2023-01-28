@@ -2,12 +2,7 @@ import { type Drawable } from './gameObjects'
 import { type Keyboard } from './keyboard'
 import { getPlayer } from '../gameActions'
 import { CAMERA_HEIGHT, CAMERA_WIDTH, CELL_WIDTH } from '../const'
-
-interface Timestep {
-  delta: number
-  now: number
-  frameCount: number
-}
+import { type Timestep } from './ticker'
 
 export interface SceneContext {
   time: Timestep
@@ -49,7 +44,7 @@ export class Scene {
     )
   }
 
-  public render(ctx: CanvasRenderingContext2D, delta: number) {
+  public render(ctx: CanvasRenderingContext2D, time: Timestep) {
     const player = getPlayer()
 
     ctx.save()
@@ -57,7 +52,7 @@ export class Scene {
       -player.x * CELL_WIDTH + CAMERA_WIDTH / 2,
       -player.y * CELL_WIDTH + CAMERA_HEIGHT / 2
     )
-    this.objects.forEach(o => o.exec(ctx, delta))
+    this.objects.forEach(o => o.exec(ctx, time))
     ctx.restore()
   }
 }
