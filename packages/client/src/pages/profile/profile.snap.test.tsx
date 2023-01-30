@@ -17,7 +17,7 @@ const store = mockStore({
 })
 
 describe(`<Profile/> snapshot test cases`, () => {
-  test(`<Profile/> should render <div className=profile>`, () => {
+  test(`<Profile/> should render form with data user and buttons for edit avatar`, () => {
     const tree = renderer
       .create(
         <Provider store={store}>

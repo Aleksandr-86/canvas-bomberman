@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Profile/> snapshot test cases <Profile/> should render <div className=profile> 1`] = `
+exports[`<Profile/> snapshot test cases <Profile/> should render form with data user and buttons for edit avatar 1`] = `
 Array [
   <div
     className="modal modalClose"
