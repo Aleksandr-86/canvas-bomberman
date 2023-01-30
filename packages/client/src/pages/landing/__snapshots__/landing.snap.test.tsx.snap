@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Landing/> snapshot test cases <Landing/> should render <div className=landing> parent with child elements (AUTH) 1`] = `
+<div
+  className="landing"
+>
+  <nav
+    className="navigationBar"
+  >
+    <img
+      alt="user-avatar"
+      draggable="false"
+    />
+    <a
+      className="link"
+      href="/profile"
+      onClick={[Function]}
+    />
+    <a
+      className="link"
+      href="/"
+      onClick={[Function]}
+    >
+      Выйти
+    </a>
+  </nav>
+  <div
+    className="wrapper"
+  >
+    <img
+      alt="bomberman-logo"
+      className="logo"
+      draggable="false"
+    />
+    <div
+      className="descriptionTop"
+    >
+      Привет 
+      ! 
+      <br />
+      Спешим напомнить, что ты в любой момент можешь освежить свои знания по игре, перечитав
+       
+      <a
+        className="link"
+        href="/rules"
+        onClick={[Function]}
+      >
+        правила
+      </a>
+       
+      и посмотреть
+       
+      <a
+        className="link"
+        href="/leaderboard"
+        onClick={[Function]}
+      >
+        таблицу лидеров!
+      </a>
+    </div>
+    <a
+      className="linkButton"
+      href="/game"
+      onClick={[Function]}
+    >
+      Погнали
+    </a>
+    <div
+      className="descriptionBottom"
+    >
+      Есть вопросы? Скорее переходи к нам на
+       
+      <a
+        className="link"
+        href="/forum"
+        onClick={[Function]}
+      >
+        форум
+      </a>
+    </div>
+  </div>
+  <img
+    alt="hero-img"
+    className="heroImg"
+    draggable="false"
+  />
+</div>
+`;
+
+exports[`<Landing/> snapshot test cases <Landing/> should render <div className=landing> parent with child elements (NO_AUTH) 1`] = `
+<div
+  className="landing"
+>
+  <div
+    className="wrapper"
+  >
+    <img
+      alt="bomberman-logo"
+      className="logo"
+      draggable="false"
+    />
+    <div
+      className="descriptionTop"
+    >
+      Привет, мы рады приветствовать тебя! 
+      <br />
+      Прежде чем ты начнёшь взрывать всё вокруг, загляни в
+       
+      <a
+        className="link"
+        href="/rules"
+        onClick={[Function]}
+      >
+        правила
+      </a>
+      . Уверены, это поможет тебе возглавить нашу
+       
+      <a
+        className="link"
+        href="/leaderboard"
+        onClick={[Function]}
+      >
+        таблицу лидеров!
+      </a>
+    </div>
+    <div
+      className="buttonWrapper"
+    >
+      <a
+        className="linkButton"
+        href="/sign-in"
+        onClick={[Function]}
+      >
+        Войти
+      </a>
+      <a
+        className="linkButton"
+        href="/sign-up"
+        onClick={[Function]}
+      >
+        Зарегистрироваться
+      </a>
+    </div>
+    <div
+      className="descriptionBottom"
+    >
+      Есть вопросы? Скорее переходи к нам на
+       
+      <a
+        className="link"
+        href="/forum"
+        onClick={[Function]}
+      >
+        форум
+      </a>
+    </div>
+  </div>
+  <img
+    alt="hero-img"
+    className="heroImg"
+    draggable="false"
+  />
+</div>
+`;

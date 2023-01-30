@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorBoundary/> snapshot test cases <ErrorBoundary/> should render <div>mockChildrenElement</div> 1`] = `
+<div>
+  mockChildrenElement
+</div>
+`;

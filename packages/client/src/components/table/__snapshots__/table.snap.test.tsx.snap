@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Table/> snapshot test cases <Table/> should render <table className=table> parent with child elements (with mockProps) 1`] = `
+<table
+  className="table"
+>
+  <thead>
+    <tr>
+      <th
+        className="tableTitle"
+      >
+        Автор
+      </th>
+      <th
+        className="tableTitle"
+      >
+        Тема
+      </th>
+      <th
+        className="tableTitle"
+      >
+        Дата
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td
+        className="tableRow"
+      >
+        Kan88
+      </td>
+      <td
+        className="tableRow"
+      >
+        Как пройти первый уровень
+      </td>
+      <td
+        className="tableRow"
+      >
+        8.01.22
+      </td>
+    </tr>
+    <tr>
+      <td
+        className="tableRow"
+      >
+        sasha85
+      </td>
+      <td
+        className="tableRow"
+      >
+        Как создать новую тему
+      </td>
+      <td
+        className="tableRow"
+      >
+        8.01.22
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;

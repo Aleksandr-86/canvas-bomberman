@@ -1,0 +1,139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FormField/> snapshot test cases <FormField/> should render <div className=field}> with childrenElement 1`] = `
+<div
+  className="field"
+>
+  <label
+    className="label"
+  />
+  <div>
+    <input
+      className="input"
+      name="mockName"
+      onChange={[Function]}
+      type="tel"
+      value="mockValue"
+    />
+    <div>
+      childrenElement
+    </div>
+  </div>
+  <p
+    className="error"
+  />
+</div>
+`;
+
+exports[`<FormField/> snapshot test cases <FormField/> should render <div className=field}> with mockErrorText (disabled FALSE) 1`] = `
+<div
+  className="field"
+>
+  <label
+    className="label"
+  />
+  <div>
+    <input
+      className="input"
+      disabled={false}
+      name="mockName"
+      onChange={[Function]}
+      type="tel"
+      value="mockValue"
+    />
+  </div>
+  <p
+    className="error"
+  >
+    mockErrorText
+  </p>
+</div>
+`;
+
+exports[`<FormField/> snapshot test cases <FormField/> should render <input> with type email (type email) 1`] = `
+<div
+  className="field"
+>
+  <label
+    className="label"
+  />
+  <div>
+    <input
+      className="input"
+      name="mockName"
+      onChange={[Function]}
+      type="email"
+      value="mockValue"
+    />
+  </div>
+  <p
+    className="error"
+  />
+</div>
+`;
+
+exports[`<FormField/> snapshot test cases <FormField/> should render <input> with type password (type password) 1`] = `
+<div
+  className="field"
+>
+  <label
+    className="label"
+  />
+  <div>
+    <input
+      className="input"
+      name="mockName"
+      onChange={[Function]}
+      type="password"
+      value="mockValue"
+    />
+  </div>
+  <p
+    className="error"
+  />
+</div>
+`;
+
+exports[`<FormField/> snapshot test cases <FormField/> should render <input> with type tel (type tel) 1`] = `
+<div
+  className="field"
+>
+  <label
+    className="label"
+  />
+  <div>
+    <input
+      className="input"
+      name="mockName"
+      onChange={[Function]}
+      type="tel"
+      value="mockValue"
+    />
+  </div>
+  <p
+    className="error"
+  />
+</div>
+`;
+
+exports[`<FormField/> snapshot test cases <FormField/> should render <input> with type text (default) 1`] = `
+<div
+  className="field"
+>
+  <label
+    className="label"
+  />
+  <div>
+    <input
+      className="input"
+      name="mockName"
+      onChange={[Function]}
+      type="text"
+      value="mockValue"
+    />
+  </div>
+  <p
+    className="error"
+  />
+</div>
+`;
