@@ -5,7 +5,8 @@
 }
 
 .buttonLink {
-  font-size: 30px;
+  display: block;
+  font-size: 25px;
   font-family: 'Rubik Bubbles', fantasy;
   text-transform: uppercase;
   cursor: pointer;
