@@ -12,7 +12,7 @@ describe(`<SignIn/> snapshot test cases`, () => {
     const tree = renderer
       .create(
         <Provider store={store}>
-          <MemoryRouter initialEntries={[`signIn`]}>
+          <MemoryRouter initialEntries={[`/signIn`]}>
             <SignIn />
           </MemoryRouter>
         </Provider>
