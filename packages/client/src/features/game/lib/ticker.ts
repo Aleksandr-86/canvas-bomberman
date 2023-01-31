@@ -1,10 +1,10 @@
-export type TickState = {
+export type FrameData = {
   delta: number
   now: number
   frameCount: number
 }
 
-type TickCallback = (current: TickState) => void
+type TickCallback = (current: FrameData) => void
 
 export class Ticker {
   public delta = 0
