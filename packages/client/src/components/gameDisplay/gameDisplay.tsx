@@ -14,11 +14,11 @@ export const GameDisplay: React.FC = () => {
     if (!canvas) return
 
     const game = new Game({
-      heigth: 720,
+      height: 720,
       width: 1280,
       backgroundColor: 'teal',
       root: canvas,
-      ...bombermanScene,
+      scene: bombermanScene,
     })
 
     game.start()
