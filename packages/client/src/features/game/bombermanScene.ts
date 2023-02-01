@@ -1,72 +1,37 @@
-import { CELL_WIDTH } from './const'
+import { CELL_WIDTH, EMPTY_FIELD_1D, GRID_HEIGHT, GRID_WIDTH } from './const'
 import { Sprite } from './lib/gameObjects'
-import { type SceneContext, type Scene } from './lib/scene'
-import { Textures } from './lib/textures'
-import { store } from '../../store'
-import { playerReset } from '../../store/gameSlice'
-import { Vec2 } from './utils/vec2'
-import { AnimatedSprite } from './lib/gameObjects/animatedSprite'
-import { placeBomb } from './gameActions'
-import { createTiles } from './createTiles'
-import { move, getField } from './gameActions'
+import { type SceneConfig } from './lib'
 
-export const bombermanScene = {
-  create: (scene: Scene) => {
-    const { x: doorx, y: doory } = store.getState().game.doorPosition
+import hero from '../../assets/images/hero.png'
 
-    const door = new Sprite(
-      Textures.Blue,
-      CELL_WIDTH * doorx,
-      CELL_WIDTH * doory,
-      CELL_WIDTH,
-      CELL_WIDTH,
-      2
-    )
+let player: Sprite
+let bomb: Sprite
 
-    const player = new Sprite(
-      Textures.Blue,
-      CELL_WIDTH,
-      CELL_WIDTH,
-      CELL_WIDTH,
-      CELL_WIDTH,
-      2,
-      'player'
-    )
+export const bombermanScene: SceneConfig = {
+  preload: load => {
+    load.image('hero', hero)
+  },
+  create: scene => {
+    player = scene.add.sprite(20, 20, 'hero')
 
-    window.addEventListener('keypress', e => {
-      if (e.code === 'KeyR') {
-        store.dispatch(playerReset())
-      }
-    })
+    // should add fallback texture
+    bomb = scene.add.sprite(20, 20, 'wood')
 
-    store.subscribe(() => {
-      const { doorPosition, playerPosition } = store.getState().game
-
-      if (Vec2.equals(doorPosition, playerPosition)) {
-        console.log('you won')
-      }
-      const { x, y } = Vec2.mul(playerPosition, CELL_WIDTH)
-
-      scene.clear()
-      const map = createTiles(getField())
-      map.forEach(o => scene.add(o))
-      scene.add(door)
-      scene.sort()
-      scene.add(player)
-      console.log(player)
-
-      player.x = x
-      player.y = y
-      player.width = CELL_WIDTH
-      player.height = CELL_WIDTH
+    scene.add.tileGrid({
+      grid: EMPTY_FIELD_1D,
+      cellSize: CELL_WIDTH,
+      width: GRID_WIDTH,
+      height: GRID_HEIGHT,
+      cells: {
+        0: 'red',
+        1: 'blue',
+      },
     })
   },
-  update: ({ kbd }: SceneContext) => {
-    if (kbd.left) move(Vec2.Left)
-    if (kbd.right) move(Vec2.Right)
-    if (kbd.up) move(Vec2.Up)
-    if (kbd.down) move(Vec2.Down)
-
-    if (kbd.space) placeBomb()
+  update: (scene, frame, kbd) => {
+    if (kbd.left) player.x -= 300 * frame.delta
+    if (kbd.right) player.x += 300 * frame.delta
+    if (kbd.up) player.y -= 300 * frame.delta
+    if (kbd.down) player.y += 300 * frame.delta
   },
 }
