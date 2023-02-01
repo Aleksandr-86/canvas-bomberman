@@ -1,66 +1,102 @@
 import { startGame } from '../gameActions'
+import { Vec2 } from '../utils'
 import { Keyboard } from './keyboard'
-import { Scene, type SceneContext } from './scene'
-import { Ticker } from './ticker'
+import { Loader } from './loader'
+import { SceneContext } from './sceneContext'
+import { FrameData, Ticker } from './ticker'
+
+/**
+ * `preload` - used to load assets
+ *
+ * `create` - create game objects, run once after `preload`
+ *
+ * `update` - run every frame, update your gameObjects here
+ */
+export type SceneConfig = {
+  preload: (load: Loader) => void
+  create: (scene: SceneContext) => void
+  update: (scene: SceneContext, frame: FrameData, kbd: Keyboard) => void
+}
 
 interface GameConfig {
   width: number
-  heigth: number
+  height: number
   root: HTMLCanvasElement
-  create: (scene: Scene) => void
-  update: (ctx: SceneContext) => void
+  scene: SceneConfig
   backgroundColor: string
 }
 
 export class Game {
   private kbd: Keyboard = new Keyboard()
-  private scene = new Scene()
+
+  private sceneContext
+
+  private loader
+
   private ticker = new Ticker()
+
+  private scene: SceneConfig
+
   private root: HTMLCanvasElement
   private ctx: CanvasRenderingContext2D
-  public screenWidth: number
-  public screenHeight: number
-  private update: (ctx: SceneContext) => void
-  private create: (scene: Scene) => void
   public started = false
 
-  constructor({
-    root,
-    width,
-    heigth,
-    update,
-    create,
-    backgroundColor,
-  }: GameConfig) {
+  constructor({ root, width, height, backgroundColor, scene }: GameConfig) {
     this.root = root
-    this.screenWidth = width
-    this.screenHeight = heigth
-    this.update = update
-    this.create = create
-
     const ctx = root.getContext('2d')
 
     if (!ctx) {
       throw new Error('Error getting context')
     }
-    ctx.imageSmoothingEnabled = false
 
     this.ctx = ctx
+    this.setCanvasProps(width, height, backgroundColor)
+    this.scene = scene
+    this.sceneContext = new SceneContext(new Vec2(width, height))
+    this.loader = new Loader(this.sceneContext)
+  }
+
+  private setCanvasProps(
+    width: number,
+    height: number,
+    backgroundColor: string
+  ) {
+    this.ctx.imageSmoothingEnabled = false
+
     this.root.width = width
-    this.root.height = heigth
+    this.root.height = height
     this.root.style.backgroundColor = backgroundColor
   }
 
-  start() {
-    this.create(this.scene)
-    this.ticker.add(time => {
-      this.update({
-        time,
-        kbd: this.kbd,
-        scene: this.scene,
-      })
-      this.ctx.clearRect(0, 0, this.screenWidth, this.screenHeight)
-      this.scene.render(this.ctx, time)
+  private async loadFallbackTextures() {
+    const colors = ['black', 'white', 'yellow', 'blue', 'red']
+
+    const textureSize = 128
+    const canvas = document.createElement('canvas')
+    canvas.width = textureSize
+    canvas.height = textureSize
+    const ctx = canvas.getContext('2d')
+    if (!ctx) throw new Error('error getting context')
+
+    colors.forEach(color => {
+      ctx.fillStyle = color
+      ctx.fillRect(0, 0, textureSize, textureSize)
+      this.loader.image(color, canvas.toDataURL())
+    })
+
+    await this.loader.start()
+  }
+
+  async start() {
+    await this.loadFallbackTextures()
+    this.scene.preload(this.loader)
+    await this.loader.start()
+
+    this.scene.create(this.sceneContext)
+
+    this.ticker.add(frameData => {
+      this.scene.update(this.sceneContext, frameData, this.kbd)
+      this.sceneContext.render(this.ctx, frameData)
     })
 
     this.ticker.start()
