@@ -1,21 +1,15 @@
-import { type Drawable } from './types'
-import { nanoid } from '@reduxjs/toolkit'
-import { Vec2 } from '../../utils'
+import type { Depth, Position, Drawable } from './types'
 
-export class Rect implements Drawable {
+export class Rect implements Drawable, Position, Depth {
+  public z = 0
+
   constructor(
-    public color: string,
     public x: number,
     public y: number,
-    public z = 1,
     public width: number,
     public height: number,
-    public id: string = nanoid()
+    public color: string
   ) {}
-
-  get position() {
-    return new Vec2(this.x, this.y)
-  }
 
   exec(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = this.color

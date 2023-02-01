@@ -1,23 +1,53 @@
-import { type Drawable } from './types'
-import { nanoid } from '@reduxjs/toolkit'
-import { Vec2 } from '../../utils'
+import type { Depth, Position, Transform, Drawable } from './types'
+import { type Texture } from '../texture'
 
-export class Sprite implements Drawable {
+export class Sprite implements Drawable, Position, Depth, Transform {
+  public z = 0
+  public scaleX = 1
+  public scaleY = 1
+  public skewX = 0
+  public skewY = 0
+  public translateX = 0
+  public translateY = 0
+  public rotation = 0
+  public width
+  public height
+
   constructor(
-    public texture: HTMLImageElement,
     public x: number,
     public y: number,
-    public z = 1,
-    public width: number,
-    public height: number,
-    public id: string = nanoid()
-  ) {}
-
-  get position() {
-    return new Vec2(this.x, this.y)
+    public texture: Texture,
+    private frame: keyof typeof texture.frames = '__base'
+  ) {
+    const { width, height } = texture.frames[frame]
+    this.width = width
+    this.height = height
   }
 
   exec(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this.texture, this.x, this.y, this.width, this.height)
+    const {
+      texture,
+      frame,
+      x,
+      y,
+      width,
+      height,
+      scaleX,
+      scaleY,
+      skewX,
+      skewY,
+      translateX,
+      translateY,
+    } = this
+
+    const {
+      x: sx,
+      y: sy,
+      width: sWidth,
+      height: sHeight,
+    } = texture.frames[frame]
+
+    ctx.setTransform(scaleX, skewX, skewY, scaleY, translateX, translateY)
+    ctx.drawImage(texture.source, sx, sy, sWidth, sHeight, x, y, width, height)
   }
 }
