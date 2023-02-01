@@ -1,11 +1,25 @@
-import { TickState } from '../ticker'
+import { type FrameData } from '../ticker'
 
-export interface Drawable {
-  id: string
+export interface Position {
   x: number
   y: number
-  z: number
-  width: number
-  height: number
-  exec: (ctx: CanvasRenderingContext2D, time: TickState) => void
 }
+
+export interface Depth {
+  z: number
+}
+
+export interface Transform {
+  scaleX: number
+  scaleY: number
+  skewX: number
+  skewY: number
+  translateX: number
+  translateY: number
+}
+
+export interface Drawable {
+  exec: (ctx: CanvasRenderingContext2D, time: FrameData) => void
+}
+
+export type SceneObject = Drawable & Depth & Position
