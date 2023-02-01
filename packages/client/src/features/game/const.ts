@@ -1,5 +1,6 @@
 import { FieldState } from './types'
 import { Vec2 } from './utils/vec2'
+import { type Kind } from './types'
 
 export const EMPTY_FIELD: FieldState = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -16,8 +17,38 @@ export const EMPTY_FIELD: FieldState = [
   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ]
+
+// prettier-ignore
+export const EMPTY_FIELD_1D: Kind[] = [
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+]
 export const GRID_WIDTH = 19
 export const GRID_HEIGHT = 13
 export const CELL_WIDTH = 80
-export const PLAYER_STARTING_POSITION = new Vec2(1, 1)
-export const PLAYER_ANIMATION_DURATION = 800
+export const PLAYER_STARTING_POSITION = new Vec2(1, 1).point
+export const MOVEMENT_COOLDOWN = 300
+export const BOMB_COOLDOWN = 800
+export const BOMB_TIMER = 1800
+export const PLAYER_ANIMATION_DURATION = MOVEMENT_COOLDOWN
+export const CAMERA_WIDTH = 1280
+export const CAMERA_HEIGHT = 720
+export const EXPLOSION_RADIUS = 1
+export const Points = {
+  Enemy: {
+    Baloon: 200,
+  },
+  Time: 10,
+  Wall: 50,
+}

@@ -1,6 +1,7 @@
 import { CELL_WIDTH, EMPTY_FIELD_1D, GRID_HEIGHT, GRID_WIDTH } from './const'
 import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
+import { Kind } from './types'
 
 import hero from '../../assets/images/hero.png'
 
@@ -23,8 +24,8 @@ export const bombermanScene: SceneConfig = {
       width: GRID_WIDTH,
       height: GRID_HEIGHT,
       cells: {
-        0: 'red',
-        1: 'blue',
+        [Kind.Empty]: 'red',
+        [Kind.WallHard]: 'blue',
       },
     })
   },
