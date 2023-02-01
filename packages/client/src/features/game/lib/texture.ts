@@ -1,4 +1,4 @@
-type Rect = {
+export type Frame = {
   x: number
   y: number
   width: number
@@ -6,7 +6,7 @@ type Rect = {
 }
 
 export class Texture {
-  public frames: Record<string, Rect> = {}
+  public frames: Record<string, Frame> = {}
 
   constructor(
     public key: string,
@@ -17,7 +17,7 @@ export class Texture {
     this.frames.__base = { x: 0, y: 0, width, height }
   }
 
-  public addFrame(key: string, frame: Rect) {
+  public addFrame(key: string, frame: Frame) {
     this.frames[key] = frame
   }
 }
