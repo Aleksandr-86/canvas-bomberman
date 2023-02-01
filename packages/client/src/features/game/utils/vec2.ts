@@ -1,3 +1,5 @@
+import { type Point } from '../../../store/gameSlice'
+
 /* origin is at the top left */
 export class Vec2 {
   static get Down() {
@@ -32,8 +34,12 @@ export class Vec2 {
     return new Vec2(this.x, this.y)
   }
 
-  get pojo() {
+  get point(): Point {
     return { x: this.x, y: this.y }
+  }
+
+  static fromPoint({ x, y }: Point) {
+    return new Vec2(x, y)
   }
 
   static equals(v1: Vec2, v2: Vec2) {
