@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorStub/> snapshot test cases <ErrorStub/> should render <div className=errorStub> parent with child elements 1`] = `
+<div
+  className="errorStub"
+>
+  <p>
+    <span
+      className="errorStubTextDanger"
+    >
+      БАААБАААХ!
+    </span>
+     И ВСЁ СЛОМАЛОСЬ!
+  </p>
+  <img
+    alt="Герой символизирующий ошибку"
+    draggable={false}
+    height={426}
+    width={426}
+  />
+  <p>
+    НО МЫ УЖЕ ЧИНИМ!
+  </p>
+</div>
+`;

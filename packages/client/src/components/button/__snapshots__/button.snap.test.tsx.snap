@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Button/> snapshot test cases <Button/> should render <button className=button mockClass> with mockProps 1`] = `
+<button
+  className="button mockClass"
+  onClick={[Function]}
+  type="submit"
+>
+  mockChildren
+</button>
+`;
+
+exports[`<Button/> snapshot test cases <Button/> should render <button className=button> with text 1`] = `
+<button
+  className="button"
+>
+  Кнопка
+</button>
+`;

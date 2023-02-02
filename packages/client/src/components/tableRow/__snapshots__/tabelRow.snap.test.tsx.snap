@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TableRow/> snapshot test cases <TableRow/> should render <tr> parent with <td className=tableRow> childs (with mockProps) 1`] = `
+<tr>
+  <td
+    className="tableRow"
+  >
+    Kan88
+  </td>
+  <td
+    className="tableRow"
+  >
+    Как пройти первый уровень
+  </td>
+  <td
+    className="tableRow"
+  >
+    8.01.22'.
+  </td>
+</tr>
+`;
