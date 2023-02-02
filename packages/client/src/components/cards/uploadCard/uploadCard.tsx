@@ -5,6 +5,8 @@ import { Modal } from '../../modal/modal'
 import cardStyles from '../card.module.css'
 import inputStyles from '../../formField/formField.module.css'
 import uploadStyles from './uploadCard.module.css'
+import { useAppDispatch } from '../../../store/hooks'
+import { uploadAvatar } from '../../../store/userActions'
 
 interface Props {
   isActive?: boolean
@@ -12,6 +14,7 @@ interface Props {
 }
 
 export const UploadCard: React.FC<Props> = props => {
+  const dispatch = useAppDispatch()
   const [label, setLabel] = useState('Файл не выбран')
   const [file, setFile] = useState({} as File | null)
 
@@ -40,6 +43,8 @@ export const UploadCard: React.FC<Props> = props => {
 
     const _file = new FormData()
     _file.append('avatar', file)
+
+    dispatch(uploadAvatar(_file))
 
     setFile(null)
     setLabel('Файл не выбран')
