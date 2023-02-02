@@ -99,7 +99,7 @@ const userSlice = createSlice({
         state.isLoading = false
 
         if (avatar) {
-          state.user.avatar = `${API_URL}resources${avatar}`
+          state.user.avatar = avatar
         }
       })
       .addCase(uploadAvatar.rejected, (state, action) => {
