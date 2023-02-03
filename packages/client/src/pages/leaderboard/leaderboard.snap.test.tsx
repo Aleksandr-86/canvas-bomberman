@@ -6,7 +6,17 @@ import { MemoryRouter } from 'react-router-dom'
 
 const mockStore = configureStore([])
 const store = mockStore({
-  user: { isAuth: true },
+  user: {
+    isAuth: true,
+    user: {
+      displayName: `mockDisplayName`,
+      login: `mockLogin`,
+      firstName: `mockFirstName`,
+      secondName: `mockSecondName`,
+      email: `mockEmail`,
+      phone: 8900000000,
+    }
+  },
   playersStats: [
     {
       id: 1,

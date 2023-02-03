@@ -15,7 +15,9 @@ exports[`<Landing/> snapshot test cases <Landing/> should render <div className=
       className="link"
       href="/profile"
       onClick={[Function]}
-    />
+    >
+      mockDisplayName
+    </a>
     <a
       className="link"
       href="/"
@@ -36,6 +38,7 @@ exports[`<Landing/> snapshot test cases <Landing/> should render <div className=
       className="descriptionTop"
     >
       Привет 
+      mockDisplayName
       ! 
       <br />
       Спешим напомнить, что ты в любой момент можешь освежить свои знания по игре, перечитав

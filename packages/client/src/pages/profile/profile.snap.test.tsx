@@ -7,12 +7,15 @@ import configureStore from 'redux-mock-store'
 const mockStore = configureStore([])
 const store = mockStore({
   user: {
-    displayName: `mockDisplayName`,
-    login: `mockLogin`,
-    firstName: `mockFirstName`,
-    secondName: `mockSecondName`,
-    email: `mockEmail`,
-    phone: 8900000000,
+    isAuth: true,
+    user: {
+      displayName: `mockDisplayName`,
+      login: `mockLogin`,
+      firstName: `mockFirstName`,
+      secondName: `mockSecondName`,
+      email: `mockEmail`,
+      phone: 8900000000,
+    }
   },
 })
 

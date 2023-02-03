@@ -5,10 +5,22 @@ import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
 const mockStore = configureStore([])
+const store = mockStore({
+  user: {
+    isAuth: true,
+    user: {
+      displayName: `mockDisplayName`,
+      login: `mockLogin`,
+      firstName: `mockFirstName`,
+      secondName: `mockSecondName`,
+      email: `mockEmail`,
+      phone: 8900000000,
+    }
+  },
+})
 
 describe(`<Landing/> snapshot test cases`, () => {
   test(`<Landing/> should render <div className=landing> parent with child elements (AUTH)`, () => {
-    const store = mockStore({ user: { isAuth: true } })
 
     const tree = renderer
       .create(
