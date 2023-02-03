@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { API_URL } from '../typings/api'
 import {
   editData,
   editPassword,
