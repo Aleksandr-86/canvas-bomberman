@@ -5,6 +5,8 @@ export type Frame = {
   height: number
 }
 
+type FrameEntries = Record<string, Frame>
+
 export class Texture {
   public frames: Record<string, Frame> = {}
 
@@ -17,7 +19,10 @@ export class Texture {
     this.frames.__base = { x: 0, y: 0, width, height }
   }
 
-  public addFrame(key: string, frame: Frame) {
-    this.frames[key] = frame
+  public addFrame(entries: FrameEntries) {
+    this.frames = {
+      ...this.frames,
+      ...entries,
+    }
   }
 }
