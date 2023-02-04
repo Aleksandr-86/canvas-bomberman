@@ -4,12 +4,13 @@ import { Rect } from './rect'
 import { Sprite } from './sprite'
 import { type SceneObject } from './types'
 
+type TextureFrame = `${string}:${string}`
+
 type TileGridConfig<C extends number = number> = {
   grid: C[]
-  width: number
-  height: number
+  gridWidth: number
   cellSize: number
-  cells: Record<number, string>
+  cells: Record<C, TextureFrame>
 }
 
 export class GameObjectFactory {
@@ -21,6 +22,9 @@ export class GameObjectFactory {
       : [...this.scene.displayList, object]
   }
 
+  /**
+   * Create and add rectangle to scene
+   */
   rect(x: number, y: number, width: number, height: number, fill: string) {
     const gameObject = new Rect(x, y, width, height, fill)
 
@@ -28,33 +32,35 @@ export class GameObjectFactory {
     return gameObject
   }
 
-  tileGrid({ grid, width, height, cellSize, cells }: TileGridConfig) {
+  /**
+   * Create and add grid of tiles to scene
+   *
+   * From 1D array (row-major order) of tile kinds and mapping of tile kinds to colon-separated string describing texture and its frame
+   *
+   * `<textureKey>:<textureFrameKey>`
+   */
+  tileGrid({ grid, gridWidth, cellSize, cells }: TileGridConfig) {
     const tiles = []
 
     for (let i = 0; i < grid.length; ++i) {
-      const textureKey = grid[i]
+      const [textureKey, frameKey] = cells[grid[i]].split(':')
+
       const texture =
-        this.scene.textures.get(cells[textureKey]) ||
+        this.scene.textures.get(textureKey) ||
         (this.scene.textures.get('white') as Texture)
 
-      const col = i % width
-      const row = Math.trunc(i / height)
-
-      // fallback textures are 128 px wide, add crop frame on the fly
-      const cropKey = '__crop'
-      texture.addFrame(cropKey, {
-        x: 0,
-        y: 0,
-        width: cellSize,
-        height: cellSize,
-      })
+      const col = i % gridWidth
+      const row = Math.trunc(i / gridWidth)
 
       const sprite = new Sprite(
         col * cellSize,
         row * cellSize,
         texture,
-        cropKey
+        frameKey
       )
+
+      sprite.width = cellSize
+      sprite.height = cellSize
 
       // put grid in background
       sprite.z = -1
@@ -65,28 +71,16 @@ export class GameObjectFactory {
     return tiles
   }
 
-  sprite(
-    x: number,
-    y: number,
-    textureKey: string,
-    frame: string | [string, Rect] = '__base'
-  ) {
+  /**
+   * Create and add Sprite with given key and frame to scene
+   */
+  sprite(x: number, y: number, textureKey: string, frameKey = '__base') {
     const texture =
       this.scene.textures.get(textureKey) ||
       (this.scene.textures.get('white') as Texture)
 
-    // TODO: handle frames
-
-    if (Array.isArray(frame)) {
-      const [key, rect] = frame
-      texture.addFrame(key, rect)
-      const gameObject = new Sprite(x, y, texture, key)
-      this.register(gameObject)
-      return gameObject
-    } else {
-      const gameObject = new Sprite(x, y, texture)
-      this.register(gameObject)
-      return gameObject
-    }
+    const gameObject = new Sprite(x, y, texture, frameKey)
+    this.register(gameObject)
+    return gameObject
   }
 }
