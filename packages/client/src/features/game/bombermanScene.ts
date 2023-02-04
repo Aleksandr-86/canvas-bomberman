@@ -4,30 +4,53 @@ import { type SceneConfig } from './lib'
 import { Kind } from './types'
 
 import hero from '../../assets/images/hero.png'
+import nesBomberman from '../../assets/images/nesBomberman3x.png'
+import nesBombermanFrames from '../../assets/images/nesBomberman3x.json'
+
+const atlasToFrames = ({ cellSize, entries }: typeof nesBombermanFrames) => {
+  return Object.fromEntries(
+    Object.entries(entries).map(([key, { x, y }]) => [
+      key,
+      {
+        x: x * cellSize,
+        y: y * cellSize,
+        width: cellSize,
+        height: cellSize,
+      },
+    ])
+  )
+}
 
 let player: Sprite
-let bomb: Sprite
 
 export const bombermanScene: SceneConfig = {
   preload: load => {
     load.image('hero', hero)
+    load.image('nesBomberman', nesBomberman, texture => {
+      const frames = atlasToFrames(nesBombermanFrames)
+
+      texture.addFrame(frames)
+    })
   },
   create: scene => {
-    player = scene.add.sprite(20, 20, 'hero')
-
-    // should add fallback texture
-    bomb = scene.add.sprite(20, 20, 'wood')
+    player = scene.add.sprite(20, 20, 'nesBomberman', 'bombermanDown2')
+    player.scaleX = 80 / 48
+    player.scaleY = 80 / 48
 
     scene.add.tileGrid({
       grid: EMPTY_FIELD_1D,
       cellSize: CELL_WIDTH,
-      width: GRID_WIDTH,
-      height: GRID_HEIGHT,
+      gridWidth: GRID_WIDTH,
       cells: {
-        [Kind.Empty]: 'red',
-        [Kind.WallHard]: 'blue',
+        [Kind.Empty]: 'nesBomberman:empty',
+        [Kind.WallHard]: 'nesBomberman:wallHard',
+        [Kind.WallSoft]: 'nesBomberman:wallSoft',
       },
     })
+    const bomb = scene.add.sprite(80, 80, 'nesBomberman', 'bomb1')
+    bomb.width = 80
+    bomb.height = 80
+    bomb.z = -1
   },
   update: (scene, frame, kbd) => {
     if (kbd.left) player.x -= 300 * frame.delta
