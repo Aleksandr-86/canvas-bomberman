@@ -37,6 +37,8 @@ export class GameObjectFactory {
    *
    * From 1D array (row-major order) of tile kinds and mapping of tile kinds to colon-separated string describing texture and its frame
    *
+   * If texture in mapping not found, cell is skipped
+   *
    * `<textureKey>:<textureFrameKey>`
    */
   tileGrid({ grid, gridWidth, cellSize, cells }: TileGridConfig) {
@@ -45,9 +47,9 @@ export class GameObjectFactory {
     for (let i = 0; i < grid.length; ++i) {
       const [textureKey, frameKey] = cells[grid[i]].split(':')
 
-      const texture =
-        this.scene.textures.get(textureKey) ||
-        (this.scene.textures.get('white') as Texture)
+      const texture = this.scene.textures.get(textureKey)
+
+      if (!texture) continue
 
       const col = i % gridWidth
       const row = Math.trunc(i / gridWidth)
