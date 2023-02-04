@@ -2,17 +2,11 @@ import { loadImage } from '../utils'
 import { type SceneContext } from './sceneContext'
 import { Texture } from './texture'
 
-type FileType = 'image'
-
 type Resource = {
-  type: FileType
   key: string
   url: string
+  onLoad?: (file: any) => void
 }
-
-const FileTypeToImpl = {
-  image: loadImage,
-} as const
 
 export class Loader {
   private queue: Resource[] = []
@@ -20,22 +14,26 @@ export class Loader {
 
   constructor(private scene: SceneContext) {}
 
-  image(key: string, resourceUrl: string) {
+  image(key: string, url: string, onLoad?: (file: Texture) => void) {
     this.queue.push({
       key,
-      type: 'image',
-      url: resourceUrl,
+      url,
+      onLoad,
     })
   }
 
   async start() {
     this.status = 'loading'
 
-    for (const { url, type, key } of this.queue) {
-      const loaderImpl = FileTypeToImpl[type]
+    for (const { url, key, onLoad } of this.queue) {
       try {
-        const image = await loaderImpl(url)
-        this.scene.textures.set(key, new Texture(key, image))
+        const image = await loadImage(url)
+        const texture = new Texture(key, image)
+        if (onLoad) {
+          onLoad(texture)
+        }
+
+        this.scene.textures.set(key, texture)
       } catch (error) {
         console.error(error)
       }
