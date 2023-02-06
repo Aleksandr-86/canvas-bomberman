@@ -11,6 +11,7 @@ type TileGridConfig<C extends number = number> = {
   gridWidth: number
   cellSize: number
   cells: Record<C, TextureFrame>
+  depth: number
 }
 
 export class GameObjectFactory {
@@ -20,6 +21,7 @@ export class GameObjectFactory {
     this.scene.displayList = Array.isArray(object)
       ? this.scene.displayList.concat(object)
       : [...this.scene.displayList, object]
+    this.scene.depthSort()
   }
 
   /**
@@ -28,7 +30,7 @@ export class GameObjectFactory {
   rect(x: number, y: number, width: number, height: number, fill: string) {
     const gameObject = new Rect(x, y, width, height, fill)
 
-    this.scene.displayList.push()
+    this.register(gameObject)
     return gameObject
   }
 
@@ -41,7 +43,7 @@ export class GameObjectFactory {
    *
    * `<textureKey>:<textureFrameKey>`
    */
-  tileGrid({ grid, gridWidth, cellSize, cells }: TileGridConfig) {
+  tileGrid({ grid, gridWidth, cellSize, cells, depth }: TileGridConfig) {
     const tiles = []
 
     for (let i = 0; i < grid.length; ++i) {
@@ -64,8 +66,7 @@ export class GameObjectFactory {
       sprite.width = cellSize
       sprite.height = cellSize
 
-      // put grid in background
-      sprite.z = -1
+      sprite.z = depth
       tiles.push(sprite)
     }
 
