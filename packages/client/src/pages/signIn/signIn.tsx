@@ -10,12 +10,17 @@ import { getValidations } from '../../features/validation'
 import styles from './signIn.module.css'
 import baseStyles from '../../app/app.module.css'
 
+import { getAuth } from '../../store/userSlice'
+import { IFormData } from '../../hooks/useAuth'
+import { useAppDispatch } from '../../store/hooks'
+
 type FormType = {
   login: string
   password: string
 }
 
 export const SignIn: React.FC = () => {
+  const dispatch = useAppDispatch()
   const [validations, setValidations] = useState<Validations<FormType>>()
 
   useEffect(() => {
@@ -28,7 +33,8 @@ export const SignIn: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
+    const data: IFormData = { name: '', password: '' }
+    dispatch(getAuth(data))
     if (isValid()) {
       alert(`Данные готовы к отправке: ${JSON.stringify(values, null, 4)}`)
     }
