@@ -8,11 +8,13 @@ const store = mockStore({})
 
 describe(`<UploadCard/> snapshot test cases`, () => {
   test(`<UploadCard/> should render <Modal/> component with child <form> elements`, () => {
-    const tree = renderer.create(
-      <Provider store={store}>
-        <UploadCard />
-      </Provider>
-    ).toJSON()
+    const tree = renderer
+      .create(
+        <Provider store={store}>
+          <UploadCard />
+        </Provider>
+      )
+      .toJSON()
     expect(tree).toMatchSnapshot()
   })
 })

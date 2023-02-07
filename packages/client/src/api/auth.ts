@@ -1,4 +1,4 @@
-import axios, { AxiosError, isAxiosError } from 'axios'
+import axios from 'axios'
 import { transformUser } from '../features/api/apiTransformers'
 import { API_URL, UserDTO } from '../typings/api'
 
@@ -23,42 +23,43 @@ const options = {
   },
 }
 
-class AuthAPI {
-  public login = async (data: LoginRequestData) => {
-    const response = await axios.post(API_URL + 'auth/signin', data, {
-      ...options,
-    })
+const login = async (data: LoginRequestData) => {
+  const response = await axios.post(API_URL + 'auth/signin', data, {
+    ...options,
+  })
 
-    return response.data
-  }
-
-  public register = async (data: RegisterRequestData) => {
-    const response = await axios.post(API_URL + 'auth/signup', data, {
-      ...options,
-    })
-
-    return response.data
-  }
-
-  public me = async () => {
-    const response = await axios.get<UserDTO>(API_URL + 'auth/user', {
-      ...options,
-    })
-
-    return transformUser(response.data)
-  }
-
-  public logout = async () => {
-    const response = await axios(API_URL + 'auth/logout', {
-      method: 'post',
-      withCredentials: true,
-      headers: {
-        'content-type': 'application/json',
-      },
-    })
-
-    return response.data
-  }
+  return response.data
 }
 
-export default new AuthAPI()
+const register = async (data: RegisterRequestData) => {
+  const response = await axios.post(API_URL + 'auth/signup', data, {
+    ...options,
+  })
+
+  return response.data
+}
+
+const me = async () => {
+  const response = await axios.get<UserDTO>(API_URL + 'auth/user', {
+    ...options,
+  })
+
+  return transformUser(response.data)
+}
+
+const logout = async () => {
+  const response = await axios.post(API_URL + 'auth/logout', undefined, {
+    ...options,
+  })
+
+  return response.data
+}
+
+const AuthAPI = {
+  login,
+  logout,
+  me,
+  register,
+}
+
+export default AuthAPI

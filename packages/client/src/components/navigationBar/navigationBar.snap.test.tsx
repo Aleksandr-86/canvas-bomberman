@@ -16,7 +16,7 @@ const store = mockStore({
       email: `mockEmail`,
       phone: 8900000000,
     },
-  }
+  },
 })
 
 describe(`<NavigationBar/> snapshot test cases`, () => {

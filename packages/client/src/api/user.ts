@@ -23,35 +23,39 @@ const options = {
   },
 }
 
-class UserAPI {
-  public editData = async (data: EditRequestData) => {
-    const response = await axios.put<UserDTO>(API_URL + 'user/profile', data, {
-      ...options,
-    })
+const editData = async (data: EditRequestData) => {
+  const response = await axios.put<UserDTO>(API_URL + 'user/profile', data, {
+    ...options,
+  })
 
-    return transformUser(response.data)
-  }
-
-  public editPassword = async (data: PasswordRequestData) => {
-    const response = await axios.put(API_URL + 'user/password', data, {
-      ...options,
-    })
-
-    return response.data
-  }
-
-  public uploadAvatar = async (data: FormData) => {
-    const response = await axios.put<UserDTO>(
-      API_URL + 'user/profile/avatar',
-      data,
-      {
-        ...options,
-        headers: {},
-      }
-    )
-
-    return transformUser(response.data)
-  }
+  return transformUser(response.data)
 }
 
-export default new UserAPI()
+const editPassword = async (data: PasswordRequestData) => {
+  const response = await axios.put(API_URL + 'user/password', data, {
+    ...options,
+  })
+
+  return response.data
+}
+
+const uploadAvatar = async (data: FormData) => {
+  const response = await axios.put<UserDTO>(
+    API_URL + 'user/profile/avatar',
+    data,
+    {
+      ...options,
+      headers: {},
+    }
+  )
+
+  return transformUser(response.data)
+}
+
+const UserAPI = {
+  editData,
+  editPassword,
+  uploadAvatar,
+}
+
+export default UserAPI

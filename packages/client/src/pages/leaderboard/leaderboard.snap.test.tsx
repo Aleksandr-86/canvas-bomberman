@@ -15,7 +15,7 @@ const store = mockStore({
       secondName: `mockSecondName`,
       email: `mockEmail`,
       phone: 8900000000,
-    }
+    },
   },
   playersStats: [
     {

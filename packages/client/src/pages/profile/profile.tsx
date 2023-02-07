@@ -71,7 +71,6 @@ export const Profile: React.FC = () => {
 
   const handleEditData = () => {
     setEdit(!isEdit)
-    console.log(store.getState())
   }
 
   const handleExit = () => {

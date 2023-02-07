@@ -15,13 +15,12 @@ const store = mockStore({
       secondName: `mockSecondName`,
       email: `mockEmail`,
       phone: 8900000000,
-    }
+    },
   },
 })
 
 describe(`<Landing/> snapshot test cases`, () => {
   test(`<Landing/> should render <div className=landing> parent with child elements (AUTH)`, () => {
-
     const tree = renderer
       .create(
         <Provider store={store}>
