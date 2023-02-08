@@ -1,5 +1,6 @@
-export { Vec2 } from './vec2'
 export { delay } from './delay'
 export { clamp } from './clamp'
 export { lerp } from './lerp'
 export { loadImage } from './loadImage'
+export { Point } from './point'
+export type { TPoint } from './point'
