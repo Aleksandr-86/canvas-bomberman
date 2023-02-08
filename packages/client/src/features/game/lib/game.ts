@@ -1,9 +1,8 @@
-import { startGame } from '../gameActions'
-import { Vec2 } from '../utils'
 import { Keyboard } from './keyboard'
 import { Loader } from './loader'
 import { SceneContext } from './sceneContext'
 import { FrameData, Ticker } from './ticker'
+import { Point } from '../utils'
 
 /**
  * `preload` - used to load assets
@@ -52,7 +51,7 @@ export class Game {
     this.ctx = ctx
     this.setCanvasProps(width, height, backgroundColor)
     this.scene = scene
-    this.sceneContext = new SceneContext(new Vec2(width, height))
+    this.sceneContext = new SceneContext(Point.New(width, height))
     this.loader = new Loader(this.sceneContext)
   }
 
@@ -101,7 +100,6 @@ export class Game {
 
     this.ticker.start()
     this.started = true
-    startGame()
   }
 
   stop() {
