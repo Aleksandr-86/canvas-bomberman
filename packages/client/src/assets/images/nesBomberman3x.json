@@ -20,9 +20,11 @@
     "bombermanDead5": { "x": 4, "y": 2 },
     "bombermanDead6": { "x": 5, "y": 2 },
     "bombermanDead7": { "x": 6, "y": 2 },
+
     "bomb1": { "x": 0, "y": 3 },
     "bomb2": { "x": 1, "y": 3 },
     "bomb3": { "x": 2, "y": 3 },
+
     "wallHard": { "x": 3, "y": 3 },
     "wallSoft": { "x": 4, "y": 3 },
     "wallSoftDead1": { "x": 5, "y": 3 },
@@ -31,7 +33,66 @@
     "wallSoftDead4": { "x": 8, "y": 3 },
     "wallSoftDead5": { "x": 9, "y": 3 },
     "wallSoftDead6": { "x": 10, "y": 3 },
+
     "door": { "x": 11, "y": 3 },
-    "empty": { "x": 0, "y": 4 }
+
+    "empty": { "x": 0, "y": 4 },
+
+    "explosionTipTop1": { "x": 2, "y": 4 },
+    "explosionTop1": { "x": 2, "y": 5 },
+    "explosionCenter1": { "x": 2, "y": 6 },
+    "explosionBottom1": { "x": 2, "y": 7 },
+    "explosionTipBottom1": { "x": 2, "y": 8 },
+    "explosionLeft1": { "x": 1, "y": 6 },
+    "explosionTipLeft1": { "x": 0, "y": 6 },
+    "explosionRight1": { "x": 3, "y": 6 },
+    "explosionTipRight1": { "x": 4, "y": 6 },
+
+    "explosionTipTop2": { "x": 7, "y": 4 },
+    "explosionTop2": { "x": 7, "y": 5 },
+    "explosionCenter2": { "x": 7, "y": 6 },
+    "explosionBottom2": { "x": 7, "y": 7 },
+    "explosionTipBottom2": { "x": 7, "y": 8 },
+    "explosionLeft2": { "x": 6, "y": 6 },
+    "explosionTipLeft2": { "x": 5, "y": 6 },
+    "explosionRight2": { "x": 8, "y": 6 },
+    "explosionTipRight2": { "x": 9, "y": 6 },
+
+    "explosionTipTop3": { "x": 2, "y": 9 },
+    "explosionTop3": { "x": 2, "y": 10 },
+    "explosionCenter3": { "x": 2, "y": 11 },
+    "explosionBottom3": { "x": 2, "y": 12 },
+    "explosionTipBottom3": { "x": 2, "y": 13 },
+    "explosionLeft3": { "x": 1, "y": 11 },
+    "explosionTipLeft3": { "x": 0, "y": 11 },
+    "explosionRight3": { "x": 3, "y": 11 },
+    "explosionTipRight3": { "x": 4, "y": 11 },
+
+    "explosionTipTop4": { "x": 7, "y": 9 },
+    "explosionTop4": { "x": 7, "y": 10 },
+    "explosionCenter4": { "x": 7, "y": 11 },
+    "explosionBottom4": { "x": 7, "y": 12 },
+    "explosionTipBottom4": { "x": 7, "y": 13 },
+    "explosionLeft4": { "x": 6, "y": 11 },
+    "explosionTipLeft4": { "x": 5, "y": 11 },
+    "explosionRight4": { "x": 8, "y": 11 },
+    "explosionTipRight4": { "x": 9, "y": 11 },
+
+    "bombAmountUp": { "x": 0, "y": 14 },
+    "bombRangeUp": { "x": 1, "y": 14 },
+    "playerSpeedUp": { "x": 2, "y": 14 },
+    "phaseThroughBricks": { "x": 3, "y": 14 },
+    "bombManualDetonation": { "x": 4, "y": 14 },
+    "phaseThroughBombs": { "x": 5, "y": 14 },
+    "ignoreBombDamage": { "x": 6, "y": 14 },
+    "randomPowerup": { "x": 7, "y": 14 },
+
+    "droplet1": { "x": 0, "y": 16 },
+    "droplet2": { "x": 1, "y": 16 },
+    "droplet3": { "x": 2, "y": 16 },
+    "droplet4": { "x": 3, "y": 16 },
+    "droplet5": { "x": 4, "y": 16 },
+    "droplet6": { "x": 5, "y": 16 },
+    "droplet7": { "x": 6, "y": 16 }
   }
 }
