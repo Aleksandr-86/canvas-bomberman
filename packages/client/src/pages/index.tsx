@@ -4,6 +4,7 @@ import { Landing } from './landing/landing'
 import { SignIn } from './signIn/signIn'
 import { SignUp } from './signUp/signUp'
 import { Profile } from './profile/profile'
+import { ChangePassword } from './changePassword/changePassword'
 import { Leaderboard } from './leaderboard/leaderboard'
 import { Forum } from './forum/forum'
 import { ForumMessages } from './forumMessages/forumMessages'
@@ -18,6 +19,7 @@ const AppRouting = () => {
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/profile/password" element={<ChangePassword />} />
       <Route path="/leaderboard" element={<Leaderboard />} />
       <Route path="/forum" element={<Forum />} />
       <Route path="/forum-messages" element={<ForumMessages />} />

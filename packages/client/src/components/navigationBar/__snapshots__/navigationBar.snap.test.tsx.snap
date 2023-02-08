@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NavigationBar/> snapshot test cases <NavigationBar/> should render <nav className=navigationBar> parent with child elements (with store data) 1`] = `
+<nav
+  className="navigationBar"
+>
+  <img
+    alt="user-avatar"
+    draggable="false"
+  />
+  <a
+    className="link"
+    href="/profile"
+    onClick={[Function]}
+  >
+    Alex
+  </a>
+  <a
+    className="link"
+    href="/"
+    onClick={[Function]}
+  >
+    Выйти
+  </a>
+</nav>
+`;

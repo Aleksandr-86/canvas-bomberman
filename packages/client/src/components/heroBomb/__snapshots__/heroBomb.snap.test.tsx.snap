@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HeroBomb/> snapshot test cases <HeroBomb/> should render <img> 1`] = `
+<img
+  alt="Герой символизирующий ошибку"
+  draggable={false}
+  height={426}
+  width={426}
+/>
+`;

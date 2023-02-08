@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Modal/> snapshot test cases <Modal/> should render <div className="modal modalActive"> parent with child elements (default) 1`] = `
+<div
+  className="modal modalClose"
+  onClick={[Function]}
+>
+  <div
+    className="modalContent"
+    onClick={[Function]}
+  />
+</div>
+`;
+
+exports[`<Modal/> snapshot test cases <Modal/> should render <div className="modal modalActive"> parent with childrenElement 1`] = `
+<div
+  className="modal modalClose"
+  onClick={[Function]}
+>
+  <div
+    className="modalContent"
+    onClick={[Function]}
+  >
+    <div>
+      childrenElement
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Modal/> snapshot test cases <Modal/> should render <div className="modal modalClose"> parent with child elements (isActive false) 1`] = `
+<div
+  className="modal modalClose"
+  onClick={[Function]}
+>
+  <div
+    className="modalContent"
+    onClick={[Function]}
+  />
+</div>
+`;

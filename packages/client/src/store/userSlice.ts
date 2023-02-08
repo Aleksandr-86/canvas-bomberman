@@ -1,16 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-interface UserState {
+export interface UserState {
+  isLoading: boolean
   isAuth: boolean
-  firstName: string
-  secondName: string
-  displayName: string
-  login: string
-  email: string
-  phone: string
+  error?: null | string | unknown
+  id?: number | null
+  firstName?: string
+  secondName?: string
+  displayName?: string
+  login?: string
+  email?: string
+  phone?: string
 }
 
 const INITIAL_STATE: UserState = {
+  error: null,
+  id: null,
+  isLoading: false,
   isAuth: true,
   firstName: '',
   secondName: '',

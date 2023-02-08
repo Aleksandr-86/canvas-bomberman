@@ -1,8 +1,37 @@
+/* stylelint-disable selector-no-vendor-prefix */
 .gameDisplay {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 4px solid #b0b0b0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.gameDisplayCanvasWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameDisplayCanvasWrapper:fullscreen canvas {
+  width: 100vw;
+  height: 100vh;
+}
+
+.gameDisplayCanvasWrapper:-ms-fullscreen canvas {
+  width: 100vw;
+  height: 100vh;
+}
+
+.gameDisplayCanvasWrapper:-moz-full-screen canvas {
+  width: 100vw;
+  height: 100vh;
+}
+
+.gameDisplayCanvasWrapper:-webkit-full-screen canvas {
+  width: 100vw;
+  height: 100vh;
 }

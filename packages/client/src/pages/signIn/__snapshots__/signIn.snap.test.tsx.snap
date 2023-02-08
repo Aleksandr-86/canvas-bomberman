@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SignIn/> snapshot test cases <SignIn/> should render <form className=signIn> parent with child elements 1`] = `
+<form
+  className="signIn"
+  onSubmit={[Function]}
+>
+  <div
+    className="signInHeader"
+  >
+    Вход
+  </div>
+  <div
+    className="signInContent"
+  >
+    <div
+      className="field"
+    >
+      <label
+        className="label"
+      >
+        Логин
+      </label>
+      <div>
+        <input
+          className="input"
+          name="name"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+          value=""
+        />
+      </div>
+      <p
+        className="error"
+      />
+    </div>
+    <div
+      className="field"
+    >
+      <label
+        className="label"
+      >
+        Пароль
+      </label>
+      <div>
+        <input
+          className="input"
+          name="password"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="password"
+          value=""
+        />
+      </div>
+      <p
+        className="error"
+      />
+    </div>
+  </div>
+  <div
+    className="signInAction"
+  >
+    <div
+      className="actionButton"
+    >
+      <button
+        className="button"
+        type="submit"
+      >
+        Все верно!
+      </button>
+    </div>
+    <div
+      className="actionButton"
+    >
+      <a
+        className="linkButton"
+        href="/"
+        onClick={[Function]}
+      >
+        На Главную
+      </a>
+    </div>
+  </div>
+</form>
+`;
