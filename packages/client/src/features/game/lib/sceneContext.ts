@@ -1,35 +1,37 @@
 import { type FrameData } from './ticker'
 import { type Texture } from './texture'
 import { GameObjectFactory } from './gameObjects'
-import { Vec2 } from '../utils'
 import { type SceneObject } from './gameObjects/types'
+import { Camera } from './camera'
+import { TPoint } from '../utils/point'
 
 export class SceneContext {
   public displayList: SceneObject[] = []
   public textures = new Map<string, Texture>()
   public add = new GameObjectFactory(this)
+  public create = this.add.creator
+  public camera: Camera
 
-  constructor(private dimensions: Vec2) {}
+  constructor(private dimensions: TPoint) {
+    this.camera = new Camera(this.dimensions.x, this.dimensions.y)
+  }
 
-  private depthSort() {
+  public depthSort() {
     this.displayList.sort(({ z: za }, { z: zb }) => za - zb)
   }
 
   public render(ctx: CanvasRenderingContext2D, time: FrameData) {
-    this.depthSort()
+    ctx.clearRect(
+      -1000,
+      -1000,
+      this.dimensions.x * 100,
+      this.dimensions.y * 100
+    )
 
-    ctx.clearRect(0, 0, this.dimensions.x, this.dimensions.y)
+    ctx.save()
+    ctx.translate(this.camera.value.x, this.camera.value.y)
 
-    /*
-      Transformation Matrix
-     | a - scaleX c - skewX  e - dx |
-     | b - skewY  d - scaleY f - dy |
-     | 0          0          1      |
-
-      DOMMatrix([a, b, c, d, e, f])
-    */
-    const zeroMatrix = new DOMMatrix([1, 0, 0, 1, 0, 0])
-    ctx.setTransform(zeroMatrix)
-    this.displayList.forEach(o => o.exec(ctx, time))
+    this.displayList.forEach(obj => obj.exec(ctx, time))
+    ctx.restore()
   }
 }
