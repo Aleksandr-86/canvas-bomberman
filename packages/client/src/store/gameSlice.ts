@@ -1,15 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import {
   PLAYER_STARTING_POSITION,
-  EMPTY_FIELD,
   GRID_HEIGHT,
   GRID_WIDTH,
+  EMPTY_FIELD,
+  GAME_DURATION,
+  BUFF_CHANCE,
+  BOMB_FUSE,
+  EXPLOSION_RADIUS,
 } from '../features/game/const'
-import { Kind, type FieldState } from '../features/game/types'
-import { delay, Vec2 } from '../features/game/utils'
-import { fillSoftWalls } from '../features/game/fillSoftWalls'
-import { explodeAdjacentSoftWalls } from '../features/game/explodeAdjacentSoftWalls'
-import { AppDispatch } from './index'
+import { type TPoint, Point } from '../features/game/utils'
+import { Kind } from '../features/game/types'
+import { delay } from '../features/game/utils'
+import { createSoftWalls } from '../features/game/createSoftWalls'
+import { adjacentWalls } from '../features/game/adjacentWalls'
+import { AppDispatch, RootState } from './index'
+import { randomInRange } from '../features/game/utils/randomInRange'
 
 export enum GameStatus {
   START = 'START',
@@ -17,24 +23,39 @@ export enum GameStatus {
   END = 'END',
 }
 
+type Buff = 'bombRangeUp' | 'playerSpeedUp' | 'bombAmountUp'
+
 type GameState = {
-  field: FieldState
   status: GameStatus
   currentScore: number
-  playerPosition: Vec2
-  doorPosition: Vec2
-  bombs: Vec2[]
+  playerPosition: TPoint
+
+  activeBuffs: Record<Buff, boolean>
+
+  doorPosition: TPoint
+  bombs: TPoint[]
+  softWalls: TPoint[]
+  buffs: (TPoint & { kind: Buff })[]
+
   time: number
 }
 
 const INITIAL_STATE: GameState = {
   status: GameStatus.START,
   currentScore: 0,
-  doorPosition: new Vec2(GRID_WIDTH - 2, GRID_HEIGHT - 2),
+  doorPosition: Point.New(GRID_WIDTH - 2, GRID_HEIGHT - 2),
   playerPosition: PLAYER_STARTING_POSITION,
+
+  activeBuffs: {
+    bombRangeUp: false,
+    playerSpeedUp: false,
+    bombAmountUp: false,
+  },
+
   bombs: [],
-  field: EMPTY_FIELD,
-  time: 300,
+  buffs: [],
+  softWalls: createSoftWalls(EMPTY_FIELD, { x: 1, y: 1 }),
+  time: GAME_DURATION,
 }
 
 const gameSlice = createSlice({
