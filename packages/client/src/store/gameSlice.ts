@@ -61,10 +61,7 @@ const INITIAL_STATE: GameState = {
 const gameSlice = createSlice({
   name: 'game',
   initialState: () => {
-    return {
-      ...INITIAL_STATE,
-      field: fillSoftWalls(EMPTY_FIELD),
-    }
+    return INITIAL_STATE
   },
   reducers: {
     setStatus: (state, action: PayloadAction<GameStatus>) => {
@@ -73,45 +70,108 @@ const gameSlice = createSlice({
     setCurrentScore: (state, action: PayloadAction<number>) => {
       state.currentScore = action.payload
     },
-    playerMoved: (state, { payload }: PayloadAction<Vec2>) => {
-      state.playerPosition = payload
+    playerMoved: (state, { payload }: PayloadAction<TPoint>) => {
+      const newPos = {
+        x: state.playerPosition.x + payload.x,
+        y: state.playerPosition.y + payload.y,
+      }
+
+      const cell = EMPTY_FIELD[newPos.y * GRID_WIDTH + newPos.x]
+
+      if (
+        !(
+          cell === Kind.Empty &&
+          !state.softWalls.some(Point.equals(newPos)) &&
+          !state.bombs.some(Point.equals(newPos))
+        )
+      ) {
+        return
+      }
+
+      state.playerPosition = newPos
+      const buff = state.buffs.find(Point.equals(newPos))
+
+      if (buff) {
+        state.activeBuffs[buff.kind] = true
+        state.buffs = state.buffs.filter(b => b !== buff)
+      }
     },
     playerReset: state => {
       state.playerPosition = PLAYER_STARTING_POSITION
     },
-    bombPlaced: (state, { payload: { x, y } }: PayloadAction<Vec2>) => {
-      state.field[y][x] = Kind.Bomb
+    bombPlaced: state => {
+      state.bombs.push(state.playerPosition)
     },
     scoreIncreased: (state, { payload }: PayloadAction<number>) => {
       state.currentScore += payload
     },
-    bombExploded: ({ field }, { payload }: PayloadAction<Vec2>) => {
-      explodeAdjacentSoftWalls(field, payload)
+    bombExploded: (state, { payload }: PayloadAction<TPoint[]>) => {
+      state.bombs.pop()
+
+      state.softWalls = state.softWalls.filter(
+        wall => !payload.find(Point.equals(wall))
+      )
     },
     timerUpdated: (state, { payload }: PayloadAction<number>) => {
-      state.time -= payload * 0.001 /* payload is in ms */
+      state.time = state.time < 0 ? 0 : state.time - payload * 0.001
+    },
+    buffCreated: (state, { payload }: PayloadAction<TPoint>) => {
+      state.buffs.push({ ...payload, kind: 'bombAmountUp' })
+    },
+    buffConsumed: state => {
+      const { buffs, activeBuffs, playerPosition } = state
+
+      const buff = buffs.find(Point.equals(playerPosition))
+      state.buffs = buffs.filter(Point.equals(playerPosition))
+
+      if (buff?.kind) {
+        activeBuffs[buff.kind] = true
+      }
+    },
+    buffExpired: (state, { payload }: PayloadAction<Buff>) => {
+      state.activeBuffs[payload] = false
     },
   },
 })
 
-export const bombSet = (pos: Vec2) => async (dispatch: AppDispatch) => {
-  dispatch(bombPlaced(pos))
-  await delay(800)
-  dispatch(bombExploded(pos))
-}
+export const bombSet =
+  () => async (dispatch: AppDispatch, getState: () => RootState) => {
+    const playerPosition = { ...getState().game.playerPosition }
+    dispatch(bombPlaced())
+    await delay(BOMB_FUSE)
+
+    const { softWalls, activeBuffs } = getState().game
+
+    const explosionRadius = activeBuffs.bombRangeUp
+      ? EXPLOSION_RADIUS * 2
+      : EXPLOSION_RADIUS
+    const wallsHit = adjacentWalls(softWalls, playerPosition, explosionRadius)
+    dispatch(bombExploded(wallsHit))
+
+    const chance = Math.random() * 100
+    if (chance > BUFF_CHANCE) {
+      const idx = randomInRange(0, wallsHit.length)
+      const buffAt = wallsHit[idx]
+      dispatch(buffCreated(buffAt))
+    }
+  }
 
 let previousTime = performance.now()
 let gameIntervalId = 0
 
-export const gameStarted = () => (dispatch: AppDispatch) => {
-  gameIntervalId = window.setInterval(() => {
-    const now = performance.now()
-    const dt = now - previousTime
-    previousTime = now
-    dispatch(timerUpdated(dt))
-  }, 1000)
-  dispatch(setStatus(GameStatus.IN_PROGRESS))
-}
+export const gameStarted =
+  () => (dispatch: AppDispatch, getState: () => RootState) => {
+    gameIntervalId = window.setInterval(() => {
+      const now = performance.now()
+      const dt = now - previousTime
+      previousTime = now
+
+      if (getState().game.time > 0) {
+        dispatch(timerUpdated(dt))
+      }
+    }, 1000)
+    dispatch(setStatus(GameStatus.IN_PROGRESS))
+  }
 
 export const gameEnded = () => (dispatch: AppDispatch) => {
   clearInterval(gameIntervalId)
@@ -128,4 +188,5 @@ export const {
   bombExploded,
   scoreIncreased,
   timerUpdated,
+  buffCreated,
 } = gameSlice.actions
