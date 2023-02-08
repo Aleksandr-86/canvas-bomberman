@@ -1,43 +1,60 @@
 import { store } from '../../store'
-import {
-  playerMoved,
-  playerReset,
-  scoreIncreased,
-  bombSet,
-  gameStarted,
-} from '../../store/gameSlice'
-import { isPassable } from './isPassable'
-import { Vec2 } from './utils'
-import { selectField, selectPlayerPosition } from '../../store/selectors'
+import * as StoreGameActions from '../../store/gameSlice'
+import { delay } from './utils'
+import { BOMB_COOLDOWN, MOVEMENT_COOLDOWN } from './const'
+import { selectGameObjects, selectPlayerPosition } from '../../store/selectors'
+import { TPoint } from './utils/point'
 
-export const getPlayer = () => selectPlayerPosition(store.getState())
-export const getField = () => selectField(store.getState())
+const buffs = () => store.getState().game.activeBuffs
 
-let cooldown = false
+const cooldownActive = {
+  bomb: false,
+  movement: false,
+}
 
-export const move = async (direction: Vec2) => {
-  if (cooldown) return
+export async function move(direction: TPoint) {
+  if (cooldownActive.movement) return
 
-  const newCoord = Vec2.add(getPlayer(), direction)
+  cooldownActive.movement = true
+  store.dispatch(StoreGameActions.playerMoved(direction))
+  const movementCooldown = buffs().playerSpeedUp
+    ? MOVEMENT_COOLDOWN.PLAYER / 2
+    : MOVEMENT_COOLDOWN.PLAYER
 
-  if (isPassable(getField(), newCoord)) {
-    store.dispatch(playerMoved(newCoord))
-    store.dispatch(scoreIncreased(300))
-    cooldown = true
-    setTimeout(() => (cooldown = false), 300)
-  }
-
-  return newCoord
+  await delay(movementCooldown)
+  cooldownActive.movement = false
 }
 
 export function reset() {
-  store.dispatch(playerReset())
+  store.dispatch(StoreGameActions.playerReset())
 }
 
-export function placeBomb() {
-  store.dispatch(bombSet(getPlayer()))
+export async function placeBomb() {
+  if (cooldownActive.bomb) return
+
+  cooldownActive.bomb = true
+  store.dispatch(StoreGameActions.bombSet())
+  const bombCooldown = buffs().bombAmountUp ? BOMB_COOLDOWN / 2 : BOMB_COOLDOWN
+
+  await delay(bombCooldown)
+  cooldownActive.bomb = false
 }
 
 export function startGame() {
-  store.dispatch(gameStarted())
+  store.dispatch(StoreGameActions.gameStarted())
+}
+
+export function onStoreUpdate(
+  sub: (
+    objects: {
+      playerPosition: ReturnType<typeof selectPlayerPosition>
+    } & ReturnType<typeof selectGameObjects>
+  ) => void
+) {
+  return store.subscribe(() => {
+    sub({
+      playerPosition: selectPlayerPosition(store.getState()),
+      ...selectGameObjects(store.getState()),
+    })
+  })
 }
