@@ -12,14 +12,16 @@ export class Sprite implements Drawable, Position, Depth, Transform {
   public rotation = 0
   public width
   public height
+  public opacity = 1
 
   constructor(
     public x: number,
     public y: number,
     public texture: Texture,
-    private frame: keyof typeof texture.frames = '__base'
+    public frame: keyof typeof texture.frames = '__base'
   ) {
     const { width, height } = texture.frames[frame]
+
     this.width = width
     this.height = height
   }
@@ -47,7 +49,9 @@ export class Sprite implements Drawable, Position, Depth, Transform {
       height: sHeight,
     } = texture.frames[frame]
 
-    ctx.setTransform(scaleX, skewX, skewY, scaleY, translateX, translateY)
+    ctx.save()
+    ctx.globalAlpha = this.opacity
     ctx.drawImage(texture.source, sx, sy, sWidth, sHeight, x, y, width, height)
+    ctx.restore()
   }
 }
