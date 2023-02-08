@@ -38,7 +38,7 @@ export class Loader {
         console.error(error)
       }
     }
-
+    // console.log(this.scene.textures.get('nesBomberman'))
     this.queue = []
     this.status = 'ready'
   }
