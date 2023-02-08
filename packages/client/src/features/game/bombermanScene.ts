@@ -1,9 +1,16 @@
-import { CELL_WIDTH, EMPTY_FIELD_1D, GRID_HEIGHT, GRID_WIDTH } from './const'
+import { Unsubscribe } from '@reduxjs/toolkit'
+import {
+  CELL_WIDTH,
+  Depth,
+  EMPTY_FIELD,
+  GRID_WIDTH,
+  PLAYER_STARTING_POSITION,
+} from './const'
 import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
 import { Kind } from './types'
-
-import hero from '../../assets/images/hero.png'
+import { Point } from './utils/point'
+import { placeBomb, move, startGame, onStoreUpdate } from './gameActions'
 import nesBomberman from '../../assets/images/nesBomberman3x.png'
 import nesBombermanFrames from '../../assets/images/nesBomberman3x.json'
 
@@ -22,10 +29,10 @@ const atlasToFrames = ({ cellSize, entries }: typeof nesBombermanFrames) => {
 }
 
 let player: Sprite
+let cancel: Unsubscribe
 
 export const bombermanScene: SceneConfig = {
   preload: load => {
-    load.image('hero', hero)
     load.image('nesBomberman', nesBomberman, texture => {
       const frames = atlasToFrames(nesBombermanFrames)
 
@@ -33,29 +40,89 @@ export const bombermanScene: SceneConfig = {
     })
   },
   create: scene => {
-    player = scene.add.sprite(20, 20, 'nesBomberman', 'bombermanDown2')
-    player.scaleX = 80 / 48
-    player.scaleY = 80 / 48
-
-    scene.add.tileGrid({
-      grid: EMPTY_FIELD_1D,
+    const backgroundTiles = scene.create.tileGrid({
+      grid: EMPTY_FIELD,
       cellSize: CELL_WIDTH,
       gridWidth: GRID_WIDTH,
       cells: {
         [Kind.Empty]: 'nesBomberman:empty',
         [Kind.WallHard]: 'nesBomberman:wallHard',
-        [Kind.WallSoft]: 'nesBomberman:wallSoft',
       },
+      depth: Depth.Ground,
     })
-    const bomb = scene.add.sprite(80, 80, 'nesBomberman', 'bomb1')
-    bomb.width = 80
-    bomb.height = 80
-    bomb.z = -1
+
+    player = scene.create.sprite(
+      PLAYER_STARTING_POSITION.x * CELL_WIDTH,
+      PLAYER_STARTING_POSITION.y * CELL_WIDTH,
+      'nesBomberman',
+      'bombermanDown1',
+      80,
+      80
+    )
+    player.z = Depth.Player
+
+    cancel = onStoreUpdate(({ bombs, walls, buffs, playerPosition }) => {
+      const wallSprites = walls.map(({ x, y }) => {
+        const wall = scene.create.sprite(
+          x * CELL_WIDTH,
+          y * CELL_WIDTH,
+          'nesBomberman',
+          'wallSoft',
+          80,
+          80
+        )
+        wall.z = Depth.Destructable
+        return wall
+      })
+
+      const bombSprites = bombs.map(({ x, y }) => {
+        const bomb = scene.create.sprite(
+          x * CELL_WIDTH,
+          y * CELL_WIDTH,
+          'nesBomberman',
+          'bomb1',
+          80,
+          80
+        )
+        bomb.z = Depth.Bomb
+        bomb.opacity = 0.8
+        return bomb
+      })
+
+      const buffSprites = buffs.map(({ x, y, kind }) => {
+        const powerup = scene.create.sprite(
+          x * CELL_WIDTH,
+          y * CELL_WIDTH,
+          'nesBomberman',
+          kind,
+          80,
+          80
+        )
+        powerup.z = Depth.Destructable
+        return powerup
+      })
+
+      player.x = playerPosition.x * CELL_WIDTH
+      player.y = playerPosition.y * CELL_WIDTH
+
+      // every update displayList recreated by joining static (backgroundTiles) and dynamic (softWalls, bombs, player) parts
+      scene.displayList = backgroundTiles
+        .concat(player)
+        .concat(bombSprites)
+        .concat(buffSprites)
+        .concat(wallSprites)
+    })
+
+    // bind player reference to camera
+    scene.camera.bind(player)
+
+    startGame()
   },
   update: (scene, frame, kbd) => {
-    if (kbd.left) player.x -= 300 * frame.delta
-    if (kbd.right) player.x += 300 * frame.delta
-    if (kbd.up) player.y -= 300 * frame.delta
-    if (kbd.down) player.y += 300 * frame.delta
+    if (kbd.left) move(Point.Left)
+    if (kbd.right) move(Point.Right)
+    if (kbd.up) move(Point.Up)
+    if (kbd.down) move(Point.Down)
+    if (kbd.space) placeBomb()
   },
 }
