@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import { useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
@@ -8,6 +9,7 @@ import heroImg from '../../assets/images/hero.png'
 
 import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
+import axios from 'axios'
 
 // Содержание для авторизованных пользователей
 const ContentLogged = () => {
@@ -60,6 +62,29 @@ const ContentNotLogged = () => (
 )
 
 export const Landing = () => {
+  const [searchParams] = useSearchParams()
+
+  useEffect(() => {
+    const code = searchParams.get(`code`)
+
+    if (code) {
+      axios
+        .post(
+          `https://ya-praktikum.tech/api/v2/oauth/yandex
+          `,
+          {
+            code,
+            redirect_uri: `http://localhost:3000`,
+          }
+        )
+        .then(() => {
+          axios.get(`https://ya-praktikum.tech/api/v2/auth/user`, {
+            withCredentials: true,
+          })
+        })
+    }
+  }, [searchParams])
+
   const { isAuth } = useAppSelector(getUser)
 
   const navBar = isAuth ? <NavigationBar /> : null
