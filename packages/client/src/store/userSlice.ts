@@ -17,7 +17,7 @@ const INITIAL_STATE: UserState = {
   error: null,
   id: null,
   isLoading: false,
-  isAuth: true,
+  isAuth: false,
   firstName: '',
   secondName: '',
   displayName: 'Алекс',
