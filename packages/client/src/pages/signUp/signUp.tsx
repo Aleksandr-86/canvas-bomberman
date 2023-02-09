@@ -52,8 +52,8 @@ export const SignUp: React.FC = () => {
     event.preventDefault()
 
     if (isValid()) {
-      const {repeatPassword, ...data} = values
-      
+      const { repeatPassword, ...data } = values
+
       alert(`Данные готовы к отправке: ${JSON.stringify(data, null, 4)}`)
     }
   }
