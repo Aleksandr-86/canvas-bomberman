@@ -15,7 +15,9 @@ exports[`<Leaderboard/> snapshot test cases <Leaderboard/> should render <div cl
       className="link"
       href="/profile"
       onClick={[Function]}
-    />
+    >
+      mockDisplayName
+    </a>
     <a
       className="link"
       href="/"

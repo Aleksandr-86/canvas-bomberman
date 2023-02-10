@@ -11,14 +11,17 @@ export const getAuth = createAsyncThunk(
 const state: UserState = {
   isLoading: false,
   isAuth: false,
-  id: null,
   error: null,
-  firstName: '',
-  secondName: '',
-  displayName: '',
-  login: '',
-  email: '',
-  phone: '',
+  user: {
+    id: null,
+    firstName: '',
+    secondName: '',
+    displayName: '',
+    login: '',
+    email: '',
+    phone: '',
+    avatar: '',
+  },
 }
 
 const authSlice = createSlice({
@@ -38,13 +41,7 @@ const authSlice = createSlice({
         state.isLoading = false
         state.isAuth = user.isAuth
         if (user.isAuth) {
-          state.id = user.id
-          state.firstName = user.firstName
-          state.secondName = user.secondName
-          state.displayName = user.displayName
-          state.login = user.login
-          state.email = user.email
-          state.phone = user.phone
+          state.user = user.user
         }
       })
       .addCase(getAuth.rejected, (state, action) => {

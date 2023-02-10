@@ -8,7 +8,7 @@ interface Props {
   type: 'text' | 'password' | 'email' | 'tel'
   value: string
   error?: string
-  onChange: { (event: React.ChangeEvent<HTMLInputElement>): void }
+  onChange?: { (event: React.ChangeEvent<HTMLInputElement>): void }
   onBlur?: { (event: React.FocusEvent<HTMLInputElement>): void }
   disabled?: boolean
   children?: any
