@@ -19,6 +19,8 @@ export interface Transform {
 }
 
 export interface Drawable {
+  shouldDestroy: boolean
+  destroy(): void
   exec: (ctx: CanvasRenderingContext2D, time: FrameData) => void
 }
 

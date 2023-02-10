@@ -1,6 +1,7 @@
+import { BaseGameObject } from './baseGameObject'
 import type { Depth, Position, Drawable } from './types'
 
-export class Rect implements Drawable, Position, Depth {
+export class Rect extends BaseGameObject {
   public z = 0
 
   constructor(
@@ -9,7 +10,9 @@ export class Rect implements Drawable, Position, Depth {
     public width: number,
     public height: number,
     public color: string
-  ) {}
+  ) {
+    super()
+  }
 
   exec(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = this.color

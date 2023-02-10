@@ -31,6 +31,8 @@ export class SceneContext {
     ctx.save()
     ctx.translate(this.camera.value.x, this.camera.value.y)
 
+    this.displayList = this.displayList.filter(obj => !obj.shouldDestroy)
+
     this.displayList.forEach(obj => obj.exec(ctx, time))
     ctx.restore()
   }

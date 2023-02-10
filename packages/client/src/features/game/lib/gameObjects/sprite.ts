@@ -1,7 +1,7 @@
-import type { Depth, Position, Transform, Drawable } from './types'
 import { type Texture } from '../texture'
+import { BaseGameObject } from './baseGameObject'
 
-export class Sprite implements Drawable, Position, Depth, Transform {
+export class Sprite extends BaseGameObject {
   public z = 0
   public scaleX = 1
   public scaleY = 1
@@ -13,6 +13,7 @@ export class Sprite implements Drawable, Position, Depth, Transform {
   public width
   public height
   public opacity = 1
+  public shouldDestroy = false
 
   constructor(
     public x: number,
@@ -20,27 +21,19 @@ export class Sprite implements Drawable, Position, Depth, Transform {
     public texture: Texture,
     public frame: keyof typeof texture.frames = '__base'
   ) {
+    super()
     const { width, height } = texture.frames[frame]
 
     this.width = width
     this.height = height
   }
 
+  destroy() {
+    this.shouldDestroy = true
+  }
+
   exec(ctx: CanvasRenderingContext2D) {
-    const {
-      texture,
-      frame,
-      x,
-      y,
-      width,
-      height,
-      scaleX,
-      scaleY,
-      skewX,
-      skewY,
-      translateX,
-      translateY,
-    } = this
+    const { texture, frame, x, y, width, height } = this
 
     const {
       x: sx,
