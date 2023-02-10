@@ -1,17 +1,13 @@
 import { Provider } from 'react-redux'
 import { store } from '../store'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
 import './app.module.css'
-import { routes } from '../store/routes'
+import { AppRouting } from '../pages'
 
-const App = () => {
-  const router = createBrowserRouter(routes)
-
+export const App = () => {
   return (
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <AppRouting />
     </Provider>
   )
 }
-
-export { App }
