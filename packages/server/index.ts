@@ -59,7 +59,7 @@ async function startServer() {
     try {
       let template: string
 
-      let render: (request: express.Request) => Promise<string>
+      let render: (url: string) => Promise<string>
 
       if (isDev() && vite) {
         template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8')
@@ -76,7 +76,7 @@ async function startServer() {
         render = (await import(ssrClientPath)).render
       }
 
-      const appHtml = await render(req)
+      const appHtml = await render(url)
 
       const html = template.replace(`<!--ssr-outlet-->`, appHtml)
 
