@@ -145,6 +145,8 @@ export const bombSet =
     const explosionRadius = activeBuffs.bombRangeUp
       ? EXPLOSION_RADIUS * 2
       : EXPLOSION_RADIUS
+
+    console.log(explosionRadius)
     const wallsHit = adjacentWalls(softWalls, playerPosition, explosionRadius)
     dispatch(bombExploded(wallsHit))
 
