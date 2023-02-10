@@ -1,3 +1,4 @@
+import { ErrorStub } from '../components/errorStub/errorStub'
 import { ChangePassword } from '../pages/changePassword/changePassword'
 import { Forum } from '../pages/forum/forum'
 import { ForumMessages } from '../pages/forumMessages/forumMessages'
@@ -10,7 +11,12 @@ import { Profile } from '../pages/profile/profile'
 import { SignIn } from '../pages/signIn/signIn'
 import { SignUp } from '../pages/signUp/signUp'
 
-const children = [
+export const routes = [
+  {
+    path: '/',
+    element: <Landing />,
+    errorElement: <ErrorStub />,
+  },
   {
     path: '/sign-in',
     element: <SignIn />,
@@ -56,12 +62,13 @@ const children = [
 /**
  * Root page
  */
-const ROOT = {
-  path: '/',
-  element: <Landing />,
-  children,
-  id: 'root',
-}
+// const ROOT = {
+//   path: '/',
+//   element: <Landing />,
+//   errorElement: <ErrorStub />,
+//   children,
+//   id: 'root',
+// }
 
 /**
  * Route maps
@@ -76,4 +83,4 @@ const ROOT = {
 //   list: [RoutePaths.login, RoutePaths.signup],
 // }
 
-export const routes = [ROOT]
+// export const routes = [ROOT]

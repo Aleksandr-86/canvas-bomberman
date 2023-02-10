@@ -13,15 +13,24 @@ const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
   const app = express()
-  app.use(cors())
+
   const port = Number(process.env.SERVER_PORT) || 3001
+
+  app.use(cors())
 
   let vite: ViteDevServer | undefined
 
-  const distPath = path.resolve('../client/dist/')
-  const srcPath = path.resolve('../client')
-  const ssrClientPath = path.resolve('../client/dist-ssr/ssr.cjs')
+  // const distPath = path.resolve('../client/dist/')
+  const distPath = path.dirname(require.resolve('client/dist/index.html'))
+  // const ssrClientPath = path.resolve('../client/dist-ssr/ssr.cjs')
+  const ssrClientPath = require.resolve('client/dist-ssr/ssr.cjs')
+  // const srcPath = path.resolve('../client')
+  const srcPath = path.dirname(require.resolve('client'))
 
+  /**
+   * Подключение vite middleware для горячей перезагрузки
+   * модулей (HMR)
+   */
   if (isDev()) {
     vite = await createViteServer({
       server: { middlewareMode: true },
@@ -33,9 +42,13 @@ async function startServer() {
   }
 
   app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)')
+    res.json('👋 Привет от сервера :)')
   })
 
+  /**
+   * Проброс статичных файлов из папки assets
+   * (необходим при эксплуатации приложения)
+   */
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
@@ -46,41 +59,38 @@ async function startServer() {
     try {
       let template: string
 
-      if (!isDev()) {
+      let render: (request: express.Request) => Promise<string>
+
+      if (isDev() && vite) {
+        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8')
+        template = await vite.transformIndexHtml(url, template)
+
+        render = (await vite.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
+          .render
+      } else {
         template = fs.readFileSync(
           path.resolve(distPath, 'index.html'),
           'utf-8'
         )
-      } else {
-        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8')
 
-        template = await vite!.transformIndexHtml(url, template)
-      }
-
-      let render: () => Promise<string>
-
-      if (!isDev()) {
         render = (await import(ssrClientPath)).render
-      } else {
-        render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
-          .render
       }
 
-      const appHtml = await render()
+      const appHtml = await render(req)
 
       const html = template.replace(`<!--ssr-outlet-->`, appHtml)
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
-      if (isDev()) {
-        vite!.ssrFixStacktrace(e as Error)
+      if (isDev() && vite) {
+        vite.ssrFixStacktrace(e as Error)
       }
       next(e)
     }
   })
 
   app.listen(port, () => {
-    console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+    console.log(`  ➜ 🎸 Сервер слушает порт: ${port}`)
   })
 }
 
