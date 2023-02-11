@@ -1,10 +1,3 @@
-const IGNORE_FILES = [
-  'packages/client/public/**',
-  'packages/client/dist/**',
-  'packages/client/dist-ssr/**',
-  'packages/server/dist/**',
-]
-
 module.exports = {
   env: {
     browser: true,
