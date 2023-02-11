@@ -11,7 +11,17 @@ export function useAuth(formData: IFormData) {
   const [user, setUser] = useState<UserState>({
     isLoading: false,
     isAuth: false,
-    id: null,
+    error: null,
+    user: {
+      id: null,
+      firstName: '',
+      secondName: '',
+      displayName: '',
+      login: '',
+      email: '',
+      phone: '',
+      avatar: '',
+    },
   })
   const [error, setError] = useState<string | null>(null)
 

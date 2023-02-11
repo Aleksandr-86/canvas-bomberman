@@ -9,7 +9,7 @@ import styles from './navigationBar.module.css'
 
 export const NavigationBar = () => {
   const dispatch = useAppDispatch()
-  const { displayName } = useAppSelector(getUser)
+  const { displayName } = useAppSelector(getUser).user
 
   return (
     <nav className={styles.navigationBar}>

@@ -5,7 +5,19 @@ import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
 const mockStore = configureStore([])
-const store = mockStore({ user: { displayName: `Alex` } })
+const store = mockStore({
+  user: {
+    isAuth: true,
+    user: {
+      displayName: `mockDisplayName`,
+      login: `mockLogin`,
+      firstName: `mockFirstName`,
+      secondName: `mockSecondName`,
+      email: `mockEmail`,
+      phone: 8900000000,
+    },
+  },
+})
 
 describe(`<NavigationBar/> snapshot test cases`, () => {
   test(`<NavigationBar/> should render <nav className=navigationBar> parent with child elements (with store data)`, () => {

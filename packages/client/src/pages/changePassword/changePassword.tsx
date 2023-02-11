@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/button/button'
 import { FormField } from '../../components/formField/formField'
 
 import { useForm, Validations } from '../../hooks/useForm'
 import { getValidations } from '../../features/validation'
+
+import { editPassword } from '../../store/userActions'
+import { useAppDispatch } from '../../store/hooks'
 
 import styles from './changePassword.module.css'
 import baseStyles from '../../app/app.module.css'
@@ -17,6 +20,8 @@ type FormType = {
 }
 
 export const ChangePassword = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const [validations, setValidations] = useState<Validations<FormType>>()
 
   useEffect(() => {
@@ -41,13 +46,14 @@ export const ChangePassword = () => {
     if (isValid()) {
       const { repeatPassword, password, newPassword } = values
 
-      alert(
-        `Данные готовы к отправке: ${JSON.stringify(
-          { oldPassword: password, newPassword },
-          null,
-          4
-        )}`
+      dispatch(
+        editPassword({
+          oldpassword: password,
+          newpassword: newPassword,
+        })
       )
+
+      navigate('/profile')
     }
   }
 

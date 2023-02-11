@@ -11,7 +11,7 @@ import styles from './landing.module.css'
 
 // Содержание для авторизованных пользователей
 const ContentLogged = () => {
-  const { displayName } = useAppSelector(getUser)
+  const { displayName } = useAppSelector(getUser).user
 
   return (
     <>
