@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { App } from './app/app'
 import { ErrorBoundary } from './components/errorBoundary/errorBoundary'
-import { startServiceWorker } from './features/game/sw/startServiceWorker'
+// import { startServiceWorker } from './features/game/sw/startServiceWorker'
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
@@ -16,4 +16,4 @@ ReactDOM.hydrateRoot(
   </StrictMode>
 )
 
-startServiceWorker()
+// startServiceWorker()
