@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import {
   editData,
   editPassword,
@@ -18,6 +18,13 @@ export interface User {
   phone: string
   avatar: string
 }
+import { useAuth } from '../hooks/useAuth'
+import { IFormData } from '../hooks/useAuth'
+
+export const getAuth = createAsyncThunk(
+  'user/getAuth',
+  async (FormData: IFormData) => useAuth(FormData)
+)
 
 export interface UserState {
   isLoading: boolean
@@ -152,6 +159,30 @@ const userSlice = createSlice({
       })
       .addCase(logout.rejected, (state, action) => {
         state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(getAuth.pending, state => {
+        state.error = null
+        state.isAuth = false
+        state.isLoading = true
+      })
+      .addCase(getAuth.fulfilled, (state, action) => {
+        const { user } = action.payload
+        state.isLoading = false
+        state.isAuth = user.isAuth
+        if (user.isAuth) {
+          state.user.id = user.user.id
+          state.user.firstName = user.user.firstName
+          state.user.secondName = user.user.secondName
+          state.user.displayName = user.user.displayName
+          state.user.login = user.user.login
+          state.user.email = user.user.email
+          state.user.phone = user.user.phone
+        }
+      })
+      .addCase(getAuth.rejected, (state, action) => {
+        state.isLoading = false
+        state.isAuth = false
         state.error = action.payload
       })
   },

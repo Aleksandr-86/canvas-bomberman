@@ -7,11 +7,14 @@ import { FormField } from '../../components/formField/formField'
 import { useForm, Validations } from '../../hooks/useForm'
 import { getValidations } from '../../features/validation'
 
-import { useAppDispatch } from '../../store/hooks'
 import { login } from '../../store/userActions'
 
 import styles from './signIn.module.css'
 import baseStyles from '../../app/app.module.css'
+
+import { getAuth } from '../../store/userSlice'
+import { IFormData } from '../../hooks/useAuth'
+import { useAppDispatch } from '../../store/hooks'
 
 type FormType = {
   login: string
@@ -34,7 +37,8 @@ export const SignIn: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
+    const data: IFormData = { name: '', password: '' }
+    dispatch(getAuth(data))
     if (isValid()) {
       dispatch(login(values))
       navigate('/')
