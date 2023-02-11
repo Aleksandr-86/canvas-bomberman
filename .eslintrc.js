@@ -1,3 +1,10 @@
+const IGNORE_FILES = [
+  'packages/client/public/**',
+  'packages/client/dist/**',
+  'packages/client/dist-ssr/**',
+  'packages/server/dist/**',
+]
+
 module.exports = {
   env: {
     browser: true,
@@ -18,12 +25,18 @@ module.exports = {
   },
   settings: {
     react: {
-      version: 'detect'
-    }
+      version: 'detect',
+    },
   },
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
-    'no-console': 'warn'
+    'no-console': 'warn',
   },
+  ignorePatterns: [
+    'packages/client/public/**',
+    'packages/client/dist/**',
+    'packages/client/dist-ssr/**',
+    'packages/server/dist/**',
+  ],
 }

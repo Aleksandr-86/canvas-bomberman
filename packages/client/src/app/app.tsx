@@ -1,8 +1,7 @@
 import { Provider } from 'react-redux'
 import { store } from '../store'
-
-import './app.module.css'
 import { AppRouting } from '../pages'
+import './app.module.css'
 
 export const App = () => {
   return (
