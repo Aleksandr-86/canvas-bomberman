@@ -2,25 +2,22 @@ import { Link } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
-import { setAuthFalse } from '../../store/userSlice'
 import avatarImg from '../../assets/images/avatar.png'
 
 import styles from './navigationBar.module.css'
+import { logout } from '../../store/userActions'
 
 export const NavigationBar = () => {
   const dispatch = useAppDispatch()
-  const { displayName } = useAppSelector(getUser).user
+  const { login, displayName } = useAppSelector(getUser).user
 
   return (
     <nav className={styles.navigationBar}>
       <img src={avatarImg} alt="user-avatar" draggable="false" />
       <Link className={styles.link} to="/profile">
-        {displayName}
+        {displayName || login}
       </Link>
-      <Link
-        className={styles.link}
-        to="/"
-        onClick={() => dispatch(setAuthFalse())}>
+      <Link className={styles.link} to="/" onClick={() => dispatch(logout())}>
         Выйти
       </Link>
     </nav>
