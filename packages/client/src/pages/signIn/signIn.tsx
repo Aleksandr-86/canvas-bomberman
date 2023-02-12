@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/button/button'
@@ -68,27 +67,6 @@ export const SignIn: React.FC = () => {
           <div className={styles.actionButton}>
             <Button type="submit">Все верно!</Button>
           </div>
-
-          <div className={styles.actionButton}>
-            <Button
-              onClick={async evt => {
-                evt.preventDefault()
-
-                const redirect_uri = `http://localhost:3000`
-
-                const {
-                  data: { service_id },
-                } = await axios.get(`https://ya-praktikum.tech/api/v2/oauth/yandex/service-id?redirect_uri=${redirect_uri}
-                `)
-
-                window.location.replace(
-                  `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=${redirect_uri}`
-                )
-              }}>
-              Яндекс OAuth
-            </Button>
-          </div>
-
           <div className={styles.actionButton}>
             <Link className={baseStyles.linkButton} to="/">
               На Главную

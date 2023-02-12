@@ -1,24 +1,32 @@
 import { useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { me } from '../../store/userActions'
 
-import { useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
 import { NavigationBar } from '../../components/navigationBar/navigationBar'
+import { Button } from '../../components/button/button'
 import bombermanLogoImg from '../../assets/images/bombermanLogo.png'
 import heroImg from '../../assets/images/hero.png'
+import yandexLogo from '../../assets/images/yaLogo.png'
 
 import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
 import axios from 'axios'
+import {
+  onOauthRequest,
+  OauthURL,
+  redirectURI,
+} from '../../features/oauth/onOauthRequest'
 
 // Содержание для авторизованных пользователей
 const ContentLogged = () => {
-  const { displayName } = useAppSelector(getUser).user
+  const { displayName, login } = useAppSelector(getUser).user
 
   return (
     <>
       <div className={styles.descriptionTop}>
-        Привет {displayName}! <br />
+        Привет {displayName || login}! <br />
         Спешим напомнить, что ты в любой момент можешь освежить свои знания по
         игре, перечитав{' '}
         <Link className={styles.link} to="/rules">
@@ -54,6 +62,10 @@ const ContentNotLogged = () => (
       <Link className={baseStyles.linkButton} to="/sign-in">
         Войти
       </Link>
+      <Button className={styles.buttonYandex} onClick={onOauthRequest}>
+        <img src={yandexLogo} alt="Логотип Яндекса" width={40} />
+        ID
+      </Button>
       <Link className={baseStyles.linkButton} to="/sign-up">
         Зарегистрироваться
       </Link>
@@ -62,6 +74,7 @@ const ContentNotLogged = () => (
 )
 
 export const Landing = () => {
+  const dispatch = useAppDispatch()
   const [searchParams] = useSearchParams()
 
   useEffect(() => {
@@ -70,20 +83,16 @@ export const Landing = () => {
     if (code) {
       axios
         .post(
-          `https://ya-praktikum.tech/api/v2/oauth/yandex
-          `,
+          OauthURL,
           {
             code,
-            redirect_uri: `http://localhost:3000`,
-          }
+            redirect_uri: redirectURI,
+          },
+          { withCredentials: true }
         )
-        .then(() => {
-          axios.get(`https://ya-praktikum.tech/api/v2/auth/user`, {
-            withCredentials: true,
-          })
-        })
+        .then(() => dispatch(me()))
     }
-  }, [searchParams])
+  }, [])
 
   const { isAuth } = useAppSelector(getUser)
 
