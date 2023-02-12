@@ -3,7 +3,7 @@ const Keys = {
   ArrowRight: 'right',
   ArrowUp: 'up',
   ArrowDown: 'down',
-  ' ': 'space',
+  Space: 'space',
 } as const
 
 export class Keyboard {
@@ -18,16 +18,16 @@ export class Keyboard {
     window.addEventListener('keyup', this.onKeyUp)
   }
 
-  onKeyDown = ({ key }: KeyboardEvent) => {
-    if (key in Keys) {
-      const keyName = Keys[key as keyof typeof Keys]
+  onKeyDown = ({ code }: KeyboardEvent) => {
+    if (code in Keys) {
+      const keyName = Keys[code as keyof typeof Keys]
       this[keyName] = true
     }
   }
 
-  onKeyUp = ({ key }: KeyboardEvent) => {
-    if (key in Keys) {
-      const keyName = Keys[key as keyof typeof Keys]
+  onKeyUp = ({ code }: KeyboardEvent) => {
+    if (code in Keys) {
+      const keyName = Keys[code as keyof typeof Keys]
       this[keyName] = false
     }
   }
