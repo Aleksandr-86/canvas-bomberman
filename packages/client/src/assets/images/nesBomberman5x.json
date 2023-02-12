@@ -1,5 +1,5 @@
 {
-  "cellSize": 48,
+  "cellSize": 80,
   "entries": {
     "bombermanLeft1": { "x": 0, "y": 0 },
     "bombermanLeft2": { "x": 1, "y": 0 },
