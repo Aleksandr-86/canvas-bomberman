@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/button/button'
 import { FormField } from '../../components/formField/formField'
 
 import { useForm, Validations } from '../../hooks/useForm'
 import { getValidations } from '../../features/validation'
 
+import { login } from '../../store/userActions'
+
 import styles from './signIn.module.css'
 import baseStyles from '../../app/app.module.css'
+
+import { getAuth } from '../../store/userSlice'
+import { IFormData } from '../../hooks/useAuth'
+import { useAppDispatch } from '../../store/hooks'
 
 type FormType = {
   login: string
@@ -17,6 +23,9 @@ type FormType = {
 }
 
 export const SignIn: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
   const [validations, setValidations] = useState<Validations<FormType>>()
 
   useEffect(() => {
@@ -29,9 +38,11 @@ export const SignIn: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
+    const data: IFormData = { name: '', password: '' }
+    dispatch(getAuth(data))
     if (isValid()) {
-      alert(`Данные готовы к отправке: ${JSON.stringify(values, null, 4)}`)
+      dispatch(login(values))
+      navigate('/')
     }
   }
 

@@ -13,7 +13,7 @@ import axios from 'axios'
 
 // Содержание для авторизованных пользователей
 const ContentLogged = () => {
-  const { displayName } = useAppSelector(getUser)
+  const { displayName } = useAppSelector(getUser).user
 
   return (
     <>

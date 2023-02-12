@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/button/button'
 import { FormField } from '../../components/formField/formField'
 
 import { useForm, Validations } from '../../hooks/useForm'
 import { getValidations } from '../../features/validation'
+
+import { useAppDispatch } from '../../store/hooks'
+import { registerUser } from '../../store/userActions'
+import { transformUserDTO } from '../../features/api/apiTransformers'
 
 import styles from './signUp.module.css'
 import baseStyles from '../../app/app.module.css'
@@ -21,6 +25,8 @@ type FormType = {
 }
 
 export const SignUp: React.FC = () => {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const [validations, setValidations] = useState<Validations<FormType>>()
 
   useEffect(() => {
@@ -52,9 +58,10 @@ export const SignUp: React.FC = () => {
     event.preventDefault()
 
     if (isValid()) {
-      const {repeatPassword, ...data} = values
-      
-      alert(`Данные готовы к отправке: ${JSON.stringify(data, null, 4)}`)
+      const { repeatPassword, ...data } = values
+
+      dispatch(registerUser(transformUserDTO(data)))
+      navigate('/')
     }
   }
 

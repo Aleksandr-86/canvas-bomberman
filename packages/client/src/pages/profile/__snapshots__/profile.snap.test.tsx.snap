@@ -89,8 +89,6 @@ Array [
             className="input"
             disabled={true}
             name="name"
-            onBlur={[Function]}
-            onChange={[Function]}
             type="text"
             value="mockDisplayName"
           />
@@ -112,8 +110,6 @@ Array [
             className="input"
             disabled={true}
             name="login"
-            onBlur={[Function]}
-            onChange={[Function]}
             placeholder="Login"
             type="text"
             value="mockLogin"
@@ -136,8 +132,6 @@ Array [
             className="input"
             disabled={true}
             name="firstName"
-            onBlur={[Function]}
-            onChange={[Function]}
             type="text"
             value="mockFirstName"
           />
@@ -159,8 +153,6 @@ Array [
             className="input"
             disabled={true}
             name="secondName"
-            onBlur={[Function]}
-            onChange={[Function]}
             type="text"
             value="mockSecondName"
           />
@@ -182,8 +174,6 @@ Array [
             className="input"
             disabled={true}
             name="email"
-            onBlur={[Function]}
-            onChange={[Function]}
             type="email"
             value="mockEmail"
           />
@@ -205,8 +195,6 @@ Array [
             className="input"
             disabled={true}
             name="phone"
-            onBlur={[Function]}
-            onChange={[Function]}
             type="tel"
             value={8900000000}
           />
