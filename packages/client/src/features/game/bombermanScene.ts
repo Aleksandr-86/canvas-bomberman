@@ -40,15 +40,14 @@ export const bombermanScene: SceneConfig = {
     })
   },
   create: scene => {
-    const backgroundTiles = scene.create.tileGrid({
+    scene.add.tileGrid({
       grid: EMPTY_FIELD,
       cellSize: CELL_WIDTH,
       gridWidth: GRID_WIDTH,
       cells: {
-        [Kind.Empty]: 'nesBomberman:empty',
-        [Kind.WallHard]: 'nesBomberman:wallHard',
+        [Kind.Empty]: `nesBomberman:empty:${Depth.Ground}`,
+        [Kind.WallHard]: `nesBomberman:wallHard:${Depth.Ground}`,
       },
-      depth: Depth.Ground,
     })
 
     player = scene.create.sprite(

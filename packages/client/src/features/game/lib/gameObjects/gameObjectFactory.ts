@@ -4,14 +4,13 @@ import { Rect } from './rect'
 import { Sprite } from './sprite'
 import { type SceneObject } from './types'
 
-type TextureFrame = `${string}:${string}`
+type TextureFrame = `${string}:${string}:${number}`
 
 type TileGridConfig<C extends number = number> = {
   grid: C[]
   gridWidth: number
   cellSize: number
   cells: Record<C, TextureFrame>
-  depth: number
 }
 
 export class GameObjectCreator {
@@ -43,11 +42,11 @@ export class GameObjectCreator {
     return gameObject
   }
 
-  tileGrid({ grid, gridWidth, cellSize, cells, depth }: TileGridConfig) {
+  tileGrid({ grid, gridWidth, cellSize, cells }: TileGridConfig) {
     const tiles = []
 
     for (let i = 0; i < grid.length; ++i) {
-      const [textureKey, frameKey] = cells[grid[i]].split(':')
+      const [textureKey, frameKey, spriteDepth] = cells[grid[i]].split(':')
 
       const texture = this.scene.textures.get(textureKey)
 
@@ -65,8 +64,8 @@ export class GameObjectCreator {
 
       sprite.width = cellSize
       sprite.height = cellSize
+      sprite.z = Number(spriteDepth)
 
-      sprite.z = depth
       tiles.push(sprite)
     }
 
@@ -84,7 +83,7 @@ export class GameObjectFactory {
     this.scene.displayList = Array.isArray(object)
       ? this.scene.displayList.concat(object)
       : [...this.scene.displayList, object]
-    this.scene.depthSort()
+    // this.scene.depthSort()
   }
 
   /**
@@ -103,7 +102,7 @@ export class GameObjectFactory {
    *
    * If texture in mapping not found, cell is skipped
    *
-   * `<textureKey>:<textureFrameKey>`
+   * `<textureKey>:<textureFrameKey>:<spriteDepth>`
    */
   tileGrid(config: TileGridConfig) {
     const tiles = this.creator.tileGrid(config)
