@@ -136,6 +136,16 @@ exports[`<Landing/> snapshot test cases <Landing/> should render <div className=
       >
         Войти
       </a>
+      <button
+        className="button buttonYandex"
+        onClick={[Function]}
+      >
+        <img
+          alt="Логотип Яндекса"
+          width={40}
+        />
+        ID
+      </button>
       <a
         className="linkButton"
         href="/sign-up"
