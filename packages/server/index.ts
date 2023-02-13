@@ -6,7 +6,7 @@ import type { ViteDevServer } from 'vite'
 dotenv.config()
 
 import express from 'express'
-import * as fs from 'fs'
+import { promises as fs } from 'fs'
 import * as path from 'path'
 
 const isDev = () => process.env.NODE_ENV === 'development'
@@ -59,13 +59,16 @@ async function startServer() {
       let render: (url: string) => Promise<string>
 
       if (isDev() && vite) {
-        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8')
+        template = await fs.readFile(
+          path.resolve(srcPath, 'index.html'),
+          'utf-8'
+        )
         template = await vite.transformIndexHtml(url, template)
 
         render = (await vite.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
           .render
       } else {
-        template = fs.readFileSync(
+        template = await fs.readFile(
           path.resolve(distPath, 'index.html'),
           'utf-8'
         )
