@@ -17,16 +17,18 @@ export const GameDisplay: React.FC = () => {
 
     if (import.meta.env.SSR) return
 
-    // const game = new Game({
-    //   heigth: 720,
-    //   width: 1280,
-    //   backgroundColor: 'teal',
-    //   root: canvas,
-    //   update: () => {},
-    //   create: () => {},
-    // })
+    const game = new Game({
+      heigth: 720,
+      width: 1280,
+      backgroundColor: 'teal',
+      root: canvas,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      update: () => {},
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      create: () => {},
+    })
 
-    // game.start()
+    game.start()
   }, [])
 
   return (
