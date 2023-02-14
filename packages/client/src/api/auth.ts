@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { transformUser } from '../features/api/apiTransformers'
 import { API_URL, UserDTO } from '../typings/api'
+import { OAUTH_URL } from '../features/oauth/onOauthRequest'
 
 interface LoginRequestData {
   login: string
@@ -16,6 +17,11 @@ interface RegisterRequestData {
   phone: string
 }
 
+interface OAuthRequestData {
+  code: string
+  redirect_uri: string
+}
+
 const options = {
   withCredentials: true,
   headers: {
@@ -25,6 +31,14 @@ const options = {
 
 const login = async (data: LoginRequestData) => {
   const response = await axios.post(API_URL + 'auth/signin', data, {
+    ...options,
+  })
+
+  return response.data
+}
+
+const oauth = async (data: OAuthRequestData) => {
+  const response = await axios.post(OAUTH_URL, data, {
     ...options,
   })
 
@@ -60,6 +74,7 @@ const AuthAPI = {
   logout,
   me,
   register,
+  oauth,
 }
 
 export default AuthAPI

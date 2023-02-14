@@ -12,12 +12,11 @@ import yandexLogo from '../../assets/images/yaLogo.png'
 
 import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
-import axios from 'axios'
 import {
   onOauthRequest,
-  OauthURL,
-  redirectURI,
+  REDIRECT_URI,
 } from '../../features/oauth/onOauthRequest'
+import { oauth } from '../../store/userActions'
 
 // Содержание для авторизованных пользователей
 const ContentLogged = () => {
@@ -81,16 +80,7 @@ export const Landing = () => {
     const code = searchParams.get(`code`)
 
     if (code) {
-      axios
-        .post(
-          OauthURL,
-          {
-            code,
-            redirect_uri: redirectURI,
-          },
-          { withCredentials: true }
-        )
-        .then(() => dispatch(me()))
+      dispatch(oauth({ code, redirect_uri: REDIRECT_URI }))
     }
   }, [])
 
