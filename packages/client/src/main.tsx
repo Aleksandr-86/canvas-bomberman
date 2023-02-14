@@ -16,8 +16,6 @@ ReactDOM.hydrateRoot(
   </StrictMode>
 )
 
-const isDev = () => process.env.NODE_ENV === 'development'
-
-if (!isDev()) {
+if (import.meta.env.PROD) {
   startServiceWorker()
 }
