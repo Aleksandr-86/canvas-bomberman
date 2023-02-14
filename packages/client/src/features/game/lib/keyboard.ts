@@ -1,3 +1,4 @@
+import { setSoundBomb } from "../../../api/audio"
 const Keys = {
   ArrowLeft: 'left',
   ArrowRight: 'right',
@@ -19,6 +20,9 @@ export class Keyboard {
   }
 
   onKeyDown = ({ key }: KeyboardEvent) => {
+    if (key == ' ') {
+      setSoundBomb();
+    }
     if (key in Keys) {
       const keyName = Keys[key as keyof typeof Keys]
       this[keyName] = true
