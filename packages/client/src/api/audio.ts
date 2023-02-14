@@ -4,7 +4,6 @@ export const setSoundBomb = () => {
   oscillator.type = 'sine'
   oscillator.frequency.value = 440
   oscillator.connect(context.destination)
-  oscillator.start()
   const gain = context.createGain()
   oscillator.connect(gain)
   gain.connect(context.destination)
