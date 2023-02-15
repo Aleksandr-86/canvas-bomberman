@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { me } from '../../store/userActions'
 
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
 import { NavigationBar } from '../../components/navigationBar/navigationBar'
 import { Button } from '../../components/button/button'
@@ -16,7 +14,7 @@ import {
   onOauthRequest,
   REDIRECT_URI,
 } from '../../features/oauth/onOauthRequest'
-import { oauth } from '../../store/userActions'
+import { useOauth } from '../../hooks/useOauth'
 
 // Содержание для авторизованных пользователей
 const ContentLogged = () => {
@@ -73,16 +71,10 @@ const ContentNotLogged = () => (
 )
 
 export const Landing = () => {
-  const dispatch = useAppDispatch()
   const [searchParams] = useSearchParams()
+  const code = searchParams.get(`code`)
 
-  useEffect(() => {
-    const code = searchParams.get(`code`)
-
-    if (code) {
-      dispatch(oauth({ code, redirect_uri: REDIRECT_URI }))
-    }
-  }, [])
+  useOauth(code, REDIRECT_URI)
 
   const { isAuth } = useAppSelector(getUser)
 
