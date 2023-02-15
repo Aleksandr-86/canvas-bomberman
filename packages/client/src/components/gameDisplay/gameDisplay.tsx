@@ -15,8 +15,10 @@ export const GameDisplay: React.FC = () => {
 
     if (!canvas) return
 
-    if (import.meta.env.SSR) return
-
+    /**
+     * TODO: Данный участок следует обработать после доработки
+     * движка по задачи № 75. Ответственный - Aleksandr-86.
+     */
     const game = new Game({
       heigth: 720,
       width: 1280,
@@ -34,12 +36,7 @@ export const GameDisplay: React.FC = () => {
   return (
     <div className={styles.gameDisplay}>
       <div className={styles.gameDisplayCanvasWrapper} ref={canvasWrapperRef}>
-        <canvas
-          ref={gameRef}
-          width={1280}
-          height={720}
-          style={{ backgroundColor: 'red' }}
-        />
+        <canvas ref={gameRef} width={1280} height={720} />
         <GameOverlay onReloadGame={() => undefined} />
       </div>
     </div>
