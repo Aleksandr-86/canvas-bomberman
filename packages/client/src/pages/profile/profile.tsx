@@ -10,11 +10,12 @@ import { getValidations } from '../../features/validation'
 import { useForm, Validations } from '../../hooks/useForm'
 
 import styles from './profile.module.css'
-import avatarImg from '../../assets/images/avatar.png'
 
 import { getUser } from '../../store/selectors'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { setAuthFalse } from '../../store/userSlice'
+import { editData, logout } from '../../store/userActions'
+
+import { store } from '../../store'
 
 type FormType = {
   displayName: string
@@ -26,7 +27,7 @@ type FormType = {
 }
 
 export const Profile: React.FC = () => {
-  const user = useAppSelector(getUser)
+  const { user } = useAppSelector(getUser)
   const dispatch = useAppDispatch()
 
   const [validations, setValidations] = useState<Validations<FormType>>()
@@ -55,7 +56,16 @@ export const Profile: React.FC = () => {
     event.preventDefault()
 
     if (isValid()) {
-      alert(`Данные готовы к отправке: ${JSON.stringify(values, null, 4)}`)
+      dispatch(
+        editData({
+          login: values.login,
+          display_name: values.displayName,
+          first_name: values.firstName,
+          second_name: values.secondName,
+          phone: values.phone,
+          email: values.email,
+        })
+      )
     }
   }
 
@@ -64,7 +74,7 @@ export const Profile: React.FC = () => {
   }
 
   const handleExit = () => {
-    dispatch(setAuthFalse())
+    dispatch(logout())
   }
 
   const onAvatarClick = () => {
@@ -81,79 +91,126 @@ export const Profile: React.FC = () => {
       <form className={styles.profile} onSubmit={handleSubmit}>
         <Avatar
           size="Gargantuan"
-          src={avatarImg}
+          src={user.avatar}
           disabled={!isEdit}
           onAvatarClick={onAvatarClick}
         />
 
-        <div className={styles.profileContent}>
-          <FormField
-            label="Псевдоним"
-            name="name"
-            type="text"
-            {...register('displayName')}
-            disabled={!isEdit}></FormField>
-          <FormField
-            label="Логин"
-            placeholder="Login"
-            name="login"
-            type="text"
-            {...register('login')}
-            disabled={!isEdit}></FormField>
-          <FormField
-            label="Имя"
-            name="firstName"
-            type="text"
-            {...register('firstName')}
-            disabled={!isEdit}></FormField>
-          <FormField
-            label="Фамилия"
-            name="secondName"
-            type="text"
-            {...register('secondName')}
-            disabled={!isEdit}></FormField>
-          <FormField
-            label="Почта"
-            name="email"
-            type="email"
-            {...register('email')}
-            disabled={!isEdit}></FormField>
-          <FormField
-            label="Телефон"
-            name="phone"
-            type="tel"
-            {...register('phone')}
-            disabled={!isEdit}></FormField>
-        </div>
-
         {isEdit ? (
-          <div className={styles.profileAction}>
-            <div className={styles.actionButton}>
-              <Button type="submit">Сохранить</Button>
+          <>
+            <div className={styles.profileContent}>
+              <FormField
+                label="Псевдоним"
+                name="name"
+                type="text"
+                {...register('displayName')}
+                disabled={!isEdit}></FormField>
+              <FormField
+                label="Логин"
+                placeholder="Login"
+                name="login"
+                type="text"
+                {...register('login')}
+                disabled={!isEdit}></FormField>
+              <FormField
+                label="Имя"
+                name="firstName"
+                type="text"
+                {...register('firstName')}
+                disabled={!isEdit}></FormField>
+              <FormField
+                label="Фамилия"
+                name="secondName"
+                type="text"
+                {...register('secondName')}
+                disabled={!isEdit}></FormField>
+              <FormField
+                label="Почта"
+                name="email"
+                type="email"
+                {...register('email')}
+                disabled={!isEdit}></FormField>
+              <FormField
+                label="Телефон"
+                name="phone"
+                type="tel"
+                {...register('phone')}
+                disabled={!isEdit}></FormField>
             </div>
 
-            <div className={styles.actionButton}>
-              <Button onClick={handleEditData}>Назад</Button>
+            <div className={styles.profileAction}>
+              <div className={styles.actionButton}>
+                <Button type="submit">Сохранить</Button>
+              </div>
+
+              <div className={styles.actionButton}>
+                <Button onClick={handleEditData}>Назад</Button>
+              </div>
             </div>
-          </div>
+          </>
         ) : (
-          <div className={styles.profileAction}>
-            <div className={styles.actionButton}>
-              <Button onClick={handleEditData}>Изменить данные</Button>
+          <>
+            <div className={styles.profileContent}>
+              <FormField
+                label="Псевдоним"
+                name="name"
+                type="text"
+                value={user.displayName}
+                disabled={!isEdit}></FormField>
+              <FormField
+                label="Логин"
+                placeholder="Login"
+                name="login"
+                type="text"
+                value={user.login}
+                disabled={!isEdit}></FormField>
+              <FormField
+                label="Имя"
+                name="firstName"
+                type="text"
+                value={user.firstName}
+                disabled={!isEdit}></FormField>
+              <FormField
+                label="Фамилия"
+                name="secondName"
+                type="text"
+                value={user.secondName}
+                disabled={!isEdit}></FormField>
+              <FormField
+                label="Почта"
+                name="email"
+                type="email"
+                value={user.email}
+                disabled={!isEdit}></FormField>
+              <FormField
+                label="Телефон"
+                name="phone"
+                type="tel"
+                value={user.phone}
+                disabled={!isEdit}></FormField>
             </div>
 
-            <div className={styles.actionButton}>
-              <Link className={styles.buttonLink} to="/profile/password">
-                Изменить пароль
-              </Link>
-            </div>
+            <div className={styles.profileAction}>
+              <div className={styles.actionButton}>
+                <Button onClick={handleEditData}>Изменить данные</Button>
+              </div>
 
-            <div className={styles.actionButton}>
-              <Link className={styles.buttonDanger} onClick={handleExit} to="/">
-                Выход
-              </Link>
+              <div className={styles.actionButton}>
+                <Link className={styles.buttonLink} to="/profile/password">
+                  Изменить пароль
+                </Link>
+              </div>
+
+              <div className={styles.actionButton}>
+                <Link
+                  className={styles.buttonDanger}
+                  onClick={handleExit}
+                  to="/">
+                  Выход
+                </Link>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </form>
     </>
