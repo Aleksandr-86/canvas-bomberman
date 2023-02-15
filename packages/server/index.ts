@@ -25,6 +25,26 @@ async function startServer() {
   const srcPath = path.dirname(require.resolve('client'))
 
   /**
+   * Решение заимствовано отсюда:
+   * https://github.com/jonluca/vite-typescript-ssr-react/blob/e8e001903fa46248cf6e2a33ae34aaa579448ea5/server.ts#L12-L26
+   */
+  const getStyleSheets = async () => {
+    try {
+      const assetPath = path.join(distPath, 'assets')
+      const files = await fs.readdir(assetPath)
+      const cssAssets = files.filter(l => l.endsWith('.css'))
+      const allContent = []
+      for (const asset of cssAssets) {
+        const content = await fs.readFile(path.join(assetPath, asset), 'utf-8')
+        allContent.push(`<style type="text/css">${content}</style>`)
+      }
+      return allContent.join('\n')
+    } catch {
+      return ''
+    }
+  }
+
+  /**
    * Подключение vite middleware для горячей перезагрузки
    * модулей (HMR)
    */
@@ -49,6 +69,8 @@ async function startServer() {
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
+
+  const styleSheets = getStyleSheets()
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
@@ -76,9 +98,12 @@ async function startServer() {
         render = (await import(ssrClientPath)).render
       }
 
+      const cssAssets = isDev() ? await styleSheets : ''
       const appHtml = await render(url)
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const html = template
+        .replace(`<!--ssr-styles-->`, cssAssets)
+        .replace(`<!--ssr-outlet-->`, appHtml)
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
