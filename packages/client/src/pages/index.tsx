@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-
 import { Landing } from './landing/landing'
 import { SignIn } from './signIn/signIn'
 import { SignUp } from './signUp/signUp'

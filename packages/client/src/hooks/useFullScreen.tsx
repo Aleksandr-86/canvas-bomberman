@@ -18,7 +18,6 @@ export const useFullScreen = <T extends HTMLElement | null>(
     }
 
     document.addEventListener(`keydown`, onKeyDown)
-
     return () => {
       document.removeEventListener(`keydown`, onKeyDown)
     }

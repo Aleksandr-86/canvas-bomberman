@@ -1,7 +1,17 @@
 {
   "plugins": ["stylelint-order"],
-  "extends": ["stylelint-config-standard-scss", "stylelint-config-prettier-scss", "stylelint-config-hudochenkov/order"],
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-prettier-scss",
+    "stylelint-config-hudochenkov/order"
+  ],
   "rules": {
     "selector-class-pattern": "^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*(?:__[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:_[a-zA-Z0-9]+(?:_[a-zA-Z0-9]+)*)?(?:\\[.+\\])?$"
-  }
+  },
+  "ignoreFiles": [
+    "packages/client/public/**",
+    "packages/client/dist/**",
+    "packages/client/dist-ssr/**",
+    "packages/server/dist/**"
+  ]
 }
