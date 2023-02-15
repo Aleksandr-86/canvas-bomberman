@@ -5,8 +5,9 @@ import { App } from './app/app'
 import { ErrorBoundary } from './components/errorBoundary/errorBoundary'
 import { startServiceWorker } from './features/game/sw/startServiceWorker'
 
-ReactDOM.hydrateRoot(
-  document.getElementById('root') as HTMLElement,
+const rootElement = document.getElementById('root') as HTMLElement
+
+const app = (
   <StrictMode>
     <BrowserRouter>
       <ErrorBoundary>
@@ -15,6 +16,12 @@ ReactDOM.hydrateRoot(
     </BrowserRouter>
   </StrictMode>
 )
+
+if (rootElement.innerHTML === '<!--ssr-outlet-->') {
+  ReactDOM.createRoot(rootElement).render(app)
+} else {
+  ReactDOM.hydrateRoot(rootElement, app)
+}
 
 if (import.meta.env.PROD) {
   startServiceWorker()
