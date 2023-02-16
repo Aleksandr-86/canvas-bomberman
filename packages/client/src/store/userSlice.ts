@@ -6,6 +6,7 @@ import {
   logout,
   me,
   uploadAvatar,
+  oauth,
 } from './userActions'
 
 export interface User {
@@ -183,6 +184,18 @@ const userSlice = createSlice({
       .addCase(getAuth.rejected, (state, action) => {
         state.isLoading = false
         state.isAuth = false
+        state.error = action.payload
+      })
+      // oauth
+      .addCase(oauth.pending, (state, action) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(oauth.fulfilled, (state, action) => {
+        state.isLoading = false
+      })
+      .addCase(oauth.rejected, (state, action) => {
+        state.isLoading = false
         state.error = action.payload
       })
   },

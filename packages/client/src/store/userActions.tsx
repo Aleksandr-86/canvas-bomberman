@@ -24,6 +24,11 @@ interface LoginPayload {
   password: string
 }
 
+interface OAuthPayload {
+  code: string
+  redirect_uri: string
+}
+
 interface RegisterPayload {
   first_name: string
   second_name: string
@@ -142,6 +147,22 @@ export const logout = createAsyncThunk(
       const response = await AuthAPI.logout()
 
       return response
+    } catch (error: unknown | AxiosError) {
+      if (isAxiosError(error)) {
+        return rejectWithValue(axiosErrorHandler(error))
+      }
+
+      return rejectWithValue(error)
+    }
+  }
+)
+
+export const oauth = createAsyncThunk(
+  'user/oauth',
+  async (data: OAuthPayload, { dispatch, rejectWithValue }) => {
+    try {
+      await AuthAPI.oauth(data)
+      dispatch(me())
     } catch (error: unknown | AxiosError) {
       if (isAxiosError(error)) {
         return rejectWithValue(axiosErrorHandler(error))
