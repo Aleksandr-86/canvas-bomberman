@@ -1,7 +1,7 @@
 import * as renderer from 'react-test-renderer'
 import { Game } from './game'
 import configureStore from 'redux-mock-store'
-import { GameStatus } from '../../store/gameSlice'
+import { GameStatus } from '../../store/reducers/gameSlice'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 

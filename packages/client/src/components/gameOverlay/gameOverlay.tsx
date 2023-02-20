@@ -2,7 +2,7 @@ import React from 'react'
 import { useAppSelector } from '../../store/hooks'
 import { GameStart } from '../gameStart/gameStart'
 import { GameEnd } from '../gameEnd/gameEnd'
-import { GameStatus } from '../../store/gameSlice'
+import { GameStatus } from '../../store/reducers/gameSlice'
 import { getGameStatus } from '../../store/selectors'
 import styles from './gameOverlay.module.css'
 

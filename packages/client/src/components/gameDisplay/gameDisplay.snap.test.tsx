@@ -3,7 +3,7 @@ import { GameDisplay } from './gameDisplay'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
-import { GameStatus } from '../../store/gameSlice'
+import { GameStatus } from '../../store/reducers/gameSlice'
 
 const mockStore = configureStore([])
 

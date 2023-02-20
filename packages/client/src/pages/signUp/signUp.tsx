@@ -8,7 +8,7 @@ import { useForm, Validations } from '../../hooks/useForm'
 import { getValidations } from '../../features/validation'
 
 import { useAppDispatch } from '../../store/hooks'
-import { registerUser } from '../../store/userActions'
+import { registerUser } from '../../store/actions/userActions'
 import { transformUserDTO } from '../../features/api/apiTransformers'
 
 import styles from './signUp.module.css'

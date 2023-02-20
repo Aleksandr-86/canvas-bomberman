@@ -1,7 +1,7 @@
 import * as renderer from 'react-test-renderer'
 import { LeaderboardTable } from './leaderboardTable'
 
-import { type PlayerStats } from '../../store/playersStatsSlice'
+import { type PlayerStats } from '../../store/reducers/playersStatsSlice'
 
 const mockProps: PlayerStats[] = [
   {

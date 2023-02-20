@@ -7,7 +7,7 @@ import {
   me,
   uploadAvatar,
   oauth,
-} from './userActions'
+} from '../actions/userActions'
 
 export interface User {
   id: number | null
@@ -19,8 +19,8 @@ export interface User {
   phone: string
   avatar: string
 }
-import { useAuth } from '../hooks/useAuth'
-import { IFormData } from '../hooks/useAuth'
+import { useAuth } from '../../hooks/useAuth'
+import { IFormData } from '../../hooks/useAuth'
 
 export const getAuth = createAsyncThunk(
   'user/getAuth',
