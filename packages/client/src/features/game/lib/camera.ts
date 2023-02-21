@@ -18,8 +18,12 @@ export class Camera {
 
   get value() {
     return {
-      x: clamp(-this.cameraTarget.x + this.cameraWidth / 2, -240, 0),
-      y: clamp(-this.cameraTarget.y + this.cameraHeight / 2, -320, 0),
+      x: Math.round(
+        clamp(-this.cameraTarget.x + this.cameraWidth / 2, -240, 0)
+      ),
+      y: Math.round(
+        clamp(-this.cameraTarget.y + this.cameraHeight / 2, -320, 0)
+      ),
     }
   }
 }
