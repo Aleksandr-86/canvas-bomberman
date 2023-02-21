@@ -1,8 +1,8 @@
 import { type Texture } from '../texture'
 import { BaseGameObject } from './baseGameObject'
+import { type Animation } from '../animation'
 
 export class Sprite extends BaseGameObject {
-  public z = 0
   public scaleX = 1
   public scaleY = 1
   public skewX = 0
@@ -14,18 +14,26 @@ export class Sprite extends BaseGameObject {
   public height
   public opacity = 1
   public shouldDestroy = false
+  public animations = new Map<string, Animation>()
 
   constructor(
     public x: number,
     public y: number,
     public texture: Texture,
-    public frame: keyof typeof texture.frames = '__base'
+    public frame: keyof typeof texture.frames = '__base',
+    public z = 0
   ) {
     super()
     const { width, height } = texture.frames[frame]
 
     this.width = width
     this.height = height
+  }
+
+  addAnimation(anims: Record<string, Animation>) {
+    Object.entries(anims).forEach(([key, anim]) => {
+      this.animations.set(key, anim)
+    })
   }
 
   destroy() {
