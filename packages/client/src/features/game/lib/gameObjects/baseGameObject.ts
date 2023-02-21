@@ -1,16 +1,18 @@
-import { TPoint } from '../../utils'
+import { type PointLike } from '../../utils'
 import { FrameData } from '../ticker'
 import type { SceneObject } from './types'
 
 export abstract class BaseGameObject implements SceneObject {
   shouldDestroy = false
+  width = 0
+  height = 0
   z = 0
   x = 0
   y = 0
 
-  setPosition({ x, y }: TPoint) {
-    this.x = x
-    this.y = y
+  setPosition({ x = 0, y = 0 }: PointLike) {
+    this.x = Math.round(x)
+    this.y = Math.round(y)
   }
 
   destroy() {
