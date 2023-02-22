@@ -27,7 +27,7 @@ exports[`<Leaderboard/> snapshot test cases <Leaderboard/> should render <div cl
     </a>
   </nav>
   <div
-    className="wrapper"
+    className="container"
   >
     <div
       className="tableCaption"
@@ -61,13 +61,7 @@ exports[`<Leaderboard/> snapshot test cases <Leaderboard/> should render <div cl
             className="head"
             onClick={[Function]}
           >
-            Игр
-          </th>
-          <th
-            className="head"
-            onClick={[Function]}
-          >
-            Время (мин)
+            Сыграно игр
           </th>
         </tr>
       </thead>
@@ -95,21 +89,32 @@ exports[`<Leaderboard/> snapshot test cases <Leaderboard/> should render <div cl
           >
             1
           </td>
-          <td
-            className="columnTotalTime"
-          >
-            23
-          </td>
         </tr>
       </tbody>
     </table>
-    <a
-      className="linkButton"
-      href="/"
-      onClick={[Function]}
+    <div
+      className="buttonWrapper"
     >
-      На главную
-    </a>
+      <button
+        className="button"
+        onClick={[Function]}
+      >
+        &lt; 
+      </button>
+      <button
+        className="button"
+        onClick={[Function]}
+      >
+        &gt;
+      </button>
+      <a
+        className="linkButton"
+        href="/"
+        onClick={[Function]}
+      >
+        На главную
+      </a>
+    </div>
     <img
       alt="hero-img"
       className="heroImg"

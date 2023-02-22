@@ -28,13 +28,7 @@ exports[`<LeaderboardTable/> snapshot test cases <LeaderboardTable/> should rend
         className="head"
         onClick={[Function]}
       >
-        Игр
-      </th>
-      <th
-        className="head"
-        onClick={[Function]}
-      >
-        Время (мин)
+        Сыграно игр
       </th>
     </tr>
   </thead>
@@ -61,11 +55,6 @@ exports[`<LeaderboardTable/> snapshot test cases <LeaderboardTable/> should rend
         className="columnGames"
       >
         1
-      </td>
-      <td
-        className="columnTotalTime"
-      >
-        23
       </td>
     </tr>
   </tbody>

@@ -9,7 +9,7 @@
   user-select: none;
 }
 
-.wrapper {
+.container {
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -20,6 +20,12 @@
 .tableCaption {
   font-size: 40px;
   text-transform: uppercase;
+}
+
+.buttonWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 }
 
 .heroImg {
