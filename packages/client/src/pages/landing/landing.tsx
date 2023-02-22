@@ -1,22 +1,29 @@
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import { useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
 import { NavigationBar } from '../../components/navigationBar/navigationBar'
+import { Button } from '../../components/button/button'
 import bombermanLogoImg from '../../assets/images/bombermanLogo.png'
 import heroImg from '../../assets/images/hero.png'
+import yandexLogo from '../../assets/images/yaLogo.png'
 
 import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
+import {
+  onOauthRequest,
+  REDIRECT_URI,
+} from '../../features/oauth/onOauthRequest'
+import { useOauth } from '../../hooks/useOauth'
 
 // Содержание для авторизованных пользователей
 const ContentLogged = () => {
-  const { displayName } = useAppSelector(getUser)
+  const { displayName, login } = useAppSelector(getUser).user
 
   return (
     <>
       <div className={styles.descriptionTop}>
-        Привет {displayName}! <br />
+        Привет {displayName || login}! <br />
         Спешим напомнить, что ты в любой момент можешь освежить свои знания по
         игре, перечитав{' '}
         <Link className={styles.link} to="/rules">
@@ -52,6 +59,10 @@ const ContentNotLogged = () => (
       <Link className={baseStyles.linkButton} to="/sign-in">
         Войти
       </Link>
+      <Button className={styles.buttonYandex} onClick={onOauthRequest}>
+        <img src={yandexLogo} alt="Логотип Яндекса" width={40} />
+        ID
+      </Button>
       <Link className={baseStyles.linkButton} to="/sign-up">
         Зарегистрироваться
       </Link>
@@ -60,6 +71,11 @@ const ContentNotLogged = () => (
 )
 
 export const Landing = () => {
+  const [searchParams] = useSearchParams()
+  const code = searchParams.get(`code`)
+
+  useOauth(code, REDIRECT_URI)
+
   const { isAuth } = useAppSelector(getUser)
 
   const navBar = isAuth ? <NavigationBar /> : null

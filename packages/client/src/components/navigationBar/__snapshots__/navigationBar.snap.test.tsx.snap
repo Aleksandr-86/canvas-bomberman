@@ -13,7 +13,7 @@ exports[`<NavigationBar/> snapshot test cases <NavigationBar/> should render <na
     href="/profile"
     onClick={[Function]}
   >
-    Alex
+    mockDisplayName
   </a>
   <a
     className="link"

@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
-import { bombermanScene } from '../../features/game/bombermanScene'
 import { Game } from '../../features/game/lib'
 import { GameOverlay } from '../gameOverlay/gameOverlay'
 import { useFullScreen } from '../../hooks/useFullScreen'
 import styles from './gameDisplay.module.css'
+import { bombermanScene } from '../../features/game/bombermanScene'
 
 export const GameDisplay: React.FC = () => {
   const gameRef = useRef<null | HTMLCanvasElement>(null)
@@ -16,6 +16,10 @@ export const GameDisplay: React.FC = () => {
 
     if (!canvas) return
 
+    /**
+     * TODO: Данный участок следует обработать после доработки
+     * движка по задачи № 75. Ответственный - Aleksandr-86.
+     */
     const game = new Game({
       height: 720,
       width: 1280,
