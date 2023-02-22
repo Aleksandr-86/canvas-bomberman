@@ -110,7 +110,7 @@ export const SignUp: React.FC = () => {
 
         <div className={styles.signUpAction}>
           <div className={styles.actionButton}>
-            <Button type="submit">Все верно!</Button>
+            <Button type="submit">Всё верно!</Button>
           </div>
 
           <div className={styles.actionButton}>
