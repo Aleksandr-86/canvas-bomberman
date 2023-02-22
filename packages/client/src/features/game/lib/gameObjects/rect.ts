@@ -1,15 +1,13 @@
 import { BaseGameObject } from './baseGameObject'
-import type { Depth, Position, Drawable } from './types'
 
 export class Rect extends BaseGameObject {
-  public z = 0
-
   constructor(
     public x: number,
     public y: number,
     public width: number,
     public height: number,
-    public color: string
+    public color: string,
+    public z = 0
   ) {
     super()
   }

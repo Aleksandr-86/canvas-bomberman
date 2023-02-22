@@ -51,7 +51,7 @@ export class Game {
     this.ctx = ctx
     this.setCanvasProps(width, height, backgroundColor)
     this.scene = scene
-    this.sceneContext = new SceneContext(Point.New(width, height))
+    this.sceneContext = new SceneContext(new Point(width, height))
     this.loader = new Loader(this.sceneContext)
   }
 

@@ -1,5 +1,10 @@
 import { type FrameData } from '../ticker'
 
+export interface Size {
+  width: number
+  height: number
+}
+
 export interface Position {
   x: number
   y: number
@@ -24,4 +29,4 @@ export interface Drawable {
   exec: (ctx: CanvasRenderingContext2D, time: FrameData) => void
 }
 
-export type SceneObject = Drawable & Depth & Position
+export type SceneObject = Drawable & Depth & Position & Size

@@ -10,14 +10,21 @@ type TileGridConfig<C extends number = number> = {
   grid: C[]
   gridWidth: number
   cellSize: number
-  cells: Record<C, TextureFrame>
+  cells: Record<C, TextureFrame | Omit<string, TextureFrame>>
 }
 
 export class GameObjectCreator {
   constructor(private scene: SceneContext) {}
 
-  rect(x: number, y: number, width: number, height: number, fill: string) {
-    const gameObject = new Rect(x, y, width, height, fill)
+  rect(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    color: string,
+    z = 0
+  ) {
+    const gameObject = new Rect(x, y, width, height, color, z)
 
     return gameObject
   }
@@ -28,13 +35,14 @@ export class GameObjectCreator {
     textureKey: string,
     frameKey = '__base',
     width?: number,
-    height?: number
+    height?: number,
+    z = 0
   ) {
     const texture =
       this.scene.textures.get(textureKey) ||
       (this.scene.textures.get('white') as Texture)
 
-    const gameObject = new Sprite(x, y, texture, frameKey)
+    const gameObject = new Sprite(x, y, texture, frameKey, z)
 
     if (width) gameObject.width = width
     if (height) gameObject.height = height
@@ -46,26 +54,24 @@ export class GameObjectCreator {
     const tiles = []
 
     for (let i = 0; i < grid.length; ++i) {
-      const [textureKey, frameKey, spriteDepth] = cells[grid[i]].split(':')
-
-      const texture = this.scene.textures.get(textureKey)
-
-      if (!texture) continue
-
       const col = i % gridWidth
       const row = Math.trunc(i / gridWidth)
+      const entry = cells[grid[i]]
+
+      const [textureKey, frameKey, spriteDepth] = entry.split(':')
+      const texture = this.scene.textures.get(textureKey)
+      if (!texture) continue
 
       const sprite = new Sprite(
         col * cellSize,
         row * cellSize,
         texture,
-        frameKey
+        frameKey,
+        Number(spriteDepth)
       )
 
       sprite.width = cellSize
       sprite.height = cellSize
-      sprite.z = Number(spriteDepth)
-
       tiles.push(sprite)
     }
 
@@ -83,14 +89,20 @@ export class GameObjectFactory {
     this.scene.displayList = Array.isArray(object)
       ? this.scene.displayList.concat(object)
       : [...this.scene.displayList, object]
-    // this.scene.depthSort()
   }
 
   /**
    * Create and add rectangle to scene
    */
-  rect(x: number, y: number, width: number, height: number, fill: string) {
-    const gameObject = this.creator.rect(x, y, width, height, fill)
+  rect(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    fill: string,
+    z = 0
+  ) {
+    const gameObject = this.creator.rect(x, y, width, height, fill, z)
     this.register(gameObject)
     return gameObject
   }
@@ -119,7 +131,8 @@ export class GameObjectFactory {
     textureKey: string,
     frameKey = '__base',
     width?: number,
-    height?: number
+    height?: number,
+    z = 0
   ) {
     const gameObject = this.creator.sprite(
       x,
@@ -127,7 +140,8 @@ export class GameObjectFactory {
       textureKey,
       frameKey,
       width,
-      height
+      height,
+      z
     )
 
     this.register(gameObject)
