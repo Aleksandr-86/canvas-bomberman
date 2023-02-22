@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../store/hooks'
 import gameScore from './gameScore.module.css'
-import bombermanAtlas from '../../assets/images/nesBomberman3x.json'
+import bombermanAtlas from '../../assets/images/nesBomberman5x.json'
 import { selectActiveBuffList, selectGameStats } from '../../store/selectors'
 
 export const GameScore = () => {

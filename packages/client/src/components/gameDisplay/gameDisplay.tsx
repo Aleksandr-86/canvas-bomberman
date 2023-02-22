@@ -4,6 +4,7 @@ import { GameOverlay } from '../gameOverlay/gameOverlay'
 import { useFullScreen } from '../../hooks/useFullScreen'
 import styles from './gameDisplay.module.css'
 import { bombermanScene } from '../../features/game/bombermanScene'
+import { GameScore } from '../gameScore'
 
 export const GameDisplay: React.FC = () => {
   const gameRef = useRef<null | HTMLCanvasElement>(null)
@@ -35,6 +36,7 @@ export const GameDisplay: React.FC = () => {
   return (
     <div className={styles.gameDisplay}>
       <div className={styles.gameDisplayCanvasWrapper} ref={canvasWrapperRef}>
+        <GameScore />
         <canvas ref={gameRef} width={1280} height={720} />
         <GameOverlay onReloadGame={() => undefined} />
       </div>
