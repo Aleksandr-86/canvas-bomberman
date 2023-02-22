@@ -3,16 +3,18 @@ import { type Texture } from './texture'
 import { GameObjectFactory } from './gameObjects'
 import { type SceneObject } from './gameObjects/types'
 import { Camera } from './camera'
-import { TPoint } from '../utils/point'
+import { type PointLike } from '../utils'
+import { AnimationRunner } from './animationRunner'
 
 export class SceneContext {
   public displayList: SceneObject[] = []
   public textures = new Map<string, Texture>()
   public add = new GameObjectFactory(this)
   public create = this.add.creator
+  public anims = new AnimationRunner()
   public camera: Camera
 
-  constructor(private dimensions: TPoint) {
+  constructor(private dimensions: PointLike) {
     this.camera = new Camera(this.dimensions.x, this.dimensions.y)
   }
 
@@ -21,12 +23,7 @@ export class SceneContext {
   }
 
   public render(ctx: CanvasRenderingContext2D, time: FrameData) {
-    ctx.clearRect(
-      -1000,
-      -1000,
-      this.dimensions.x * 100,
-      this.dimensions.y * 100
-    )
+    ctx.clearRect(0, 0, this.dimensions.x, this.dimensions.y)
 
     ctx.save()
     ctx.translate(this.camera.value.x, this.camera.value.y)
