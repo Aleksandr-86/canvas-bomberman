@@ -45,8 +45,9 @@ export const transformUserDTO = (data: UserForm) => {
 export const transformLeaderboardDTO = (arrayDTO: { data: PlayerStats }[]) => {
   const transformedData: PlayerStats[] = []
   let place = 1
+  const lenDTO = arrayDTO.length
 
-  if (arrayDTO.length === 0) {
+  if (lenDTO === 0) {
     transformedData.push({
       id: 0,
       place: 0,

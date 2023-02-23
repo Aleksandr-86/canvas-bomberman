@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { transformUser } from '../features/api/apiTransformers'
+import { transformUser } from '../features/utils/apiTransformers'
 import { API_URL, UserDTO } from '../typings/api'
 import { OAUTH_URL } from '../features/oauth/onOauthRequest'
 

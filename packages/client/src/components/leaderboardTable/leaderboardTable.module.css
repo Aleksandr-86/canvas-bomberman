@@ -11,10 +11,14 @@
 }
 
 .head {
+  display: flex;
   padding-bottom: 10px;
-  border-bottom: 5px solid black;
-  text-align: center;
   cursor: pointer;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
 }
 
 .ascending::after {
@@ -29,11 +33,7 @@
   margin-left: 10px;
 }
 
-.columnPlace,
-.columnName,
-.columnScore,
-.columnGames,
-.columnTotalTime {
+.paddingBorder {
   padding: 10px 0;
   border-bottom: 2px solid #ccc;
 }
@@ -56,6 +56,16 @@
 .columnGames {
   width: 330px;
   text-align: center;
+}
+
+.body {
+  border-top: 5px solid black;
+  height: 345px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
 }
 
 .row:hover {

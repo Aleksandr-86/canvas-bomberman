@@ -1,20 +1,11 @@
 import React from 'react'
-
 import { useSortableData } from '../../hooks/userSortableData'
 import { PlayerStats } from '../../store/reducers/leaderboardSlice'
-
 import styles from './leaderboardTable.module.css'
 
 interface Props {
   state: PlayerStats[]
 }
-
-const HEADERS: { name: string; title: string }[] = [
-  { name: 'place', title: 'Место' },
-  { name: 'name', title: 'Имя игрока' },
-  { name: 'score', title: 'Очки' },
-  { name: 'games', title: 'Сыграно игр' },
-]
 
 export const LeaderboardTable: React.FC<Props> = props => {
   const { items, requestSort, sortConfig } = useSortableData(props.state, {
@@ -30,37 +21,55 @@ export const LeaderboardTable: React.FC<Props> = props => {
     const { key, direction } = sortConfig
 
     if (key === name) {
-      return `${styles.head} ${styles[direction]}`
+      return `${styles.title} ${styles[direction]}`
     } else {
-      return styles.head
+      return styles.title
     }
   }
 
   return (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          {HEADERS.map(({ name, title }, index) => (
-            <th
-              key={index}
-              onClick={() => requestSort(name)}
-              className={getClassNamesFor(name)}>
-              {title}
-            </th>
-          ))}
-        </tr>
-      </thead>
+    <div className={styles.table}>
+      <div className={styles.head}>
+        <div
+          onClick={() => requestSort('place')}
+          className={styles.columnPlace + ' ' + getClassNamesFor('place')}>
+          Место
+        </div>
+        <div
+          onClick={() => requestSort('name')}
+          className={styles.columnName + ' ' + getClassNamesFor('name')}>
+          Имя игрока
+        </div>
+        <div
+          onClick={() => requestSort('score')}
+          className={styles.columnScore + ' ' + getClassNamesFor('score')}>
+          Очки
+        </div>
+        <div
+          onClick={() => requestSort('games')}
+          className={styles.columnGames + ' ' + getClassNamesFor('games')}>
+          Игр сыграно
+        </div>
+      </div>
 
-      <tbody>
+      <div className={styles.body}>
         {items.map(item => (
-          <tr className={styles.row} key={item.id}>
-            <td className={styles.columnPlace}>{item.place}</td>
-            <td className={styles.columnName}>{item.name}</td>
-            <td className={styles.columnScore}>{item.score}</td>
-            <td className={styles.columnGames}>{item.games}</td>
-          </tr>
+          <div className={styles.row} key={item.id}>
+            <div className={styles.columnPlace + ' ' + styles.paddingBorder}>
+              {item.place}
+            </div>
+            <div className={styles.columnName + ' ' + styles.paddingBorder}>
+              {item.name}
+            </div>
+            <div className={styles.columnScore + ' ' + styles.paddingBorder}>
+              {item.score}
+            </div>
+            <div className={styles.columnGames + ' ' + styles.paddingBorder}>
+              {item.games}
+            </div>
+          </div>
         ))}
-      </tbody>
-    </table>
+      </div>
+    </div>
   )
 }

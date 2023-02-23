@@ -9,7 +9,7 @@ import { getValidations } from '../../features/validation'
 
 import { useAppDispatch } from '../../store/hooks'
 import { registerUser } from '../../store/actions/userActions'
-import { transformUserDTO } from '../../features/api/apiTransformers'
+import { transformUserDTO } from '../../features/utils/apiTransformers'
 
 import styles from './signUp.module.css'
 import baseStyles from '../../app/app.module.css'

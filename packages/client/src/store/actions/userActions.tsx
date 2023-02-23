@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import UserAPI from '../../api/user'
-import AuthAPI from '../../api/auth'
+import UserAPI from '../../api/userAPI'
+import AuthAPI from '../../api/authAPI'
 import { AxiosError, isAxiosError } from 'axios'
-import { axiosErrorHandler } from '../../features/api/axiosErrorHandler'
+import { axiosErrorHandler } from '../../features/utils/axiosErrorHandler'
 
 type UserDataChangePayload = {
   first_name: string

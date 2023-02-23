@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { PlayerStats } from '../store/reducers/leaderboardSlice'
 import { TEAM_NAME, API_URL } from '../features/constants'
-import { transformLeaderboardDTO } from '../features/api/apiTransformers'
+import { transformLeaderboardDTO } from '../features/utils/apiTransformers'
 
 const options = {
   withCredentials: true,

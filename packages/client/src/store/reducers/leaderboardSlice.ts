@@ -1,4 +1,4 @@
-import { transformLeaderboardDTO } from './../../features/api/apiTransformers'
+import { transformLeaderboardDTO } from '../../features/utils/apiTransformers'
 import { leaderboardThunks } from '../actions/leaderboardThunks'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 

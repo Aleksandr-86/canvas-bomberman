@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError, isAxiosError } from 'axios'
-import { axiosErrorHandler } from '../../features/api/axiosErrorHandler'
+import { axiosErrorHandler } from '../../features/utils/axiosErrorHandler'
 import { PlayerStats } from '../reducers/leaderboardSlice'
-import { LeaderboardAPI } from '../../api/leaderboard'
-import AuthAPI from '../../api/auth'
+import { LeaderboardAPI } from '../../api/leaderboardAPI'
+import AuthAPI from '../../api/authAPI'
 
 export const sendLeaderStats = createAsyncThunk(
   'leaderboard/send',
