@@ -2,23 +2,17 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError, isAxiosError } from 'axios'
 import { axiosErrorHandler } from '../../features/api/axiosErrorHandler'
 import { PlayerStats } from '../reducers/leaderboardSlice'
-import { LeaderboardAPI, LeadersRequest } from '../../api/leaderboard'
+import { LeaderboardAPI } from '../../api/leaderboard'
 import AuthAPI from '../../api/auth'
 
 export const sendLeaderStats = createAsyncThunk(
   'leaderboard/send',
   async (score: number, { rejectWithValue }) => {
     try {
-      const params: LeadersRequest = {
-        ratingFieldName: 'score',
-        cursor: 0,
-        limit: 50,
-      }
-
       const userInfo = await AuthAPI.me()
       const id = userInfo.id
       const name = userInfo.login
-      const leaderboardStats = await LeaderboardAPI.getTeamLeaderboard(params)
+      const leaderboardStats = await LeaderboardAPI.getTeamLeaderboard()
 
       const playerStats: PlayerStats = {
         id: id,
@@ -60,14 +54,8 @@ export const sendLeaderStats = createAsyncThunk(
 export const setLeadersStatsState = createAsyncThunk(
   'leaderboard/set',
   async (_, { rejectWithValue }) => {
-    const params: LeadersRequest = {
-      ratingFieldName: 'score',
-      cursor: 0,
-      limit: 50,
-    }
-
     try {
-      const response = await LeaderboardAPI.getTeamLeaderboard(params)
+      const response = await LeaderboardAPI.getTeamLeaderboard()
 
       return response
     } catch (error: unknown | AxiosError) {
