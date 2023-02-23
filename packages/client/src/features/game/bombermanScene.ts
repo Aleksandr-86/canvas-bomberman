@@ -3,21 +3,25 @@ import {
   CELL_WIDTH,
   Depth,
   EMPTY_FIELD,
+  ENEMY_ANIMATION_DURATION,
+  ENEMY_COUNT,
   GRID_WIDTH,
+  PLAYER_ANIMATION_DURATION,
   PLAYER_STARTING_POSITION,
+  PLAYER_VELOCITY,
 } from './const'
 import { SceneObject, Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
 import { Kind } from './types'
 import { Point, type PointLike } from './utils/point'
-import { startGame } from './gameActions'
+import { gameStarted } from './gameActions'
 import nesBomberman from '../../assets/images/nesBomberman5xTransparent.png'
 import nesBombermanFrames from '../../assets/images/nesBomberman5x.json'
 import { createSoftWalls } from './createSoftWalls'
 import { clamp, delay } from './utils'
 import { Animation } from './lib/animation'
 import { adjacentWalls } from './adjacentWalls'
-import { randomInRange } from './utils/randomInRange'
+import { Movement } from './movement'
 
 /**
  * Convert atlas entries to canvas space
@@ -36,7 +40,66 @@ function atlasToCanvasSpace({ cellSize, entries }: typeof nesBombermanFrames) {
   )
 }
 
-const toCanvasSpace = (p: PointLike) => new Point(p.x, p.y).scale(CELL_WIDTH)
+const explosionAnimations = {
+  center: new Animation([
+    'explosionCenter1',
+    'explosionCenter2',
+    'explosionCenter3',
+    'explosionCenter4',
+  ]),
+  tipTop: new Animation([
+    'explosionTipTop1',
+    'explosionTipTop2',
+    'explosionTipTop3',
+    'explosionTipTop4',
+  ]),
+  tipBottom: new Animation([
+    'explosionTipBottom1',
+    'explosionTipBottom2',
+    'explosionTipBottom3',
+    'explosionTipBottom4',
+  ]),
+  tipLeft: new Animation([
+    'explosionTipLeft1',
+    'explosionTipLeft2',
+    'explosionTipLeft3',
+    'explosionTipLeft4',
+  ]),
+  tipRight: new Animation([
+    'explosionTipRight1',
+    'explosionTipRight2',
+    'explosionTipRight3',
+    'explosionTipRight4',
+  ]),
+  top: new Animation([
+    'explosionTop1',
+    'explosionTop2',
+    'explosionTop3',
+    'explosionTop4',
+  ]),
+  bottom: new Animation([
+    'explosionBottom1',
+    'explosionBottom2',
+    'explosionBottom3',
+    'explosionBottom4',
+  ]),
+  left: new Animation([
+    'explosionLeft1',
+    'explosionLeft2',
+    'explosionLeft3',
+    'explosionLeft4',
+  ]),
+  right: new Animation([
+    'explosionRight1',
+    'explosionRight2',
+    'explosionRight3',
+    'explosionRight4',
+  ]),
+}
+
+const nearestCell = (p: PointLike) =>
+  Point.from(p).apply(c => Math.round(c / CELL_WIDTH) * CELL_WIDTH)
+const toCanvasSpace = (p: PointLike) => Point.from(p).scale(CELL_WIDTH)
 const filterCollidable = (list: SceneObject[]) =>
   list.filter(
     obj =>
@@ -47,13 +110,14 @@ const filterCollidable = (list: SceneObject[]) =>
   )
 
 let player: Sprite
-let backgroundTiles: Sprite[]
-let softWalls: Sprite[]
-let enemy: Sprite
+let playerDead = false
+const enemies = new Map<Sprite, Movement>()
+let backgroundTiles: Sprite[] = []
+let softWalls: Sprite[] = []
 
-const vel = CELL_WIDTH * 4
+const vel = PLAYER_VELOCITY
 
-let newBomb: Sprite
+let newBomb: Sprite | null = null
 
 let shouldCollideWith: SceneObject[]
 
@@ -87,22 +151,35 @@ export const bombermanScene: SceneConfig = {
     )
 
     player.addAnimation({
-      left: new Animation([
-        'bombermanLeft1',
-        'bombermanLeft2',
-        'bombermanLeft3',
-      ]),
-      right: new Animation([
-        'bombermanRight1',
-        'bombermanRight2',
-        'bombermanRight3',
-      ]),
-      up: new Animation(['bombermanUp1', 'bombermanUp2', 'bombermanUp3']),
-      down: new Animation([
-        'bombermanDown1',
-        'bombermanDown2',
-        'bombermanDown3',
-      ]),
+      left: new Animation(
+        ['bombermanLeft1', 'bombermanLeft2', 'bombermanLeft3'],
+        PLAYER_ANIMATION_DURATION
+      ),
+      right: new Animation(
+        ['bombermanRight1', 'bombermanRight2', 'bombermanRight3'],
+        PLAYER_ANIMATION_DURATION
+      ),
+      up: new Animation(
+        ['bombermanUp1', 'bombermanUp2', 'bombermanUp3'],
+        PLAYER_ANIMATION_DURATION
+      ),
+      down: new Animation(
+        ['bombermanDown1', 'bombermanDown2', 'bombermanDown3'],
+        PLAYER_ANIMATION_DURATION
+      ),
+      die: new Animation(
+        [
+          'bombermanDead1',
+          'bombermanDead2',
+          'bombermanDead3',
+          'bombermanDead4',
+          'bombermanDead5',
+          'bombermanDead6',
+          'bombermanDead7',
+          'empty',
+        ],
+        PLAYER_ANIMATION_DURATION * 0.33
+      ),
     })
 
     softWalls = createSoftWalls(EMPTY_FIELD, new Point(1, 1)).map(point => {
@@ -120,161 +197,161 @@ export const bombermanScene: SceneConfig = {
       return sprite
     })
 
+    const freeCells = backgroundTiles
+      .concat(softWalls)
+      .filter(
+        obj =>
+          'frame' in obj && obj.frame !== 'wallSoft' && obj.frame !== 'wallHard'
+      )
+
+    const dropletAnimations = {
+      left: new Animation(
+        ['droplet1', 'droplet2', 'droplet3'],
+        ENEMY_ANIMATION_DURATION
+      ),
+      right: new Animation(
+        ['droplet4', 'droplet5', 'droplet6'],
+        ENEMY_ANIMATION_DURATION
+      ),
+      center: new Animation(['droplet7', 'droplet1'], ENEMY_ANIMATION_DURATION),
+      die: new Animation(
+        ['dieBlue1', 'dieBlue2', 'dieBlue3', 'dieBlue4'],
+        ENEMY_ANIMATION_DURATION
+      ),
+    }
+
+    for (const { x, y } of freeCells) {
+      const belowMaxEnemies = enemies.entries.length < ENEMY_COUNT
+
+      if (Math.random() * 101 < 5 && belowMaxEnemies && x >= 160 && y >= 160) {
+        const sprite = scene.add.sprite(
+          x,
+          y,
+          'nesBomberman',
+          'droplet1',
+          CELL_WIDTH,
+          CELL_WIDTH,
+          Depth.Enemy
+        )
+
+        sprite.addAnimation(dropletAnimations)
+
+        const criteria = ({ frame }: Sprite) =>
+          frame !== 'wallHard' &&
+          frame !== 'wallSoft' &&
+          !frame.startsWith('droplet')
+      }
+    }
+
     // bind player reference to camera
     scene.camera.bind(player)
 
+    // cache walls for collision detection
     shouldCollideWith = filterCollidable(scene.displayList)
 
-    startGame()
+    gameStarted()
   },
   update: (scene, frame, kbd) => {
-    if (!enemy) {
-      const lo = backgroundTiles
-        .concat(softWalls)
-        // @ts-ignore-next
-        .filter(({ frame }) => frame === 'empty' && frame !== 'wallSoft')
-
-      const sel = lo[randomInRange(0, lo.length - 1)]
-
-      enemy = scene.add.sprite(
-        sel.x,
-        sel.y,
-        'nesBomberman',
-        'droplet1',
-        CELL_WIDTH,
-        CELL_WIDTH,
-        Depth.Enemy
-      )
-
-      setInterval(() => {
-        const pl = new Point(enemy.x, enemy.y)
-
-        const left = pl.add(new Point(-1, 0).scale(CELL_WIDTH))
-        const right = pl.add(new Point(1, 0).scale(CELL_WIDTH))
-        const up = pl.add(new Point(0, -1).scale(CELL_WIDTH))
-        const down = pl.add(new Point(0, 1).scale(CELL_WIDTH))
-
-        const newpos = [left, right, up, down][randomInRange(0, 3)]
-        const movementDuration = 2000
-
-        const lastTime = performance.now()
-        setInterval(() => {
-          const co = performance.now() - lastTime
-          const percent = (movementDuration / 100) * co
-          const newpos2 = Point.lerp(pl, newpos, percent)
-
-          enemy.setPosition(newpos2)
-        }, 50)
-      }, 800)
-    }
-
     const velocity = new Point()
 
-    if (kbd.left) {
-      velocity.x -= 1
-      if (frame.frameCount % 5 === 0) {
-        scene.anims.run(player, 'left')
+    if (!playerDead) {
+      if (kbd.left) {
+        velocity.x -= 1
+        scene.anims.run(player, 'left', frame.delta)
       }
-    }
-    if (kbd.right) {
-      velocity.x += 1
-      if (frame.frameCount % 5 === 0) {
-        scene.anims.run(player, 'right')
+      if (kbd.right) {
+        velocity.x += 1
+        scene.anims.run(player, 'right', frame.delta)
       }
-    }
-    if (kbd.up) {
-      velocity.y -= 1
-      if (frame.frameCount % 5 === 0) {
-        scene.anims.run(player, 'up')
+      if (kbd.up) {
+        velocity.y -= 1
+        scene.anims.run(player, 'up', frame.delta)
       }
-    }
-    if (kbd.down) {
-      velocity.y += 1
-      if (frame.frameCount % 5 === 0) {
-        scene.anims.run(player, 'down')
-      }
-    }
-
-    if (kbd.space) {
-      if (frame.frameCount % 10 !== 0) return
-
-      const currentLocation = new Point(player.x, player.y)
-
-      const localRef = (newBomb = scene.add.sprite(
-        Math.round(currentLocation.x / CELL_WIDTH) * CELL_WIDTH,
-        Math.round(currentLocation.y / CELL_WIDTH) * CELL_WIDTH,
-        'nesBomberman',
-        'bomb1',
-        CELL_WIDTH,
-        CELL_WIDTH,
-        Depth.Bomb
-      ))
-
-      newBomb.addAnimation({
-        pulse: new Animation(['bomb1', 'bomb2', 'bomb3']),
-      })
-
-      if (frame.frameCount % 10 === 0) {
-        scene.anims.run(newBomb, 'pulse')
+      if (kbd.down) {
+        velocity.y += 1
+        scene.anims.run(player, 'down', frame.delta)
       }
 
-      delay(BOMB_FUSE).then(() => {
-        const currentCell = new Point(
-          currentLocation.x,
-          currentLocation.y
-        ).apply(c => Math.round(c / CELL_WIDTH) * CELL_WIDTH)
-        const walls = adjacentWalls(currentCell, 2).map(({ x, y }) =>
-          scene.add.sprite(
-            x,
-            y,
-            'nesBomberman',
-            'explosionCenter1',
-            CELL_WIDTH,
-            CELL_WIDTH,
-            1
-          )
+      if (kbd.space && !newBomb) {
+        const currentLocation = Point.from(player)
+
+        newBomb = scene.add.sprite(
+          Math.round(currentLocation.x / CELL_WIDTH) * CELL_WIDTH,
+          Math.round(currentLocation.y / CELL_WIDTH) * CELL_WIDTH,
+          'nesBomberman',
+          'bomb1',
+          CELL_WIDTH,
+          CELL_WIDTH,
+          Depth.Bomb
         )
 
-        delay(800).then(() => walls.forEach(w => w.destroy()))
+        newBomb.addAnimation({
+          pulse: new Animation(['bomb1', 'bomb2', 'bomb3'], 800),
+        })
 
-        localRef.destroy()
-      })
+        delay(BOMB_FUSE).then(() => {
+          const currentCell = nearestCell(currentLocation)
+          const explosions = adjacentWalls(currentCell, 2).map(({ x, y }) => {
+            const explosion = scene.add.sprite(
+              x,
+              y,
+              'nesBomberman',
+              'explosionCenter1',
+              CELL_WIDTH,
+              CELL_WIDTH,
+              Depth.Destructable
+            )
+            explosion.addAnimation(explosionAnimations)
+            return explosion
+          })
+
+          newBomb?.destroy()
+          newBomb = null
+
+          delay(800).then(() => {
+            for (const explosion of explosions) {
+              scene.anims.run(explosion, 'center', 0.16, true)
+              explosion.destroy()
+            }
+          })
+        })
+      }
     }
 
-    if (!kbd.left && !kbd.right && !kbd.up && !kbd.down) {
-      player.frame = 'bombermanDown1'
+    if (newBomb) {
+      scene.anims.run(newBomb, 'pulse', frame.delta)
     }
 
-    if (newBomb && frame.frameCount % 17 === 0) {
-      scene.anims.run(newBomb, 'pulse')
-    }
-
-    const enemies = scene.displayList.filter(
-      // @ts-ignore-next
-      ({ frame }) => frame === 'droplet1'
-    )
-
-    if (checkEnemyCollision(enemies, player)) {
-      console.log('hit an enemy')
-    }
-
-    const newPos = new Point(player.x, player.y).add(
+    const nextPlayerPosition = Point.from(player).add(
       velocity.scale(vel * frame.delta)
     )
 
     const resolved = resolveCollision(
-      selectNearbyTiles(shouldCollideWith, newPos),
-      newPos
+      selectNearbyTiles(shouldCollideWith, nextPlayerPosition),
+      nextPlayerPosition
     )
+
+    for (const [enemy, movement] of enemies) {
+      const playerKilled = checkCircleCollision(enemy, player)
+
+      if (playerKilled) {
+        playerDead = true
+        scene.anims.run(player, 'die', frame.delta, true)
+      }
+
+      enemies.forEach(e => scene.anims.run(enemy, 'left', frame.delta))
+    }
+
+    if (!kbd.left && !kbd.right && !kbd.up && !kbd.down && !playerDead) {
+      player.frame = 'bombermanDown2'
+    }
 
     player.setPosition(resolved)
   },
 }
 
-function checkEnemyCollision(colliders: PointLike[], player: PointLike) {
-  return colliders.some(c => {
-    return (player.x - c.x) ** 2 + (player.y - c.y) ** 2 <= CELL_WIDTH ** 2
-  })
+function checkCircleCollision(c1: PointLike, c2: PointLike) {
+  return (c1.x - c2.x) ** 2 + (c1.y - c2.y) ** 2 <= CELL_WIDTH ** 2
 }
 
 function resolveCollision(colliders: PointLike[], playerOrigin: Point) {
@@ -307,8 +384,8 @@ function resolveCollision(colliders: PointLike[], playerOrigin: Point) {
   return res.sub(radius)
 }
 
-function selectNearbyTiles(tiles: PointLike[], player: Point) {
-  const currentCell = player.apply(c => Math.trunc(c / CELL_WIDTH) * CELL_WIDTH)
+function selectNearbyTiles(tiles: PointLike[], center: Point) {
+  const currentCell = nearestCell(center)
 
   return tiles.filter(
     ({ x, y }) =>

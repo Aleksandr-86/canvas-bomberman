@@ -72,6 +72,10 @@ export class Point {
     }
   }
 
+  static from(p: PointLike) {
+    return new Point(p.x, p.y)
+  }
+
   toString() {
     return `x:${this.x}|y:${this.y}`
   }
