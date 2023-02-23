@@ -3,6 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   getLeaderboardState,
   getUser,
+  isFirstPage,
+  isLastPage,
   isLeaderboardLoading,
 } from '../../store/selectors'
 import { NavigationBar } from '../../components/navigationBar/navigationBar'
@@ -20,6 +22,8 @@ export const Leaderboard = () => {
   const userState = useAppSelector(getUser)
   const leaderboardState = useAppSelector(getLeaderboardState)
   const isLoading = useAppSelector(isLeaderboardLoading)
+  const isFirst = useAppSelector(isFirstPage)
+  const isLast = useAppSelector(isLastPage)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -32,8 +36,16 @@ export const Leaderboard = () => {
       <LeaderboardTable state={leaderboardState} />
 
       <div className={styles.buttonWrapper}>
-        <Button onClick={() => dispatch(previousPage())}>&lt; </Button>
-        <Button onClick={() => dispatch(nextPage())}>&gt;</Button>
+        <Button
+          onClick={() => dispatch(previousPage())}
+          className={isFirst ? styles.dimmed : ''}>
+          &lt;{' '}
+        </Button>
+        <Button
+          onClick={() => dispatch(nextPage())}
+          className={isLast ? styles.dimmed : ''}>
+          &gt;
+        </Button>
         <Link className={baseStyles.linkButton} to="/">
           На главную
         </Link>

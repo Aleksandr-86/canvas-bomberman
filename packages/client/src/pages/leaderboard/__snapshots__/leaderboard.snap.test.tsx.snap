@@ -98,13 +98,14 @@ exports[`<Leaderboard/> snapshot test cases <Leaderboard/> should render <div cl
       className="buttonWrapper"
     >
       <button
-        className="button"
+        className="button dimmed"
         onClick={[Function]}
       >
-        &lt; 
+        &lt;
+         
       </button>
       <button
-        className="button"
+        className="button dimmed"
         onClick={[Function]}
       >
         &gt;

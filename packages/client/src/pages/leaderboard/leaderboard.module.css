@@ -28,6 +28,20 @@
   gap: 20px;
 }
 
+.dimmed {
+  border-color: grey;
+  color: grey;
+  cursor: auto;
+}
+
+.dimmed:hover {
+  background: none;
+}
+
+.dimmed:active {
+  background: none;
+}
+
 .heroImg {
   position: absolute;
   top: 780px;
