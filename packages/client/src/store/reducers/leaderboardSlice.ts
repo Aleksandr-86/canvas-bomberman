@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type PlayerStats = {
   id: number
-  place: number
+  place?: number
   name: string
   score: number
   games: number
@@ -45,6 +45,10 @@ const leaderboardSlice = createSlice({
   },
   extraReducers: builder => {
     builder
+      /**
+       * Получение статистики игроков с последующим
+       * сохранением в хранилище
+       */
       .addCase(leaderboardThunks.setLeadersStatsState.pending, state => {
         state.isLoading = true
       })
@@ -54,14 +58,13 @@ const leaderboardSlice = createSlice({
           const payload = action.payload
 
           if (payload) {
-            state.stats = transformLeaderboardDTO(payload)
+            state.stats = payload
           }
 
           state.isLoading = false
         }
       )
       .addCase(leaderboardThunks.setLeadersStatsState.rejected, state => {
-        console.log('rejected')
         state.isLoading = false
       })
   },

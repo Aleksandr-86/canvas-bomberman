@@ -1,7 +1,7 @@
-import { TEAM_NAME } from './../features/constants'
 import axios from 'axios'
-import { API_URL } from '../features/constants'
 import { PlayerStats } from '../store/reducers/leaderboardSlice'
+import { TEAM_NAME, API_URL } from '../features/constants'
+import { transformLeaderboardDTO } from '../features/api/apiTransformers'
 
 export type LeadersRequest = {
   ratingFieldName: string
@@ -18,7 +18,7 @@ const options = {
 
 const sendLeaderboardNewLeaderRequest = async (data: PlayerStats) => {
   const requestParams = {
-    ratingFieldName: 'score',
+    ratingFieldName: 'games',
     teamName: TEAM_NAME,
   }
 
@@ -38,7 +38,7 @@ const getTeamLeaderboard = async (data: LeadersRequest) => {
     { ...options }
   )
 
-  return response
+  return transformLeaderboardDTO(response.data)
 }
 
 export const LeaderboardAPI = {
