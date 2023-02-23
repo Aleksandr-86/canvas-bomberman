@@ -59,8 +59,8 @@
 }
 
 .body {
-  border-top: 5px solid black;
   height: 345px;
+  border-top: 5px solid black;
 }
 
 .row {

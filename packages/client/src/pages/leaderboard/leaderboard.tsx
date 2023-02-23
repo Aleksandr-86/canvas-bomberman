@@ -27,26 +27,24 @@ export const Leaderboard = () => {
   }, [])
 
   const leaderboard = (
-    <>
-      <div className={styles.container}>
-        <div className={styles.tableCaption}>Таблица лидеров</div>
-        <LeaderboardTable state={leaderboardState} />
+    <div className={styles.container}>
+      <div className={styles.tableCaption}>Таблица лидеров</div>
+      <LeaderboardTable state={leaderboardState} />
 
-        <div className={styles.buttonWrapper}>
-          <Button onClick={() => dispatch(previousPage())}>&lt; </Button>
-          <Button onClick={() => dispatch(nextPage())}>&gt;</Button>
-          <Link className={baseStyles.linkButton} to="/">
-            На главную
-          </Link>
-        </div>
-        <img
-          className={styles.heroImg}
-          src={heroImg}
-          alt="hero-img"
-          draggable="false"
-        />
+      <div className={styles.buttonWrapper}>
+        <Button onClick={() => dispatch(previousPage())}>&lt; </Button>
+        <Button onClick={() => dispatch(nextPage())}>&gt;</Button>
+        <Link className={baseStyles.linkButton} to="/">
+          На главную
+        </Link>
       </div>
-    </>
+      <img
+        className={styles.heroImg}
+        src={heroImg}
+        alt="hero-img"
+        draggable="false"
+      />
+    </div>
   )
 
   const navBar = userState.isAuth ? <NavigationBar /> : null

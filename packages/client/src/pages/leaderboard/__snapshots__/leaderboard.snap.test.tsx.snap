@@ -34,64 +34,66 @@ exports[`<Leaderboard/> snapshot test cases <Leaderboard/> should render <div cl
     >
       Таблица лидеров
     </div>
-    <table
+    <div
       className="table"
     >
-      <thead>
-        <tr>
-          <th
-            className="head ascending"
-            onClick={[Function]}
-          >
-            Место
-          </th>
-          <th
-            className="head"
-            onClick={[Function]}
-          >
-            Имя игрока
-          </th>
-          <th
-            className="head"
-            onClick={[Function]}
-          >
-            Очки
-          </th>
-          <th
-            className="head"
-            onClick={[Function]}
-          >
-            Сыграно игр
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
+      <div
+        className="head"
+      >
+        <div
+          className="columnPlace title ascending"
+          onClick={[Function]}
+        >
+          Место
+        </div>
+        <div
+          className="columnName title"
+          onClick={[Function]}
+        >
+          Имя игрока
+        </div>
+        <div
+          className="columnScore title"
+          onClick={[Function]}
+        >
+          Очки
+        </div>
+        <div
+          className="columnGames title"
+          onClick={[Function]}
+        >
+          Игр сыграно
+        </div>
+      </div>
+      <div
+        className="body"
+      >
+        <div
           className="row"
         >
-          <td
-            className="columnPlace"
+          <div
+            className="columnPlace paddingBorder"
           >
             1
-          </td>
-          <td
-            className="columnName"
+          </div>
+          <div
+            className="columnName paddingBorder"
           >
             Alex
-          </td>
-          <td
-            className="columnScore"
+          </div>
+          <div
+            className="columnScore paddingBorder"
           >
             811
-          </td>
-          <td
-            className="columnGames"
+          </div>
+          <div
+            className="columnGames paddingBorder"
           >
             1
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </div>
+    </div>
     <div
       className="buttonWrapper"
     >
