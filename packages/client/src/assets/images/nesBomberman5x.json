@@ -27,12 +27,12 @@
 
     "wallHard": { "x": 3, "y": 3 },
     "wallSoft": { "x": 4, "y": 3 },
-    "wallSoftDead1": { "x": 5, "y": 3 },
-    "wallSoftDead2": { "x": 6, "y": 3 },
-    "wallSoftDead3": { "x": 7, "y": 3 },
-    "wallSoftDead4": { "x": 8, "y": 3 },
-    "wallSoftDead5": { "x": 9, "y": 3 },
-    "wallSoftDead6": { "x": 10, "y": 3 },
+    "wallSoftHit1": { "x": 5, "y": 3 },
+    "wallSoftHit2": { "x": 6, "y": 3 },
+    "wallSoftHit3": { "x": 7, "y": 3 },
+    "wallSoftHit4": { "x": 8, "y": 3 },
+    "wallSoftHit5": { "x": 9, "y": 3 },
+    "wallSoftHit6": { "x": 10, "y": 3 },
 
     "door": { "x": 11, "y": 3 },
 
@@ -87,12 +87,36 @@
     "ignoreBombDamage": { "x": 6, "y": 14 },
     "randomPowerup": { "x": 7, "y": 14 },
 
+    "baloon1": { "x": 0, "y": 15 },
+    "baloon2": { "x": 1, "y": 15 },
+    "baloon3": { "x": 2, "y": 15 },
+    "baloon4": { "x": 3, "y": 15 },
+    "baloon5": { "x": 4, "y": 15 },
+    "baloon6": { "x": 5, "y": 15 },
+    "baloonHit": { "x": 6, "y": 15 },
+
     "droplet1": { "x": 0, "y": 16 },
     "droplet2": { "x": 1, "y": 16 },
     "droplet3": { "x": 2, "y": 16 },
     "droplet4": { "x": 3, "y": 16 },
     "droplet5": { "x": 4, "y": 16 },
     "droplet6": { "x": 5, "y": 16 },
-    "droplet7": { "x": 6, "y": 16 }
+    "dropletHit": { "x": 6, "y": 16 },
+
+    "overtimeCoin1": { "x": 0, "y": 22 },
+    "overtimeCoin2": { "x": 1, "y": 22 },
+    "overtimeCoin3": { "x": 2, "y": 22 },
+    "overtimeCoin4": { "x": 3, "y": 22 },
+    "overtimeCoinHit": { "x": 6, "y": 22 },
+
+    "dieOrange1": { "x": 7, "y": 15 },
+    "dieOrange2": { "x": 8, "y": 15 },
+    "dieOrange3": { "x": 9, "y": 15 },
+    "dieOrange4": { "x": 10, "y": 15 },
+
+    "dieBlue1": { "x": 7, "y": 18 },
+    "dieBlue2": { "x": 8, "y": 18 },
+    "dieBlue3": { "x": 9, "y": 18 },
+    "dieBlue4": { "x": 10, "y": 18 }
   }
 }
