@@ -11,7 +11,12 @@ export const sendLeaderStats = createAsyncThunk(
     try {
       const userInfo = await AuthAPI.me()
       const id = userInfo.id
-      const name = userInfo.login
+      let name =
+        userInfo.displayName ?? userInfo.firstName + ' ' + userInfo.secondName
+      if (name.includes('ё')) {
+        name = name.replaceAll('ё', 'e')
+      }
+
       const leaderboardStats = await LeaderboardAPI.getTeamLeaderboard()
 
       const playerStats: PlayerStats = {
