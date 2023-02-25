@@ -9,14 +9,18 @@ import { GameScore } from '../gameScore'
 export const GameDisplay: React.FC = () => {
   const gameRef = useRef<null | HTMLCanvasElement>(null)
   const canvasWrapperRef = useRef<null | HTMLDivElement>(null)
+  const shouldRunSecondTime = useRef(true)
 
   useFullScreen(canvasWrapperRef)
 
   useEffect(() => {
     const canvas = gameRef.current
 
-    if (!canvas) return
+    if (!canvas || !shouldRunSecondTime.current) {
+      return
+    }
 
+    shouldRunSecondTime.current = false
     /**
      * TODO: Данный участок следует обработать после доработки
      * движка по задачи № 75. Ответственный - Aleksandr-86.
@@ -28,9 +32,11 @@ export const GameDisplay: React.FC = () => {
       root: canvas,
       scene: bombermanScene,
     })
-
     game.start()
-    return () => game.stop()
+
+    return () => {
+      game.stop()
+    }
   }, [])
 
   return (
