@@ -8,13 +8,13 @@ import { startServiceWorker } from './features/game/sw/startServiceWorker'
 const rootElement = document.getElementById('root') as HTMLElement
 
 const app = (
-  // <StrictMode>
+  <StrictMode>
     <BrowserRouter>
       <ErrorBoundary>
         <App />
       </ErrorBoundary>
     </BrowserRouter>
-  // </StrictMode>
+  </StrictMode>
 )
 
 if (rootElement.innerHTML === '<!--ssr-outlet-->') {
