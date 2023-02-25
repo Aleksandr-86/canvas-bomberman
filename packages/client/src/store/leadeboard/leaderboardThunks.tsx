@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { AxiosError, isAxiosError } from 'axios'
 import { axiosErrorHandler } from '../../features/utils/axiosErrorHandler'
-import { PlayerStats } from '../reducers/leaderboardSlice'
+import { PlayerStats } from './leaderboardSlice'
 import { LeaderboardAPI } from '../../api/leaderboardAPI'
 import AuthAPI from '../../api/authAPI'
 

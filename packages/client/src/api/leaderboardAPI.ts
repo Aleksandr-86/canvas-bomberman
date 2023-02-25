@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { PlayerStats } from '../store/reducers/leaderboardSlice'
+import { PlayerStats } from '../store/leadeboard/leaderboardSlice'
 import { TEAM_NAME, API_URL } from '../features/constants'
 import { transformLeaderboardDTO } from '../features/utils/apiTransformers'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSortableData } from '../../hooks/userSortableData'
-import { PlayerStats } from '../../store/reducers/leaderboardSlice'
+import { PlayerStats } from '../../store/leadeboard/leaderboardSlice'
 import styles from './leaderboardTable.module.css'
 
 interface Props {

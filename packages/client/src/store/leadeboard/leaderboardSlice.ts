@@ -1,5 +1,5 @@
 import { transformLeaderboardDTO } from '../../features/utils/apiTransformers'
-import { leaderboardThunks } from '../actions/leaderboardThunks'
+import { leaderboardThunks } from './leaderboardThunks'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type PlayerStats = {

@@ -7,7 +7,7 @@ import {
   me,
   uploadAvatar,
   oauth,
-} from '../actions/userActions'
+} from './userActions'
 
 export interface User {
   id: number | null

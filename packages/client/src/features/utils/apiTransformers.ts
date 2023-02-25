@@ -1,6 +1,6 @@
 import { API_URL, UserDTO } from '../../typings/api'
 import defaultAvatar from '../../assets/images/avatar.png'
-import { PlayerStats } from '../../store/reducers/leaderboardSlice'
+import { PlayerStats } from '../../store/leadeboard/leaderboardSlice'
 
 interface UserForm {
   login: string
