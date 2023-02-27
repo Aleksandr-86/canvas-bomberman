@@ -59,14 +59,10 @@ export const Leaderboard = () => {
     </div>
   )
 
-  const navBar = userState.isAuth ? <NavigationBar /> : null
-  const pageContent = isLoading ? <ActivityIndicator /> : leaderboard
-
   return (
     <div className={styles.leaderboard}>
-      {navBar}
-
-      {pageContent}
+      {userState.isAuth ? <NavigationBar /> : null}
+      {isLoading ? <ActivityIndicator /> : leaderboard}
     </div>
   )
 }
