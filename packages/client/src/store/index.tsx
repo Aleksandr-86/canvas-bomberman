@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './userSlice'
+import { forumReducer } from './forumSlice'
 import { playersStatsReducer } from './playersStatsSlice'
 import { gameReducer } from './gameSlice'
 
@@ -8,6 +9,7 @@ export const store = configureStore({
     user: userReducer,
     playersStats: playersStatsReducer,
     game: gameReducer,
+    forum: forumReducer,
   },
 })
 

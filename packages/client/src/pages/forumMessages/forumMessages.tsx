@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import classes from './forumMessages.module.css'
 import { Table } from '../../components/table/table'
 const FORUM_MESSAGES = {
@@ -35,11 +35,14 @@ const FORUM_MESSAGES = {
   ],
 }
 export const ForumMessages = () => {
+  const {id} = useParams();
+  console.log(typeof id)
+
   return (
     <div className={classes.forum}>
       <Table {...FORUM_MESSAGES} />
       <div className={classes.forumWrapper}>
-        <Link to="/forum-new-message" className={classes.forumLink}>
+        <Link to={`/forum-new-message/${id}`} className={classes.forumLink}>
           Создать сообщение
         </Link>
         <Link to="/" className={classes.forumLink}>

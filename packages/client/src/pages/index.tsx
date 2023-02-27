@@ -21,9 +21,9 @@ const AppRouting = () => {
       <Route path="/profile/password" element={<ChangePassword />} />
       <Route path="/leaderboard" element={<Leaderboard />} />
       <Route path="/forum" element={<Forum />} />
-      <Route path="/forum-messages" element={<ForumMessages />} />
+      <Route path="/forum/:id" element={<ForumMessages />} />
       <Route path="/forum-new-post" element={<ForumNewPost />} />
-      <Route path="/forum-new-message" element={<ForumNewMessage />} />
+      <Route path="/forum-new-message/:id" element={<ForumNewMessage />} />
       <Route path="/game" element={<Game />} />
     </Routes>
   )

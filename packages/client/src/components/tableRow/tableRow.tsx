@@ -1,4 +1,5 @@
 import classes from './tableRow.module.css'
+import { useNavigate } from "react-router-dom";
 
 export interface Post {
   id: number
@@ -8,8 +9,13 @@ export interface Post {
 }
 
 export const TableRow = (props: Post) => {
+  const navigate = useNavigate();
+  const handleRedirect = (id: number) => {
+    navigate(`/forum/${id}`);
+  }
+
   return (
-    <tr>
+    <tr className={classes.tableItem} onClick={() => handleRedirect(props.id)}>
       <td className={classes.tableRow}>{props.author}</td>
       <td className={classes.tableRow}>{props.body}</td>
       <td className={classes.tableRow}>{props.date}</td>
