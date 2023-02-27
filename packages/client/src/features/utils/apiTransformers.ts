@@ -1,3 +1,4 @@
+import { TEAM_NAME } from './../constants'
 import { API_URL, UserDTO } from '../../typings/api'
 import defaultAvatar from '../../assets/images/avatar.png'
 import { PlayerStats } from '../../store/leadeboard/leaderboardSlice'
@@ -43,40 +44,28 @@ export const transformUserDTO = (data: UserForm) => {
  * в подходящий формат для отображения в таблице лидеров
  */
 export const transformLeaderboardDTO = (arrayDTO: { data: PlayerStats }[]) => {
-  const transformedData: PlayerStats[] = []
-  let place = 1
-  const lenDTO = arrayDTO.length
-
-  if (lenDTO === 0) {
-    transformedData.push({
-      id: 0,
-      place: 0,
-      name: 'без имени',
-      score: 0,
-      games: 0,
-    })
+  if (arrayDTO.length === 0) {
+    return [
+      {
+        id: 0,
+        place: 0,
+        name: `данные команды "${TEAM_NAME}" не содержат статистики игроков`,
+        score: 0,
+        games: 0,
+      },
+    ]
   }
 
-  for (let i = 0; i < arrayDTO.length; i++) {
-    const data = arrayDTO[i].data
-
-    // Фильтрация объектов не имеющих соответствующих полей
-    if (!data.id || !data.name || !data.score || !data.games) {
-      continue
-    }
-
-    const playerStats = {
-      id: data.id,
-      place: place,
-      name: data.name,
-      score: data.score,
-      games: data.games,
-    }
-
-    place++
-
-    transformedData.push(playerStats)
-  }
-
-  return transformedData
+  return arrayDTO
+    .filter(
+      item =>
+        item.data.id && item.data.name && item.data.score && item.data.games
+    )
+    .map((filteredItem, index) => ({
+      id: filteredItem.data.id,
+      place: index + 1,
+      name: filteredItem.data.name,
+      score: filteredItem.data.score,
+      games: filteredItem.data.games,
+    }))
 }
