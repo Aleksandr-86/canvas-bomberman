@@ -30,39 +30,39 @@ export const Leaderboard = () => {
     dispatch(leaderboardThunks.setLeadersStatsState())
   }, [])
 
-  const leaderboard = (
-    <div className={styles.container}>
-      <div className={styles.tableCaption}>Таблица лидеров</div>
-      <LeaderboardTable state={leaderboardState} />
-
-      <div className={styles.buttonWrapper}>
-        <Button
-          onClick={() => dispatch(previousPage())}
-          className={isFirst ? styles.dimmed : ''}>
-          &lt;{' '}
-        </Button>
-        <Button
-          onClick={() => dispatch(nextPage())}
-          className={isLast ? styles.dimmed : ''}>
-          &gt;
-        </Button>
-        <Link className={baseStyles.linkButton} to="/">
-          На главную
-        </Link>
-      </div>
-      <img
-        className={styles.heroImg}
-        src={heroImg}
-        alt="hero-img"
-        draggable="false"
-      />
-    </div>
-  )
-
   return (
     <div className={styles.leaderboard}>
       {userState.isAuth ? <NavigationBar /> : null}
-      {isLoading ? <ActivityIndicator /> : leaderboard}
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <div className={styles.container}>
+          <div className={styles.tableCaption}>Таблица лидеров</div>
+          <LeaderboardTable state={leaderboardState} />
+
+          <div className={styles.buttonWrapper}>
+            <Button
+              onClick={() => dispatch(previousPage())}
+              className={isFirst ? styles.dimmed : ''}>
+              &lt;{' '}
+            </Button>
+            <Button
+              onClick={() => dispatch(nextPage())}
+              className={isLast ? styles.dimmed : ''}>
+              &gt;
+            </Button>
+            <Link className={baseStyles.linkButton} to="/">
+              На главную
+            </Link>
+          </div>
+          <img
+            className={styles.heroImg}
+            src={heroImg}
+            alt="hero-img"
+            draggable="false"
+          />
+        </div>
+      )}
     </div>
   )
 }
