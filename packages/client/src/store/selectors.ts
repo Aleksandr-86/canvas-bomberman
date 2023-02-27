@@ -13,7 +13,7 @@ export const getLeaderboardState = (state: RootState) => {
 export const isFirstPage = (state: RootState) => state.leaderboard.page === 0
 export const isLastPage = (state: RootState) => {
   const len = state.leaderboard.stats.length
-  const range = (state.leaderboard.page + 1) * 5
+  const range = (state.leaderboard.page + 1) * LEADERBOARD_LENGTH
   return range < len ? false : true
 }
 
