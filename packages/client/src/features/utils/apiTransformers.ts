@@ -49,7 +49,7 @@ export const transformLeaderboardDTO = (arrayDTO: { data: PlayerStats }[]) => {
       {
         id: 0,
         place: 0,
-        name: `данные команды "${TEAM_NAME}" не содержат статистики игроков`,
+        name: `Команда "${TEAM_NAME}" не имеет статистики игроков`,
         score: 0,
         games: 0,
       },
