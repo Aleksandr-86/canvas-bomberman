@@ -18,7 +18,7 @@ export class SceneContext {
     this.camera = new Camera(this.dimensions.x, this.dimensions.y)
   }
 
-  public depthSort() {
+  public sortSceneByDepth() {
     this.displayList.sort(({ z: za }, { z: zb }) => za - zb)
   }
 
@@ -27,6 +27,8 @@ export class SceneContext {
 
     ctx.save()
     ctx.translate(this.camera.value.x, this.camera.value.y)
+
+    this.sortSceneByDepth()
 
     this.displayList = this.displayList.filter(obj => !obj.shouldDestroy)
 
