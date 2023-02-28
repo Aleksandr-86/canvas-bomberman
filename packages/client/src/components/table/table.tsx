@@ -17,14 +17,17 @@ interface Props {
 }
 
 export const Table: React.FC<Props> = props => {
-  
   const { headers, rows } = props
   if (rows) {
     return (
       <table className={classes.table}>
         <thead>
           <tr>
-            {headers.map((header) => <th key={header} className={classes.tableTitle}>{header}</th>)}
+            {headers.map(header => (
+              <th key={header} className={classes.tableTitle}>
+                {header}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -37,7 +40,7 @@ export const Table: React.FC<Props> = props => {
               date={item.date}
               likes={item?.likes}
               dislikes={item?.dislikes}
-              redirect={props.redirect? true : null}
+              redirect={props.redirect ? true : null}
             />
           ))}
         </tbody>

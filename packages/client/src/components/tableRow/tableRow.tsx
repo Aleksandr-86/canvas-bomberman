@@ -29,12 +29,26 @@ export const TableRow: React.FC<Post> = (props: Post) => {
   }
 
   return (
-    <tr className={classes.tableItem} onClick={props.redirect? () => handleRedirect(props.id): undefined}>
+    <tr
+      className={classes.tableItem}
+      onClick={props.redirect ? () => handleRedirect(props.id) : undefined}>
       <td className={classes.tableRow}>{props.author}</td>
       <td className={classes.tableRow}>{props.body}</td>
       <td className={classes.tableRow}>{props.date}</td>
-      {props.likes && <td onClick={() => incrementLike(props.id)} className={classes.tableRow}>{props.likes}</td>}
-      {props.dislikes && <td onClick={() => incrementDislike(props.id)} className={classes.tableRow}>{props.dislikes}</td>}
+      {props.likes && (
+        <td
+          onClick={() => incrementLike(props.id)}
+          className={classes.tableRow}>
+          {props.likes}
+        </td>
+      )}
+      {props.dislikes && (
+        <td
+          onClick={() => incrementDislike(props.id)}
+          className={classes.tableRow}>
+          {props.dislikes}
+        </td>
+      )}
     </tr>
   )
 }

@@ -30,15 +30,12 @@ export const sendPost = createAsyncThunk(
 )
 
 export const sendLike = createAsyncThunk(
-  'users/sendPost',
+  'users/sendLike',
   async (id: number) => {
     try {
-      await axios.post(
-        'https://alt-f4-bomberman-21.ya-praktikum.tech/likes',
-        {
-          data: id,
-        }
-      )
+      await axios.post('https://alt-f4-bomberman-21.ya-praktikum.tech/likes', {
+        data: id,
+      })
       return id
     } catch (e) {
       return e as AxiosError
@@ -47,7 +44,7 @@ export const sendLike = createAsyncThunk(
 )
 
 export const sendDislike = createAsyncThunk(
-  'users/sendPost',
+  'users/sendDislike',
   async (id: number) => {
     try {
       await axios.post(
@@ -63,7 +60,9 @@ export const sendDislike = createAsyncThunk(
   }
 )
 
-export const getMessages = createAsyncThunk('forum/getMessages', async id => {
+export const getMessages = createAsyncThunk(
+  'forum/getMessages',
+  async (id: string | undefined) => {
   try {
     const response = await axios.get(
       `https://alt-f4-bomberman-21.ya-praktikum.tech/posts/${id}`
@@ -107,7 +106,7 @@ const FORUM_DATA = {
       date: '8.01.22',
     },
   ],
-  redirect: true
+  redirect: true,
 }
 const FORUM_MESSAGES = {
   headers: ['Автор', 'Сообщения', 'Дата', 'Лайки', 'Дизлайки'],
@@ -119,7 +118,7 @@ const FORUM_MESSAGES = {
       body: 'Как пройти первый уровень',
       date: '8.01.22',
       likes: 150,
-      dislikes: 12
+      dislikes: 12,
     },
     {
       id: 2,
@@ -128,8 +127,8 @@ const FORUM_MESSAGES = {
       body: 'Я прошел на изи, надо лишь быстро двигать пальцами',
       date: '8.01.22',
       likes: 2,
-      dislikes: 12
-    }
+      dislikes: 12,
+    },
   ],
 }
 
@@ -171,14 +170,14 @@ const forumSlice = createSlice({
       state.posts.rows.push(action.payload)
     })
     builder.addCase(sendLike.fulfilled, (state, action) => {
-      state.messages.rows.map((item) => {
+      state.messages.rows.map(item => {
         if (item.id === action.payload) {
           item.likes++
         }
       })
     })
     builder.addCase(sendDislike.fulfilled, (state, action) => {
-      state.messages.rows.map((item) => {
+      state.messages.rows.map(item => {
         if (item.id === action.payload) {
           item.dislikes++
         }

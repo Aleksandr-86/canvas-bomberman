@@ -2,16 +2,22 @@ import { Link, useParams } from 'react-router-dom'
 import classes from './forumMessages.module.css'
 import { Table } from '../../components/table/table'
 import { getMessages } from '../../store/selectors'
-import { useAppSelector } from '../../store/hooks'
+import { getMessages as getAll } from '../../store/forumSlice'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useEffect } from 'react'
 
 export const ForumMessages: React.FC = () => {
-  const messages = useAppSelector(getMessages)
   const { id } = useParams()
-  const cb = () => console.log('cb')
+
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(getAll(id))
+  }) 
+  const messages = useAppSelector(getMessages)
 
   return (
     <div className={classes.forum}>
-      <Table {...messages}/>
+      <Table {...messages} />
       <div className={classes.forumWrapper}>
         <Link to={`/forum-new-message/${id}`} className={classes.forumLink}>
           Создать сообщение
