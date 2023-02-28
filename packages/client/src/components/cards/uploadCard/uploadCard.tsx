@@ -6,7 +6,7 @@ import cardStyles from '../card.module.css'
 import inputStyles from '../../formField/formField.module.css'
 import uploadStyles from './uploadCard.module.css'
 import { useAppDispatch } from '../../../store/hooks'
-import { uploadAvatar } from '../../../store/userActions'
+import { uploadAvatar } from '../../../store/user/userActions'
 
 interface Props {
   isActive?: boolean

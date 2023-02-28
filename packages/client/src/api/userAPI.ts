@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { API_URL, UserDTO } from '../typings/api'
-import { transformUser } from '../features/api/apiTransformers'
+import { transformUser } from '../features/utils/apiTransformers'
 
 type EditRequestData = {
   first_name: string

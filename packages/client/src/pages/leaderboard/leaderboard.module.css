@@ -9,7 +9,7 @@
   user-select: none;
 }
 
-.wrapper {
+.container {
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -22,10 +22,30 @@
   text-transform: uppercase;
 }
 
+.buttonWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.dimmed {
+  border-color: grey;
+  color: grey;
+  cursor: auto;
+}
+
+.dimmed:hover {
+  background: none;
+}
+
+.dimmed:active {
+  background: none;
+}
+
 .heroImg {
   position: absolute;
   top: 780px;
-  right: 200px;
+  right: 150px;
   width: 253px;
   height: 191px;
 }

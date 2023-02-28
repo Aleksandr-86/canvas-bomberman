@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { oauth } from '../store/userActions'
+import { oauth } from '../store/user/userActions'
 import { useAppDispatch } from '../store/hooks'
 
 export const useOauth = (code: string | null, redirectUri: string) => {

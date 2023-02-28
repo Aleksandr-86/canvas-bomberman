@@ -17,16 +17,19 @@ const store = mockStore({
       phone: 8900000000,
     },
   },
-  playersStats: [
-    {
-      id: 1,
-      place: 1,
-      name: `Alex`,
-      score: 811,
-      games: 1,
-      totalTime: 23,
-    },
-  ],
+  leaderboard: {
+    isLoading: false,
+    stats: [
+      {
+        id: 1,
+        place: 1,
+        name: `Alex`,
+        score: 811,
+        games: 1,
+      },
+    ],
+    page: 0,
+  },
 })
 
 describe(`<Leaderboard/> snapshot test cases`, () => {
