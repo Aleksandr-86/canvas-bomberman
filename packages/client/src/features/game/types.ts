@@ -7,3 +7,14 @@ export enum Kind {
 }
 
 export type FieldState = Kind[]
+
+export type ExplosionOrientation = `explosion${
+  | 'TipLeft'
+  | 'Left'
+  | 'TipRight'
+  | 'Right'
+  | 'TipUp'
+  | 'Up'
+  | 'TipDown'
+  | 'Down'
+  | 'Center'}`
