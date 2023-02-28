@@ -11,6 +11,8 @@ export class AnimationRunner {
         anim.advance(delta)
         sprite.frame = anim.currentFrame
       }
+    } else {
+      console.error('no animation with this name')
     }
   }
 
@@ -20,6 +22,8 @@ export class AnimationRunner {
     if (anim) {
       anim.reset()
       sprite.frame = anim.currentFrame
+    } else {
+      console.error('no animation with this name')
     }
   }
 }
