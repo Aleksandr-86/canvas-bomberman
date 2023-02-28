@@ -1,0 +1,30 @@
+@keyframes roll {
+  0% {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(360deg);
+  }
+}
+
+.activityIndicator {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+}
+
+.activityIndicator::after {
+  content: ' ';
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 8px;
+  border: 20px solid hsl(30deg 76% 64%);
+  border-color: hsl(30deg 76% 64%) transparent hsl(30deg 76% 64%) transparent;
+  border-radius: 50%;
+  opacity: 0;
+  animation: roll 1.8s 0.3s linear infinite;
+}

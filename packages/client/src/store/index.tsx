@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './userSlice'
-import { playersStatsReducer } from './playersStatsSlice'
+import { leaderboardReducer } from './playersStatsSlice'
 import { gameReducer } from './gameSlice'
 
 const initialState: Record<string, unknown> =
@@ -11,7 +11,7 @@ const initialState: Record<string, unknown> =
           status: 'start',
           currentScore: 0,
         },
-        playersStats: [],
+        leaderboard: [],
         user: {
           error: null,
           isAuth: false,
@@ -35,7 +35,7 @@ export const createStore = (
   return configureStore({
     reducer: {
       user: userReducer,
-      playersStats: playersStatsReducer,
+      leaderboard: leaderboardReducer,
       game: gameReducer,
     },
     preloadedState,
