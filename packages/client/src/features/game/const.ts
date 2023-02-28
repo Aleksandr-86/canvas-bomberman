@@ -25,16 +25,16 @@ export const CAMERA_WIDTH = 1280
 export const CAMERA_HEIGHT = 720
 
 export const PLAYER_STARTING_POSITION = { x: 1, y: 1 }
-export const PLAYER_ANIMATION_DURATION = 600
+export const PLAYER_ANIMATION_DURATION = 450
 export const ENEMY_ANIMATION_DURATION = PLAYER_ANIMATION_DURATION
-export const PLAYER_VELOCITY = CELL_WIDTH * 2
+export const PLAYER_VELOCITY = CELL_WIDTH * 3
 export const BASIC_ENEMY_VELOCITY = PLAYER_VELOCITY
 export const BOMB_COOLDOWN = 2000
 export const BOMB_FUSE = 3000
 export const EXPLOSION_RADIUS = 1
 export const GAME_DURATION = 200
 export const BUFF_CHANCE = 8
-export const ENEMY_COUNT = 6
+export const ENEMY_COUNT = 7
 
 export const Points = {
   Enemy: {
@@ -50,7 +50,7 @@ export enum Depth {
   Ground = 1,
   Door = 2,
   Bomb = 4,
-  Destructable = 5,
   Player = 6,
   Enemy = 7,
+  Destructable = 8,
 }
