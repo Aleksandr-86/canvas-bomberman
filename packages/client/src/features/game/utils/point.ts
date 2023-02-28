@@ -1,4 +1,5 @@
 export type PointLike = { x: number; y: number }
+import { lerp } from './lerp'
 
 export class Point {
   constructor(public x = 0, public y = 0) {}
@@ -12,24 +13,31 @@ export class Point {
   }
 
   mul(p: PointLike) {
-    return new Point(this.x * p.x, this.y * p.y)
+    this.x *= p.x
+    this.y *= p.y
+    return this
   }
 
   scale(by: number) {
-    return new Point(this.x * by, this.y * by)
+    this.mul({ x: by, y: by })
+    return this
   }
 
   add(p: PointLike) {
-    return new Point(this.x + p.x, this.y + p.y)
+    this.x += p.x
+    this.y += p.y
+    return this
   }
 
   sub(p: PointLike) {
-    return new Point(this.x - p.x, this.y - p.y)
+    this.x -= p.x
+    this.y -= p.y
+    return this
   }
 
-  normalize() {
+  normalized() {
     const mag = this.mag()
-    return new Point(this.x / mag, this.y / mag)
+    return mag === 0 ? new Point() : new Point(this.x / mag, this.y / mag)
   }
 
   equals(p: PointLike) {
@@ -40,26 +48,23 @@ export class Point {
     return new Point(this.x, this.y)
   }
 
-  apply(func: (arg: number) => number) {
+  map(func: (arg: number) => number) {
     return new Point(func(this.x), func(this.y))
   }
 
   clamp(min: PointLike, max: PointLike) {
-    const res = this.copy()
-
     if (this.x < min.x) {
-      res.x = min.x
+      this.x = min.x
     } else if (this.x > max.x) {
-      res.x = max.x
+      this.x = max.x
     }
 
     if (this.y < min.y) {
-      res.y = min.y
+      this.y = min.y
     } else if (this.y > max.y) {
       this.y = max.y
     }
-
-    return res
+    return this
   }
 
   static lerp(from: Point, to: Point, t: number) {
@@ -68,7 +73,7 @@ export class Point {
     } else if (t >= 1) {
       return to.copy()
     } else {
-      return from.add(to.sub(from).scale(t))
+      return new Point(lerp(from.x, to.x, t), lerp(from.y, to.y, t))
     }
   }
 
