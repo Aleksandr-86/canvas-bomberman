@@ -1,16 +1,12 @@
 import * as React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import routes from '../routes'
+import { routes } from '../routes'
 
 const AppRouting = () => {
   return (
     <Routes>
-      {routes.map(({ fetchData, element, ...routeProps }) => (
-        <Route
-          key={routeProps.path}
-          element={React.createElement(element)}
-          {...routeProps}
-        />
+      {routes.map(({ element, path }) => (
+        <Route key={path} element={React.createElement(element)} path={path} />
       ))}
     </Routes>
   )

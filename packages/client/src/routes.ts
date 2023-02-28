@@ -9,15 +9,14 @@ import { ForumMessages } from './pages/forumMessages/forumMessages'
 import { ForumNewPost } from './pages/forumNewPost/forumNewPost'
 import { ForumNewMessage } from './pages/forumNewMessage/forumNewMessage'
 import { Game } from './pages/game/game'
-import { AppDispatch } from './store'
-import { PathMatch } from 'react-router'
 
-type RouterFetchDataArgs = {
-  dispatch: AppDispatch
-  match: PathMatch<'slug'>
-}
+type Routes = {
+  initStoreWithServer?: (slug: string) => []
+  path: string
+  element: React.FC<Record<string, unknown>> | (() => JSX.Element)
+}[]
 
-export default [
+export const routes: Routes = [
   {
     path: '/',
     element: Landing,
@@ -45,18 +44,14 @@ export default [
   {
     path: '/forum',
     element: Forum,
-    fetchData({ dispatch }: RouterFetchDataArgs) {
-      //пример использования, если нужно предзагрузить данные для ssr
-      //return dispatch(fetchForums());
-    },
+    //пример использования, если нужно предзагрузить данные для ssr
+    //initStoreWithServer(slug: string) {
+    //  return [fetchForum(), fetchForumsMessages(slug)]
+    //}
   },
   {
     path: '/forum/messages',
     element: ForumMessages,
-    fetchData({ dispatch, match }: RouterFetchDataArgs) {
-      //пример использования, если нужно предзагрузить данные для ssr
-      //return dispatch(fetchForumMessages(match.params.slug));
-    },
   },
   {
     path: '/forum-new-post',
