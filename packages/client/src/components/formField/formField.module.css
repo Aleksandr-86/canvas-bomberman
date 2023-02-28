@@ -3,27 +3,27 @@
 }
 
 .label {
-  font-size: 25px;
   margin: 0 auto;
+  font-size: 25px;
 }
 
 .input {
   max-width: 250px;
-  background-color: transparent;
-  border: 0;
-  outline: none;
-  text-align: center;
   padding-bottom: 5px;
+  border: 0;
   border-bottom: 5px solid black;
+  background-color: transparent;
+  outline: none;
   font-size: 25px;
-  line-height: 30px;
   font-family: 'Rubik Bubbles', fantasy;
+  line-height: 30px;
+  text-align: center;
 }
 
 .error {
-  color: red;
-  text-align: center;
   height: 20px;
-  font-size: 0.75rem;
   margin-top: 0.25rem;
+  color: red;
+  font-size: 0.75rem;
+  text-align: center;
 }

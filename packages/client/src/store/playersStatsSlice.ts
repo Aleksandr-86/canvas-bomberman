@@ -1,63 +1,75 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { transformLeaderboardDTO } from '../features/utils/apiTransformers'
+import { leaderboardThunks } from './leaderboardThunks'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export type PlayerStats = {
   id: number
-  place: number
+  place?: number
   name: string
   score: number
   games: number
-  totalTime: number
 }
 
-type PlayersStatsState = PlayerStats[]
+interface InitialState {
+  isLoading: boolean
+  stats: PlayerStats[]
+  page: number
+}
 
-const INITIAL_STATE: PlayersStatsState = [
-  {
-    id: 1,
-    place: 1,
-    name: 'Bionic',
-    score: 27500,
-    games: 10,
-    totalTime: 61,
-  },
-  {
-    id: 2,
-    place: 2,
-    name: 'Chrome Road',
-    score: 15150,
-    games: 5,
-    totalTime: 36,
-  },
-  {
-    id: 3,
-    place: 3,
-    name: 'Bladewatch',
-    score: 13500,
-    games: 4,
-    totalTime: 30,
-  },
-  {
-    id: 4,
-    place: 4,
-    name: 'Marshmallow',
-    score: 12100,
-    games: 3,
-    totalTime: 23,
-  },
-  {
-    id: 5,
-    place: 5,
-    name: 'Arctic Realm',
-    score: 9800,
-    games: 3,
-    totalTime: 19,
-  },
-]
+const INITIAL_STATE: InitialState = {
+  isLoading: false,
+  stats: [],
+  page: 0,
+}
 
-const playersStatsSlice = createSlice({
-  name: 'playersStats',
+const leaderboardSlice = createSlice({
+  name: 'leaderboard',
   initialState: INITIAL_STATE,
-  reducers: {},
+  reducers: {
+    setPlayersStats: (
+      state: InitialState,
+      { payload }: PayloadAction<PlayerStats[]>
+    ) => {
+      state.stats = payload
+    },
+    nextPage: (state: InitialState) => {
+      if ((state.page + 1) * 5 < state.stats.length) {
+        state.page++
+      }
+    },
+    previousPage: (state: InitialState) => {
+      if (state.page > 0) {
+        state.page--
+      }
+    },
+  },
+  extraReducers: builder => {
+    builder
+      /**
+       * Получение статистики игроков с последующим
+       * сохранением в хранилище
+       */
+      .addCase(leaderboardThunks.setLeadersStatsState.pending, state => {
+        state.isLoading = true
+      })
+      .addCase(
+        leaderboardThunks.setLeadersStatsState.fulfilled,
+        (state, action) => {
+          const payload = action.payload
+
+          if (payload) {
+            state.stats = payload
+          }
+
+          state.isLoading = false
+        }
+      )
+      .addCase(leaderboardThunks.setLeadersStatsState.rejected, state => {
+        state.isLoading = false
+      })
+  },
 })
 
-export const playersStatsReducer = playersStatsSlice.reducer
+export const { setPlayersStats, nextPage, previousPage } =
+  leaderboardSlice.actions
+export const leaderboardReducer = leaderboardSlice.reducer
