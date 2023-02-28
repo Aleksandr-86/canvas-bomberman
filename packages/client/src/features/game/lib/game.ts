@@ -3,6 +3,7 @@ import { Loader } from './loader'
 import { SceneContext } from './sceneContext'
 import { FrameData, Ticker } from './ticker'
 import { Point } from '../utils'
+import { gameEnded } from '../gameActions'
 
 /**
  * `preload` - used to load assets
@@ -103,6 +104,7 @@ export class Game {
   }
 
   stop() {
+    gameEnded()
     this.ticker.stop()
     this.started = false
   }
