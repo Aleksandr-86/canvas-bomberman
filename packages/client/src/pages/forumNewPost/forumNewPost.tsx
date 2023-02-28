@@ -8,7 +8,7 @@ import { sendPost } from '../../store/forumSlice'
 
 export const ForumNewPost = () => {
   const dispatch = useAppDispatch()
-  const handleSubmit = (evt: FormEvent<HTMLFormElement> ) => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     const formData = new FormData(evt.currentTarget)
     dispatch(sendPost(formData))
   }
@@ -17,8 +17,8 @@ export const ForumNewPost = () => {
       <h2 className={classes.forumTitle}>Новая тема</h2>
 
       <div className={classes.forumWrapper}>
-        <form onSubmit={(evt) => handleSubmit(evt)}>
-          <Input type="text" name='body' placeholder="Название темы" />
+        <form onSubmit={evt => handleSubmit(evt)}>
+          <Input type="text" name="body" placeholder="Название темы" />
           <Button type="submit" className="forumBtnCreate">
             создать тему
           </Button>

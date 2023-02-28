@@ -5,3 +5,4 @@ export const getPlayersStats = (state: RootState) => state.playersStats
 export const getCurrentScore = (state: RootState) => state.game.currentScore
 export const getGameStatus = (state: RootState) => state.game.status
 export const getPosts = (state: RootState) => state.forum.posts
+export const getMessages = (state: RootState) => state.forum.messages
