@@ -5,7 +5,7 @@ import { getUser } from '../../store/selectors'
 import avatarImg from '../../assets/images/avatar.png'
 
 import styles from './navigationBar.module.css'
-import { logout } from '../../store/user/userActions'
+import { logout } from '../../store/userActions'
 
 export const NavigationBar = () => {
   const dispatch = useAppDispatch()

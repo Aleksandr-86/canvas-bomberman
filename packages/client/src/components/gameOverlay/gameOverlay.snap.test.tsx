@@ -2,7 +2,7 @@ import * as renderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 import { GameOverlay } from './gameOverlay'
 import configureStore from 'redux-mock-store'
-import { GameStatus } from '../../store/game/gameSlice'
+import { GameStatus } from '../../store/gameSlice'
 import { MemoryRouter } from 'react-router-dom'
 
 const mockStore = configureStore([])

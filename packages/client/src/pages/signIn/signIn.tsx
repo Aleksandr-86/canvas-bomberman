@@ -7,12 +7,12 @@ import { FormField } from '../../components/formField/formField'
 import { useForm, Validations } from '../../hooks/useForm'
 import { getValidations } from '../../features/validation'
 
-import { login } from '../../store/user/userActions'
+import { login } from '../../store/userActions'
 
 import styles from './signIn.module.css'
 import baseStyles from '../../app/app.module.css'
 
-import { getAuth } from '../../store/user/userSlice'
+import { getAuth } from '../../store/userSlice'
 import { IFormData } from '../../hooks/useAuth'
 import { useAppDispatch } from '../../store/hooks'
 

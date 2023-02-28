@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
-import { UserState } from '../store/user/userSlice'
+import { UserState } from '../store/userSlice'
 
 export interface IFormData {
   name: string

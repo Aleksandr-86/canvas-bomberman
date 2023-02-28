@@ -1,7 +1,7 @@
 import { TEAM_NAME } from './../constants'
 import { API_URL, UserDTO } from '../../typings/api'
 import defaultAvatar from '../../assets/images/avatar.png'
-import { PlayerStats } from '../../store/leadeboard/leaderboardSlice'
+import { PlayerStats } from '../../store/playersStatsSlice'
 
 interface UserForm {
   login: string

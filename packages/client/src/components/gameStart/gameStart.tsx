@@ -2,7 +2,7 @@ import { Button } from '../button/button'
 import styles from './gameStart.module.css'
 import keyboard from '../../assets/images/keyboard.png'
 import { useAppDispatch } from '../../store/hooks'
-import { GameStatus, setStatus } from '../../store/game/gameSlice'
+import { GameStatus, setStatus } from '../../store/gameSlice'
 
 export const GameStart: React.FC = () => {
   const dispatch = useAppDispatch()

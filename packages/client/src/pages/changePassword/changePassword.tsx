@@ -7,7 +7,7 @@ import { FormField } from '../../components/formField/formField'
 import { useForm, Validations } from '../../hooks/useForm'
 import { getValidations } from '../../features/validation'
 
-import { editPassword } from '../../store/user/userActions'
+import { editPassword } from '../../store/userActions'
 import { useAppDispatch } from '../../store/hooks'
 
 import styles from './changePassword.module.css'

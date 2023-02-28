@@ -13,7 +13,7 @@ import styles from './profile.module.css'
 
 import { getUser } from '../../store/selectors'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { editData, logout } from '../../store/user/userActions'
+import { editData, logout } from '../../store/userActions'
 
 import { store } from '../../store'
 

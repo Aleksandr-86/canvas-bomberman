@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { userReducer } from './user/userSlice'
-import { leaderboardReducer } from './leadeboard/leaderboardSlice'
-import { gameReducer } from './game/gameSlice'
+import { userReducer } from './userSlice'
+import { leaderboardReducer } from './playersStatsSlice'
+import { gameReducer } from './gameSlice'
 
 export const store = configureStore({
   reducer: {
