@@ -1,5 +1,5 @@
 import { SceneContext } from './lib/sceneContext'
-import { PointLike } from './utils'
+import { Point, PointLike, randomInRange } from './utils'
 import { CELL_WIDTH, Depth } from './const'
 import { ExplosionOrientation } from './types'
 import { makeAnimation } from './animationHelpers'
@@ -108,4 +108,35 @@ export function makeExplosion(
   })
 
   return explosion
+}
+
+const possibleBuffs = ['bombAmountUp', 'bombRangeUp', 'playerSpeedUp']
+
+export function makeBuff(scene: SceneContext, position: PointLike) {
+  const buffKind = possibleBuffs[randomInRange(0, possibleBuffs.length - 1)]
+
+  const buff = scene.add.sprite(
+    position.x,
+    position.y,
+    'nesBomberman',
+    buffKind,
+    CELL_WIDTH,
+    CELL_WIDTH,
+    Depth.Buff
+  )
+  return buff
+}
+
+export function makeDoor(scene: SceneContext, position: PointLike) {
+  const door = scene.add.sprite(
+    position.x,
+    position.y,
+    'nesBomberman',
+    'door',
+    CELL_WIDTH,
+    CELL_WIDTH,
+    Depth.Door
+  )
+
+  return door
 }
