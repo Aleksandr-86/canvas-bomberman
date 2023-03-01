@@ -11,7 +11,10 @@ const initialState: Record<string, unknown> =
           status: 'start',
           currentScore: 0,
         },
-        leaderboard: [],
+        leaderboard: {
+          stats: [],
+          page: 0,
+        },
         user: {
           error: null,
           isAuth: false,

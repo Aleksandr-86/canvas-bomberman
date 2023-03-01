@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
 import { userReducer } from '../store/userSlice'
-import { playersStatsReducer } from '../store/playersStatsSlice'
+import { leaderboardReducer } from '../store/playersStatsSlice'
 import { gameReducer } from '../store/gameSlice'
 
 const appContent = 'Есть вопросы?'
