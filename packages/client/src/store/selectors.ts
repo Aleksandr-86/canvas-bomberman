@@ -22,3 +22,4 @@ export const isLeaderboardLoading = (state: RootState) =>
 
 export const getCurrentScore = (state: RootState) => state.game.currentScore
 export const getGameStatus = (state: RootState) => state.game.status
+export const getTheme = (state: RootState) => state.theme.current

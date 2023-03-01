@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './userSlice'
 import { leaderboardReducer } from './playersStatsSlice'
 import { gameReducer } from './gameSlice'
+import { themeReducer } from './themeSlice'
 
 const initialState: Record<string, unknown> =
   typeof window !== 'undefined'
@@ -30,6 +31,9 @@ const initialState: Record<string, unknown> =
             phone: '',
           },
         },
+        theme: {
+          current: `light`,
+        },
       }
 
 export const createStore = (
@@ -40,6 +44,7 @@ export const createStore = (
       user: userReducer,
       leaderboard: leaderboardReducer,
       game: gameReducer,
+      theme: themeReducer,
     },
     preloadedState,
   })
