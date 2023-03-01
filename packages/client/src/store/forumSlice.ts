@@ -1,94 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios, { AxiosError } from 'axios'
+import { ForumApi } from '../api/forum'
 
-export const getPosts = createAsyncThunk('forum/getPosts', async () => {
-  try {
-    const response = await axios.get(
-      'https://alt-f4-bomberman-21.ya-praktikum.tech/posts'
-    )
-    return response.data
-  } catch (e) {
-    return e as AxiosError
-  }
-})
+export const getPosts = createAsyncThunk('forum/getPosts', ForumApi.getPosts)
 
-export const sendPost = createAsyncThunk(
-  'users/sendPost',
-  async (formData: FormData) => {
-    try {
-      const response = await axios.post(
-        'https://alt-f4-bomberman-21.ya-praktikum.tech/posts',
-        {
-          data: formData,
-        }
-      )
-      return response.data
-    } catch (e) {
-      return e as AxiosError
-    }
-  }
-)
+export const sendPost = createAsyncThunk('users/sendPost', ForumApi.sendPosts)
 
-export const sendLike = createAsyncThunk(
-  'users/sendLike',
-  async (id: number) => {
-    try {
-      await axios.post('https://alt-f4-bomberman-21.ya-praktikum.tech/likes', {
-        data: id,
-      })
-      return id
-    } catch (e) {
-      return e as AxiosError
-    }
-  }
-)
+export const sendLike = createAsyncThunk('users/sendLike', ForumApi.sendLike)
 
-export const sendDislike = createAsyncThunk(
-  'users/sendDislike',
-  async (id: number) => {
-    try {
-      await axios.post(
-        'https://alt-f4-bomberman-21.ya-praktikum.tech/dislikes',
-        {
-          data: id,
-        }
-      )
-      return id
-    } catch (e) {
-      return e as AxiosError
-    }
-  }
-)
+export const sendDislike = createAsyncThunk('users/sendDislike',ForumApi.sendDislike)
 
-export const getMessages = createAsyncThunk(
-  'forum/getMessages',
-  async (id: string | undefined) => {
-  try {
-    const response = await axios.get(
-      `https://alt-f4-bomberman-21.ya-praktikum.tech/posts/${id}`
-    )
-    return response.data
-  } catch (e) {
-    return e as AxiosError
-  }
-})
+export const getMessages = createAsyncThunk('forum/getMessages',ForumApi.getMessages)
 
-export const sendMessage = createAsyncThunk(
-  'users/sendMessage',
-  async (formData: FormData) => {
-    try {
-      const response = await axios.post(
-        `https://alt-f4-bomberman-21.ya-praktikum.tech/posts/`,
-        {
-          data: formData,
-        }
-      )
-      return response.data
-    } catch (e) {
-      return e as AxiosError
-    }
-  }
-)
+export const sendMessage = createAsyncThunk('users/sendMessage', ForumApi.sendMessage)
 
 const FORUM_DATA = {
   headers: ['Автор', 'Тема', 'Дата'],

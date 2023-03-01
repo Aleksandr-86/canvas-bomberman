@@ -10,7 +10,7 @@ export interface Post {
   date: string
   likes?: number
   dislikes?: number
-  redirect?: boolean | null
+  redirect?: boolean | undefined
 }
 
 export const TableRow: React.FC<Post> = (props: Post) => {
