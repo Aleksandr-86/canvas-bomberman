@@ -15,6 +15,7 @@ import {
   REDIRECT_URI,
 } from '../../features/oauth/onOauthRequest'
 import { useOauth } from '../../hooks/useOauth'
+import { ThemeSwitcher } from '../../components/themeSwitcher/themeSwitcher'
 
 // Содержание для авторизованных пользователей
 const ContentLogged = () => {
@@ -85,6 +86,7 @@ export const Landing = () => {
     <div className={styles.landing}>
       {navBar}
       <div className={styles.wrapper}>
+        <ThemeSwitcher />
         <img
           className={styles.logo}
           src={bombermanLogoImg}
