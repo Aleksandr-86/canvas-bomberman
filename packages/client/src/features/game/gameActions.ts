@@ -1,5 +1,10 @@
 import { store } from '../../store'
-import { setStatus, GameStatus, timerUpdated } from '../../store/gameSlice'
+import {
+  setStatus,
+  GameStatus,
+  timerUpdated,
+  scoreIncreased,
+} from '../../store/gameSlice'
 
 let intervalId: number
 
@@ -8,6 +13,10 @@ export function gameStarted() {
   intervalId = window.setInterval(() => {
     store.dispatch(timerUpdated(1000))
   }, 1000)
+}
+
+export function pointsAdded(points: number) {
+  store.dispatch(scoreIncreased(points))
 }
 
 export function gameEnded() {
