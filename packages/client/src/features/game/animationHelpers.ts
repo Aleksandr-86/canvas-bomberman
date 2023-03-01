@@ -28,6 +28,7 @@ const animations = {
       'bombermanDead6',
       'bombermanDead7',
       'empty',
+      'transparent',
     ],
     PLAYER_ANIMATION_DURATION * 0.8,
   ],
