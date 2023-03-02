@@ -40,7 +40,7 @@ export const Table: React.FC<Props> = props => {
               date={item.date}
               likes={item?.likes}
               dislikes={item?.dislikes}
-              redirect={props.redirect}
+              redirect={props.redirect ? true : false}
             />
           ))}
         </tbody>
