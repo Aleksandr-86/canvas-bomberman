@@ -26,6 +26,8 @@ services:
         restart: always
         ports:
             - "${SERVER_PORT}:${SERVER_PORT}"
+        depends_on:
+          - postgres
         environment:
           SERVER_PORT: ${SERVER_PORT}
 
