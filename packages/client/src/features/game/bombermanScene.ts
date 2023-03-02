@@ -13,17 +13,12 @@ import {
   EXPLOSION_DURATION,
   BUFF_CHANCE,
   Points,
+  BOMB_PLACEMENT_COOLDOWN,
 } from './const'
 import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
 import { Kind } from './types'
-import {
-  Point,
-  type PointLike,
-  delay,
-  withChance,
-  randomInRange,
-} from './utils'
+import { Point, type PointLike, delay, withChance } from './utils'
 import { gameStarted, pointsAdded } from './gameActions'
 import nesBomberman from '../../assets/images/nesBomberman5xTransparent.png'
 import nesBombermanFrames from '../../assets/images/nesBomberman5x.json'
@@ -42,20 +37,16 @@ import {
 } from './spriteHelpers'
 import { SpriteList } from './spriteList'
 import { SceneContext } from './lib/sceneContext'
-import { EnemyController } from './enemyController'
 
 type GameState = {
   player: {
     ref: null | Sprite
     direction: Point
-    playerDead: boolean
-    lastDirection: 'left' | 'right' | 'up' | 'down'
+    isDead: boolean
+    lastFacing: 'left' | 'right' | 'up' | 'down'
     bombLimit: number
-    buffs: {
-      bombAmountUp: boolean
-      bombRangeUp: boolean
-      playerSpeedUp: boolean
-    }
+    bombRange: number
+    speedScale: number
   }
   field: {
     enemies: SpriteList
@@ -71,14 +62,11 @@ const state: GameState = {
   player: {
     ref: null,
     direction: new Point(),
-    playerDead: false,
-    lastDirection: 'down',
+    isDead: false,
+    lastFacing: 'down',
     bombLimit: 1,
-    buffs: {
-      bombAmountUp: false,
-      bombRangeUp: false,
-      playerSpeedUp: false,
-    },
+    bombRange: 1,
+    speedScale: 1,
   },
   field: {
     enemies: new SpriteList(),
@@ -131,44 +119,34 @@ export const bombermanScene: SceneConfig = {
       ) as Sprite[])
     )
 
-    // controller = new EnemyController(
-    //   s => s.frame === 'empty',
-    //   collidableCells.toArray()
-    // )
-
-    // controller.add(state.field.enemies.toArray(), PLAYER_VELOCITY)
-
     makeDoor(scene, new Point(1680, 720))
 
     gameStarted()
   },
   update: (scene, frame, kbd) => {
-    const { ref: player } = state.player
-
-    if (!player) {
-      return
-    }
+    // player certainly defined in create()
+    const playerRef = state.player.ref!
 
     state.player.direction = new Point()
 
-    if (state.player.playerDead) {
-      scene.anims.run(player, 'die', frame.delta, true)
+    if (state.player.isDead) {
+      scene.anims.run(playerRef, 'die', frame.delta, true)
     } else {
       if (kbd.left) {
         state.player.direction.x -= 1
-        scene.anims.run(player, 'left', frame.delta)
+        scene.anims.run(playerRef, 'left', frame.delta)
       }
       if (kbd.right) {
         state.player.direction.x += 1
-        scene.anims.run(player, 'right', frame.delta)
+        scene.anims.run(playerRef, 'right', frame.delta)
       }
       if (kbd.up) {
         state.player.direction.y -= 1
-        scene.anims.run(player, 'up', frame.delta)
+        scene.anims.run(playerRef, 'up', frame.delta)
       }
       if (kbd.down) {
         state.player.direction.y += 1
-        scene.anims.run(player, 'down', frame.delta)
+        scene.anims.run(playerRef, 'down', frame.delta)
       }
 
       const playerMovingDiagonally =
@@ -179,21 +157,18 @@ export const bombermanScene: SceneConfig = {
         state.player.direction.map(s => Math.sign(s) * length)
       }
 
-      if (
-        kbd.space &&
-        state.field.bombs.length < (state.player.buffs.bombAmountUp ? 2 : 1) &&
-        frame.now - lastBombPlacementTime > 1000
-      ) {
-        const bombCell = nearestCell(state.player.ref!).copy()
+      const belowMaxBombs = state.field.bombs.length < state.player.bombLimit
+      const cooldown =
+        frame.now - lastBombPlacementTime > BOMB_PLACEMENT_COOLDOWN
+      if (kbd.space && belowMaxBombs && cooldown) {
+        const bombCell = nearestCell(playerRef).copy()
 
         state.field.bombs.unshift(makeBomb(scene, bombCell))
         lastBombPlacementTime = frame.now
 
         delay(BOMB_FUSE).then(() => {
-          const radius = state.player.buffs.bombRangeUp ? 2 : 1
-
           state.field.explosions.add(
-            ...resolveExplosion(bombCell, radius).map(
+            ...resolveExplosion(bombCell, state.player.bombRange).map(
               ({ point, orientation }) => {
                 return makeExplosion(scene, point, orientation)
               }
@@ -203,17 +178,13 @@ export const bombermanScene: SceneConfig = {
           state.field.bombs.destroyLast()
 
           delay(EXPLOSION_DURATION).then(() => {
-            const shouldGetBuff = withChance(BUFF_CHANCE)
-            let buffAlreadyCreated = false
-
-            for (const softWall of state.field.softWalls) {
-              if (!buffAlreadyCreated && shouldGetBuff) {
-                buffAlreadyCreated = false
-
-                state.field.buffs.add(makeBuff(scene, softWall))
+            for (const wall of state.field.softWalls) {
+              const wallWithExplosion = state.field.explosions.byPoint(wall)
+              if (wallWithExplosion && withChance(BUFF_CHANCE)) {
+                state.field.buffs.add(makeBuff(scene, wallWithExplosion))
+                break
               }
             }
-
             state.field.explosions.destroyAll()
           })
         })
@@ -244,62 +215,49 @@ export const bombermanScene: SceneConfig = {
 
     /* --- Update Player --- */
     const playerNotMoving =
-      !kbd.left &&
-      !kbd.right &&
-      !kbd.up &&
-      !kbd.down &&
-      !state.player.playerDead
+      !kbd.left && !kbd.right && !kbd.up && !kbd.down && !state.player.isDead
 
     if (playerNotMoving) {
       const lastAnimationFrame =
-        player.animations.get(state.player.lastDirection)?.currentFrame ||
+        playerRef.animations.get(state.player.lastFacing)?.currentFrame ||
         'bombermanDown2'
-      player.frame = lastAnimationFrame
+      playerRef.frame = lastAnimationFrame
     }
 
     const playerHitByExplosion = state.field.explosions.byPoint(
-      nearestCell(player)
+      nearestCell(playerRef)
     )
-    const playerHitByEnemy = state.field.enemies.byPoint(player)
+    const playerHitByEnemy = state.field.enemies.byPoint(playerRef)
 
     if (playerHitByEnemy || playerHitByExplosion) {
-      state.player.playerDead = true
+      state.player.isDead = true
     }
 
-    // controller.run(frame.delta)
+    const playerPickBuff = state.field.buffs.byPoint(nearestCell(playerRef))
 
-    for (const buff of state.field.buffs) {
-      const playerPickBuff = state.field.buffs.byPoint(nearestCell(player))
-      // const player = Point.from(state.player.ref!)
-
-      // const playerPickBuff = circleCircleCollision(
-      //   player,
-      //   CELL_WIDTH / 2,
-      //   buff,
-      //   CELL_WIDTH / 2
-      // )
-
-      if (playerPickBuff) {
-        const sprite = state.field.buffs.byPoint(nearestCell(player))
-
-        if (!sprite) {
+    if (playerPickBuff) {
+      switch (playerPickBuff.frame) {
+        case 'playerSpeedUp':
+          state.player.speedScale += 0.5
           break
-        }
 
-        const { frame = 'playerSpeedUp' } = sprite
+        case 'bombAmountUp':
+          state.player.bombLimit += 1
+          break
 
-        state.player.buffs[frame as 'playerSpeedUp'] = true
+        case 'bombRangeUp':
+          state.player.bombRange += 1
+          break
 
-        state.field.buffs.destroyByPoint(nearestCell(player))
-
-        delay(20000).then(
-          () => (state.player.buffs[frame as 'playerSpeedUp'] = false)
-        )
+        default:
+          break
       }
+
+      state.field.buffs.destroyByPoint(nearestCell(playerRef))
     }
 
     const playerVelocity =
-      PLAYER_VELOCITY * frame.delta * (state.player.buffs.playerSpeedUp ? 3 : 2)
+      PLAYER_VELOCITY * frame.delta * state.player.speedScale
 
     updatePlayerPosition(scene, state, playerVelocity)
 
@@ -310,12 +268,12 @@ export const bombermanScene: SceneConfig = {
       const enemyHitPlayer = circleCircleCollision(
         enemy,
         CELL_WIDTH / 2,
-        player,
+        playerRef,
         CELL_WIDTH / 2 - 30
       )
 
       if (enemyHitPlayer) {
-        state.player.playerDead = true
+        state.player.isDead = true
       }
 
       if (enemyInBlast) {

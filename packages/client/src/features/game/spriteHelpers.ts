@@ -1,5 +1,5 @@
 import { SceneContext } from './lib/sceneContext'
-import { Point, PointLike, randomInRange } from './utils'
+import { type PointLike, randomInRange } from './utils'
 import { CELL_WIDTH, Depth } from './const'
 import { ExplosionOrientation } from './types'
 import { makeAnimation } from './animationHelpers'

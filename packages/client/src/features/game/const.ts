@@ -36,12 +36,13 @@ export const SOFT_WALL_SPAWN_OFFSET = {
   y: CELL_WIDTH * 1,
 }
 
-/* --- Animations --- */
+/* --- Timings --- */
 export const PLAYER_ANIMATION_DURATION = 450
 export const EXPLOSION_DURATION = 600
 export const ENEMY_ANIMATION_DURATION = PLAYER_ANIMATION_DURATION
 export const BOMB_FUSE = 3000
 export const GAME_DURATION = 200
+export const BOMB_PLACEMENT_COOLDOWN = 200
 
 /* --- Velocity --- */
 export const PLAYER_VELOCITY = CELL_WIDTH * 3
