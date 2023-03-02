@@ -3,15 +3,24 @@ import { ForumApi } from '../api/forum'
 
 export const getPosts = createAsyncThunk('forum/getPosts', ForumApi.getPosts)
 
-export const sendPost = createAsyncThunk('users/sendPost', ForumApi.sendPosts)
+export const sendPost = createAsyncThunk('users/sendPost', ForumApi.sendPost)
 
 export const sendLike = createAsyncThunk('users/sendLike', ForumApi.sendLike)
 
-export const sendDislike = createAsyncThunk('users/sendDislike',ForumApi.sendDislike)
+export const sendDislike = createAsyncThunk(
+  'users/sendDislike',
+  ForumApi.sendDislike
+)
 
-export const getMessages = createAsyncThunk('forum/getMessages',ForumApi.getMessages)
+export const getMessages = createAsyncThunk(
+  'forum/getMessages',
+  ForumApi.getMessages
+)
 
-export const sendMessage = createAsyncThunk('users/sendMessage', ForumApi.sendMessage)
+export const sendMessage = createAsyncThunk(
+  'users/sendMessage',
+  ForumApi.sendMessage
+)
 
 const FORUM_DATA = {
   headers: ['Автор', 'Тема', 'Дата'],
