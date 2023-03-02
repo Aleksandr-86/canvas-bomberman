@@ -96,7 +96,7 @@ export class Game {
 
     this.ticker.add(frameData => {
       this.scene.update(this.sceneContext, frameData, this.kbd)
-      this.sceneContext.render(this.ctx, frameData)
+      this.sceneContext.render(this.ctx)
     })
 
     this.ticker.start()

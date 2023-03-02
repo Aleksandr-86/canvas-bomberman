@@ -26,7 +26,7 @@ export const GameDisplay: React.FC = () => {
      * движка по задачи № 75. Ответственный - Aleksandr-86.
      */
     const game = new Game({
-      height: 720,
+      height: 640,
       width: 1280,
       backgroundColor: '#64b0ff',
       root: canvas,
@@ -43,7 +43,7 @@ export const GameDisplay: React.FC = () => {
     <div className={styles.gameDisplay}>
       <div className={styles.gameDisplayCanvasWrapper} ref={canvasWrapperRef}>
         <GameScore />
-        <canvas ref={gameRef} width={1280} height={720} />
+        <canvas ref={gameRef} width={1280} height={640} />
         <GameOverlay onReloadGame={() => undefined} />
       </div>
     </div>

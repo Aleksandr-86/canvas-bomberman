@@ -9,7 +9,7 @@ export class Camera {
   /*
       cameraTransform
       -240 < -pX + cW / 2 < 0
-      -320 < -pY + cH / 2 < 0
+      -400 < -pY + cH / 2 < 0
     */
 
   bind(object: Position) {
@@ -22,7 +22,7 @@ export class Camera {
         clamp(-this.cameraTarget.x + this.cameraWidth / 2, -240, 0)
       ),
       y: Math.round(
-        clamp(-this.cameraTarget.y + this.cameraHeight / 2, -320, 0)
+        clamp(-this.cameraTarget.y + this.cameraHeight / 2, -400, 0)
       ),
     }
   }

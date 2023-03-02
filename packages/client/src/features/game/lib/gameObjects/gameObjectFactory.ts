@@ -2,7 +2,6 @@ import { type SceneContext } from '../sceneContext'
 import { type Texture } from '../texture'
 import { Rect } from './rect'
 import { Sprite } from './sprite'
-import { type SceneObject } from './types'
 
 type TextureFrame = `${string}:${string}:${number}`
 
@@ -85,10 +84,8 @@ export class GameObjectFactory {
     this.creator = new GameObjectCreator(scene)
   }
 
-  private register(object: SceneObject | SceneObject[]) {
-    this.scene.displayList = Array.isArray(object)
-      ? this.scene.displayList.concat(object)
-      : [...this.scene.displayList, object]
+  private register(object: Sprite[]) {
+    this.scene.displayList.concat(object)
   }
 
   /**
@@ -103,7 +100,7 @@ export class GameObjectFactory {
     z = 0
   ) {
     const gameObject = this.creator.rect(x, y, width, height, fill, z)
-    this.register(gameObject)
+    this.register([gameObject] as unknown as Sprite[])
     return gameObject
   }
 
@@ -144,7 +141,7 @@ export class GameObjectFactory {
       z
     )
 
-    this.register(gameObject)
+    this.register([gameObject])
     return gameObject
   }
 }
