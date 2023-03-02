@@ -37,6 +37,7 @@ import {
 } from './spriteHelpers'
 import { SpriteList } from './spriteList'
 import { SceneContext } from './lib/sceneContext'
+import { EnemyController } from './enemyController'
 
 type GameState = {
   player: {
@@ -78,7 +79,9 @@ const state: GameState = {
   },
 }
 
-// let controller
+const controller = new EnemyController(({ frame }: Sprite) => {
+  return !frame.startsWith('wall')
+})
 let lastBombPlacementTime = performance.now()
 const collidableCells = new SpriteList()
 
@@ -112,14 +115,24 @@ export const bombermanScene: SceneConfig = {
 
     // cache walls for collision detection
     collidableCells.add(
-      ...(scene.displayList.filter(
+      ...scene.displayList.filter(
         sprite =>
           sprite instanceof Sprite &&
           (sprite.frame === 'wallSoft' || sprite.frame === 'wallHard')
-      ) as Sprite[])
+      )
     )
 
-    makeDoor(scene, new Point(1680, 720))
+    const door = new Point(640, 560)
+
+    makeDoor(scene, door)
+    state.field.softWalls.add(makeSoftWall(scene, door))
+
+    const a = scene.displayList.filter(v => {
+      return !v.frame.startsWith('wall')
+    })
+
+    controller.addField(a)
+    controller.addEnemies(state.field.enemies.toArray(), PLAYER_VELOCITY)
 
     gameStarted()
   },
@@ -263,7 +276,7 @@ export const bombermanScene: SceneConfig = {
 
     /* --- Update Enemies --- */
     for (const enemy of state.field.enemies) {
-      const enemyInBlast = state.field.explosions.byPoint(enemy)
+      const enemyInBlast = state.field.explosions.byPoint(nearestCell(enemy))
 
       const enemyHitPlayer = circleCircleCollision(
         enemy,
@@ -289,6 +302,8 @@ export const bombermanScene: SceneConfig = {
         scene.anims.run(enemy, 'right', frame.delta)
       }
     }
+
+    controller.run(frame.delta)
   },
 }
 
