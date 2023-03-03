@@ -1,16 +1,16 @@
 .card {
   position: relative;
   max-width: 450px;
-  padding: 50px 40px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 0 6px rgb(0 0 0 / 14%);
   margin: auto;
+  padding: 50px 40px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 0 6px rgb(0 0 0 / 14%);
 }
 
 .cardRow {
-  display: flex;
   position: relative;
+  display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
@@ -22,15 +22,15 @@
 }
 
 .cardHeader {
+  margin: 0;
   font-size: 40px;
   text-align: center;
-  margin: 0;
 }
 
 .cardContent {
+  margin: 30px 0;
   font-size: 25px;
   text-align: center;
-  margin: 30px 0;
 }
 
 .cardContentFile {
@@ -41,8 +41,8 @@
 .cardForm {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   min-width: 450px;
   min-height: 420px;
 }

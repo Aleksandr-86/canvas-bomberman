@@ -78,7 +78,8 @@ async function startServer() {
     try {
       let template: string
 
-      let render: (url: string) => Promise<string>
+      let render: (url: string, store: object) => Promise<string>
+      let prepareStore: (url: string) => any
 
       if (isDev() && vite) {
         template = await fs.readFile(
@@ -89,6 +90,9 @@ async function startServer() {
 
         render = (await vite.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
           .render
+        prepareStore = (
+          await vite.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))
+        ).prepareStore
       } else {
         template = await fs.readFile(
           path.resolve(distPath, 'index.html'),
@@ -96,14 +100,21 @@ async function startServer() {
         )
 
         render = (await import(ssrClientPath)).render
+        prepareStore = (await import(ssrClientPath)).prepareStore
       }
 
       const cssAssets = isDev() ? await styleSheets : ''
-      const appHtml = await render(url)
+      const store = await prepareStore(url)
+      const appHtml = await render(url, store)
+
+      const appStore = `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
+        store.getState()
+      )}</script>`
 
       const html = template
         .replace(`<!--ssr-styles-->`, cssAssets)
         .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(`<!--ssr-store-->`, appStore)
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {

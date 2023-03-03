@@ -11,10 +11,14 @@
 }
 
 .head {
+  display: flex;
   padding-bottom: 10px;
-  border-bottom: 5px solid black;
-  text-align: center;
   cursor: pointer;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
 }
 
 .ascending::after {
@@ -29,22 +33,18 @@
   margin-left: 10px;
 }
 
-.columnPlace,
-.columnName,
-.columnScore,
-.columnGames,
-.columnTotalTime {
+.paddingBorder {
   padding: 10px 0;
   border-bottom: 2px solid #ccc;
 }
 
 .columnPlace {
-  width: 200px;
+  width: 220px;
   text-align: center;
 }
 
 .columnName {
-  width: 350px;
+  width: 420px;
   text-align: left;
 }
 
@@ -54,13 +54,18 @@
 }
 
 .columnGames {
-  width: 150px;
+  width: 330px;
   text-align: center;
 }
 
-.columnTotalTime {
-  width: 350px;
-  text-align: center;
+.body {
+  height: 345px;
+  border-top: 5px solid black;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
 }
 
 .row:hover {
