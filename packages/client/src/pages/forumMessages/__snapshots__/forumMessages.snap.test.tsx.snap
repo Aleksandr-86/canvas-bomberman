@@ -17,17 +17,29 @@ exports[`<ForumMessages/> snapshot test cases <ForumMessages/> should render <di
         <th
           className="tableTitle"
         >
-          Тема
+          Сообщения
         </th>
         <th
           className="tableTitle"
         >
           Дата
         </th>
+        <th
+          className="tableTitle"
+        >
+          Лайки
+        </th>
+        <th
+          className="tableTitle"
+        >
+          Дизлайки
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr
+        className="tableItem"
+      >
         <td
           className="tableRow"
         >
@@ -43,8 +55,22 @@ exports[`<ForumMessages/> snapshot test cases <ForumMessages/> should render <di
         >
           8.01.22
         </td>
+        <td
+          className="tableRow"
+          onClick={[Function]}
+        >
+          150
+        </td>
+        <td
+          className="tableRow"
+          onClick={[Function]}
+        >
+          12
+        </td>
       </tr>
-      <tr>
+      <tr
+        className="tableItem"
+      >
         <td
           className="tableRow"
         >
@@ -60,39 +86,17 @@ exports[`<ForumMessages/> snapshot test cases <ForumMessages/> should render <di
         >
           8.01.22
         </td>
-      </tr>
-      <tr>
         <td
           className="tableRow"
+          onClick={[Function]}
         >
-          Kan88
+          2
         </td>
         <td
           className="tableRow"
+          onClick={[Function]}
         >
-          Подскажите пожалуйста как пройти второй уровень
-        </td>
-        <td
-          className="tableRow"
-        >
-          8.01.22
-        </td>
-      </tr>
-      <tr>
-        <td
-          className="tableRow"
-        >
-          sasha85
-        </td>
-        <td
-          className="tableRow"
-        >
-          Я еще не прошел
-        </td>
-        <td
-          className="tableRow"
-        >
-          8.01.22
+          12
         </td>
       </tr>
     </tbody>
@@ -102,7 +106,7 @@ exports[`<ForumMessages/> snapshot test cases <ForumMessages/> should render <di
   >
     <a
       className="forumLink"
-      href="/forum-new-message"
+      href="/forum-new-message/undefined"
       onClick={[Function]}
     >
       Создать сообщение

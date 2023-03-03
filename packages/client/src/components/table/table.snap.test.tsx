@@ -1,5 +1,11 @@
 import * as renderer from 'react-test-renderer'
 import { Table } from './table'
+import { MemoryRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import configureStore from 'redux-mock-store'
+
+const mockStore = configureStore([])
+const store = mockStore({})
 
 const mockProps = {
   headers: ['Автор', 'Тема', 'Дата'],
@@ -21,7 +27,15 @@ const mockProps = {
 
 describe(`<Table/> snapshot test cases`, () => {
   test(`<Table/> should render <table className=table> parent with child elements (with mockProps)`, () => {
-    const tree = renderer.create(<Table {...mockProps} />).toJSON()
+    const tree = renderer
+      .create(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Table {...mockProps} />
+          </MemoryRouter>
+        </Provider>
+      )
+      .toJSON()
     expect(tree).toMatchSnapshot()
   })
 })
