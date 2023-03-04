@@ -85,7 +85,7 @@ export class GameObjectFactory {
   }
 
   private register(object: Sprite[]) {
-    this.scene.displayList.concat(object)
+    this.scene.displayList = this.scene.displayList.concat(object)
   }
 
   /**

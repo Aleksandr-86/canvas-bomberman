@@ -53,6 +53,58 @@ export class Sprite extends BaseGameObject {
     ctx.save()
     ctx.globalAlpha = this.opacity
     ctx.drawImage(texture.source, sx, sy, sWidth, sHeight, x, y, width, height)
+    if (frame.startsWith('bomberman')) {
+      ctx.lineWidth = 4
+
+      ctx.strokeStyle = 'red'
+      ctx.beginPath()
+      ctx.arc(x + 40, y + 40, 25, 0, 2 * Math.PI)
+      ctx.stroke()
+      ctx.strokeStyle = 'yellow'
+      ctx.beginPath()
+      ctx.arc(x + 40, y + 40, 40, 0, 2 * Math.PI)
+      ctx.stroke()
+    }
+    if (frame.startsWith('wall')) {
+      ctx.lineWidth = 4
+
+      ctx.strokeStyle = 'teal'
+      ctx.lineWidth = 4
+
+      ctx.beginPath()
+      ctx.strokeRect(x - 2, y - 2, 80, 80)
+
+      ctx.lineWidth = 4
+
+      ctx.beginPath()
+      ctx.moveTo(x - 2, y - 2)
+      ctx.lineTo(x - 2 + 80, y - 2 + 80)
+      ctx.stroke()
+
+      ctx.beginPath()
+      ctx.moveTo(x - 2 + 80, y - 2)
+      ctx.lineTo(x - 2, y - 2 + 80)
+      ctx.stroke()
+    }
+
+    if (frame.startsWith('empty')) {
+      ctx.lineWidth = 4
+
+      ctx.strokeStyle = 'teal'
+
+      ctx.beginPath()
+      ctx.strokeRect(x - 2, y - 2, 80, 80)
+    }
+
+    if (frame.startsWith('baloon')) {
+      ctx.lineWidth = 4
+
+      ctx.strokeStyle = 'red'
+      ctx.beginPath()
+      ctx.arc(x + 40, y + 40, 40, 0, 2 * Math.PI)
+      ctx.stroke()
+    }
+
     ctx.restore()
   }
 }

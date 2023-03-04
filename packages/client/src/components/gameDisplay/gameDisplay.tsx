@@ -21,10 +21,7 @@ export const GameDisplay: React.FC = () => {
     }
 
     shouldRunSecondTime.current = false
-    /**
-     * TODO: Данный участок следует обработать после доработки
-     * движка по задачи № 75. Ответственный - Aleksandr-86.
-     */
+
     const game = new Game({
       height: 640,
       width: 1280,
