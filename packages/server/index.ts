@@ -1,3 +1,5 @@
+import { cspMiddleware } from './middlewares/cspMiddleware'
+// import type { NextFunction, Request, RequestHandler, Response } from 'express';
 import dotenv from 'dotenv'
 import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
@@ -70,6 +72,8 @@ async function startServer() {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
 
+  app.use(cspMiddleware())
+
   const styleSheets = getStyleSheets()
 
   app.use('*', async (req: any, res, next) => {
@@ -115,6 +119,7 @@ async function startServer() {
         .replace(`<!--ssr-styles-->`, cssAssets)
         .replace(`<!--ssr-outlet-->`, appHtml)
         .replace(`<!--ssr-store-->`, appStore)
+        .replace(/<script/g, `<script nonce="${req.nonce}"`)
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
