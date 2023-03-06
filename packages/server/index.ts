@@ -72,7 +72,7 @@ async function startServer() {
 
   const styleSheets = getStyleSheets()
 
-  app.use('*', async (req, res, next) => {
+  app.use('*', async (req: any, res, next) => {
     const url = req.originalUrl
 
     try {

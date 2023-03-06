@@ -42,7 +42,7 @@ export const createStore = (
       leaderboard: leaderboardReducer,
       game: gameReducer,
       forum: forumReducer,
-  },
+    },
     preloadedState,
   })
 }
