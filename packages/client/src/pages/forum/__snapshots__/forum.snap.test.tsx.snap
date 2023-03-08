@@ -32,11 +32,14 @@ exports[`<Forum/> snapshot test cases <Forum/> should render <div className=foru
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr
+        className="tableItem"
+        onClick={[Function]}
+      >
         <td
           className="tableRow"
         >
-          Kan88
+          Kan
         </td>
         <td
           className="tableRow"
@@ -49,11 +52,14 @@ exports[`<Forum/> snapshot test cases <Forum/> should render <div className=foru
           8.01.22
         </td>
       </tr>
-      <tr>
+      <tr
+        className="tableItem"
+        onClick={[Function]}
+      >
         <td
           className="tableRow"
         >
-          sasha85
+          sasha
         </td>
         <td
           className="tableRow"

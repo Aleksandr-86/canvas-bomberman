@@ -10,10 +10,20 @@ exports[`<ForumNewMessage/> snapshot test cases <ForumMessages/> should render <
     Новое сообщение
   </h2>
   <div>
-    <form>
+    <form
+      onSubmit={[Function]}
+    >
       <label>
         <input
           className="form__input"
+          placeholder="Инпут"
+          type="hidden"
+        />
+      </label>
+      <label>
+        <input
+          className="form__input"
+          name="body"
           placeholder="Введите сообщение"
           type="text"
         />

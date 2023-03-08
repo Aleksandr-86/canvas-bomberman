@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './userSlice'
+import { forumReducer } from './forumSlice'
 import { leaderboardReducer } from './playersStatsSlice'
 import { gameReducer } from './gameSlice'
 
@@ -40,6 +41,7 @@ export const createStore = (
       user: userReducer,
       leaderboard: leaderboardReducer,
       game: gameReducer,
+      forum: forumReducer,
     },
     preloadedState,
   })
