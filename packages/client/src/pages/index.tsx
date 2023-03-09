@@ -9,7 +9,7 @@ const AppRouting = () => {
 
   useEffect(() => {
     dispatch(me())
-  })
+  }, [])
 
   return (
     <Routes>
