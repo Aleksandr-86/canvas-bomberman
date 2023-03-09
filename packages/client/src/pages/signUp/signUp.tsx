@@ -9,7 +9,7 @@ import { getValidations } from '../../features/validation'
 
 import { useAppDispatch } from '../../store/hooks'
 import { registerUser } from '../../store/userActions'
-import { transformUserDTO } from '../../features/api/apiTransformers'
+import { transformUserDTO } from '../../features/utils/apiTransformers'
 
 import styles from './signUp.module.css'
 import baseStyles from '../../app/app.module.css'
@@ -110,7 +110,7 @@ export const SignUp: React.FC = () => {
 
         <div className={styles.signUpAction}>
           <div className={styles.actionButton}>
-            <Button type="submit">Все верно!</Button>
+            <Button type="submit">Всё верно!</Button>
           </div>
 
           <div className={styles.actionButton}>

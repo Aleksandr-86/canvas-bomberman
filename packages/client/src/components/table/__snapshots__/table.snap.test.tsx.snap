@@ -24,7 +24,9 @@ exports[`<Table/> snapshot test cases <Table/> should render <table className=ta
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr
+      className="tableItem"
+    >
       <td
         className="tableRow"
       >
@@ -41,7 +43,9 @@ exports[`<Table/> snapshot test cases <Table/> should render <table className=ta
         8.01.22
       </td>
     </tr>
-    <tr>
+    <tr
+      className="tableItem"
+    >
       <td
         className="tableRow"
       >

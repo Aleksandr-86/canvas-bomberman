@@ -27,89 +27,97 @@ exports[`<Leaderboard/> snapshot test cases <Leaderboard/> should render <div cl
     </a>
   </nav>
   <div
-    className="wrapper"
+    className="container"
   >
     <div
       className="tableCaption"
     >
       Таблица лидеров
     </div>
-    <table
+    <div
       className="table"
     >
-      <thead>
-        <tr>
-          <th
-            className="head ascending"
-            onClick={[Function]}
-          >
-            Место
-          </th>
-          <th
-            className="head"
-            onClick={[Function]}
-          >
-            Имя игрока
-          </th>
-          <th
-            className="head"
-            onClick={[Function]}
-          >
-            Очки
-          </th>
-          <th
-            className="head"
-            onClick={[Function]}
-          >
-            Игр
-          </th>
-          <th
-            className="head"
-            onClick={[Function]}
-          >
-            Время (мин)
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
+      <div
+        className="head"
+      >
+        <div
+          className="columnPlace title ascending"
+          onClick={[Function]}
+        >
+          Место
+        </div>
+        <div
+          className="columnName title"
+          onClick={[Function]}
+        >
+          Имя игрока
+        </div>
+        <div
+          className="columnScore title"
+          onClick={[Function]}
+        >
+          Очки
+        </div>
+        <div
+          className="columnGames title"
+          onClick={[Function]}
+        >
+          Игр сыграно
+        </div>
+      </div>
+      <div
+        className="body"
+      >
+        <div
           className="row"
         >
-          <td
-            className="columnPlace"
+          <div
+            className="columnPlace paddingBorder"
           >
             1
-          </td>
-          <td
-            className="columnName"
+          </div>
+          <div
+            className="columnName paddingBorder"
           >
             Alex
-          </td>
-          <td
-            className="columnScore"
+          </div>
+          <div
+            className="columnScore paddingBorder"
           >
             811
-          </td>
-          <td
-            className="columnGames"
+          </div>
+          <div
+            className="columnGames paddingBorder"
           >
             1
-          </td>
-          <td
-            className="columnTotalTime"
-          >
-            23
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <a
-      className="linkButton"
-      href="/"
-      onClick={[Function]}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="buttonWrapper"
     >
-      На главную
-    </a>
+      <button
+        className="button dimmed"
+        onClick={[Function]}
+      >
+        &lt;
+         
+      </button>
+      <button
+        className="button dimmed"
+        onClick={[Function]}
+      >
+        &gt;
+      </button>
+      <a
+        className="linkButton"
+        href="/"
+        onClick={[Function]}
+      >
+        На главную
+      </a>
+    </div>
     <img
       alt="hero-img"
       className="heroImg"

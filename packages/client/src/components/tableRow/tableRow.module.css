@@ -1,3 +1,9 @@
+.tableItem:hover {
+  background-color: grey;
+  color: white;
+  cursor: pointer;
+}
+
 .tableRow {
   font-weight: 400;
   font-size: 24px;
