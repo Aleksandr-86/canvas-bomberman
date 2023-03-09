@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './userSlice'
 import { leaderboardReducer } from './playersStatsSlice'
 import { gameReducer } from './gameSlice'
-import { themeReducer } from './themeSlice'
+import { Theme, themeReducer } from './themeSlice'
 
 const initialState: Record<string, unknown> =
   typeof window !== 'undefined'
@@ -32,7 +32,7 @@ const initialState: Record<string, unknown> =
           },
         },
         theme: {
-          current: `light`,
+          current: Theme.LIGHT,
         },
       }
 

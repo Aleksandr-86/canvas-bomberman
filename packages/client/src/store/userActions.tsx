@@ -3,6 +3,8 @@ import UserAPI from '../api/user'
 import AuthAPI from '../api/auth'
 import { AxiosError, isAxiosError } from 'axios'
 import { axiosErrorHandler } from '../features/utils/axiosErrorHandler'
+import ThemeAPI from '../api/theme'
+import { setTheme, Theme } from './themeSlice'
 
 type UserDataChangePayload = {
   first_name: string
@@ -127,9 +129,27 @@ export const me = createAsyncThunk(
     try {
       const response = await AuthAPI.me()
 
+      const { data: theme } = await ThemeAPI.getCurrentTheme(response.id).catch(
+        () => {
+          const localTheme = localStorage.getItem(`theme`) as Theme | null
+          return ThemeAPI.sendCurrentTheme({
+            id: response.id,
+            theme: localTheme || Theme.LIGHT,
+          })
+        }
+      )
+
+      localStorage.setItem(`theme`, theme)
+      document.documentElement.dataset.theme = theme
+      dispatch(setTheme(theme))
+
       return response
     } catch (error: unknown | AxiosError) {
       dispatch(logout())
+
+      const theme = localStorage.getItem(`theme`) as Theme
+      document.documentElement.dataset.theme = theme
+      dispatch(setTheme(theme))
 
       if (isAxiosError(error)) {
         return rejectWithValue(axiosErrorHandler(error))
