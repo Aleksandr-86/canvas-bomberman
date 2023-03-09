@@ -1,25 +1,27 @@
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { getTheme } from '../../store/selectors'
-import { setTheme } from '../../store/themeSlice'
+import { getTheme, getUser } from '../../store/selectors'
+import { updateCurrentTheme } from '../../store/themeActions'
+import { Theme } from '../../store/themeSlice'
 import styles from './themeSwitcher.module.css'
 
 export const ThemeSwitcher: React.FC = () => {
   const dispatch = useAppDispatch()
   const theme = useAppSelector(getTheme)
+  const {
+    user: { id },
+  } = useAppSelector(getUser)
 
   return (
     <label className={styles.switch}>
       <input
         type="checkbox"
-        checked={theme === 'dark'}
+        checked={theme === Theme.DARK}
         onChange={() => {
-          if (theme === `light`) {
-            document.documentElement.dataset.theme = `dark`
-            dispatch(setTheme(`dark`))
+          if (theme === Theme.LIGHT) {
+            dispatch(updateCurrentTheme({ id, theme: Theme.DARK }))
           } else {
-            document.documentElement.dataset.theme = `light`
-            dispatch(setTheme(`light`))
+            dispatch(updateCurrentTheme({ id, theme: Theme.LIGHT }))
           }
         }}
       />
