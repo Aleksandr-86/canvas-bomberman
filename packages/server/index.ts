@@ -1,4 +1,5 @@
 import { cspMiddleware } from './middlewares/cspMiddleware'
+import serialize from 'serialize-javascript'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
@@ -109,8 +110,9 @@ async function startServer() {
       const store = await prepareStore(url)
       const appHtml = await render(url, store)
 
-      const appStore = `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
-        store.getState()
+      const appStore = `<script>window.__PRELOADED_STATE__ = ${serialize(
+        store.getState(),
+        { isJSON: true }
       )}</script>`
 
       const html = template
