@@ -2,11 +2,25 @@ import { routes } from '../routes'
 import { matchPath } from 'react-router-dom'
 import { createStore, RootState } from '.'
 import { AsyncThunkAction } from '@reduxjs/toolkit'
+import { UserDTO } from '../typings/api'
+import { transformUser } from '../features/utils/apiTransformers'
 
-export async function prepareStore(url: string) {
+export async function prepareStore(url: string, user?: UserDTO) {
   const dataRequirements: (Promise<unknown> | void)[] = []
 
-  const store = createStore(undefined)
+  let prst = undefined
+  if (user) {
+    prst = {
+      user: {
+        error: null,
+        isAuth: true,
+        isLoading: false,
+        user: transformUser(user),
+      },
+    }
+  }
+
+  const store = createStore(prst)
 
   routes.some(route => {
     const { initStoreWithServer } = route
