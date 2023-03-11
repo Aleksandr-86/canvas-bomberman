@@ -1,4 +1,5 @@
 import type { RequestHandler } from 'http-proxy-middleware'
+import serialize from 'serialize-javascript'
 import type { ViteDevServer } from 'vite'
 import { promises as fs } from 'fs'
 import * as path from 'path'
@@ -74,8 +75,9 @@ export const ssrMiddleware = ({
       const store = await prepareStore(url, res.locals.user)
       const appHtml = await render(url, store)
 
-      const appStore = `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
-        store.getState()
+      const appStore = `<script>window.__PRELOADED_STATE__ = ${serialize(
+        store.getState(),
+        { isJSON: true }
       )}</script>`
 
       const html = template
