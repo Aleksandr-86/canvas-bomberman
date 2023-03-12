@@ -5,7 +5,7 @@ export const axiosErrorHandler = (error: AxiosError<APIError>) => {
   const { request, response } = error
 
   if (response) {
-    return response.data.reason
+    return { reason: response.data.reason, status: response.status }
   } else if (request) {
     return 'server time out'
   } else {
