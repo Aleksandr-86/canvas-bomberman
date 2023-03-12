@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
@@ -10,11 +10,7 @@ import yandexLogo from '../../assets/images/yaLogo.png'
 
 import baseStyles from '../../app/app.module.css'
 import styles from './landing.module.css'
-import {
-  onOauthRequest,
-  REDIRECT_URI,
-} from '../../features/oauth/onOauthRequest'
-import { useOauth } from '../../hooks/useOauth'
+import { onOauthRequest } from '../../features/oauth/onOauthRequest'
 import { ThemeSwitcher } from '../../components/themeSwitcher/themeSwitcher'
 
 // Содержание для авторизованных пользователей
@@ -72,11 +68,6 @@ const ContentNotLogged = () => (
 )
 
 export const Landing = () => {
-  const [searchParams] = useSearchParams()
-  const code = searchParams.get(`code`)
-
-  useOauth(code, REDIRECT_URI)
-
   const { isAuth } = useAppSelector(getUser)
 
   const navBar = isAuth ? <NavigationBar /> : null
