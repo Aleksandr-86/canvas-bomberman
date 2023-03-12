@@ -5,11 +5,11 @@ import type { ViteDevServer } from 'vite'
 
 dotenv.config()
 
-import express, { Request, Response } from 'express'
+import express from 'express'
 import { promises as fs } from 'fs'
 import * as path from 'path'
 import { sequelize } from './db'
-import { UserTheme } from './models/userTheme'
+import { themeRouter } from './routes/themeRoutes'
 
 const isDev = () => process.env.NODE_ENV === 'development'
 
@@ -20,6 +20,7 @@ async function startServer() {
 
   app.use(express.json())
   app.use(cors())
+  app.use(themeRouter)
 
   let vite: ViteDevServer | undefined
 
@@ -76,53 +77,6 @@ async function startServer() {
   const styleSheets = getStyleSheets()
 
   await sequelize.sync()
-
-  app.get(`/api/theme/:id`, async (req: Request, res: Response) => {
-    const user = await UserTheme.findOne({
-      where: {
-        user_id: req.params.id,
-      },
-    })
-
-    if (user) {
-      res.status(200).json(user.value)
-    } else {
-      res.status(500).json({ error: `An error occurred while receiving` })
-    }
-  })
-
-  app.post(`/api/theme`, async (req: Request, res: Response) => {
-    const user = await UserTheme.create(req.body)
-
-    if (user.dataValues.value) {
-      res.status(200).json(user.dataValues.value)
-    } else {
-      res.status(500).json({ error: `An error occurred while sending` })
-    }
-  })
-
-  app.put(`/api/theme`, async (req: Request, res: Response) => {
-    const updatedUser = await UserTheme.update(
-      { value: req.body.value },
-      {
-        where: {
-          user_id: req.body.user_id,
-        },
-      }
-    ).then(() =>
-      UserTheme.findOne({
-        where: {
-          user_id: req.body.user_id,
-        },
-      })
-    )
-
-    if (updatedUser) {
-      res.status(200).json(updatedUser.dataValues.value)
-    } else {
-      res.status(500).json({ error: `An error occurred while updating` })
-    }
-  })
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
