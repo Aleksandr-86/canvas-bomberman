@@ -3,8 +3,7 @@ import UserAPI from '../api/user'
 import AuthAPI from '../api/auth'
 import { AxiosError, isAxiosError } from 'axios'
 import { axiosErrorHandler } from '../features/utils/axiosErrorHandler'
-import ThemeAPI from '../api/theme'
-import { setTheme, Theme } from './themeSlice'
+import { getCurrentTheme } from './themeActions'
 
 type UserDataChangePayload = {
   first_name: string
@@ -97,6 +96,10 @@ export const login = createAsyncThunk(
     try {
       await AuthAPI.login(data)
       await dispatch(me())
+        .unwrap()
+        .then(async ({ id }) => {
+          dispatch(getCurrentTheme(id))
+        })
     } catch (error: unknown | AxiosError) {
       if (isAxiosError(error)) {
         return rejectWithValue(axiosErrorHandler(error))
@@ -113,6 +116,10 @@ export const registerUser = createAsyncThunk(
     try {
       await AuthAPI.register(data)
       await dispatch(me())
+        .unwrap()
+        .then(async ({ id }) => {
+          dispatch(getCurrentTheme(id))
+        })
     } catch (error: unknown | AxiosError) {
       if (isAxiosError(error)) {
         return rejectWithValue(axiosErrorHandler(error))
@@ -129,27 +136,9 @@ export const me = createAsyncThunk(
     try {
       const response = await AuthAPI.me()
 
-      const { data: theme } = await ThemeAPI.getCurrentTheme(response.id).catch(
-        () => {
-          const localTheme = localStorage.getItem(`theme`) as Theme | null
-          return ThemeAPI.sendCurrentTheme({
-            id: response.id,
-            theme: localTheme || Theme.LIGHT,
-          })
-        }
-      )
-
-      localStorage.setItem(`theme`, theme)
-      document.documentElement.dataset.theme = theme
-      dispatch(setTheme(theme))
-
       return response
     } catch (error: unknown | AxiosError) {
       dispatch(logout())
-
-      const theme = localStorage.getItem(`theme`) as Theme
-      document.documentElement.dataset.theme = theme
-      dispatch(setTheme(theme))
 
       if (isAxiosError(error)) {
         return rejectWithValue(axiosErrorHandler(error))
@@ -182,7 +171,7 @@ export const oauth = createAsyncThunk(
   async (data: OAuthPayload, { dispatch, rejectWithValue }) => {
     try {
       await AuthAPI.oauth(data)
-      dispatch(me())
+      // dispatch(me())
     } catch (error: unknown | AxiosError) {
       if (isAxiosError(error)) {
         return rejectWithValue(axiosErrorHandler(error))
