@@ -1,47 +1,22 @@
-import { useEffect, useRef } from 'react'
-import { Game } from '../../features/game/lib'
+import { useRef } from 'react'
+import { useGame } from '../../features/game'
 import { GameOverlay } from '../gameOverlay/gameOverlay'
 import { useFullScreen } from '../../hooks/useFullScreen'
-import styles from './gameDisplay.module.css'
-import { bombermanScene } from '../../features/game/bombermanScene'
 import { GameScore } from '../gameScore'
+import styles from './gameDisplay.module.css'
 
 export const GameDisplay: React.FC = () => {
-  const gameRef = useRef<null | HTMLCanvasElement>(null)
   const canvasWrapperRef = useRef<null | HTMLDivElement>(null)
-  const shouldRunSecondTime = useRef(true)
-
   useFullScreen(canvasWrapperRef)
 
-  useEffect(() => {
-    const canvas = gameRef.current
-
-    if (!canvas || !shouldRunSecondTime.current) {
-      return
-    }
-
-    shouldRunSecondTime.current = false
-
-    const game = new Game({
-      height: 640,
-      width: 1280,
-      backgroundColor: '#64b0ff',
-      root: canvas,
-      scene: bombermanScene,
-    })
-    game.start()
-
-    return () => {
-      game.stop()
-    }
-  }, [])
+  const { canvasRef, startGame } = useGame()
 
   return (
     <div className={styles.gameDisplay}>
       <div className={styles.gameDisplayCanvasWrapper} ref={canvasWrapperRef}>
         <GameScore />
-        <canvas ref={gameRef} width={1280} height={640} />
-        <GameOverlay onReloadGame={() => undefined} />
+        <canvas ref={canvasRef} width={1280} height={640} />
+        <GameOverlay startGame={startGame} />
       </div>
     </div>
   )

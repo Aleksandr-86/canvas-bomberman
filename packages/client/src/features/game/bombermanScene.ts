@@ -133,7 +133,7 @@ export const bombermanScene: SceneConfig = {
 
     gameStarted()
   },
-  update: (scene, frame, kbd) => {
+  update: (scene, frame, kbd, endGame) => {
     // player certainly defined in create()
     const playerRef = state.player.ref!
 
@@ -141,6 +141,7 @@ export const bombermanScene: SceneConfig = {
 
     if (state.player.isDead) {
       scene.anims.run(playerRef, 'die', frame.delta, true)
+      delay(500).then(() => endGame())
     } else {
       if (kbd.left) {
         state.player.direction.x -= 1

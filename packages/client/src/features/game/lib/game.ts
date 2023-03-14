@@ -15,15 +15,21 @@ import { gameEnded } from '../gameActions'
 export type SceneConfig = {
   preload: (load: Loader) => void
   create: (scene: SceneContext) => void
-  update: (scene: SceneContext, frame: FrameData, kbd: Keyboard) => void
+  update: (
+    scene: SceneContext,
+    frame: FrameData,
+    kbd: Keyboard,
+    endGame: () => void
+  ) => void
 }
 
-interface GameConfig {
+export interface GameConfig {
   width: number
   height: number
   root: HTMLCanvasElement
   scene: SceneConfig
   backgroundColor: string
+  onGameEnd: () => void
 }
 
 export class Game {
@@ -36,13 +42,22 @@ export class Game {
   private ticker = new Ticker()
 
   private scene: SceneConfig
+  private onGameEnd: () => void
 
   private root: HTMLCanvasElement
   private ctx: CanvasRenderingContext2D
   public started = false
 
-  constructor({ root, width, height, backgroundColor, scene }: GameConfig) {
+  constructor({
+    root,
+    width,
+    height,
+    backgroundColor,
+    scene,
+    onGameEnd,
+  }: GameConfig) {
     this.root = root
+    this.onGameEnd = onGameEnd
     const ctx = root.getContext('2d')
 
     if (!ctx) {
@@ -52,7 +67,9 @@ export class Game {
     this.ctx = ctx
     this.setCanvasProps(width, height, backgroundColor)
     this.scene = scene
-    this.sceneContext = new SceneContext(new Point(width, height))
+    this.sceneContext = new SceneContext(new Point(width, height), () =>
+      this.stop()
+    )
     this.loader = new Loader(this.sceneContext)
   }
 
@@ -95,7 +112,12 @@ export class Game {
     this.scene.create(this.sceneContext)
 
     this.ticker.add(frameData => {
-      this.scene.update(this.sceneContext, frameData, this.kbd)
+      this.scene.update(
+        this.sceneContext,
+        frameData,
+        this.kbd,
+        this.stop.bind(this)
+      )
       this.sceneContext.render(this.ctx)
     })
 
@@ -106,6 +128,7 @@ export class Game {
   stop() {
     gameEnded()
     this.ticker.stop()
+    this.onGameEnd()
     this.started = false
   }
 }
