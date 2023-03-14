@@ -79,9 +79,7 @@ const state: GameState = {
   },
 }
 
-const controller = new EnemyController(({ frame }: Sprite) => {
-  return !frame.startsWith('wall')
-})
+const controller = new EnemyController()
 
 let lastBombPlacementTime = performance.now()
 const collidableCells = new SpriteList()
@@ -127,13 +125,9 @@ export const bombermanScene: SceneConfig = {
     makeDoor(scene, door)
     state.field.softWalls.add(makeSoftWall(scene, door))
 
-    // const a = scene.displayList.filter(v => {
-    //   return !v.frame.startsWith('wall')
-    // })
-    const a = scene.displayList.filter(v => v.frame === 'wallSoft')
-
-    // controller.addField(a)
-    controller.registerSoftWalls(a)
+    // Получение массива кирпичной кладки
+    const softWalls = scene.displayList.filter(v => v.frame === 'wallSoft')
+    controller.registerSoftWalls(softWalls)
     controller.addEnemies(state.field.enemies.toArray(), PLAYER_VELOCITY)
 
     gameStarted()
@@ -177,11 +171,14 @@ export const bombermanScene: SceneConfig = {
         frame.now - lastBombPlacementTime > BOMB_PLACEMENT_COOLDOWN
       if (kbd.space && belowMaxBombs && cooldown) {
         const bombCell = nearestCell(playerRef).copy()
+        controller.registerBomb(bombCell)
 
         state.field.bombs.unshift(makeBomb(scene, bombCell))
         lastBombPlacementTime = frame.now
 
         delay(BOMB_FUSE).then(() => {
+          controller.unregisterBomb(bombCell)
+
           state.field.explosions.add(
             ...resolveExplosion(bombCell, state.player.bombRange).map(
               ({ point, orientation }) => {

@@ -51,6 +51,8 @@ export const BASIC_ENEMY_VELOCITY = PLAYER_VELOCITY
 /* --- Chance --- */
 export const BUFF_CHANCE = 8
 export const WALL_GENERATION_CHANCE = 30
+// Шанс изменения направления движения противников
+export const CHANGE_DIR_POSSIBILITY_CHANCE = 20
 
 /* --- Stats --- */
 export const EXPLOSION_RADIUS = 1

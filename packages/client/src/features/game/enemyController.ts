@@ -1,4 +1,10 @@
-import { GRID_WIDTH, GRID_HEIGHT, CELL_WIDTH } from './const'
+import { isAxiosError } from 'axios'
+import {
+  GRID_WIDTH,
+  GRID_HEIGHT,
+  CELL_WIDTH,
+  CHANGE_DIR_POSSIBILITY_CHANCE,
+} from './const'
 import { type Sprite } from './lib'
 import { Point, randomInRange } from './utils'
 
@@ -15,14 +21,6 @@ enum MovementState {
 }
 
 type Criteria = (s: Sprite) => boolean
-
-/**
- * Возвращает логическое "ИСТИНА" если
- * переданный в функцию аргумент
- * (представляющий собой координату x или y)
- * принадлежит к нечётному ряду или колонке.
- */
-const isOdd = (num: number) => (num / CELL_WIDTH) % 2 === 0
 
 /**
  * Возвращает логическое значение "ИСТИНА" в случае
@@ -44,10 +42,11 @@ export class EnemyController {
   private field: Sprite[] = []
   private walls: (boolean | null)[][] = []
 
-  constructor(private criteria: Criteria) {
+  constructor() {
     this._registerHardWalls()
   }
 
+  // Регистрация границ уровня и колонн
   private _registerHardWalls() {
     // Инициализация пустого двухмерного массива
     for (let x = 0; x < GRID_WIDTH; x++) {
@@ -94,8 +93,20 @@ export class EnemyController {
     }
   }
 
-  public addField(field: Sprite[]) {
-    this.field = field
+  // Регистрация смонтированной бомбы
+  public registerBomb(bombCell: Point) {
+    let { x, y } = bombCell
+    x /= CELL_WIDTH
+    y /= CELL_WIDTH
+    this.walls[x][y] = true
+  }
+
+  // Отмена регистрации смонтированной бомбы
+  public unregisterBomb(bombCell: Point) {
+    let { x, y } = bombCell
+    x /= CELL_WIDTH
+    y /= CELL_WIDTH
+    this.walls[x][y] = false
   }
 
   public addEnemies(sprites: Sprite[], velocity: number) {
@@ -109,16 +120,31 @@ export class EnemyController {
     }
   }
 
+  private possibleDirections(enemyX: number, enemyY: number) {
+    const possibleDirections: string[] = []
+
+    if (!this.walls[enemyX][enemyY - 1]) {
+      possibleDirections.push('вверх')
+    }
+    if (!this.walls[enemyX + 1][enemyY]) {
+      possibleDirections.push('вправо')
+    }
+    if (!this.walls[enemyX][enemyY + 1]) {
+      possibleDirections.push('вниз')
+    }
+    if (!this.walls[enemyX - 1][enemyY]) {
+      possibleDirections.push('влево')
+    }
+
+    return possibleDirections
+  }
+
   /**
-   * Возвращает экземпляр класса Sprite,
-   * олицетворяющий собой клетку к которой
-   * двинется противник.
+   * Возвращает клетку к которой двинется противник.
    */
   private chooseNextPoint(enemy: Sprite) {
-    // Массив пригодных к перемещению клеток
-    const suitable: Point[] = []
-    // Целевая клетка к которой двинется противник
     let target = new Point(enemy.x, enemy.y)
+    enemy.mileAge++
 
     // Позиция противника в двумерном массиве
     const enemyX = enemy.x / CELL_WIDTH
@@ -126,21 +152,40 @@ export class EnemyController {
 
     // Определение первоначального направления движения противника
     if (enemy.movementDir === '') {
-      const targetDir: string[] = []
+      const possDirs = this.possibleDirections(enemyX, enemyY)
+      enemy.movementDir = possDirs[randomInRange(0, possDirs.length - 1)]
+    }
 
-      if (!this.walls[enemyX][enemyY - 1]) {
-        targetDir.push('вверх')
-      } else if (!this.walls[enemyX + 1][enemyY]) {
-        targetDir.push('вправо')
-      } else if (!this.walls[enemyX][enemyY + 1]) {
-        targetDir.push('вниз')
-      } else if (!this.walls[enemyX - 1][enemyY]) {
-        targetDir.push('влево')
+    // Определение возможности изменения направления
+    if (!enemy.changeDirPossibility && enemy.mileAge > 5) {
+      const randomNum = randomInRange(1, 100)
+      if (randomNum <= CHANGE_DIR_POSSIBILITY_CHANCE) {
+        enemy.changeDirPossibility = true
       }
+    }
 
-      const dir = targetDir[randomInRange(0, targetDir.length - 1)]
-      enemy.movementDir = dir
-      // enemy.movementDir = 'влево'
+    if (enemy.changeDirPossibility) {
+      const dirs = this.possibleDirections(enemyX, enemyY)
+
+      const filteredDirs = dirs.filter(elem => elem !== enemy.movementDir)
+
+      if (filteredDirs.length > 0) {
+        const dir = filteredDirs[randomInRange(0, filteredDirs.length - 1)]
+
+        if (dir === 'вверх') {
+          target = Point.from(enemy).add(new Point(0, -CELL_WIDTH))
+        } else if (dir === 'вправо') {
+          target = Point.from(enemy).add(new Point(CELL_WIDTH, 0))
+        } else if (dir === 'вниз') {
+          target = Point.from(enemy).add(new Point(0, CELL_WIDTH))
+        } else if (dir === 'влево') {
+          target = Point.from(enemy).add(new Point(-CELL_WIDTH, 0))
+        }
+
+        enemy.mileAge = 0
+        enemy.changeDirPossibility = false
+        enemy.movementDir = dir
+      }
     }
 
     // Движение вверх
@@ -175,8 +220,6 @@ export class EnemyController {
         enemy.movementDir = 'вправо'
       }
     }
-
-    // target = Array.from(suitable)[randomInRange(0, suitable.length - 1)]
 
     return target
   }
