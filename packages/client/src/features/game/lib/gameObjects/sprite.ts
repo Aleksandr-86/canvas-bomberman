@@ -16,6 +16,10 @@ export class Sprite extends BaseGameObject {
   public shouldDestroy = false
   public animations = new Map<string, Animation>()
 
+  public movementDir = '' // Направление движения противника
+  public deadEnd = false // Достижение тупика
+  public changeDir = false // Перспектива смены направления движения
+
   constructor(
     public x: number,
     public y: number,

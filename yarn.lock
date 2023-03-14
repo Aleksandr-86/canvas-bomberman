@@ -4020,7 +4020,7 @@
     "jest-message-util" "^28.1.3"
     "jest-util" "^28.1.3"
 
-"express-csp-header@^5.1.0":
+"express-csp-header@5.1.0":
   "integrity" "sha512-+5pXxmnwklwbJuiMZSbCYwihNttSOqKsp5WhLUaO8cpuRE4CLOBFJEpoanDbbr+S4+FF/TOmHd7sVDgHSzVxWg=="
   "resolved" "https://registry.npmjs.org/express-csp-header/-/express-csp-header-5.1.0.tgz"
   "version" "5.1.0"

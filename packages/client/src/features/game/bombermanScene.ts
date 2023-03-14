@@ -79,9 +79,10 @@ const state: GameState = {
   },
 }
 
-// const controller = new EnemyController(({ frame }: Sprite) => {
-//   return !frame.startsWith('wall')
-// })
+const controller = new EnemyController(({ frame }: Sprite) => {
+  return !frame.startsWith('wall')
+})
+
 let lastBombPlacementTime = performance.now()
 const collidableCells = new SpriteList()
 
@@ -107,7 +108,6 @@ export const bombermanScene: SceneConfig = {
     )
 
     state.player.ref = makePlayer(scene, PLAYER_STARTING_POSITION)
-
     addSoftWalls(scene, state, SOFT_WALL_SPAWN_OFFSET)
     spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET)
 
@@ -130,9 +130,11 @@ export const bombermanScene: SceneConfig = {
     // const a = scene.displayList.filter(v => {
     //   return !v.frame.startsWith('wall')
     // })
+    const a = scene.displayList.filter(v => v.frame === 'wallSoft')
 
     // controller.addField(a)
-    // controller.addEnemies(state.field.enemies.toArray(), PLAYER_VELOCITY)
+    controller.registerSoftWalls(a)
+    controller.addEnemies(state.field.enemies.toArray(), PLAYER_VELOCITY)
 
     gameStarted()
   },
@@ -303,7 +305,7 @@ export const bombermanScene: SceneConfig = {
       }
     }
 
-    // controller.run(frame.delta)
+    controller.run(frame.delta)
   },
 }
 

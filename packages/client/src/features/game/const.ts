@@ -54,7 +54,8 @@ export const WALL_GENERATION_CHANCE = 30
 
 /* --- Stats --- */
 export const EXPLOSION_RADIUS = 1
-export const MAX_ENEMY_COUNT = 7
+// export const MAX_ENEMY_COUNT = 7
+export const MAX_ENEMY_COUNT = 1
 
 export const Points = {
   Enemy: {
