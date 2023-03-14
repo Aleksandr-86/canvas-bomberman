@@ -4,6 +4,9 @@ import {
   GRID_HEIGHT,
   CELL_WIDTH,
   CHANGE_DIR_POSSIBILITY_CHANCE,
+  U_TURN_CHANCE,
+  LOWER_BOUND_MILE_AGE,
+  UPPER_BOUND_MILE_AGE,
 } from './const'
 import { type Sprite } from './lib'
 import { Point, randomInRange } from './utils'
@@ -43,11 +46,11 @@ export class EnemyController {
   private walls: (boolean | null)[][] = []
 
   constructor() {
-    this._registerHardWalls()
+    this.registerHardWalls()
   }
 
   // Регистрация границ уровня и колонн
-  private _registerHardWalls() {
+  private registerHardWalls() {
     // Инициализация пустого двухмерного массива
     for (let x = 0; x < GRID_WIDTH; x++) {
       const row = []
@@ -144,30 +147,48 @@ export class EnemyController {
    */
   private chooseNextPoint(enemy: Sprite) {
     let target = new Point(enemy.x, enemy.y)
-    enemy.mileAge++
+    enemy.totalMileAge++
 
     // Позиция противника в двумерном массиве
     const enemyX = enemy.x / CELL_WIDTH
     const enemyY = enemy.y / CELL_WIDTH
 
-    // Определение первоначального направления движения противника
+    /**
+     * Определение первоначального направления движения противника,
+     * а также случайного значения randomMileAge
+     */
     if (enemy.movementDir === '') {
       const possDirs = this.possibleDirections(enemyX, enemyY)
       enemy.movementDir = possDirs[randomInRange(0, possDirs.length - 1)]
+      enemy.randomMileAge = randomInRange(
+        LOWER_BOUND_MILE_AGE,
+        UPPER_BOUND_MILE_AGE
+      )
     }
 
     // Определение возможности изменения направления
-    if (!enemy.changeDirPossibility && enemy.mileAge > 5) {
-      const randomNum = randomInRange(1, 100)
-      if (randomNum <= CHANGE_DIR_POSSIBILITY_CHANCE) {
+    if (
+      !enemy.changeDirPossibility &&
+      enemy.totalMileAge > enemy.randomMileAge
+    ) {
+      if (randomInRange(1, 100) <= CHANGE_DIR_POSSIBILITY_CHANCE) {
         enemy.changeDirPossibility = true
       }
     }
 
     if (enemy.changeDirPossibility) {
       const dirs = this.possibleDirections(enemyX, enemyY)
+      let filteredDirs: string[] = []
 
-      const filteredDirs = dirs.filter(elem => elem !== enemy.movementDir)
+      if (randomInRange(1, 100) <= U_TURN_CHANCE) {
+        filteredDirs = dirs.filter(d => d !== enemy.movementDir)
+      } else {
+        if (enemy.movementDir === 'вверх' || enemy.movementDir === 'вниз') {
+          filteredDirs = dirs.filter(d => d !== 'вверх' && d !== 'вниз')
+        } else {
+          filteredDirs = dirs.filter(d => d !== 'вправо' && d !== 'влево')
+        }
+      }
 
       if (filteredDirs.length > 0) {
         const dir = filteredDirs[randomInRange(0, filteredDirs.length - 1)]
@@ -182,7 +203,11 @@ export class EnemyController {
           target = Point.from(enemy).add(new Point(-CELL_WIDTH, 0))
         }
 
-        enemy.mileAge = 0
+        enemy.totalMileAge = 0
+        enemy.randomMileAge = randomInRange(
+          LOWER_BOUND_MILE_AGE,
+          UPPER_BOUND_MILE_AGE
+        )
         enemy.changeDirPossibility = false
         enemy.movementDir = dir
       }

@@ -51,13 +51,29 @@ export const BASIC_ENEMY_VELOCITY = PLAYER_VELOCITY
 /* --- Chance --- */
 export const BUFF_CHANCE = 8
 export const WALL_GENERATION_CHANCE = 30
-// Шанс изменения направления движения противников
-export const CHANGE_DIR_POSSIBILITY_CHANCE = 20
+
+/**
+ * Ключевые параметры выбора случайного значения,
+ * определяющего количество клеток которые должен пройти
+ * противник, прежде чем его направление движения
+ * может измениться.
+ */
+// Нижний порог
+export const LOWER_BOUND_MILE_AGE = 2
+// Верхний порог
+export const UPPER_BOUND_MILE_AGE = 20
+
+/**
+ * Шанс изменения направления движения противника
+ * с горизонтального на вертикальное (и наоборот).
+ */
+export const CHANGE_DIR_POSSIBILITY_CHANCE = 55
+export const U_TURN_CHANCE = 15 // Шанс разворота противника
 
 /* --- Stats --- */
 export const EXPLOSION_RADIUS = 1
-// export const MAX_ENEMY_COUNT = 7
-export const MAX_ENEMY_COUNT = 1
+export const MAX_ENEMY_COUNT = 7
+// export const MAX_ENEMY_COUNT = 1
 
 export const Points = {
   Enemy: {
