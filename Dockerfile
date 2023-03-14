@@ -1,8 +1,8 @@
 ARG BUILD_IMAGE="node:16-alpine3.17"
 ARG SERVER_IMAGE=$BUILD_IMAGE
-ARG SERVER_PORT=3021
+ARG SERVER_PORT=3001
 ARG CLIENT_IMAGE="nginx:1.23.3-alpine"
-ARG CLIENT_PORT=3022
+ARG CLIENT_PORT=3000
 
 FROM $BUILD_IMAGE AS builder
 
@@ -10,9 +10,6 @@ WORKDIR /build
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
-
-RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn install --frozen-lockfile
-
 
 COPY . .
 
@@ -31,9 +28,10 @@ COPY --from=builder /build/yarn.lock /app/yarn.lock
 RUN yarn install --production=true
 
 # Link client
-COPY --from=builder /build/packages/client/ /app/node_modules/client
+COPY --from=builder /build/packages/client /app/node_modules/client
 
 EXPOSE $SERVER_PORT
+ENV ENV_NODE=production
 ENTRYPOINT ["node", "/app/index.js"]
 
 # Client image
