@@ -23,8 +23,8 @@ export const GameDisplay: React.FC = () => {
     shouldRunSecondTime.current = false
 
     const game = new Game({
-      height: 1040,
-      width: 1520,
+      height: 640,
+      width: 1280,
       backgroundColor: '#64b0ff',
       root: canvas,
       scene: bombermanScene,

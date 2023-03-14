@@ -40,7 +40,7 @@ const almostEqual = (p1: Point, p2: Point) => {
  */
 export class EnemyController {
   private state: EnemyState[] = []
-  private walls: (boolean | null)[][] = []
+  private obstacles: (boolean | null)[][] = []
 
   constructor() {
     this.registerHardWalls()
@@ -52,33 +52,33 @@ export class EnemyController {
     for (let x = 0; x < GRID_WIDTH; x++) {
       const row = []
       for (let y = 0; y < GRID_HEIGHT; y++) row.push(null)
-      this.walls.push(row)
+      this.obstacles.push(row)
     }
 
     // Регистрация верхней границы уровня
     for (let x = 0; x < GRID_WIDTH; x++) {
-      this.walls[x][0] = true
+      this.obstacles[x][0] = true
     }
 
     // Регистрация правой границы уровня
     for (let y = 1; y < GRID_HEIGHT - 1; y++) {
-      this.walls[GRID_WIDTH - 1][y] = true
+      this.obstacles[GRID_WIDTH - 1][y] = true
     }
 
     // Регистрация нижней границы уровня
     for (let x = 0; x < GRID_WIDTH; x++) {
-      this.walls[x][GRID_HEIGHT - 1] = true
+      this.obstacles[x][GRID_HEIGHT - 1] = true
     }
 
     // Регистрация левой границы уровня
     for (let y = 1; y < GRID_HEIGHT - 1; y++) {
-      this.walls[0][y] = true
+      this.obstacles[0][y] = true
     }
 
     // Регистрация колонн
     for (let y = 2; y <= GRID_HEIGHT; y += 2) {
       for (let x = 2; x <= GRID_WIDTH; x += 2) {
-        this.walls[x][y] = true
+        this.obstacles[x][y] = true
       }
     }
   }
@@ -89,24 +89,24 @@ export class EnemyController {
       let { x, y } = softWall
       x /= CELL_WIDTH
       y /= CELL_WIDTH
-      this.walls[x][y] = true
+      this.obstacles[x][y] = true
     }
   }
 
-  // Регистрация смонтированной бомбы
-  public registerBomb(bombCell: Point) {
+  // Регистрация установленной бомбы
+  public registerObstacle(bombCell: Point) {
     let { x, y } = bombCell
     x /= CELL_WIDTH
     y /= CELL_WIDTH
-    this.walls[x][y] = true
+    this.obstacles[x][y] = true
   }
 
-  // Отмена регистрации смонтированной бомбы
-  public unregisterBomb(bombCell: Point) {
+  // Отмена регистрации установленной бомбы
+  public unregisterObstacle(bombCell: Point) {
     let { x, y } = bombCell
     x /= CELL_WIDTH
     y /= CELL_WIDTH
-    this.walls[x][y] = false
+    this.obstacles[x][y] = false
   }
 
   public addEnemies(sprites: Sprite[], velocity: number) {
@@ -120,19 +120,20 @@ export class EnemyController {
     }
   }
 
+  // Поиск возможных направлений движения противника
   private possibleDirections(enemyX: number, enemyY: number) {
     const possibleDirections: string[] = []
 
-    if (!this.walls[enemyX][enemyY - 1]) {
+    if (!this.obstacles[enemyX][enemyY - 1]) {
       possibleDirections.push('вверх')
     }
-    if (!this.walls[enemyX + 1][enemyY]) {
+    if (!this.obstacles[enemyX + 1][enemyY]) {
       possibleDirections.push('вправо')
     }
-    if (!this.walls[enemyX][enemyY + 1]) {
+    if (!this.obstacles[enemyX][enemyY + 1]) {
       possibleDirections.push('вниз')
     }
-    if (!this.walls[enemyX - 1][enemyY]) {
+    if (!this.obstacles[enemyX - 1][enemyY]) {
       possibleDirections.push('влево')
     }
 
@@ -212,7 +213,7 @@ export class EnemyController {
 
     // Движение вверх
     if (enemy.movementDir === 'вверх') {
-      if (!this.walls[enemyX][enemyY - 1]) {
+      if (!this.obstacles[enemyX][enemyY - 1]) {
         target = Point.from(enemy).add(new Point(0, -CELL_WIDTH))
       } else {
         enemy.movementDir = 'вниз'
@@ -220,7 +221,7 @@ export class EnemyController {
     }
     // Движение вправо
     else if (enemy.movementDir === 'вправо') {
-      if (!this.walls[enemyX + 1][enemyY]) {
+      if (!this.obstacles[enemyX + 1][enemyY]) {
         target = Point.from(enemy).add(new Point(CELL_WIDTH, 0))
       } else {
         enemy.movementDir = 'влево'
@@ -228,7 +229,7 @@ export class EnemyController {
     }
     // Движение вниз
     else if (enemy.movementDir === 'вниз') {
-      if (!this.walls[enemyX][enemyY + 1]) {
+      if (!this.obstacles[enemyX][enemyY + 1]) {
         target = Point.from(enemy).add(new Point(0, CELL_WIDTH))
       } else {
         enemy.movementDir = 'вверх'
@@ -236,7 +237,7 @@ export class EnemyController {
     }
     // Движение влево
     else if (enemy.movementDir === 'влево') {
-      if (!this.walls[enemyX - 1][enemyY]) {
+      if (!this.obstacles[enemyX - 1][enemyY]) {
         target = Point.from(enemy).add(new Point(-CELL_WIDTH, 0))
       } else {
         enemy.movementDir = 'вправо'

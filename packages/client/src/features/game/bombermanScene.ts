@@ -128,6 +128,7 @@ export const bombermanScene: SceneConfig = {
     // Получение массива кирпичной кладки
     const softWalls = scene.displayList.filter(v => v.frame === 'wallSoft')
     controller.registerSoftWalls(softWalls)
+
     controller.addEnemies(state.field.enemies.toArray(), PLAYER_VELOCITY)
 
     gameStarted()
@@ -171,13 +172,13 @@ export const bombermanScene: SceneConfig = {
         frame.now - lastBombPlacementTime > BOMB_PLACEMENT_COOLDOWN
       if (kbd.space && belowMaxBombs && cooldown) {
         const bombCell = nearestCell(playerRef).copy()
-        controller.registerBomb(bombCell)
+        controller.registerObstacle(bombCell)
 
         state.field.bombs.unshift(makeBomb(scene, bombCell))
         lastBombPlacementTime = frame.now
 
         delay(BOMB_FUSE).then(() => {
-          controller.unregisterBomb(bombCell)
+          controller.unregisterObstacle(bombCell)
 
           state.field.explosions.add(
             ...resolveExplosion(bombCell, state.player.bombRange).map(
@@ -192,6 +193,13 @@ export const bombermanScene: SceneConfig = {
           delay(EXPLOSION_DURATION).then(() => {
             for (const wall of state.field.softWalls) {
               const wallWithExplosion = state.field.explosions.byPoint(wall)
+
+              if (wallWithExplosion) {
+                controller.unregisterObstacle(
+                  new Point(wallWithExplosion.x, wallWithExplosion.y)
+                )
+              }
+
               if (wallWithExplosion && withChance(BUFF_CHANCE)) {
                 state.field.buffs.add(makeBuff(scene, wallWithExplosion))
                 break
