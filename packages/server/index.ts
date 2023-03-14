@@ -7,7 +7,9 @@ import { cspMiddleware } from './middlewares/cspMiddleware'
 import path from 'node:path'
 import fs from 'node:fs/promises'
 import { getStylesheets } from './helpers/getStylesheets'
-import { postgressConnect } from 'db'
+import { postgressConnect } from './db'
+import { User } from './models'
+import { routes } from './routes'
 
 dotenv.config()
 
@@ -48,9 +50,7 @@ async function createServer(isProd = process.env.NODE_ENV === 'production') {
     app.use(vite.middlewares)
   }
 
-  app.get('/api', (_, res) => {
-    res.json('👋 Привет от сервера :)')
-  })
+  app.use('/api', routes)
 
   app.use('*', async (req: any, res, next) => {
     const url = req.originalUrl
