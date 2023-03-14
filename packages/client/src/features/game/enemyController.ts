@@ -23,8 +23,6 @@ enum MovementState {
   Idle,
 }
 
-type Criteria = (s: Sprite) => boolean
-
 /**
  * Возвращает логическое значение "ИСТИНА" в случае
  * соответствия векторов Point между собой с допуском
@@ -42,7 +40,6 @@ const almostEqual = (p1: Point, p2: Point) => {
  */
 export class EnemyController {
   private state: EnemyState[] = []
-  private field: Sprite[] = []
   private walls: (boolean | null)[][] = []
 
   constructor() {
@@ -257,10 +254,6 @@ export class EnemyController {
         if (!candidate) {
           continue
         }
-
-        // const dest = Point.from(candidate)
-        // dest.x = 0
-        // entry.destination = dest
 
         entry.destination = Point.from(candidate)
 
