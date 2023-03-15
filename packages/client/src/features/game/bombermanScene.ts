@@ -67,7 +67,8 @@ const state: GameState = {
     direction: new Point(),
     isDead: false,
     lastFacing: 'down',
-    bombLimit: 1,
+    // bombLimit: 1,
+    bombLimit: 5,
     bombRange: 1,
     speedScale: 1,
   },
@@ -178,11 +179,24 @@ export const bombermanScene: SceneConfig = {
       const cooldown =
         frame.now - lastBombPlacementTime > BOMB_PLACEMENT_COOLDOWN
       if (kbd.space && belowMaxBombs && cooldown) {
+        lastBombPlacementTime = frame.now
         const bombCell = nearestCell(playerRef).copy()
+
+        /**
+         * Проверяет возможность установки бомбы
+         * (проверка отсутствия в данной клетки другой бомбы)
+         */
+        const x = bombCell.x / CELL_WIDTH
+        const y = bombCell.y / CELL_WIDTH
+
+        if (state.field.obstacles[x][y]) {
+          return
+        }
+
         registerObstacle(bombCell)
+        console.warn(bombCell.x)
 
         state.field.bombs.unshift(makeBomb(scene, bombCell))
-        lastBombPlacementTime = frame.now
 
         delay(BOMB_FUSE).then(() => {
           unregisterObstacle(bombCell)
