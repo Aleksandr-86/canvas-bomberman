@@ -7,17 +7,6 @@ exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div cl
   <div
     className="gameDisplayCanvasWrapper"
   >
-    <div
-      className="panel"
-    >
-      <span>
-        Time Left: 
-        NaN
-      </span>
-      <span>
-        Score: 
-      </span>
-    </div>
     <canvas
       height={640}
       width={1280}
@@ -75,17 +64,6 @@ exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div cl
   <div
     className="gameDisplayCanvasWrapper"
   >
-    <div
-      className="panel"
-    >
-      <span>
-        Time Left: 
-        NaN
-      </span>
-      <span>
-        Score: 
-      </span>
-    </div>
     <canvas
       height={640}
       width={1280}
