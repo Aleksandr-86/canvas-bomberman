@@ -16,7 +16,6 @@ const isAuthCookie = (cookies: string | undefined) => {
 }
 
 export const authMiddleware: RequestHandler = async (req, res, next) => {
-  console.log('enter')
   if (isAuthCookie(req.headers.cookie)) {
     try {
       const response = await axios(API_URL + '/auth/user', {
@@ -29,8 +28,6 @@ export const authMiddleware: RequestHandler = async (req, res, next) => {
 
       next()
     } catch (err) {
-      console.log(err)
-
       res.clearCookie('authCookie')
       res.clearCookie('uuid')
 

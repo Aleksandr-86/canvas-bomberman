@@ -8,9 +8,9 @@ import { transformUser } from '../features/utils/apiTransformers'
 export async function prepareStore(url: string, user?: UserDTO) {
   const dataRequirements: (Promise<unknown> | void)[] = []
 
-  let prst = undefined
+  let preloadedState = undefined
   if (user) {
-    prst = {
+    preloadedState = {
       user: {
         error: null,
         isAuth: true,
@@ -20,7 +20,7 @@ export async function prepareStore(url: string, user?: UserDTO) {
     }
   }
 
-  const store = createStore(prst)
+  const store = createStore(preloadedState)
 
   routes.some(route => {
     const { initStoreWithServer } = route
