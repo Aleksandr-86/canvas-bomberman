@@ -7,17 +7,6 @@ exports[`<Game/> snapshot test cases <Game/> should render <div className=gameDi
   <div
     className="gameDisplayCanvasWrapper"
   >
-    <div
-      className="panel"
-    >
-      <span>
-        Time Left: 
-        NaN
-      </span>
-      <span>
-        Score: 
-      </span>
-    </div>
     <canvas
       height={640}
       width={1280}
@@ -75,17 +64,6 @@ exports[`<Game/> snapshot test cases <Game/> should render <div className=gameDi
   <div
     className="gameDisplayCanvasWrapper"
   >
-    <div
-      className="panel"
-    >
-      <span>
-        Time Left: 
-        NaN
-      </span>
-      <span>
-        Score: 
-      </span>
-    </div>
     <canvas
       height={640}
       width={1280}
@@ -127,13 +105,20 @@ exports[`<Game/> snapshot test cases <Game/> should render <div className=gameDi
     <div
       className="panel"
     >
-      <span>
-        Time Left: 
-        NaN
-      </span>
-      <span>
-        Score: 
-      </span>
+      <div
+        className="progressBar"
+      >
+        <div
+          className="bar"
+        >
+          <div
+            className="progress"
+          />
+        </div>
+      </div>
+      <div
+        className="panelScore"
+      />
     </div>
     <canvas
       height={640}

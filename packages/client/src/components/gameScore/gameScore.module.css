@@ -1,24 +1,117 @@
+@keyframes count-down {
+  0% {
+    width: 100%;
+    background-color: hsl(120deg 100% 50%);
+  }
+
+  10% {
+    width: 90%;
+  }
+
+  20% {
+    width: 80%;
+  }
+
+  25% {
+    width: 75%;
+    background-color: hsl(90deg 100% 50%);
+  }
+
+  30% {
+    width: 70%;
+  }
+
+  40% {
+    width: 60%;
+  }
+
+  50% {
+    width: 50%;
+    background-color: hsl(60deg 100% 50%);
+  }
+
+  60% {
+    width: 40%;
+  }
+
+  70% {
+    width: 30%;
+  }
+
+  75% {
+    width: 25%;
+    background-color: hsl(30deg 100% 50%);
+  }
+
+  80% {
+    width: 20%;
+  }
+
+  90% {
+    width: 10%;
+  }
+
+  100% {
+    width: 0%;
+    background: hsl(0deg 100% 53%);
+  }
+}
+
 .panel {
   display: flex;
-  flex-grow: 1;
-  gap: 50px;
   justify-content: space-around;
+  align-items: center;
   width: 100%;
-  height: 'max-content';
-  min-height: calc(1em + 48px);
-  padding-top: 0.5em;
-  border-bottom: 4px solid #b0b0b0;
+  height: 70px;
+  padding: 5px;
   background-color: #64b0ff;
-  font-size: 32px;
+  box-shadow: 0 -4px 14px 2px #006fe6 inset;
+  font-size: 50px;
 }
 
-.buffTile {
-  display: inline-flex;
-  width: 48px;
-  height: 48px;
-  background: url('../../assets/images/nesBomberman3x.png');
+.progressBar {
+  overflow: hidden;
+  width: 82%;
+  height: 20px;
+  border-radius: 20px;
 }
 
-.buffTile:first-child {
-  margin-left: auto;
+.bar {
+  border-radius: 20px;
+  background: rgb(0 0 0 / 10%);
+  box-shadow: 2px 2px 4px 0 rgb(0 0 0 / 30%) inset;
+}
+
+.progress {
+  height: 20px;
+  animation: count-down 200s linear forwards;
+}
+
+.panelScore {
+  display: flex;
+  justify-content: center;
+  width: 14%;
+}
+
+@media all and (display-mode: fullscreen) {
+  .panel {
+    height: 140px;
+    padding: 10px;
+    box-shadow: 0 -4px 14px 4px #004a99 inset;
+    font-size: 100px;
+  }
+
+  .progressBar {
+    height: 40px;
+    border-radius: 40px;
+  }
+
+  .bar {
+    border-radius: 40px;
+    box-shadow: 4px 4px 8px 0 rgb(0 0 0 / 30%) inset;
+  }
+
+  .progress {
+    height: 40px;
+  }
 }

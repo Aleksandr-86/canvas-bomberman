@@ -1,14 +1,19 @@
 import { useAppSelector } from '../../store/hooks'
-import gameScore from './gameScore.module.css'
+import styles from './gameScore.module.css'
 import { selectGameStats } from '../../store/selectors'
 
 export const GameScore = () => {
-  const { score, timeLeft } = useAppSelector(selectGameStats)
+  const { score } = useAppSelector(selectGameStats)
 
   return (
-    <div className={gameScore.panel}>
-      <span>Time Left: {timeLeft}</span>
-      <span>Score: {score}</span>
+    <div className={styles.panel}>
+      <div className={styles.progressBar}>
+        <div className={styles.bar}>
+          <div className={styles.progress}></div>
+        </div>
+      </div>
+
+      <div className={styles.panelScore}>{score}</div>
     </div>
   )
 }

@@ -14,6 +14,7 @@ import {
   BUFF_CHANCE,
   Points,
   BOMB_PLACEMENT_COOLDOWN,
+  GRID_HEIGHT,
 } from './const'
 import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
@@ -50,6 +51,7 @@ type GameState = {
     speedScale: number
   }
   field: {
+    obstacles: (boolean | null)[][]
     enemies: SpriteList
     backgroundTiles: SpriteList
     softWalls: SpriteList
@@ -70,6 +72,7 @@ const state: GameState = {
     speedScale: 1,
   },
   field: {
+    obstacles: [],
     enemies: new SpriteList(),
     backgroundTiles: new SpriteList(),
     softWalls: new SpriteList(),
@@ -126,9 +129,12 @@ export const bombermanScene: SceneConfig = {
     makeDoor(scene, door)
     state.field.softWalls.add(makeSoftWall(scene, door))
 
+    // Регистрация границ уровня и колонн
+    registerHardWalls()
+
     // Получение массива кирпичной кладки
     const softWalls = scene.displayList.filter(v => v.frame === 'wallSoft')
-    controller.registerSoftWalls(softWalls)
+    registerSoftWalls(softWalls)
 
     controller.addEnemies(state.field.enemies.toArray(), PLAYER_VELOCITY)
 
@@ -174,13 +180,13 @@ export const bombermanScene: SceneConfig = {
         frame.now - lastBombPlacementTime > BOMB_PLACEMENT_COOLDOWN
       if (kbd.space && belowMaxBombs && cooldown) {
         const bombCell = nearestCell(playerRef).copy()
-        controller.registerObstacle(bombCell)
+        registerObstacle(bombCell)
 
         state.field.bombs.unshift(makeBomb(scene, bombCell))
         lastBombPlacementTime = frame.now
 
         delay(BOMB_FUSE).then(() => {
-          controller.unregisterObstacle(bombCell)
+          unregisterObstacle(bombCell)
 
           state.field.explosions.add(
             ...resolveExplosion(bombCell, state.player.bombRange).map(
@@ -197,7 +203,7 @@ export const bombermanScene: SceneConfig = {
               const wallWithExplosion = state.field.explosions.byPoint(wall)
 
               if (wallWithExplosion) {
-                controller.unregisterObstacle(
+                unregisterObstacle(
                   new Point(wallWithExplosion.x, wallWithExplosion.y)
                 )
               }
@@ -223,7 +229,7 @@ export const bombermanScene: SceneConfig = {
         delay(EXPLOSION_DURATION).then(() => {
           const destroyed = state.field.softWalls.destroyByPoint(explosion)
           if (destroyed) {
-            pointsAdded(Points.Wall)
+            pointsAdded(25)
           }
         })
       }
@@ -304,7 +310,7 @@ export const bombermanScene: SceneConfig = {
           const destroyed = state.field.enemies.destroyByPoint(enemy)
 
           if (destroyed) {
-            pointsAdded(Points.Enemy.Baloon)
+            pointsAdded(100)
           }
         })
       } else {
@@ -312,7 +318,7 @@ export const bombermanScene: SceneConfig = {
       }
     }
 
-    controller.run(frame.delta)
+    controller.run(frame.delta, state.field.obstacles)
   },
 }
 
@@ -411,4 +417,67 @@ function updatePlayerPosition(
   ).sub(topLeftToCenterOffset)
 
   state.player.ref.setPosition(resolved)
+}
+
+// Регистрация границ уровня и колонн
+const registerHardWalls = () => {
+  // Инициализация пустого двухмерного массива
+  for (let x = 0; x < GRID_WIDTH; x++) {
+    const row = []
+    for (let y = 0; y < GRID_HEIGHT; y++) row.push(null)
+    state.field.obstacles.push(row)
+  }
+
+  // Регистрация верхней границы уровня
+  for (let x = 0; x < GRID_WIDTH; x++) {
+    state.field.obstacles[x][0] = true
+  }
+
+  // Регистрация правой границы уровня
+  for (let y = 1; y < GRID_HEIGHT - 1; y++) {
+    state.field.obstacles[GRID_WIDTH - 1][y] = true
+  }
+
+  // Регистрация нижней границы уровня
+  for (let x = 0; x < GRID_WIDTH; x++) {
+    state.field.obstacles[x][GRID_HEIGHT - 1] = true
+  }
+
+  // Регистрация левой границы уровня
+  for (let y = 1; y < GRID_HEIGHT - 1; y++) {
+    state.field.obstacles[0][y] = true
+  }
+
+  // Регистрация колонн
+  for (let y = 2; y <= GRID_HEIGHT; y += 2) {
+    for (let x = 2; x <= GRID_WIDTH; x += 2) {
+      state.field.obstacles[x][y] = true
+    }
+  }
+}
+
+// Регистрация кирпичных стен
+const registerSoftWalls = (softWalls: Sprite[]) => {
+  for (const softWall of softWalls) {
+    let { x, y } = softWall
+    x /= CELL_WIDTH
+    y /= CELL_WIDTH
+    state.field.obstacles[x][y] = true
+  }
+}
+
+// Регистрация препятствия
+const registerObstacle = (bombCell: Point) => {
+  let { x, y } = bombCell
+  x /= CELL_WIDTH
+  y /= CELL_WIDTH
+  state.field.obstacles[x][y] = true
+}
+
+// Отмена регистрации препятствия
+const unregisterObstacle = (bombCell: Point) => {
+  let { x, y } = bombCell
+  x /= CELL_WIDTH
+  y /= CELL_WIDTH
+  state.field.obstacles[x][y] = false
 }

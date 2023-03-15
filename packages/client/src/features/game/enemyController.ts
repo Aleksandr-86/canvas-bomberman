@@ -1,6 +1,4 @@
 import {
-  GRID_WIDTH,
-  GRID_HEIGHT,
   CELL_WIDTH,
   CHANGE_DIR_POSSIBILITY_CHANCE,
   U_TURN_CHANCE,
@@ -39,74 +37,6 @@ const almostEqual = (p1: Point, p2: Point) => {
  */
 export class EnemyController {
   private state: EnemyState[] = []
-  private obstacles: (boolean | null)[][] = []
-
-  constructor() {
-    this.registerHardWalls()
-  }
-
-  // Регистрация границ уровня и колонн
-  private registerHardWalls() {
-    // Инициализация пустого двухмерного массива
-    for (let x = 0; x < GRID_WIDTH; x++) {
-      const row = []
-      for (let y = 0; y < GRID_HEIGHT; y++) row.push(null)
-      this.obstacles.push(row)
-    }
-
-    // Регистрация верхней границы уровня
-    for (let x = 0; x < GRID_WIDTH; x++) {
-      this.obstacles[x][0] = true
-    }
-
-    // Регистрация правой границы уровня
-    for (let y = 1; y < GRID_HEIGHT - 1; y++) {
-      this.obstacles[GRID_WIDTH - 1][y] = true
-    }
-
-    // Регистрация нижней границы уровня
-    for (let x = 0; x < GRID_WIDTH; x++) {
-      this.obstacles[x][GRID_HEIGHT - 1] = true
-    }
-
-    // Регистрация левой границы уровня
-    for (let y = 1; y < GRID_HEIGHT - 1; y++) {
-      this.obstacles[0][y] = true
-    }
-
-    // Регистрация колонн
-    for (let y = 2; y <= GRID_HEIGHT; y += 2) {
-      for (let x = 2; x <= GRID_WIDTH; x += 2) {
-        this.obstacles[x][y] = true
-      }
-    }
-  }
-
-  // Регистрация кирпичных стен
-  public registerSoftWalls(softWalls: Sprite[]) {
-    for (const softWall of softWalls) {
-      let { x, y } = softWall
-      x /= CELL_WIDTH
-      y /= CELL_WIDTH
-      this.obstacles[x][y] = true
-    }
-  }
-
-  // Регистрация установленной бомбы
-  public registerObstacle(bombCell: Point) {
-    let { x, y } = bombCell
-    x /= CELL_WIDTH
-    y /= CELL_WIDTH
-    this.obstacles[x][y] = true
-  }
-
-  // Отмена регистрации установленной бомбы
-  public unregisterObstacle(bombCell: Point) {
-    let { x, y } = bombCell
-    x /= CELL_WIDTH
-    y /= CELL_WIDTH
-    this.obstacles[x][y] = false
-  }
 
   public addEnemies(sprites: Sprite[], velocity: number) {
     for (const sprite of sprites) {
@@ -120,19 +50,23 @@ export class EnemyController {
   }
 
   // Поиск возможных направлений движения противника
-  private possibleDirections(enemyX: number, enemyY: number) {
+  private possibleDirections(
+    enemyX: number,
+    enemyY: number,
+    obstacles: (boolean | null)[][]
+  ) {
     const possibleDirections: string[] = []
 
-    if (!this.obstacles[enemyX][enemyY - 1]) {
+    if (!obstacles[enemyX][enemyY - 1]) {
       possibleDirections.push('вверх')
     }
-    if (!this.obstacles[enemyX + 1][enemyY]) {
+    if (!obstacles[enemyX + 1][enemyY]) {
       possibleDirections.push('вправо')
     }
-    if (!this.obstacles[enemyX][enemyY + 1]) {
+    if (!obstacles[enemyX][enemyY + 1]) {
       possibleDirections.push('вниз')
     }
-    if (!this.obstacles[enemyX - 1][enemyY]) {
+    if (!obstacles[enemyX - 1][enemyY]) {
       possibleDirections.push('влево')
     }
 
@@ -142,7 +76,7 @@ export class EnemyController {
   /**
    * Возвращает клетку к которой двинется противник.
    */
-  private chooseNextPoint(enemy: Sprite) {
+  private chooseNextPoint(enemy: Sprite, obstacles: (boolean | null)[][]) {
     let target = new Point(enemy.x, enemy.y)
     enemy.totalMileAge++
 
@@ -155,7 +89,7 @@ export class EnemyController {
      * а также случайного значения randomMileAge
      */
     if (enemy.movementDir === '') {
-      const possDirs = this.possibleDirections(enemyX, enemyY)
+      const possDirs = this.possibleDirections(enemyX, enemyY, obstacles)
       enemy.movementDir = possDirs[randomInRange(0, possDirs.length - 1)]
       enemy.randomMileAge = randomInRange(
         LOWER_BOUND_MILE_AGE,
@@ -174,7 +108,7 @@ export class EnemyController {
     }
 
     if (enemy.changeDirPossibility) {
-      const dirs = this.possibleDirections(enemyX, enemyY)
+      const dirs = this.possibleDirections(enemyX, enemyY, obstacles)
       let filteredDirs: string[] = []
 
       if (randomInRange(1, 100) <= U_TURN_CHANCE) {
@@ -212,7 +146,7 @@ export class EnemyController {
 
     // Движение вверх
     if (enemy.movementDir === 'вверх') {
-      if (!this.obstacles[enemyX][enemyY - 1]) {
+      if (!obstacles[enemyX][enemyY - 1]) {
         target = Point.from(enemy).add(new Point(0, -CELL_WIDTH))
       } else {
         enemy.movementDir = 'вниз'
@@ -220,7 +154,7 @@ export class EnemyController {
     }
     // Движение вправо
     else if (enemy.movementDir === 'вправо') {
-      if (!this.obstacles[enemyX + 1][enemyY]) {
+      if (!obstacles[enemyX + 1][enemyY]) {
         target = Point.from(enemy).add(new Point(CELL_WIDTH, 0))
       } else {
         enemy.movementDir = 'влево'
@@ -228,7 +162,7 @@ export class EnemyController {
     }
     // Движение вниз
     else if (enemy.movementDir === 'вниз') {
-      if (!this.obstacles[enemyX][enemyY + 1]) {
+      if (!obstacles[enemyX][enemyY + 1]) {
         target = Point.from(enemy).add(new Point(0, CELL_WIDTH))
       } else {
         enemy.movementDir = 'вверх'
@@ -236,7 +170,7 @@ export class EnemyController {
     }
     // Движение влево
     else if (enemy.movementDir === 'влево') {
-      if (!this.obstacles[enemyX - 1][enemyY]) {
+      if (!obstacles[enemyX - 1][enemyY]) {
         target = Point.from(enemy).add(new Point(-CELL_WIDTH, 0))
       } else {
         enemy.movementDir = 'вправо'
@@ -246,10 +180,10 @@ export class EnemyController {
     return target
   }
 
-  run(delta: number) {
+  run(delta: number, obstacles: (boolean | null)[][]) {
     for (const entry of this.state) {
       if (entry.movementState === MovementState.Idle) {
-        const candidate = this.chooseNextPoint(entry.ref)
+        const candidate = this.chooseNextPoint(entry.ref, obstacles)
 
         if (!candidate) {
           continue

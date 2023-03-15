@@ -27,7 +27,7 @@ const gameSlice = createSlice({
     timerUpdated: (state, { payload }: PayloadAction<number>) => {
       // because of <StrictMode/>, this runs twice
       state.time = state.time <= 0 ? 0 : state.time - payload * 0.001
-      state.currentScore += state.time > 0 ? Points.Time : 0
+      // state.currentScore += state.time > 0 ? Points.Time : 0
     },
   },
 })
