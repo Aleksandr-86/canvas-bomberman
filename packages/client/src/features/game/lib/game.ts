@@ -5,6 +5,7 @@ import { FrameData, Ticker } from './ticker'
 import { Point } from '../utils'
 import { gameEnded } from '../gameActions'
 
+let flag = true
 /**
  * `preload` - used to load assets
  *
