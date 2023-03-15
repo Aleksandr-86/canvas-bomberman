@@ -105,13 +105,20 @@ exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div cl
     <div
       className="panel"
     >
-      <span>
-        Оставшееся время: 
-        NaN
-      </span>
-      <span>
-        Очки: 
-      </span>
+      <div
+        className="progressBar"
+      >
+        <div
+          className="bar"
+        >
+          <div
+            className="progress"
+          />
+        </div>
+      </div>
+      <div
+        className="panelScore"
+      />
     </div>
     <canvas
       height={640}
