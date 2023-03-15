@@ -7,8 +7,8 @@ export const GameScore = () => {
 
   return (
     <div className={gameScore.panel}>
-      <span>Time Left: {timeLeft}</span>
-      <span>Score: {score}</span>
+      <span>Оставшееся время: {timeLeft}</span>
+      <span>Очки: {score}</span>
     </div>
   )
 }
