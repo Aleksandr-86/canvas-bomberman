@@ -15,12 +15,7 @@ import { gameEnded } from '../gameActions'
 export type SceneConfig = {
   preload: (load: Loader) => void
   create: (scene: SceneContext) => void
-  update: (
-    scene: SceneContext,
-    frame: FrameData,
-    kbd: Keyboard,
-    endGame: () => void
-  ) => void
+  update: (scene: SceneContext, frame: FrameData, kbd: Keyboard) => void
 }
 
 export interface GameConfig {
@@ -29,7 +24,6 @@ export interface GameConfig {
   root: HTMLCanvasElement
   scene: SceneConfig
   backgroundColor: string
-  onGameEnd: () => void
 }
 
 export class Game {
@@ -42,22 +36,13 @@ export class Game {
   private ticker = new Ticker()
 
   private scene: SceneConfig
-  private onGameEnd: () => void
 
   private root: HTMLCanvasElement
   private ctx: CanvasRenderingContext2D
   public started = false
 
-  constructor({
-    root,
-    width,
-    height,
-    backgroundColor,
-    scene,
-    onGameEnd,
-  }: GameConfig) {
+  constructor({ root, width, height, backgroundColor, scene }: GameConfig) {
     this.root = root
-    this.onGameEnd = onGameEnd
     const ctx = root.getContext('2d')
 
     if (!ctx) {
@@ -112,12 +97,7 @@ export class Game {
     this.scene.create(this.sceneContext)
 
     this.ticker.add(frameData => {
-      this.scene.update(
-        this.sceneContext,
-        frameData,
-        this.kbd,
-        this.stop.bind(this)
-      )
+      this.scene.update(this.sceneContext, frameData, this.kbd)
       this.sceneContext.render(this.ctx)
     })
 
@@ -128,7 +108,6 @@ export class Game {
   stop() {
     gameEnded()
     this.ticker.stop()
-    this.onGameEnd()
     this.started = false
   }
 }

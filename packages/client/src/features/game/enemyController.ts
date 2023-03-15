@@ -1,4 +1,3 @@
-import { isAxiosError } from 'axios'
 import {
   GRID_WIDTH,
   GRID_HEIGHT,
