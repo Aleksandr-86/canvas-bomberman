@@ -16,6 +16,11 @@ export class Sprite extends BaseGameObject {
   public shouldDestroy = false
   public animations = new Map<string, Animation>()
 
+  public movementDir = '' // Направление движения противника
+  public totalMileAge = 0 // Общее количество клеток пройденных противником
+  public randomMileAge = 0 // Случайное количество клеток
+  public changeDirPossibility = false // Перспектива изменения направления движения
+
   constructor(
     public x: number,
     public y: number,

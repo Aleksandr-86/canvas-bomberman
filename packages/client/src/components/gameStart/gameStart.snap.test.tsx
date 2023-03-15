@@ -11,7 +11,7 @@ describe(`<GameStart/> snapshot test cases`, () => {
     const tree = renderer
       .create(
         <Provider store={store}>
-          <GameStart />
+          <GameStart startGame={() => undefined} />
         </Provider>
       )
       .toJSON()

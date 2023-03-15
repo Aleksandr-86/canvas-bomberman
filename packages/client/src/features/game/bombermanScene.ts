@@ -79,9 +79,8 @@ const state: GameState = {
   },
 }
 
-// const controller = new EnemyController(({ frame }: Sprite) => {
-//   return !frame.startsWith('wall')
-// })
+const controller = new EnemyController()
+
 let lastBombPlacementTime = performance.now()
 const collidableCells = new SpriteList()
 
@@ -107,7 +106,6 @@ export const bombermanScene: SceneConfig = {
     )
 
     state.player.ref = makePlayer(scene, PLAYER_STARTING_POSITION)
-
     addSoftWalls(scene, state, SOFT_WALL_SPAWN_OFFSET)
     spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET)
 
@@ -127,16 +125,15 @@ export const bombermanScene: SceneConfig = {
     makeDoor(scene, door)
     state.field.softWalls.add(makeSoftWall(scene, door))
 
-    // const a = scene.displayList.filter(v => {
-    //   return !v.frame.startsWith('wall')
-    // })
+    // Получение массива кирпичной кладки
+    const softWalls = scene.displayList.filter(v => v.frame === 'wallSoft')
+    controller.registerSoftWalls(softWalls)
 
-    // controller.addField(a)
-    // controller.addEnemies(state.field.enemies.toArray(), PLAYER_VELOCITY)
+    controller.addEnemies(state.field.enemies.toArray(), PLAYER_VELOCITY)
 
     gameStarted()
   },
-  update: (scene, frame, kbd) => {
+  update: (scene, frame, kbd, endGame) => {
     // player certainly defined in create()
     const playerRef = state.player.ref!
 
@@ -144,6 +141,7 @@ export const bombermanScene: SceneConfig = {
 
     if (state.player.isDead) {
       scene.anims.run(playerRef, 'die', frame.delta, true)
+      delay(500).then(() => endGame())
     } else {
       if (kbd.left) {
         state.player.direction.x -= 1
@@ -175,11 +173,14 @@ export const bombermanScene: SceneConfig = {
         frame.now - lastBombPlacementTime > BOMB_PLACEMENT_COOLDOWN
       if (kbd.space && belowMaxBombs && cooldown) {
         const bombCell = nearestCell(playerRef).copy()
+        controller.registerObstacle(bombCell)
 
         state.field.bombs.unshift(makeBomb(scene, bombCell))
         lastBombPlacementTime = frame.now
 
         delay(BOMB_FUSE).then(() => {
+          controller.unregisterObstacle(bombCell)
+
           state.field.explosions.add(
             ...resolveExplosion(bombCell, state.player.bombRange).map(
               ({ point, orientation }) => {
@@ -193,6 +194,13 @@ export const bombermanScene: SceneConfig = {
           delay(EXPLOSION_DURATION).then(() => {
             for (const wall of state.field.softWalls) {
               const wallWithExplosion = state.field.explosions.byPoint(wall)
+
+              if (wallWithExplosion) {
+                controller.unregisterObstacle(
+                  new Point(wallWithExplosion.x, wallWithExplosion.y)
+                )
+              }
+
               if (wallWithExplosion && withChance(BUFF_CHANCE)) {
                 state.field.buffs.add(makeBuff(scene, wallWithExplosion))
                 break
@@ -303,7 +311,7 @@ export const bombermanScene: SceneConfig = {
       }
     }
 
-    // controller.run(frame.delta)
+    controller.run(frame.delta)
   },
 }
 

@@ -13,7 +13,7 @@ describe(`<GameEnd/> snapshot test cases`, () => {
       .create(
         <Provider store={store}>
           <MemoryRouter initialEntries={[`/game`]}>
-            <GameEnd onReloadGame={() => undefined} />
+            <GameEnd restartGame={() => undefined} />
           </MemoryRouter>
         </Provider>
       )
