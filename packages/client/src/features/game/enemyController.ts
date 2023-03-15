@@ -1,4 +1,3 @@
-import { isAxiosError } from 'axios'
 import {
   CELL_WIDTH,
   CHANGE_DIR_POSSIBILITY_CHANCE,

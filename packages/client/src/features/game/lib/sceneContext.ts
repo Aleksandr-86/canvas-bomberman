@@ -12,7 +12,7 @@ export class SceneContext {
   public anims = new AnimationRunner()
   public camera: Camera
 
-  constructor(private dimensions: PointLike, private stopGame: () => void) {
+  constructor(private dimensions: PointLike, public stopGame: () => void) {
     this.camera = new Camera(this.dimensions.x, this.dimensions.y)
   }
 

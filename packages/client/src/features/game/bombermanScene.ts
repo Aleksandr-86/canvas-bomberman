@@ -83,6 +83,7 @@ const state: GameState = {
   },
 }
 
+// TODO: Инициализировать переменные при каждом создании игры
 const controller = new EnemyController()
 
 let lastBombPlacementTime = performance.now()
@@ -140,7 +141,7 @@ export const bombermanScene: SceneConfig = {
 
     gameStarted()
   },
-  update: (scene, frame, kbd, endGame) => {
+  update: (scene, frame, kbd) => {
     // player certainly defined in create()
     const playerRef = state.player.ref!
 
@@ -148,7 +149,7 @@ export const bombermanScene: SceneConfig = {
 
     if (state.player.isDead) {
       scene.anims.run(playerRef, 'die', frame.delta, true)
-      delay(500).then(() => endGame())
+      delay(500).then(() => scene.stopGame())
     } else {
       if (kbd.left) {
         state.player.direction.x -= 1

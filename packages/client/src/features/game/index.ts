@@ -1,9 +1,10 @@
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect } from 'react'
 import { useAppDispatch } from '../../store/hooks'
 import { bombermanScene } from './bombermanScene'
 import { setStatus, GameStatus } from '../../store/gameSlice'
 import { Game } from '../game/lib'
 import { GameConfig } from './lib'
+import { gameEnded } from './gameActions'
 
 export function createGame(config: GameConfig) {
   return new Game(config)
@@ -15,11 +16,11 @@ export function useGame() {
   const shouldRunSecondTime = useRef(true)
   const dispatch = useAppDispatch()
 
-  /* рекурсивно вызывает саму себя? */
-  const endGame = useCallback(() => {
+  const endGame = () => {
     gameRef.current?.stop()
-    dispatch(setStatus(GameStatus.END))
-  }, [dispatch])
+    gameRef.current = null
+    gameEnded()
+  }
 
   const startGame = () => {
     if (!canvasRef.current) {
@@ -32,7 +33,6 @@ export function useGame() {
       backgroundColor: '#64b0ff',
       root: canvasRef.current,
       scene: bombermanScene,
-      onGameEnd: endGame,
     })
 
     gameRef.current.start()
@@ -54,9 +54,8 @@ export function useGame() {
       backgroundColor: '#64b0ff',
       root: canvas,
       scene: bombermanScene,
-      onGameEnd: endGame,
     })
-  }, [endGame])
+  }, [])
 
   return {
     endGame,
