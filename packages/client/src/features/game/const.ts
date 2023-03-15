@@ -72,8 +72,7 @@ export const U_TURN_CHANCE = 15 // Шанс разворота противни�
 
 /* --- Stats --- */
 export const EXPLOSION_RADIUS = 1
-// export const MAX_ENEMY_COUNT = 7
-export const MAX_ENEMY_COUNT = 0
+export const MAX_ENEMY_COUNT = 7
 
 export const Points = {
   Enemy: {

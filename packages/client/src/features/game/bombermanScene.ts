@@ -221,9 +221,9 @@ export const bombermanScene: SceneConfig = {
 
         delay(EXPLOSION_DURATION).then(() => {
           const destroyed = state.field.softWalls.destroyByPoint(explosion)
-          if (destroyed) {
-            pointsAdded(Points.Wall)
-          }
+          // if (destroyed) {
+          // pointsAdded(Points.Wall)
+          // }
         })
       }
 
@@ -303,7 +303,8 @@ export const bombermanScene: SceneConfig = {
           const destroyed = state.field.enemies.destroyByPoint(enemy)
 
           if (destroyed) {
-            pointsAdded(Points.Enemy.Baloon)
+            console.warn('!')
+            pointsAdded(100)
           }
         })
       } else {
