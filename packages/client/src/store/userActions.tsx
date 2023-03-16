@@ -171,7 +171,6 @@ export const oauth = createAsyncThunk(
   async (data: OAuthPayload, { dispatch, rejectWithValue }) => {
     try {
       await AuthAPI.oauth(data)
-      // dispatch(me())
     } catch (error: unknown | AxiosError) {
       if (isAxiosError(error)) {
         return rejectWithValue(axiosErrorHandler(error))
