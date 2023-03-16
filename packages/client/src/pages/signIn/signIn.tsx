@@ -65,7 +65,7 @@ export const SignIn: React.FC = () => {
 
         <div className={styles.signInAction}>
           <div className={styles.actionButton}>
-            <Button type="submit">Все верно!</Button>
+            <Button type="submit">Всё верно!</Button>
           </div>
           <div className={styles.actionButton}>
             <Link className={baseStyles.linkButton} to="/">

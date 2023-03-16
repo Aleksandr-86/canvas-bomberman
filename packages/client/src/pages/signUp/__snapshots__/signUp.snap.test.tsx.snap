@@ -178,7 +178,7 @@ exports[`<SignUp/> snapshot test cases <SignUp/> should render <form className=s
         className="button"
         type="submit"
       >
-        Все верно!
+        Всё верно!
       </button>
     </div>
     <div
