@@ -8,6 +8,7 @@ import { oauth } from '../store/userActions'
 import { useSearchParams } from 'react-router-dom'
 import { REDIRECT_URI } from '../features/oauth/onOauthRequest'
 import { setTheme, Theme } from '../store/themeSlice'
+import { THEME_LOCAL_STORAGE_KEY } from '../features/constants'
 
 const AppRouting = () => {
   const dispatch = useAppDispatch()
@@ -31,11 +32,11 @@ const AppRouting = () => {
       })
       .catch(async error => {
         if (error.status === 401) {
-          let theme = localStorage.getItem(`theme`)
+          let theme = localStorage.getItem(THEME_LOCAL_STORAGE_KEY)
 
           if (!theme) {
             theme = Theme.LIGHT
-            localStorage.setItem(`theme`, Theme.LIGHT)
+            localStorage.setItem(THEME_LOCAL_STORAGE_KEY, Theme.LIGHT)
           }
 
           document.documentElement.dataset.theme = theme

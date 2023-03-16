@@ -15,3 +15,5 @@ export const LEADERBOARD_LENGTH = 5
 
 // Локальный сервер, будет заменен url Яндекс Практикума, после деплоя в облако
 export const API_URL_CUSTOM = `http://localhost:3001/api`
+
+export const THEME_LOCAL_STORAGE_KEY = `theme`

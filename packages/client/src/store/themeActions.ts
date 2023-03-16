@@ -3,6 +3,7 @@ import { AxiosError, isAxiosError } from 'axios'
 import { axiosErrorHandler } from '../features/utils/axiosErrorHandler'
 import ThemeAPI from '../api/theme'
 import { Theme } from './themeSlice'
+import { THEME_LOCAL_STORAGE_KEY } from '../features/constants'
 
 interface UpdateThemeData {
   id: number | null
@@ -17,7 +18,7 @@ export const getCurrentTheme = createAsyncThunk(
         data: { theme },
       } = await ThemeAPI.getCurrentTheme(id)
 
-      const localTheme = localStorage.getItem(`theme`)
+      const localTheme = localStorage.getItem(THEME_LOCAL_STORAGE_KEY)
 
       if (localTheme && localTheme !== theme) {
         const {
@@ -35,7 +36,7 @@ export const getCurrentTheme = createAsyncThunk(
 
       return theme
     } catch (error: unknown | AxiosError) {
-      const theme = localStorage.getItem(`theme`)
+      const theme = localStorage.getItem(THEME_LOCAL_STORAGE_KEY)
 
       if (theme) {
         dispatch(sendCurrentTheme({ id, theme: theme as Theme }))
@@ -77,12 +78,12 @@ export const updateCurrentTheme = createAsyncThunk(
         })
 
         document.documentElement.dataset.theme = updatedTheme
-        localStorage.setItem(`theme`, updatedTheme)
+        localStorage.setItem(THEME_LOCAL_STORAGE_KEY, updatedTheme)
 
         return updatedTheme
       } else {
         document.documentElement.dataset.theme = theme
-        localStorage.setItem(`theme`, theme)
+        localStorage.setItem(THEME_LOCAL_STORAGE_KEY, theme)
 
         return theme
       }
