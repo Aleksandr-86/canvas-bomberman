@@ -17,13 +17,14 @@ export const ThemeSwitcher: React.FC = () => {
       <input
         type="checkbox"
         checked={theme === Theme.DARK}
-        onChange={() => {
-          if (theme === Theme.LIGHT) {
-            dispatch(updateCurrentTheme({ id, theme: Theme.DARK }))
-          } else {
-            dispatch(updateCurrentTheme({ id, theme: Theme.LIGHT }))
-          }
-        }}
+        onChange={() =>
+          dispatch(
+            updateCurrentTheme({
+              id,
+              theme: theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT,
+            })
+          )
+        }
       />
       <span className={`${styles.slider} ${styles.round}`}></span>
     </label>
