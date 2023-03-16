@@ -4,6 +4,8 @@ import {
   U_TURN_CHANCE,
   LOWER_BOUND_MILE_AGE,
   UPPER_BOUND_MILE_AGE,
+  GRID_WIDTH,
+  GRID_HEIGHT,
 } from './const'
 import { type Sprite } from './lib'
 import { Point, randomInRange } from './utils'
@@ -77,6 +79,23 @@ export class EnemyController {
    * Возвращает клетку к которой двинется противник.
    */
   private chooseNextPoint(enemy: Sprite, obstacles: (boolean | null)[][]) {
+    const enemyOrthX = Math.floor(enemy.x / CELL_WIDTH)
+    const enemyOrthY = Math.floor(enemy.y / CELL_WIDTH)
+
+    if (
+      enemyOrthX > GRID_WIDTH - 2 ||
+      enemyOrthX < 1 ||
+      enemyOrthY > GRID_HEIGHT - 2 ||
+      enemyOrthY < 1 ||
+      enemy.x % CELL_WIDTH !== 0 ||
+      enemy.y % CELL_WIDTH !== 0
+    ) {
+      console.warn('!!!')
+      enemy.x = 240
+      enemy.y = 240
+      // return
+    }
+
     let target = new Point(enemy.x, enemy.y)
     enemy.totalMileAge++
 

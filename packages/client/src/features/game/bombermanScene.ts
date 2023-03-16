@@ -71,7 +71,6 @@ const state: GameState = {
     lastFacing: 'down',
     // Координаты последний покинутой игроком клетки
     lastPos: { x: 1, y: 1 },
-    // bombLimit: 1,
     bombLimit: 1,
     bombRange: 1,
     speedScale: 1,
@@ -450,7 +449,6 @@ function updatePlayerPosition(
     (playerOrthX !== lastPos.x && trasholdX) ||
     (playerOrthY !== lastPos.y && trasholdY)
   ) {
-    console.warn(PLAYER_VELOCITY)
     if (state.field.obstacles[lastPos.x][lastPos.y]) {
       // Добавляет объект с координатами бомбы в набор
       state.field.bombsSet.add({ x: lastPos.x, y: lastPos.y })

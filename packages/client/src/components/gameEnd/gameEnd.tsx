@@ -26,7 +26,7 @@ export const GameEnd: React.FC<Props> = ({ restartGame }) => {
           На главную
         </Link>
         <Button onClick={restartGame} className={styles.gameEndButton}>
-          Сыграть еще раз
+          Сыграть ещё раз
         </Button>
         <Link
           to="/leaderboard"

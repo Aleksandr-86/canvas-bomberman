@@ -41,7 +41,7 @@ exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div cl
             className="button gameEndButton"
             onClick={[Function]}
           >
-            Сыграть еще раз
+            Сыграть ещё раз
           </button>
           <a
             className="linkButton gameEndButton"
