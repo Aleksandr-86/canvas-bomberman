@@ -55,7 +55,7 @@ export class EnemyController {
   private possibleDirections(
     enemyX: number,
     enemyY: number,
-    obstacles: (boolean | null)[][]
+    obstacles: ('concrete' | 'wall' | 'bomb' | null)[][]
   ) {
     const possibleDirections: string[] = []
 
@@ -78,7 +78,10 @@ export class EnemyController {
   /**
    * Возвращает клетку к которой двинется противник.
    */
-  private chooseNextPoint(enemy: Sprite, obstacles: (boolean | null)[][]) {
+  private chooseNextPoint(
+    enemy: Sprite,
+    obstacles: ('concrete' | 'wall' | 'bomb' | null)[][]
+  ) {
     const enemyOrthX = Math.floor(enemy.x / CELL_WIDTH)
     const enemyOrthY = Math.floor(enemy.y / CELL_WIDTH)
 
@@ -90,7 +93,6 @@ export class EnemyController {
       enemy.x % CELL_WIDTH !== 0 ||
       enemy.y % CELL_WIDTH !== 0
     ) {
-      console.warn('!!!')
       enemy.x = 240
       enemy.y = 240
       // return
@@ -199,7 +201,7 @@ export class EnemyController {
     return target
   }
 
-  run(delta: number, obstacles: (boolean | null)[][]) {
+  run(delta: number, obstacles: ('concrete' | 'wall' | 'bomb' | null)[][]) {
     for (const entry of this.state) {
       if (entry.movementState === MovementState.Idle) {
         const candidate = this.chooseNextPoint(entry.ref, obstacles)

@@ -52,7 +52,7 @@ type GameState = {
     speedScale: number
   }
   field: {
-    obstacles: (boolean | null)[][]
+    obstacles: ('concrete' | 'wall' | 'bomb' | null)[][]
     enemies: SpriteList
     backgroundTiles: SpriteList
     softWalls: SpriteList
@@ -199,12 +199,12 @@ export const bombermanScene: SceneConfig = {
           return
         }
 
-        registerObstacle(bombCell)
+        registerBombObstacle(bombCell)
 
         state.field.bombs.unshift(makeBomb(scene, bombCell))
 
         delay(BOMB_FUSE).then(() => {
-          unregisterObstacle(bombCell)
+          unregisterBombObstacle(bombCell)
           // Исключает координаты бомб из набора
           state.field.bombsSet.forEach((b, _, set) => {
             if (
@@ -216,11 +216,13 @@ export const bombermanScene: SceneConfig = {
           })
 
           state.field.explosions.add(
-            ...resolveExplosion(bombCell, state.player.bombRange).map(
-              ({ point, orientation }) => {
-                return makeExplosion(scene, point, orientation)
-              }
-            )
+            ...resolveExplosion(
+              bombCell,
+              state.player.bombRange,
+              state.field.obstacles
+            ).map(({ point, orientation }) => {
+              return makeExplosion(scene, point, orientation)
+            })
           )
 
           state.field.bombs.destroyLast()
@@ -230,7 +232,7 @@ export const bombermanScene: SceneConfig = {
               const wallWithExplosion = state.field.explosions.byPoint(wall)
 
               if (wallWithExplosion) {
-                unregisterObstacle(
+                unregisterBombObstacle(
                   new Point(wallWithExplosion.x, wallWithExplosion.y)
                 )
               }
@@ -494,28 +496,28 @@ const registerHardWalls = () => {
 
   // Регистрация верхней границы уровня
   for (let x = 0; x < GRID_WIDTH; x++) {
-    state.field.obstacles[x][0] = true
+    state.field.obstacles[x][0] = 'concrete'
   }
 
   // Регистрация правой границы уровня
   for (let y = 1; y < GRID_HEIGHT - 1; y++) {
-    state.field.obstacles[GRID_WIDTH - 1][y] = true
+    state.field.obstacles[GRID_WIDTH - 1][y] = 'concrete'
   }
 
   // Регистрация нижней границы уровня
   for (let x = 0; x < GRID_WIDTH; x++) {
-    state.field.obstacles[x][GRID_HEIGHT - 1] = true
+    state.field.obstacles[x][GRID_HEIGHT - 1] = 'concrete'
   }
 
   // Регистрация левой границы уровня
   for (let y = 1; y < GRID_HEIGHT - 1; y++) {
-    state.field.obstacles[0][y] = true
+    state.field.obstacles[0][y] = 'concrete'
   }
 
   // Регистрация колонн
   for (let y = 2; y <= GRID_HEIGHT; y += 2) {
     for (let x = 2; x <= GRID_WIDTH; x += 2) {
-      state.field.obstacles[x][y] = true
+      state.field.obstacles[x][y] = 'concrete'
     }
   }
 }
@@ -526,22 +528,22 @@ const registerSoftWalls = (softWalls: Sprite[]) => {
     let { x, y } = softWall
     x /= CELL_WIDTH
     y /= CELL_WIDTH
-    state.field.obstacles[x][y] = true
+    state.field.obstacles[x][y] = 'wall'
   }
 }
 
 // Регистрация препятствия
-const registerObstacle = (bombCell: Point) => {
+const registerBombObstacle = (bombCell: Point) => {
   let { x, y } = bombCell
   x /= CELL_WIDTH
   y /= CELL_WIDTH
-  state.field.obstacles[x][y] = true
+  state.field.obstacles[x][y] = 'bomb'
 }
 
 // Отмена регистрации препятствия
-const unregisterObstacle = (bombCell: Point) => {
+const unregisterBombObstacle = (bombCell: Point) => {
   let { x, y } = bombCell
   x /= CELL_WIDTH
   y /= CELL_WIDTH
-  state.field.obstacles[x][y] = false
+  state.field.obstacles[x][y] = null
 }
