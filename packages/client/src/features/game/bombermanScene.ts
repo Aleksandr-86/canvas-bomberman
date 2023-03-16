@@ -46,6 +46,7 @@ type GameState = {
     direction: Point
     isDead: boolean
     lastFacing: 'left' | 'right' | 'up' | 'down'
+    lastPos: { x: number; y: number }
     bombLimit: number
     bombRange: number
     speedScale: number
@@ -56,6 +57,7 @@ type GameState = {
     backgroundTiles: SpriteList
     softWalls: SpriteList
     bombs: SpriteList
+    bombsSet: Set<PointLike>
     explosions: SpriteList
     buffs: SpriteList
   }
@@ -67,8 +69,10 @@ const state: GameState = {
     direction: new Point(),
     isDead: false,
     lastFacing: 'down',
+    // Координаты последний покинутой игроком клетки
+    lastPos: { x: 1, y: 1 },
     // bombLimit: 1,
-    bombLimit: 5,
+    bombLimit: 3,
     bombRange: 1,
     speedScale: 1,
   },
@@ -77,8 +81,10 @@ const state: GameState = {
     enemies: new SpriteList(),
     backgroundTiles: new SpriteList(),
     softWalls: new SpriteList(),
-    explosions: new SpriteList(),
     bombs: new SpriteList(),
+    // Набор координат установленных бомб
+    bombsSet: new Set(),
+    explosions: new SpriteList(),
     buffs: new SpriteList(),
   },
 }
@@ -195,12 +201,20 @@ export const bombermanScene: SceneConfig = {
         }
 
         registerObstacle(bombCell)
-        console.warn(bombCell.x)
 
         state.field.bombs.unshift(makeBomb(scene, bombCell))
 
         delay(BOMB_FUSE).then(() => {
           unregisterObstacle(bombCell)
+          // Исключает координаты бомб из набора
+          state.field.bombsSet.forEach((b, _, set) => {
+            if (
+              b.x * CELL_WIDTH === bombCell.x &&
+              b.y * CELL_WIDTH === bombCell.y
+            ) {
+              set.delete(b)
+            }
+          })
 
           state.field.explosions.add(
             ...resolveExplosion(bombCell, state.player.bombRange).map(
@@ -419,6 +433,38 @@ function updatePlayerPosition(
     nextPlayerPosition,
     2
   )
+
+  const playerX = state.player.ref.x
+  const playerY = state.player.ref.y
+  const playerOrthX = Math.floor(playerX / CELL_WIDTH)
+  const playerOrthY = Math.floor(playerY / CELL_WIDTH)
+  const lastPos = state.player.lastPos
+
+  // Проверяет факт полного перехода игрока на другую клетку
+  if (
+    (playerOrthX !== lastPos.x && playerX % CELL_WIDTH === 0) ||
+    (playerOrthY !== lastPos.y && playerY % CELL_WIDTH === 0)
+  ) {
+    if (state.field.obstacles[lastPos.x][lastPos.y]) {
+      // Добавляет объект с координатами бомбы в набор
+      state.field.bombsSet.add({ x: lastPos.x, y: lastPos.y })
+    }
+
+    // Сохраняет координаты последней посещённой игроком клетки
+    state.player.lastPos = { x: playerOrthX, y: playerOrthY }
+  }
+
+  /**
+   * Добавляет PointLike объект в массив cellsAroundPlayer
+   * ограничивающий игрока от возврата в клетку,
+   * в которой установлена бомба.
+   */
+  state.field.bombsSet.forEach(b => {
+    cellsAroundPlayer.push({
+      x: b.x * CELL_WIDTH,
+      y: b.y * CELL_WIDTH,
+    })
+  })
 
   const topLeftToCenterOffset = new Point(CELL_WIDTH / 2, CELL_WIDTH / 2)
 
