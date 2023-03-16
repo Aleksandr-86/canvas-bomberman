@@ -72,7 +72,7 @@ const state: GameState = {
     // Координаты последний покинутой игроком клетки
     lastPos: { x: 1, y: 1 },
     // bombLimit: 1,
-    bombLimit: 3,
+    bombLimit: 1,
     bombRange: 1,
     speedScale: 1,
   },
@@ -439,12 +439,18 @@ function updatePlayerPosition(
   const playerOrthX = Math.floor(playerX / CELL_WIDTH)
   const playerOrthY = Math.floor(playerY / CELL_WIDTH)
   const lastPos = state.player.lastPos
+  const playerVel = PLAYER_VELOCITY / CELL_WIDTH + 2
+  const trasholdX =
+    playerX % CELL_WIDTH >= 0 && playerX % CELL_WIDTH <= playerVel
+  const trasholdY =
+    playerY % CELL_WIDTH >= 0 && playerY % CELL_WIDTH <= playerVel
 
   // Проверяет факт полного перехода игрока на другую клетку
   if (
-    (playerOrthX !== lastPos.x && playerX % CELL_WIDTH === 0) ||
-    (playerOrthY !== lastPos.y && playerY % CELL_WIDTH === 0)
+    (playerOrthX !== lastPos.x && trasholdX) ||
+    (playerOrthY !== lastPos.y && trasholdY)
   ) {
+    console.warn(PLAYER_VELOCITY)
     if (state.field.obstacles[lastPos.x][lastPos.y]) {
       // Добавляет объект с координатами бомбы в набор
       state.field.bombsSet.add({ x: lastPos.x, y: lastPos.y })
