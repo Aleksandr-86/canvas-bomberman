@@ -1,15 +1,15 @@
 import type { ViteDevServer } from 'vite'
 import express from 'express'
 import serialize from 'serialize-javascript'
-import dotenv from 'dotenv'
+
+import * as dotenv from 'dotenv'
 import cors from 'cors'
 import { cspMiddleware } from './middlewares/cspMiddleware'
 import path from 'node:path'
 import fs from 'node:fs/promises'
 import { getStylesheets } from './helpers/getStylesheets'
-import { postgressConnect } from './db'
-import { User } from './models'
-import { routes } from './routes'
+import { postgressConnectAndSync } from './db'
+import { appRoutes } from './routes'
 
 dotenv.config()
 
@@ -50,7 +50,7 @@ async function createServer(isProd = process.env.NODE_ENV === 'production') {
     app.use(vite.middlewares)
   }
 
-  app.use('/api', routes)
+  app.use('/api', appRoutes)
 
   app.use('*', async (req: any, res, next) => {
     const url = req.originalUrl
@@ -87,11 +87,16 @@ async function createServer(isProd = process.env.NODE_ENV === 'production') {
     }
   })
 
-  await postgressConnect()
+  return app
+}
 
-  app.listen(PORT, () => {
+async function startServer() {
+  await postgressConnectAndSync()
+  const server = await createServer()
+
+  server.listen(PORT, () => {
     console.log(`  ➜ 🎸 Сервер слушает порт: ${PORT}`)
   })
 }
 
-createServer()
+startServer()

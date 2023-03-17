@@ -1,18 +1,19 @@
-import { Router } from 'express'
-import { User } from '../models'
+import express, { Router } from 'express'
+import cookieParser from 'cookie-parser'
+import * as PostsController from '../controllers/post'
+import * as CommentsController from '../controllers/comment'
 
-export const routes = Router()
+const appRoutes = Router()
 
-routes.get('/user', async (_, res) => {
-  const usr = await User.findAll()
+appRoutes.use([express.json(), cookieParser()])
 
-  res.status(201).send(usr[0].createdAt)
-})
+appRoutes.get('/posts', PostsController.getAllPosts)
+appRoutes.post('/posts', PostsController.createNewPost)
+appRoutes.get('/posts/:id', PostsController.getTopicComments)
 
-routes.get('/post', (_, res) => {
-  res.status(403).json({ reason: 'unauthorized' })
-})
+appRoutes.post('/message', CommentsController.addTopicComment)
 
-routes.get('/like', (_, res) => {
-  res.status(500).json({ reason: 'server error' })
-})
+appRoutes.post('/likes', CommentsController.addTopicLike)
+appRoutes.post('/dislikes', CommentsController.addTopicDislike)
+
+export { appRoutes }
