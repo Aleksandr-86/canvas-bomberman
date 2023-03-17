@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { transformUser } from '../features/utils/apiTransformers'
-import { UserDTO } from '../typings/api'
+import { API_URL, UserDTO } from '../typings/api'
 import { OAUTH_URL } from '../features/oauth/onOauthRequest'
-import { API_URL } from '../features/constants'
 
 interface LoginRequestData {
   login: string
@@ -31,7 +30,7 @@ const options = {
 }
 
 const login = async (data: LoginRequestData) => {
-  const response = await axios.post(API_URL + '/auth/signin', data, {
+  const response = await axios.post(API_URL + 'auth/signin', data, {
     ...options,
   })
 
@@ -47,7 +46,7 @@ const oauth = async (data: OAuthRequestData) => {
 }
 
 const register = async (data: RegisterRequestData) => {
-  const response = await axios.post(API_URL + '/auth/signup', data, {
+  const response = await axios.post(API_URL + 'auth/signup', data, {
     ...options,
   })
 
@@ -55,7 +54,7 @@ const register = async (data: RegisterRequestData) => {
 }
 
 const me = async () => {
-  const response = await axios.get<UserDTO>(API_URL + '/auth/user', {
+  const response = await axios.get<UserDTO>(API_URL + 'auth/user', {
     ...options,
   })
 
@@ -63,7 +62,7 @@ const me = async () => {
 }
 
 const logout = async () => {
-  const response = await axios.post(API_URL + '/auth/logout', undefined, {
+  const response = await axios.post(API_URL + 'auth/logout', undefined, {
     ...options,
   })
 

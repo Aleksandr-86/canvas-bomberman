@@ -1,5 +1,6 @@
-import { API_URL } from '../constants'
 import { expressCspHeader, SELF, NONE, NONCE, INLINE } from 'express-csp-header'
+
+const API_URL = 'https://ya-praktikum.tech'
 
 export const cspMiddleware = () =>
   expressCspHeader({
