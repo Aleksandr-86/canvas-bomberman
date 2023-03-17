@@ -86,6 +86,7 @@ export function resolveExplosion(
         const squareOrthY = pointInDirection.y / CELL_WIDTH
         const squareType = obstacles[squareOrthX][squareOrthY]
         if (squareType === 'concrete' || squareType === 'wall') {
+          obstacles[squareOrthX][squareOrthY] = null
           // Прерываем ударную волну, если была разрушена кирпичная стена
           break
         }

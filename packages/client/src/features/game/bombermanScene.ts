@@ -189,12 +189,11 @@ export const bombermanScene: SceneConfig = {
         const bombCell = nearestCell(playerRef).copy()
 
         /**
-         * Проверяет возможность установки бомбы
-         * (проверка отсутствия в данной клетки другой бомбы)
+         * Не допускает установку бомбы в том случае,
+         * если в клетке уже стоит другая бомба.
          */
         const x = bombCell.x / CELL_WIDTH
         const y = bombCell.y / CELL_WIDTH
-
         if (state.field.obstacles[x][y]) {
           return
         }
@@ -204,7 +203,7 @@ export const bombermanScene: SceneConfig = {
         state.field.bombs.unshift(makeBomb(scene, bombCell))
 
         delay(BOMB_FUSE).then(() => {
-          unregisterBombObstacle(bombCell)
+          unregisterObstacle(bombCell)
           // Исключает координаты бомб из набора
           state.field.bombsSet.forEach((b, _, set) => {
             if (
@@ -230,12 +229,6 @@ export const bombermanScene: SceneConfig = {
           delay(EXPLOSION_DURATION).then(() => {
             for (const wall of state.field.softWalls) {
               const wallWithExplosion = state.field.explosions.byPoint(wall)
-
-              if (wallWithExplosion) {
-                unregisterBombObstacle(
-                  new Point(wallWithExplosion.x, wallWithExplosion.y)
-                )
-              }
 
               if (wallWithExplosion && withChance(BUFF_CHANCE)) {
                 state.field.buffs.add(makeBuff(scene, wallWithExplosion))
@@ -293,6 +286,8 @@ export const bombermanScene: SceneConfig = {
     const playerPickBuff = state.field.buffs.byPoint(nearestCell(playerRef))
 
     if (playerPickBuff) {
+      pointsAdded(500)
+
       switch (playerPickBuff.frame) {
         case 'playerSpeedUp':
           state.player.speedScale += 0.5
@@ -533,16 +528,16 @@ const registerSoftWalls = (softWalls: Sprite[]) => {
 }
 
 // Регистрация препятствия
-const registerBombObstacle = (bombCell: Point) => {
-  let { x, y } = bombCell
+const registerBombObstacle = (square: PointLike) => {
+  let { x, y } = square
   x /= CELL_WIDTH
   y /= CELL_WIDTH
   state.field.obstacles[x][y] = 'bomb'
 }
 
 // Отмена регистрации препятствия
-const unregisterBombObstacle = (bombCell: Point) => {
-  let { x, y } = bombCell
+const unregisterObstacle = (square: PointLike) => {
+  let { x, y } = square
   x /= CELL_WIDTH
   y /= CELL_WIDTH
   state.field.obstacles[x][y] = null
