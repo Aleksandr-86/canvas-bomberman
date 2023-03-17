@@ -1,7 +1,6 @@
 import axios from 'axios'
-import { UserDTO } from '../typings/api'
+import { API_URL, UserDTO } from '../typings/api'
 import { transformUser } from '../features/utils/apiTransformers'
-import { API_URL } from '../features/constants'
 
 type EditRequestData = {
   first_name: string
@@ -25,7 +24,7 @@ const options = {
 }
 
 const editData = async (data: EditRequestData) => {
-  const response = await axios.put<UserDTO>(API_URL + '/user/profile', data, {
+  const response = await axios.put<UserDTO>(API_URL + 'user/profile', data, {
     ...options,
   })
 
@@ -33,7 +32,7 @@ const editData = async (data: EditRequestData) => {
 }
 
 const editPassword = async (data: PasswordRequestData) => {
-  const response = await axios.put(API_URL + '/user/password', data, {
+  const response = await axios.put(API_URL + 'user/password', data, {
     ...options,
   })
 
@@ -42,7 +41,7 @@ const editPassword = async (data: PasswordRequestData) => {
 
 const uploadAvatar = async (data: FormData) => {
   const response = await axios.put<UserDTO>(
-    API_URL + '/user/profile/avatar',
+    API_URL + 'user/profile/avatar',
     data,
     {
       ...options,

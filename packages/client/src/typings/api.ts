@@ -14,3 +14,5 @@ export type UserDTO = {
   phone: string
   email: string
 }
+
+export const API_URL = 'https://ya-praktikum.tech/api/v2/'
