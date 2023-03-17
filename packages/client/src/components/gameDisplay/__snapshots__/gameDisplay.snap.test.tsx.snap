@@ -8,7 +8,7 @@ exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div cl
     className="gameDisplayCanvasWrapper"
   >
     <canvas
-      height={720}
+      height={640}
       width={1280}
     />
     <div
@@ -41,7 +41,7 @@ exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div cl
             className="button gameEndButton"
             onClick={[Function]}
           >
-            Сыграть еще раз
+            Сыграть ещё раз
           </button>
           <a
             className="linkButton gameEndButton"
@@ -65,7 +65,7 @@ exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div cl
     className="gameDisplayCanvasWrapper"
   >
     <canvas
-      height={720}
+      height={640}
       width={1280}
     />
     <div
@@ -102,8 +102,26 @@ exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div cl
   <div
     className="gameDisplayCanvasWrapper"
   >
+    <div
+      className="panel"
+    >
+      <div
+        className="progressBar"
+      >
+        <div
+          className="bar"
+        >
+          <div
+            className="progress"
+          />
+        </div>
+      </div>
+      <div
+        className="panelScore"
+      />
+    </div>
     <canvas
-      height={720}
+      height={640}
       width={1280}
     />
   </div>

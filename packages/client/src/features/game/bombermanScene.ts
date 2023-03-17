@@ -14,6 +14,7 @@ import {
   BUFF_CHANCE,
   Points,
   BOMB_PLACEMENT_COOLDOWN,
+  GRID_HEIGHT,
 } from './const'
 import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
@@ -45,15 +46,18 @@ type GameState = {
     direction: Point
     isDead: boolean
     lastFacing: 'left' | 'right' | 'up' | 'down'
+    lastPos: { x: number; y: number }
     bombLimit: number
     bombRange: number
     speedScale: number
   }
   field: {
+    obstacles: ('concrete' | 'wall' | 'bomb' | null)[][]
     enemies: SpriteList
     backgroundTiles: SpriteList
     softWalls: SpriteList
     bombs: SpriteList
+    bombsSet: Set<PointLike>
     explosions: SpriteList
     buffs: SpriteList
   }
@@ -65,23 +69,28 @@ const state: GameState = {
     direction: new Point(),
     isDead: false,
     lastFacing: 'down',
+    // Координаты последний покинутой игроком клетки
+    lastPos: { x: 1, y: 1 },
     bombLimit: 1,
     bombRange: 1,
     speedScale: 1,
   },
   field: {
+    obstacles: [],
     enemies: new SpriteList(),
     backgroundTiles: new SpriteList(),
     softWalls: new SpriteList(),
-    explosions: new SpriteList(),
     bombs: new SpriteList(),
+    // Набор координат установленных бомб
+    bombsSet: new Set(),
+    explosions: new SpriteList(),
     buffs: new SpriteList(),
   },
 }
 
-// const controller = new EnemyController(({ frame }: Sprite) => {
-//   return !frame.startsWith('wall')
-// })
+// TODO: Инициализировать переменные при каждом создании игры
+const controller = new EnemyController()
+
 let lastBombPlacementTime = performance.now()
 const collidableCells = new SpriteList()
 
@@ -107,7 +116,6 @@ export const bombermanScene: SceneConfig = {
     )
 
     state.player.ref = makePlayer(scene, PLAYER_STARTING_POSITION)
-
     addSoftWalls(scene, state, SOFT_WALL_SPAWN_OFFSET)
     spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET)
 
@@ -127,12 +135,14 @@ export const bombermanScene: SceneConfig = {
     makeDoor(scene, door)
     state.field.softWalls.add(makeSoftWall(scene, door))
 
-    // const a = scene.displayList.filter(v => {
-    //   return !v.frame.startsWith('wall')
-    // })
+    // Регистрация границ уровня и колонн
+    registerHardWalls()
 
-    // controller.addField(a)
-    // controller.addEnemies(state.field.enemies.toArray(), PLAYER_VELOCITY)
+    // Получение массива кирпичной кладки
+    const softWalls = scene.displayList.filter(v => v.frame === 'wallSoft')
+    registerSoftWalls(softWalls)
+
+    controller.addEnemies(state.field.enemies.toArray(), PLAYER_VELOCITY)
 
     gameStarted()
   },
@@ -144,6 +154,7 @@ export const bombermanScene: SceneConfig = {
 
     if (state.player.isDead) {
       scene.anims.run(playerRef, 'die', frame.delta, true)
+      delay(500).then(() => scene.stopGame())
     } else {
       if (kbd.left) {
         state.player.direction.x -= 1
@@ -174,18 +185,43 @@ export const bombermanScene: SceneConfig = {
       const cooldown =
         frame.now - lastBombPlacementTime > BOMB_PLACEMENT_COOLDOWN
       if (kbd.space && belowMaxBombs && cooldown) {
+        lastBombPlacementTime = frame.now
         const bombCell = nearestCell(playerRef).copy()
 
+        /**
+         * Не допускает установку бомбы в том случае,
+         * если в клетке уже стоит другая бомба.
+         */
+        const x = bombCell.x / CELL_WIDTH
+        const y = bombCell.y / CELL_WIDTH
+        if (state.field.obstacles[x][y]) {
+          return
+        }
+
+        registerBombObstacle(bombCell)
+
         state.field.bombs.unshift(makeBomb(scene, bombCell))
-        lastBombPlacementTime = frame.now
 
         delay(BOMB_FUSE).then(() => {
+          unregisterObstacle(bombCell)
+          // Исключает координаты бомб из набора
+          state.field.bombsSet.forEach((b, _, set) => {
+            if (
+              b.x * CELL_WIDTH === bombCell.x &&
+              b.y * CELL_WIDTH === bombCell.y
+            ) {
+              set.delete(b)
+            }
+          })
+
           state.field.explosions.add(
-            ...resolveExplosion(bombCell, state.player.bombRange).map(
-              ({ point, orientation }) => {
-                return makeExplosion(scene, point, orientation)
-              }
-            )
+            ...resolveExplosion(
+              bombCell,
+              state.player.bombRange,
+              state.field.obstacles
+            ).map(({ point, orientation }) => {
+              return makeExplosion(scene, point, orientation)
+            })
           )
 
           state.field.bombs.destroyLast()
@@ -193,6 +229,7 @@ export const bombermanScene: SceneConfig = {
           delay(EXPLOSION_DURATION).then(() => {
             for (const wall of state.field.softWalls) {
               const wallWithExplosion = state.field.explosions.byPoint(wall)
+
               if (wallWithExplosion && withChance(BUFF_CHANCE)) {
                 state.field.buffs.add(makeBuff(scene, wallWithExplosion))
                 break
@@ -214,7 +251,7 @@ export const bombermanScene: SceneConfig = {
         delay(EXPLOSION_DURATION).then(() => {
           const destroyed = state.field.softWalls.destroyByPoint(explosion)
           if (destroyed) {
-            pointsAdded(Points.Wall)
+            pointsAdded(25)
           }
         })
       }
@@ -249,6 +286,8 @@ export const bombermanScene: SceneConfig = {
     const playerPickBuff = state.field.buffs.byPoint(nearestCell(playerRef))
 
     if (playerPickBuff) {
+      pointsAdded(500)
+
       switch (playerPickBuff.frame) {
         case 'playerSpeedUp':
           state.player.speedScale += 0.5
@@ -295,7 +334,7 @@ export const bombermanScene: SceneConfig = {
           const destroyed = state.field.enemies.destroyByPoint(enemy)
 
           if (destroyed) {
-            pointsAdded(Points.Enemy.Baloon)
+            pointsAdded(100)
           }
         })
       } else {
@@ -303,7 +342,7 @@ export const bombermanScene: SceneConfig = {
       }
     }
 
-    // controller.run(frame.delta)
+    controller.run(frame.delta, state.field.obstacles)
   },
 }
 
@@ -391,6 +430,43 @@ function updatePlayerPosition(
     2
   )
 
+  const playerX = state.player.ref.x
+  const playerY = state.player.ref.y
+  const playerOrthX = Math.floor(playerX / CELL_WIDTH)
+  const playerOrthY = Math.floor(playerY / CELL_WIDTH)
+  const lastPos = state.player.lastPos
+  const playerVel = PLAYER_VELOCITY / CELL_WIDTH + 2
+  const trasholdX =
+    playerX % CELL_WIDTH >= 0 && playerX % CELL_WIDTH <= playerVel
+  const trasholdY =
+    playerY % CELL_WIDTH >= 0 && playerY % CELL_WIDTH <= playerVel
+
+  // Проверяет факт полного перехода игрока на другую клетку
+  if (
+    (playerOrthX !== lastPos.x && trasholdX) ||
+    (playerOrthY !== lastPos.y && trasholdY)
+  ) {
+    if (state.field.obstacles[lastPos.x][lastPos.y]) {
+      // Добавляет объект с координатами бомбы в набор
+      state.field.bombsSet.add({ x: lastPos.x, y: lastPos.y })
+    }
+
+    // Сохраняет координаты последней посещённой игроком клетки
+    state.player.lastPos = { x: playerOrthX, y: playerOrthY }
+  }
+
+  /**
+   * Добавляет PointLike объект в массив cellsAroundPlayer
+   * ограничивающий игрока от возврата в клетку,
+   * в которой установлена бомба.
+   */
+  state.field.bombsSet.forEach(b => {
+    cellsAroundPlayer.push({
+      x: b.x * CELL_WIDTH,
+      y: b.y * CELL_WIDTH,
+    })
+  })
+
   const topLeftToCenterOffset = new Point(CELL_WIDTH / 2, CELL_WIDTH / 2)
 
   // move origin center, resolve collision, move back
@@ -402,4 +478,67 @@ function updatePlayerPosition(
   ).sub(topLeftToCenterOffset)
 
   state.player.ref.setPosition(resolved)
+}
+
+// Регистрация границ уровня и колонн
+const registerHardWalls = () => {
+  // Инициализация пустого двухмерного массива
+  for (let x = 0; x < GRID_WIDTH; x++) {
+    const row = []
+    for (let y = 0; y < GRID_HEIGHT; y++) row.push(null)
+    state.field.obstacles.push(row)
+  }
+
+  // Регистрация верхней границы уровня
+  for (let x = 0; x < GRID_WIDTH; x++) {
+    state.field.obstacles[x][0] = 'concrete'
+  }
+
+  // Регистрация правой границы уровня
+  for (let y = 1; y < GRID_HEIGHT - 1; y++) {
+    state.field.obstacles[GRID_WIDTH - 1][y] = 'concrete'
+  }
+
+  // Регистрация нижней границы уровня
+  for (let x = 0; x < GRID_WIDTH; x++) {
+    state.field.obstacles[x][GRID_HEIGHT - 1] = 'concrete'
+  }
+
+  // Регистрация левой границы уровня
+  for (let y = 1; y < GRID_HEIGHT - 1; y++) {
+    state.field.obstacles[0][y] = 'concrete'
+  }
+
+  // Регистрация колонн
+  for (let y = 2; y <= GRID_HEIGHT; y += 2) {
+    for (let x = 2; x <= GRID_WIDTH; x += 2) {
+      state.field.obstacles[x][y] = 'concrete'
+    }
+  }
+}
+
+// Регистрация кирпичных стен
+const registerSoftWalls = (softWalls: Sprite[]) => {
+  for (const softWall of softWalls) {
+    let { x, y } = softWall
+    x /= CELL_WIDTH
+    y /= CELL_WIDTH
+    state.field.obstacles[x][y] = 'wall'
+  }
+}
+
+// Регистрация препятствия
+const registerBombObstacle = (square: PointLike) => {
+  let { x, y } = square
+  x /= CELL_WIDTH
+  y /= CELL_WIDTH
+  state.field.obstacles[x][y] = 'bomb'
+}
+
+// Отмена регистрации препятствия
+const unregisterObstacle = (square: PointLike) => {
+  let { x, y } = square
+  x /= CELL_WIDTH
+  y /= CELL_WIDTH
+  state.field.obstacles[x][y] = null
 }

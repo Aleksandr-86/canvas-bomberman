@@ -15,7 +15,7 @@ describe(`<GameOverlay/> snapshot test cases`, () => {
       .create(
         <Provider store={store}>
           <MemoryRouter initialEntries={[`/game`]}>
-            <GameOverlay onReloadGame={() => undefined} />
+            <GameOverlay startGame={() => undefined} />
           </MemoryRouter>
         </Provider>
       )
@@ -30,7 +30,7 @@ describe(`<GameOverlay/> snapshot test cases`, () => {
       .create(
         <Provider store={store}>
           <MemoryRouter initialEntries={[`/game`]}>
-            <GameOverlay onReloadGame={() => undefined} />
+            <GameOverlay startGame={() => undefined} />
           </MemoryRouter>
         </Provider>
       )
@@ -45,7 +45,7 @@ describe(`<GameOverlay/> snapshot test cases`, () => {
       .create(
         <Provider store={store}>
           <MemoryRouter initialEntries={[`/game`]}>
-            <GameOverlay onReloadGame={() => undefined} />
+            <GameOverlay startGame={() => undefined} />
           </MemoryRouter>
         </Provider>
       )

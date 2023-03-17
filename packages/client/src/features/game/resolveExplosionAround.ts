@@ -34,7 +34,11 @@ type ExplosionConfig = {
  * @param radius explosion radius (game space)
  * @returns
  */
-export function resolveExplosion(center: PointLike, radius: number) {
+export function resolveExplosion(
+  center: PointLike,
+  radius: number,
+  obstacles: ('concrete' | 'wall' | 'bomb' | null)[][]
+) {
   const cutoffs = {
     left: false,
     right: false,
@@ -76,6 +80,16 @@ export function resolveExplosion(center: PointLike, radius: number) {
           point: pointInDirection,
           orientation: orientation as ExplosionOrientation,
         })
+
+        // Получение типа следующей клетки
+        const squareOrthX = pointInDirection.x / CELL_WIDTH
+        const squareOrthY = pointInDirection.y / CELL_WIDTH
+        const squareType = obstacles[squareOrthX][squareOrthY]
+        if (squareType === 'concrete' || squareType === 'wall') {
+          obstacles[squareOrthX][squareOrthY] = null
+          // Прерываем ударную волну, если была разрушена кирпичная стена
+          break
+        }
       } else {
         cutoffs[direction] = true
       }
