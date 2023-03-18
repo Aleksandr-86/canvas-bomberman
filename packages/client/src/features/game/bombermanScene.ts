@@ -344,7 +344,7 @@ export const bombermanScene: SceneConfig = {
           break
 
         case 'playerSpeedUp':
-          state.player.speedScale += 0.2
+          state.player.speedScale += 0.25
           state.field.buffStats.playerSpeedUp.spawned = false
           state.field.buffStats.playerSpeedUp.amount++
           break
