@@ -41,6 +41,13 @@ import { SpriteList } from './spriteList'
 import { SceneContext } from './lib/sceneContext'
 import { EnemyController } from './enemyController'
 
+export interface BuffStats {
+  playerSpeedUp: number
+  bombAmountUp: number
+  bombRangeUp: number
+  bombPass: number
+}
+
 type GameState = {
   player: {
     ref: null | Sprite
@@ -61,6 +68,7 @@ type GameState = {
     bombsSet: Set<PointLike>
     explosions: SpriteList
     buffs: SpriteList
+    buffStats: BuffStats
   }
 }
 
@@ -86,6 +94,12 @@ const state: GameState = {
     bombsSet: new Set(),
     explosions: new SpriteList(),
     buffs: new SpriteList(),
+    buffStats: {
+      bombAmountUp: 0,
+      bombRangeUp: 0,
+      playerSpeedUp: 0,
+      bombPass: 0,
+    },
   },
 }
 
@@ -161,14 +175,17 @@ export const bombermanScene: SceneConfig = {
         state.player.direction.x -= 1
         scene.anims.run(playerRef, 'left', frame.delta)
       }
+
       if (kbd.right) {
         state.player.direction.x += 1
         scene.anims.run(playerRef, 'right', frame.delta)
       }
+
       if (kbd.up) {
         state.player.direction.y -= 1
         scene.anims.run(playerRef, 'up', frame.delta)
       }
+
       if (kbd.down) {
         state.player.direction.y += 1
         scene.anims.run(playerRef, 'down', frame.delta)
@@ -232,7 +249,9 @@ export const bombermanScene: SceneConfig = {
               const wallWithExplosion = state.field.explosions.byPoint(wall)
 
               if (wallWithExplosion && withChance(BUFF_CHANCE)) {
-                state.field.buffs.add(makeBuff(scene, wallWithExplosion))
+                state.field.buffs.add(
+                  makeBuff(scene, wallWithExplosion, state.field.buffStats)
+                )
                 break
               }
             }
@@ -292,6 +311,7 @@ export const bombermanScene: SceneConfig = {
       switch (playerPickBuff.frame) {
         case 'playerSpeedUp':
           state.player.speedScale += 0.5
+          state.field.buffStats.playerSpeedUp++
           break
 
         case 'bombAmountUp':
@@ -300,6 +320,10 @@ export const bombermanScene: SceneConfig = {
 
         case 'bombRangeUp':
           state.player.bombRange += 1
+          break
+
+        case 'bombPass':
+          state.field.buffStats.bombPass = 1
           break
 
         default:
@@ -461,12 +485,14 @@ function updatePlayerPosition(
    * ограничивающий игрока от возврата в клетку,
    * в которой установлена бомба.
    */
-  state.field.bombsSet.forEach(b => {
-    cellsAroundPlayer.push({
-      x: b.x * CELL_WIDTH,
-      y: b.y * CELL_WIDTH,
+  if (state.field.buffStats.bombPass === 0) {
+    state.field.bombsSet.forEach(b => {
+      cellsAroundPlayer.push({
+        x: b.x * CELL_WIDTH,
+        y: b.y * CELL_WIDTH,
+      })
     })
-  })
+  }
 
   const topLeftToCenterOffset = new Point(CELL_WIDTH / 2, CELL_WIDTH / 2)
 

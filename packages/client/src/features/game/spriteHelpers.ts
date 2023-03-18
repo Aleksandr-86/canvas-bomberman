@@ -3,6 +3,7 @@ import { type PointLike, randomInRange } from './utils'
 import { CELL_WIDTH, Depth } from './const'
 import { ExplosionOrientation } from './types'
 import { makeAnimation } from './animationHelpers'
+import { BuffStats } from './bombermanScene'
 
 export function makePlayer(scene: SceneContext, position: PointLike) {
   const player = scene.add.sprite(
@@ -110,10 +111,29 @@ export function makeExplosion(
   return explosion
 }
 
-const possibleBuffs = ['bombAmountUp', 'bombRangeUp', 'playerSpeedUp']
+let possibleBuffs = ['playerSpeedUp', 'bombAmountUp', 'bombRangeUp', 'bombPass']
 
-export function makeBuff(scene: SceneContext, position: PointLike) {
-  const buffKind = possibleBuffs[randomInRange(0, possibleBuffs.length)]
+export function makeBuff(
+  scene: SceneContext,
+  position: PointLike,
+  buffStats: BuffStats
+) {
+  let buffKind = 'bombPass'
+
+  if (buffStats.playerSpeedUp === 0) {
+    buffKind = 'playerSpeedUp'
+  } else {
+    // Ограничение набора улучшений
+    if (buffStats.playerSpeedUp === 2) {
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'playerSpeedUp')
+    }
+
+    if (buffStats.bombPass > 0) {
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'bombPass')
+    }
+
+    buffKind = possibleBuffs[randomInRange(0, possibleBuffs.length)]
+  }
 
   const buff = scene.add.sprite(
     position.x,
