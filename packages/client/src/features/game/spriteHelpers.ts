@@ -117,9 +117,10 @@ export function makeBuff(
   buffStats: BuffStats
 ) {
   let possibleBuffs = [
-    'playerSpeedUp',
     'bombAmountUp',
     'bombRangeUp',
+    'playerSpeedUp',
+    'detonator',
     'bombPass',
   ]
 
@@ -139,10 +140,13 @@ export function makeBuff(
       possibleBuffs = possibleBuffs.filter(buff => buff !== 'playerSpeedUp')
     }
 
+    if (buffStats.detonator.spawned || buffStats.detonator.amount > 0) {
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'detonator')
+    }
+
     if (buffStats.bombPass.spawned || buffStats.bombPass.amount > 0) {
       possibleBuffs = possibleBuffs.filter(buff => buff !== 'bombPass')
     }
-
 
     buffKind = possibleBuffs[randomInRange(0, possibleBuffs.length)]
   }
@@ -150,6 +154,8 @@ export function makeBuff(
   // Учёт улучшения
   if (buffKind === 'playerSpeedUp') {
     buffStats.playerSpeedUp.spawned = true
+  } else if (buffKind === 'detonator') {
+    buffStats.detonator.spawned = true
   } else if (buffKind === 'bombPass') {
     buffStats.bombPass.spawned = true
   }

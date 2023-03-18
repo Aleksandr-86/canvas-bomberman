@@ -4,6 +4,7 @@ const Keys = {
   ArrowUp: 'up',
   ArrowDown: 'down',
   Space: 'space',
+  ControlLeft: 'control',
 } as const
 
 export class Keyboard {
@@ -12,6 +13,7 @@ export class Keyboard {
   public up = false
   public down = false
   public space = false
+  public control = false
 
   constructor() {
     window.addEventListener('keydown', this.onKeyDown)

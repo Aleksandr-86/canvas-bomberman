@@ -40,9 +40,10 @@ import { SceneContext } from './lib/sceneContext'
 import { EnemyController } from './enemyController'
 
 export interface BuffStats {
-  playerSpeedUp: { spawned: boolean; amount: number }
   bombAmountUp: { spawned: boolean; amount: number }
   bombRangeUp: { spawned: boolean; amount: number }
+  playerSpeedUp: { spawned: boolean; amount: number }
+  detonator: { spawned: boolean; amount: number }
   bombPass: { spawned: boolean; amount: number }
 }
 
@@ -66,6 +67,7 @@ type GameState = {
     softWalls: SpriteList
     bombs: SpriteList
     bombsSet: Set<PointLike>
+    bombPlanted: Point[]
     explosions: SpriteList
     buffs: SpriteList
     buffStats: BuffStats
@@ -80,7 +82,7 @@ const state: GameState = {
     lastFacing: 'down',
     // Координаты последний покинутой игроком клетки
     lastPos: { x: 1, y: 1 },
-    bombLimit: 1,
+    bombLimit: 3,
     bombRange: 1,
     speedScale: 1,
   },
@@ -92,12 +94,14 @@ const state: GameState = {
     bombs: new SpriteList(),
     // Набор координат установленных бомб
     bombsSet: new Set(),
+    bombPlanted: [],
     explosions: new SpriteList(),
     buffs: new SpriteList(),
     buffStats: {
       bombAmountUp: { spawned: false, amount: 0 },
       bombRangeUp: { spawned: false, amount: 0 },
       playerSpeedUp: { spawned: false, amount: 0 },
+      detonator: { spawned: false, amount: 0 },
       bombPass: { spawned: false, amount: 0 },
     },
   },
@@ -108,6 +112,44 @@ const controller = new EnemyController()
 
 let lastBombPlacementTime = performance.now()
 const collidableCells = new SpriteList()
+
+// Детонация бомб
+const bombDetonation = (bombCell: Point, scene: SceneContext) => {
+  unregisterObstacle(bombCell)
+  // Исключает координаты бомб из набора
+  state.field.bombsSet.forEach((b, _, set) => {
+    if (b.x * CELL_WIDTH === bombCell.x && b.y * CELL_WIDTH === bombCell.y) {
+      set.delete(b)
+    }
+  })
+
+  state.field.explosions.add(
+    ...resolveExplosion(
+      bombCell,
+      state.player.bombRange,
+      state.field.obstacles
+    ).map(({ point, orientation }) => {
+      return makeExplosion(scene, point, orientation)
+    })
+  )
+
+  state.field.bombs.destroyLast()
+
+  delay(EXPLOSION_DURATION).then(() => {
+    for (const wall of state.field.softWalls) {
+      const wallWithExplosion = state.field.explosions.byPoint(wall)
+
+      if (wallWithExplosion && withChance(BUFF_CHANCE)) {
+        state.field.buffs.add(
+          makeBuff(scene, wallWithExplosion, state.field.buffStats)
+        )
+        break
+      }
+    }
+
+    state.field.explosions.destroyAll()
+  })
+}
 
 export const bombermanScene: SceneConfig = {
   preload: load => {
@@ -192,6 +234,13 @@ export const bombermanScene: SceneConfig = {
         scene.anims.run(playerRef, 'down', frame.delta)
       }
 
+      if (kbd.control && state.field.buffStats.detonator.amount === 1) {
+        const bombCell = state.field.bombPlanted.shift()
+        if (bombCell) {
+          bombDetonation(bombCell, scene)
+        }
+      }
+
       const playerMovingDiagonally =
         state.player.direction.x !== 0 && state.player.direction.y !== 0
 
@@ -218,46 +267,14 @@ export const bombermanScene: SceneConfig = {
         }
 
         registerBombObstacle(bombCell)
-
+        state.field.bombPlanted.push(bombCell)
         state.field.bombs.unshift(makeBomb(scene, bombCell))
 
+        if (state.field.buffStats.detonator.amount === 1) return
+
         delay(BOMB_FUSE).then(() => {
-          unregisterObstacle(bombCell)
-          // Исключает координаты бомб из набора
-          state.field.bombsSet.forEach((b, _, set) => {
-            if (
-              b.x * CELL_WIDTH === bombCell.x &&
-              b.y * CELL_WIDTH === bombCell.y
-            ) {
-              set.delete(b)
-            }
-          })
-
-          state.field.explosions.add(
-            ...resolveExplosion(
-              bombCell,
-              state.player.bombRange,
-              state.field.obstacles
-            ).map(({ point, orientation }) => {
-              return makeExplosion(scene, point, orientation)
-            })
-          )
-
-          state.field.bombs.destroyLast()
-
-          delay(EXPLOSION_DURATION).then(() => {
-            for (const wall of state.field.softWalls) {
-              const wallWithExplosion = state.field.explosions.byPoint(wall)
-
-              if (wallWithExplosion && withChance(BUFF_CHANCE)) {
-                state.field.buffs.add(
-                  makeBuff(scene, wallWithExplosion, state.field.buffStats)
-                )
-                break
-              }
-            }
-            state.field.explosions.destroyAll()
-          })
+          state.field.bombPlanted.shift()
+          bombDetonation(bombCell, scene)
         })
       }
     }
@@ -310,12 +327,6 @@ export const bombermanScene: SceneConfig = {
       pointsAdded(500)
 
       switch (playerPickBuff.frame) {
-        case 'playerSpeedUp':
-          state.player.speedScale += 0.5
-          state.field.buffStats.playerSpeedUp.spawned = false
-          state.field.buffStats.playerSpeedUp.amount++
-          break
-
         case 'bombAmountUp':
           state.player.bombLimit += 1
           break
@@ -324,8 +335,17 @@ export const bombermanScene: SceneConfig = {
           state.player.bombRange += 1
           break
 
+        case 'playerSpeedUp':
+          state.player.speedScale += 0.5
+          state.field.buffStats.playerSpeedUp.spawned = false
+          state.field.buffStats.playerSpeedUp.amount++
+          break
+
+        case 'detonator':
+          state.field.buffStats.detonator.amount = 1
+          break
+
         case 'bombPass':
-          state.field.buffStats.bombPass.spawned = false
           state.field.buffStats.bombPass.amount = 1
           break
 

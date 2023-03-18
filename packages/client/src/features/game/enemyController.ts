@@ -91,9 +91,7 @@ export class EnemyController {
       enemy.x % CELL_WIDTH !== 0 ||
       enemy.y % CELL_WIDTH !== 0
     ) {
-      // enemy.x = 240
-      // enemy.y = 240
-      // return
+      return
     }
 
     let target = new Point(enemy.x, enemy.y)

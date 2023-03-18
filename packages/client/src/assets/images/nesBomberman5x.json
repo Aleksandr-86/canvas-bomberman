@@ -80,9 +80,10 @@
     "explosionRight4": { "x": 8, "y": 11 },
     "explosionTipRight4": { "x": 9, "y": 11 },
 
-    "playerSpeedUp": { "x": 2, "y": 14 },
     "bombAmountUp": { "x": 0, "y": 14 },
     "bombRangeUp": { "x": 1, "y": 14 },
+    "playerSpeedUp": { "x": 2, "y": 14 },
+    "detonator": { "x": 4, "y": 14 },
     "bombPass": { "x": 5, "y": 14 },
     "phaseThroughBricks": { "x": 3, "y": 14 },
     "bombManualDetonation": { "x": 4, "y": 14 },
