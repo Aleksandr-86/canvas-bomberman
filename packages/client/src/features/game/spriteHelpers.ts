@@ -113,7 +113,7 @@ export function makeExplosion(
 const possibleBuffs = ['bombAmountUp', 'bombRangeUp', 'playerSpeedUp']
 
 export function makeBuff(scene: SceneContext, position: PointLike) {
-  const buffKind = possibleBuffs[randomInRange(0, possibleBuffs.length - 1)]
+  const buffKind = possibleBuffs[randomInRange(0, possibleBuffs.length)]
 
   const buff = scene.add.sprite(
     position.x,

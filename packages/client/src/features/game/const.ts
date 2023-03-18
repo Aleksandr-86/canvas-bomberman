@@ -45,11 +45,11 @@ export const GAME_DURATION = 200
 export const BOMB_PLACEMENT_COOLDOWN = 200
 
 /* --- Velocity --- */
-export const PLAYER_VELOCITY = CELL_WIDTH * 3
-export const BASIC_ENEMY_VELOCITY = PLAYER_VELOCITY
+export const PLAYER_VELOCITY = CELL_WIDTH * 2
+export const BASIC_ENEMY_VELOCITY = CELL_WIDTH * 3
 
 /* --- Chance --- */
-export const BUFF_CHANCE = 8
+export const BUFF_CHANCE = 100
 export const WALL_GENERATION_CHANCE = 30
 
 /**
@@ -72,7 +72,7 @@ export const U_TURN_CHANCE = 15 // Шанс разворота противни�
 
 /* --- Stats --- */
 export const EXPLOSION_RADIUS = 1
-export const MAX_ENEMY_COUNT = 7
+export const MAX_ENEMY_COUNT = 1
 
 export const Points = {
   Enemy: {

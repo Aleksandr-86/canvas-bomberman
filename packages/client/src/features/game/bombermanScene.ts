@@ -15,6 +15,7 @@ import {
   Points,
   BOMB_PLACEMENT_COOLDOWN,
   GRID_HEIGHT,
+  BASIC_ENEMY_VELOCITY,
 } from './const'
 import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
@@ -142,7 +143,7 @@ export const bombermanScene: SceneConfig = {
     const softWalls = scene.displayList.filter(v => v.frame === 'wallSoft')
     registerSoftWalls(softWalls)
 
-    controller.addEnemies(state.field.enemies.toArray(), PLAYER_VELOCITY)
+    controller.addEnemies(state.field.enemies.toArray(), BASIC_ENEMY_VELOCITY)
 
     gameStarted()
   },
