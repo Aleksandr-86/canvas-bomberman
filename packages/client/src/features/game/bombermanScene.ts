@@ -2,7 +2,6 @@ import {
   BOMB_FUSE,
   CELL_WIDTH,
   Depth,
-  EMPTY_FIELD,
   MAX_ENEMY_COUNT,
   GRID_WIDTH,
   PLAYER_STARTING_POSITION,
@@ -12,7 +11,6 @@ import {
   CELL_DIMENSIONS,
   EXPLOSION_DURATION,
   BUFF_CHANCE,
-  Points,
   BOMB_PLACEMENT_COOLDOWN,
   GRID_HEIGHT,
   BASIC_ENEMY_VELOCITY,
@@ -24,7 +22,7 @@ import { Point, type PointLike, delay, withChance } from './utils'
 import { gameStarted, pointsAdded } from './gameActions'
 import nesBomberman from '../../assets/images/nesBomberman5xTransparent.png'
 import nesBombermanFrames from '../../assets/images/nesBomberman5x.json'
-import { generateWallPositions } from './createSoftWalls'
+import { generateWallSoftPositions } from './createSoftWalls'
 import { resolveExplosion } from './resolveExplosionAround'
 import { circleCircleCollision, rectCircleResolve } from './collision'
 import { nearestCell, selectNearbyCells, scaleAtlasFrames } from './gridHelpers'
@@ -42,11 +40,13 @@ import { SceneContext } from './lib/sceneContext'
 import { EnemyController } from './enemyController'
 
 export interface BuffStats {
-  playerSpeedUp: number
-  bombAmountUp: number
-  bombRangeUp: number
-  bombPass: number
+  playerSpeedUp: { spawned: boolean; amount: number }
+  bombAmountUp: { spawned: boolean; amount: number }
+  bombRangeUp: { spawned: boolean; amount: number }
+  bombPass: { spawned: boolean; amount: number }
 }
+
+export type Obstacles = ('wallHard' | 'wallSoft' | 'bomb' | null)[][]
 
 type GameState = {
   player: {
@@ -60,7 +60,7 @@ type GameState = {
     speedScale: number
   }
   field: {
-    obstacles: ('concrete' | 'wall' | 'bomb' | null)[][]
+    obstacles: Obstacles
     enemies: SpriteList
     backgroundTiles: SpriteList
     softWalls: SpriteList
@@ -95,10 +95,10 @@ const state: GameState = {
     explosions: new SpriteList(),
     buffs: new SpriteList(),
     buffStats: {
-      bombAmountUp: 0,
-      bombRangeUp: 0,
-      playerSpeedUp: 0,
-      bombPass: 0,
+      bombAmountUp: { spawned: false, amount: 0 },
+      bombRangeUp: { spawned: false, amount: 0 },
+      playerSpeedUp: { spawned: false, amount: 0 },
+      bombPass: { spawned: false, amount: 0 },
     },
   },
 }
@@ -118,9 +118,12 @@ export const bombermanScene: SceneConfig = {
     })
   },
   create: scene => {
+    // Регистрация границ уровня и колонн
+    registerHardWalls()
+
     state.field.backgroundTiles.add(
       ...scene.add.tileGrid({
-        grid: EMPTY_FIELD,
+        grid: state.field.obstacles,
         cellSize: CELL_WIDTH,
         gridWidth: GRID_WIDTH,
         cells: {
@@ -145,13 +148,11 @@ export const bombermanScene: SceneConfig = {
       )
     )
 
-    const door = new Point(640, 560)
+    // const door = new Point(640, 560)
+    const door = new Point(240, 240)
 
     makeDoor(scene, door)
     state.field.softWalls.add(makeSoftWall(scene, door))
-
-    // Регистрация границ уровня и колонн
-    registerHardWalls()
 
     // Получение массива кирпичной кладки
     const softWalls = scene.displayList.filter(v => v.frame === 'wallSoft')
@@ -311,7 +312,8 @@ export const bombermanScene: SceneConfig = {
       switch (playerPickBuff.frame) {
         case 'playerSpeedUp':
           state.player.speedScale += 0.5
-          state.field.buffStats.playerSpeedUp++
+          state.field.buffStats.playerSpeedUp.spawned = false
+          state.field.buffStats.playerSpeedUp.amount++
           break
 
         case 'bombAmountUp':
@@ -323,7 +325,8 @@ export const bombermanScene: SceneConfig = {
           break
 
         case 'bombPass':
-          state.field.buffStats.bombPass = 1
+          state.field.buffStats.bombPass.spawned = false
+          state.field.buffStats.bombPass.amount = 1
           break
 
         default:
@@ -398,8 +401,8 @@ function addSoftWalls(
   wallSpawnOffset: PointLike
 ) {
   state.field.softWalls.add(
-    ...generateWallPositions(
-      EMPTY_FIELD,
+    ...generateWallSoftPositions(
+      state.field.obstacles,
       Point.from(wallSpawnOffset).scale(1 / CELL_WIDTH)
     ).map(cell => makeSoftWall(scene, Point.from(cell).scale(CELL_WIDTH)))
   )
@@ -425,7 +428,6 @@ function spawnEnemies(
 
     if (withChance(20) && canSpawnEnemy) {
       const enemy = makeEnemy(scene, cell, 'baloon')
-
       state.field.enemies.add(enemy)
     }
   }
@@ -485,7 +487,7 @@ function updatePlayerPosition(
    * ограничивающий игрока от возврата в клетку,
    * в которой установлена бомба.
    */
-  if (state.field.buffStats.bombPass === 0) {
+  if (state.field.buffStats.bombPass.amount === 0) {
     state.field.bombsSet.forEach(b => {
       cellsAroundPlayer.push({
         x: b.x * CELL_WIDTH,
@@ -518,28 +520,28 @@ const registerHardWalls = () => {
 
   // Регистрация верхней границы уровня
   for (let x = 0; x < GRID_WIDTH; x++) {
-    state.field.obstacles[x][0] = 'concrete'
+    state.field.obstacles[x][0] = 'wallHard'
   }
 
   // Регистрация правой границы уровня
   for (let y = 1; y < GRID_HEIGHT - 1; y++) {
-    state.field.obstacles[GRID_WIDTH - 1][y] = 'concrete'
+    state.field.obstacles[GRID_WIDTH - 1][y] = 'wallHard'
   }
 
   // Регистрация нижней границы уровня
   for (let x = 0; x < GRID_WIDTH; x++) {
-    state.field.obstacles[x][GRID_HEIGHT - 1] = 'concrete'
+    state.field.obstacles[x][GRID_HEIGHT - 1] = 'wallHard'
   }
 
   // Регистрация левой границы уровня
   for (let y = 1; y < GRID_HEIGHT - 1; y++) {
-    state.field.obstacles[0][y] = 'concrete'
+    state.field.obstacles[0][y] = 'wallHard'
   }
 
   // Регистрация колонн
   for (let y = 2; y <= GRID_HEIGHT; y += 2) {
     for (let x = 2; x <= GRID_WIDTH; x += 2) {
-      state.field.obstacles[x][y] = 'concrete'
+      state.field.obstacles[x][y] = 'wallHard'
     }
   }
 }
@@ -550,7 +552,7 @@ const registerSoftWalls = (softWalls: Sprite[]) => {
     let { x, y } = softWall
     x /= CELL_WIDTH
     y /= CELL_WIDTH
-    state.field.obstacles[x][y] = 'wall'
+    state.field.obstacles[x][y] = 'wallSoft'
   }
 }
 

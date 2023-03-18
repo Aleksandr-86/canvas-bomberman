@@ -8,6 +8,7 @@ import {
   GRID_HEIGHT,
 } from './const'
 import { type Sprite } from './lib'
+import type { Obstacles } from './bombermanScene'
 import { Point, randomInRange } from './utils'
 
 type EnemyState = {
@@ -55,7 +56,7 @@ export class EnemyController {
   private possibleDirections(
     enemyX: number,
     enemyY: number,
-    obstacles: ('concrete' | 'wall' | 'bomb' | null)[][]
+    obstacles: Obstacles
   ) {
     const possibleDirections: string[] = []
 
@@ -78,10 +79,7 @@ export class EnemyController {
   /**
    * Возвращает клетку к которой двинется противник.
    */
-  private chooseNextPoint(
-    enemy: Sprite,
-    obstacles: ('concrete' | 'wall' | 'bomb' | null)[][]
-  ) {
+  private chooseNextPoint(enemy: Sprite, obstacles: Obstacles) {
     const enemyOrthX = Math.floor(enemy.x / CELL_WIDTH)
     const enemyOrthY = Math.floor(enemy.y / CELL_WIDTH)
 
@@ -201,7 +199,7 @@ export class EnemyController {
     return target
   }
 
-  run(delta: number, obstacles: ('concrete' | 'wall' | 'bomb' | null)[][]) {
+  run(delta: number, obstacles: Obstacles) {
     for (const entry of this.state) {
       if (entry.movementState === MovementState.Idle) {
         const candidate = this.chooseNextPoint(entry.ref, obstacles)

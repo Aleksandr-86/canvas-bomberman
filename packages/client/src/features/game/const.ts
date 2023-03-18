@@ -1,24 +1,10 @@
-import { FieldState } from './types'
-
 // prettier-ignore
-export const EMPTY_FIELD: FieldState = [
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
-  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
-  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
-  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
-  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-  1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
-  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-]
-
 export const GRID_WIDTH = 19
 export const GRID_HEIGHT = 13
+
+// export const GRID_WIDTH = 31
+// export const GRID_HEIGHT = 13
+
 export const CELL_WIDTH = 80
 
 export const CAMERA_WIDTH = 1280
@@ -49,7 +35,7 @@ export const PLAYER_VELOCITY = CELL_WIDTH * 2
 export const BASIC_ENEMY_VELOCITY = CELL_WIDTH * 3
 
 /* --- Chance --- */
-export const BUFF_CHANCE = 100
+export const BUFF_CHANCE = 8
 export const WALL_GENERATION_CHANCE = 30
 
 /**
@@ -72,7 +58,7 @@ export const U_TURN_CHANCE = 15 // Шанс разворота противни�
 
 /* --- Stats --- */
 export const EXPLOSION_RADIUS = 1
-export const MAX_ENEMY_COUNT = 1
+export const MAX_ENEMY_COUNT = 8
 
 export const Points = {
   Enemy: {
