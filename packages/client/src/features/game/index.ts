@@ -1,6 +1,7 @@
+import { CELL_WIDTH, GRID_HEIGHT } from './const'
 import { useRef, useEffect } from 'react'
 import { useAppDispatch } from '../../store/hooks'
-import { bombermanScene } from './bombermanScene'
+import { makeBombermanScene } from './bombermanScene'
 import { setStatus, GameStatus } from '../../store/gameSlice'
 import { Game } from '../game/lib'
 import { GameConfig } from './lib'
@@ -28,11 +29,11 @@ export function useGame() {
     }
 
     gameRef.current = createGame({
-      height: 640,
-      width: 1280,
+      width: GRID_HEIGHT * CELL_WIDTH * 2,
+      height: GRID_HEIGHT * CELL_WIDTH,
       backgroundColor: '#64b0ff',
       root: canvasRef.current,
-      scene: bombermanScene,
+      scene: makeBombermanScene(),
     })
 
     gameRef.current.start()
@@ -53,7 +54,7 @@ export function useGame() {
       width: 1280,
       backgroundColor: '#64b0ff',
       root: canvas,
-      scene: bombermanScene,
+      scene: makeBombermanScene(),
     })
   }, [])
 
