@@ -45,6 +45,7 @@ export interface BuffStats {
   playerSpeedUp: { spawned: boolean; amount: number }
   detonator: { spawned: boolean; amount: number }
   bombPass: { spawned: boolean; amount: number }
+  flamePass: { spawned: boolean; amount: number }
 }
 
 export type Obstacles = ('wallHard' | 'wallSoft' | 'bomb' | null)[][]
@@ -82,7 +83,7 @@ const state: GameState = {
     lastFacing: 'down',
     // Координаты последний покинутой игроком клетки
     lastPos: { x: 1, y: 1 },
-    bombLimit: 3,
+    bombLimit: 1,
     bombRange: 1,
     speedScale: 1,
   },
@@ -103,6 +104,7 @@ const state: GameState = {
       playerSpeedUp: { spawned: false, amount: 0 },
       detonator: { spawned: false, amount: 0 },
       bombPass: { spawned: false, amount: 0 },
+      flamePass: { spawned: false, amount: 0 },
     },
   },
 }
@@ -312,9 +314,15 @@ export const bombermanScene: SceneConfig = {
       playerRef.frame = lastAnimationFrame
     }
 
-    const playerHitByExplosion = state.field.explosions.byPoint(
-      nearestCell(playerRef)
-    )
+    let playerHitByExplosion: Sprite | undefined
+    if (state.field.buffStats.flamePass.amount > 0) {
+      playerHitByExplosion = undefined
+    } else {
+      playerHitByExplosion = state.field.explosions.byPoint(
+        nearestCell(playerRef)
+      )
+    }
+
     const playerHitByEnemy = state.field.enemies.byPoint(playerRef)
 
     if (playerHitByEnemy || playerHitByExplosion) {
@@ -336,7 +344,7 @@ export const bombermanScene: SceneConfig = {
           break
 
         case 'playerSpeedUp':
-          state.player.speedScale += 0.5
+          state.player.speedScale += 0.2
           state.field.buffStats.playerSpeedUp.spawned = false
           state.field.buffStats.playerSpeedUp.amount++
           break
@@ -347,6 +355,10 @@ export const bombermanScene: SceneConfig = {
 
         case 'bombPass':
           state.field.buffStats.bombPass.amount = 1
+          break
+
+        case 'flamePass':
+          state.field.buffStats.flamePass.amount = 1
           break
 
         default:

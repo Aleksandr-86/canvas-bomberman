@@ -122,6 +122,7 @@ export function makeBuff(
     'playerSpeedUp',
     'detonator',
     'bombPass',
+    'flamePass',
   ]
 
   let buffKind = ''
@@ -148,6 +149,10 @@ export function makeBuff(
       possibleBuffs = possibleBuffs.filter(buff => buff !== 'bombPass')
     }
 
+    if (buffStats.flamePass.spawned || buffStats.flamePass.amount > 0) {
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'flamePass')
+    }
+
     buffKind = possibleBuffs[randomInRange(0, possibleBuffs.length)]
   }
 
@@ -158,6 +163,8 @@ export function makeBuff(
     buffStats.detonator.spawned = true
   } else if (buffKind === 'bombPass') {
     buffStats.bombPass.spawned = true
+  } else if (buffKind === 'flamePass') {
+    buffStats.flamePass.spawned = true
   }
 
   const buff = scene.add.sprite(
