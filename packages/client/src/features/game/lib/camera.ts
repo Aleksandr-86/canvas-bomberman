@@ -19,7 +19,7 @@ export class Camera {
   get value() {
     return {
       x: Math.round(
-        clamp(-this.cameraTarget.x + this.cameraWidth / 2, -300, 0)
+        clamp(-this.cameraTarget.x + this.cameraWidth / 2, -400, 0)
       ),
       y: Math.round(clamp(-this.cameraTarget.y + this.cameraHeight / 2, 0, 0)),
     }

@@ -1,4 +1,4 @@
-import { CELL_WIDTH, GRID_HEIGHT } from './const'
+import { CAMERA_WIDTH, CAMERA_HEIGHT } from './const'
 import { useRef, useEffect } from 'react'
 import { useAppDispatch } from '../../store/hooks'
 import { makeBombermanScene } from './bombermanScene'
@@ -29,8 +29,8 @@ export function useGame() {
     }
 
     gameRef.current = createGame({
-      width: GRID_HEIGHT * CELL_WIDTH * 2,
-      height: GRID_HEIGHT * CELL_WIDTH,
+      width: CAMERA_WIDTH,
+      height: CAMERA_HEIGHT,
       backgroundColor: '#64b0ff',
       root: canvasRef.current,
       scene: makeBombermanScene(),

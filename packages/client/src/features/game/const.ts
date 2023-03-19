@@ -1,14 +1,10 @@
-// prettier-ignore
-// export const GRID_WIDTH = 19
-// export const GRID_HEIGHT = 13
-
 export const GRID_WIDTH = 31
 export const GRID_HEIGHT = 13
 
 export const CELL_WIDTH = 80
 
-export const CAMERA_WIDTH = 1280
-export const CAMERA_HEIGHT = 720
+export const CAMERA_WIDTH = 2080
+export const CAMERA_HEIGHT = 1040
 
 /* --- Positions --- */
 export const CELL_DIMENSIONS = { x: CELL_WIDTH, y: CELL_WIDTH }
