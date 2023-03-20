@@ -1,19 +1,15 @@
-import {
-  expressCspHeader,
-  SELF,
-  NONE,
-  NONCE,
-  INLINE,
-  DATA,
-} from 'express-csp-header'
-
-const API_URL = 'https://ya-praktikum.tech'
+import { API_URL } from '../constants'
+import { expressCspHeader, SELF, NONE, NONCE, INLINE } from 'express-csp-header'
 
 export const cspMiddleware = () =>
   expressCspHeader({
     directives: {
-      'default-src': [SELF, API_URL, 'ws://localhost:24678'],
-      'img-src': [SELF, DATA],
+      'default-src': [
+        SELF,
+        API_URL,
+        'ws://localhost:24678',
+        'https://ya-praktikum.tech/api/v2/oauth/yandex/service-id',
+      ],
       'font-src': [SELF],
       'media-src': [SELF],
       'object-src': [NONE],

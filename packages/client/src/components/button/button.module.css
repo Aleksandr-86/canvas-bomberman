@@ -1,13 +1,14 @@
 .button {
   padding: 10px 50px;
-  border: 5px solid black;
+  border: 5px solid var(--text-main-color);
   border-radius: 15px;
-  background: hsl(29deg 6% 89%);
+  background: transparent;
   font-size: 40px;
   font-family: 'Rubik Bubbles', fantasy;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s linear;
+  color: var(--text-main-color);
 }
 
 .button:hover {

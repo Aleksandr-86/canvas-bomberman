@@ -3,6 +3,7 @@ import UserAPI from '../api/user'
 import AuthAPI from '../api/auth'
 import { AxiosError, isAxiosError } from 'axios'
 import { axiosErrorHandler } from '../features/utils/axiosErrorHandler'
+import { getCurrentTheme } from './themeActions'
 
 type UserDataChangePayload = {
   first_name: string
@@ -95,6 +96,10 @@ export const login = createAsyncThunk(
     try {
       await AuthAPI.login(data)
       await dispatch(me())
+        .unwrap()
+        .then(async ({ id }) => {
+          dispatch(getCurrentTheme(id))
+        })
     } catch (error: unknown | AxiosError) {
       if (isAxiosError(error)) {
         return rejectWithValue(axiosErrorHandler(error))
@@ -111,6 +116,10 @@ export const registerUser = createAsyncThunk(
     try {
       await AuthAPI.register(data)
       await dispatch(me())
+        .unwrap()
+        .then(async ({ id }) => {
+          dispatch(getCurrentTheme(id))
+        })
     } catch (error: unknown | AxiosError) {
       if (isAxiosError(error)) {
         return rejectWithValue(axiosErrorHandler(error))
@@ -162,7 +171,6 @@ export const oauth = createAsyncThunk(
   async (data: OAuthPayload, { dispatch, rejectWithValue }) => {
     try {
       await AuthAPI.oauth(data)
-      dispatch(me())
     } catch (error: unknown | AxiosError) {
       if (isAxiosError(error)) {
         return rejectWithValue(axiosErrorHandler(error))

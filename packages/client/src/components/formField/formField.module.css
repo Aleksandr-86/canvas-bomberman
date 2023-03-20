@@ -11,8 +11,9 @@
   max-width: 250px;
   padding-bottom: 5px;
   border: 0;
-  border-bottom: 5px solid black;
+  border-bottom: 5px solid var(--text-main-color);
   background-color: transparent;
+  color: var(--text-main-color);
   outline: none;
   font-size: 25px;
   font-family: 'Rubik Bubbles', fantasy;
