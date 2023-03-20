@@ -1,9 +1,11 @@
 import classes from './input.module.css'
 
 interface Props {
-  placeholder: string
+  placeholder?: string
   class?: string
   type: string
+  name?: string
+  value?: string
 }
 
 export const Input = (props: Props) => {
@@ -17,6 +19,8 @@ export const Input = (props: Props) => {
         className={inputClasses}
         type={props.type}
         placeholder={placeholder}
+        value={props.value}
+        name={props.name}
       />
     </label>
   )

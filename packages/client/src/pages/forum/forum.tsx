@@ -1,28 +1,21 @@
 import { Link } from 'react-router-dom'
 import classes from './forum.module.css'
 import { Table } from '../../components/table/table'
-const FORUM_DATA = {
-  headers: ['Автор', 'Тема', 'Дата'],
-  rows: [
-    {
-      id: 1,
-      author: 'Kan88',
-      body: 'Как пройти первый уровень',
-      date: '8.01.22',
-    },
-    {
-      id: 2,
-      author: 'sasha85',
-      body: 'Как создать новую тему',
-      date: '8.01.22',
-    },
-  ],
-}
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { getPosts as getAll } from '../../store/forumSlice'
+import { getPosts } from '../../store/selectors'
+import { useEffect } from 'react'
+
 export const Forum = () => {
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(getAll)
+  }, [])
+  const posts = useAppSelector(getPosts)
   return (
     <div className={classes.forum}>
       <h2 className={classes.forumTitle}>Форум</h2>
-      <Table {...FORUM_DATA} />
+      <Table {...posts} />
       <div className={classes.forumWrapper}>
         <Link to="/forum-new-post" className={classes.forumLink}>
           Создать тему

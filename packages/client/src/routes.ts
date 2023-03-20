@@ -50,7 +50,7 @@ export const routes: Routes = [
     //}
   },
   {
-    path: '/forum/messages',
+    path: '/forum/:id',
     element: ForumMessages,
   },
   {
@@ -58,7 +58,7 @@ export const routes: Routes = [
     element: ForumNewPost,
   },
   {
-    path: '/forum-new-message',
+    path: '/forum-new-message/:id',
     element: ForumNewMessage,
   },
   {

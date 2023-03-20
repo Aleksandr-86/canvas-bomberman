@@ -12,10 +12,13 @@ exports[`<ForumNewPost/> snapshot test cases <ForumNewPost/> should render <div 
   <div
     className="forumWrapper"
   >
-    <form>
+    <form
+      onSubmit={[Function]}
+    >
       <label>
         <input
           className="form__input"
+          name="body"
           placeholder="Название темы"
           type="text"
         />

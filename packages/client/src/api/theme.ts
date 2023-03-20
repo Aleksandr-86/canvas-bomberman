@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_URL_CUSTOM } from '../features/constants'
+import { LOCALHOST_API } from '../features/constants'
 import { Theme } from '../store/themeSlice'
 
 const options = {
@@ -14,14 +14,14 @@ interface SendTheme {
 }
 
 export const getCurrentTheme = async (id: number) => {
-  const response = await axios.get(`${API_URL_CUSTOM}/theme/${id}`)
+  const response = await axios.get(`${LOCALHOST_API}/theme/${id}`)
 
   return response
 }
 
 export const sendCurrentTheme = async ({ id, theme }: SendTheme) => {
   const response = await axios.post(
-    `${API_URL_CUSTOM}/theme/`,
+    `${LOCALHOST_API}/theme/`,
     {
       user_id: id,
       value: theme,
@@ -34,7 +34,7 @@ export const sendCurrentTheme = async ({ id, theme }: SendTheme) => {
 
 export const updateCurrentTheme = async ({ id, theme }: SendTheme) => {
   const response = await axios.put(
-    `${API_URL_CUSTOM}/theme/`,
+    `${LOCALHOST_API}/theme/`,
     {
       user_id: id,
       value: theme,
