@@ -1,37 +1,32 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 import { cspMiddleware } from './middlewares/cspMiddleware'
-import { proxyMiddleware } from './middlewares/proxyMiddleware'
 import { authMiddleware } from './middlewares/authMiddleware'
 import { ssrMiddleware } from './middlewares/ssrMiddleware'
-import dotenv from 'dotenv'
 import cors from 'cors'
-import { createServer as createViteServer } from 'vite'
-import type { ViteDevServer } from 'vite'
-import * as path from 'path'
+import { createServer as createViteServer, type ViteDevServer } from 'vite'
+import path from 'path'
 import express from 'express'
 import { sequelize } from './db'
-import { themeRouter } from './routes/themeRoutes'
+import { appRouter } from './routes'
 
-dotenv.config()
+const PORT = Number(process.env.SERVER_PORT) || 3002
 
 export const isDev = () => process.env.NODE_ENV === 'development'
 
-async function startServer() {
+async function createServer() {
   const app = express()
 
-  const port = Number(process.env.SERVER_PORT) || 3001
-
-  app.use(express.json())
   app.use(cors())
-  app.use(themeRouter)
+  app.use(cspMiddleware())
 
   let vite: ViteDevServer | undefined
 
   const distPath = path.dirname(require.resolve('client/dist/index.html'))
   const srcPath = path.dirname(require.resolve('client'))
 
-  app.use(cors())
-  app.use(cspMiddleware())
-  app.use('/api', proxyMiddleware)
+  app.use('/api', appRouter)
 
   /**
    * Подключение vite middleware для горячей перезагрузки
@@ -49,19 +44,22 @@ async function startServer() {
 
   /**
    * Проброс статичных файлов из папки assets
-   * (необходим при эксплуатации приложения)
    */
-  if (!isDev()) {
-    app.use('/assets', express.static(path.resolve(distPath, 'assets')))
-  }
+  app.use('/assets', express.static('assets'))
 
   app.use('*', authMiddleware, ssrMiddleware({ vite, srcPath, distPath }))
 
   await sequelize.sync()
 
-  app.listen(port, () => {
-    console.log(`  ➜ 🎸 Сервер слушает порт: ${port}`)
+  return app
+}
+
+async function start() {
+  const server = await createServer()
+
+  server.listen(PORT, () => {
+    console.log(`  ➜ 🎸 Сервер слушает порт: ${PORT}`)
   })
 }
 
-startServer()
+start()

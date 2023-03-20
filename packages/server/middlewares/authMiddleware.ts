@@ -1,22 +1,14 @@
 import type { RequestHandler } from 'http-proxy-middleware'
-import { authRoutes, redirectRoute } from '../routes'
 import axios from 'axios'
 import { API_URL } from '../constants'
 
-const isAuthCookie = (cookies: string | undefined) => {
-  if (!cookies) {
-    return false
-  }
-
-  return cookies.split(';').some(cookie => {
-    const [key] = cookie.split('=')
-
-    return key.trim() === 'authCookie'
-  })
-}
+const authRoutes = ['/profile', '/game', '/leaderboard']
+const signIn = '/sign-in'
 
 export const authMiddleware: RequestHandler = async (req, res, next) => {
-  if (isAuthCookie(req.headers.cookie)) {
+  const { cookies } = req.cookies
+
+  if (cookies && 'authCookie' in cookies) {
     try {
       const response = await axios(API_URL + '/auth/user', {
         headers: { Cookie: req.headers.cookie },
@@ -32,13 +24,13 @@ export const authMiddleware: RequestHandler = async (req, res, next) => {
       res.clearCookie('uuid')
 
       if (authRoutes.includes(req.originalUrl)) {
-        res.redirect(redirectRoute)
+        res.redirect(signIn)
       }
 
       next()
     }
   } else if (authRoutes.includes(req.originalUrl)) {
-    res.redirect(redirectRoute)
+    res.redirect(signIn)
   } else {
     next()
   }

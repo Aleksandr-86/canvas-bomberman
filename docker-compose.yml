@@ -4,33 +4,58 @@ services:
     client:
         container_name: prakticum-client
         image: prakticum-client
+        profiles:
+          - production
         build:
             context: .
-            dockerfile: Dockerfile.client
+            dockerfile: ./Dockerfile
+            target: client
             args:
               CLIENT_PORT: ${CLIENT_PORT}
-        restart: always
         ports:
             - "${CLIENT_PORT}:80"
         environment:
-          - CLIENT_PORT=${CLIENT_PORT}
-          - SERVER_PORT=${SERVER_PORT}
+          CLIENT_PORT: ${CLIENT_PORT}
+          SERVER_PORT: ${SERVER_PORT}
+
     server:
         container_name: prakticum-server
+        profiles:
+          - production
         image: prackicum-server
         build:
             context: .
-            dockerfile: Dockerfile.server
+            dockerfile: ./Dockerfile
+            target: server
             args:
               SERVER_PORT: ${SERVER_PORT}
-        restart: always
         ports:
             - "${SERVER_PORT}:${SERVER_PORT}"
         environment:
           SERVER_PORT: ${SERVER_PORT}
 
+    admin-dashboard:
+      profiles: 
+        - development
+      image: dpage/pgadmin4:6.21
+      environment:
+          PGADMIN_DEFAULT_EMAIL: mail@email.com
+          PGADMIN_DEFAULT_PASSWORD: password
+          PGADMIN_LISTEN_PORT: 80
+      ports:
+        - 8080:80
+      depends_on:
+        - postgres
+      volumes:
+        - pgadmin-data:/var/lib/pgadmin
+      networks:
+        - bomberman-network
+
     postgres:
-      image: postgres:14     
+      image: postgres:14-alpine
+      profiles:
+        - development
+        - production
       ports:
         - "${POSTGRES_PORT}:${POSTGRES_PORT}"
       environment:
@@ -39,4 +64,12 @@ services:
         POSTGRES_DB: ${POSTGRES_DB}
       volumes:
         - ./tmp/pgdata:/var/lib/postgresql/data
+      networks:
+        - bomberman-network
+      
 
+volumes:
+  pgadmin-data:
+
+networks:
+  bomberman-network:
