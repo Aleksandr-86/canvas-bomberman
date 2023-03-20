@@ -4,6 +4,7 @@ import {
   GameStatus,
   timerUpdated,
   scoreIncreased,
+  scoreClear,
 } from '../../store/gameSlice'
 
 let intervalId: number
@@ -17,6 +18,10 @@ export function gameStarted() {
 
 export function pointsAdded(points: number) {
   store.dispatch(scoreIncreased(points))
+}
+
+export function pointsClear() {
+  store.dispatch(scoreClear())
 }
 
 export function gameEnded() {

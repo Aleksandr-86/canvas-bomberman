@@ -19,7 +19,7 @@ import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
 import { Kind } from './types'
 import { Point, type PointLike, delay, withChance } from './utils'
-import { gameStarted, pointsAdded } from './gameActions'
+import { gameStarted, pointsAdded, pointsClear } from './gameActions'
 import nesBomberman from '../../assets/images/nesBomberman5xTransparent.png'
 import nesBombermanFrames from '../../assets/images/nesBomberman5x.json'
 import { generateWallSoftPositions } from './createSoftWalls'
@@ -110,8 +110,12 @@ export const makeBombermanScene = (): SceneConfig => {
     },
   }
 
+  // Обнуление накопленных очков
+  pointsClear()
+
   // TODO: Инициализировать переменные при каждом создании игры
   const controller = new EnemyController()
+  const door = new Point(160, 560)
 
   let lastBombPlacementTime = performance.now()
   const collidableCells = new SpriteList()
@@ -194,6 +198,19 @@ export const makeBombermanScene = (): SceneConfig => {
       (playerOrthX !== lastPos.x && trasholdX) ||
       (playerOrthY !== lastPos.y && trasholdY)
     ) {
+      // Проверяет факт пересечения игрока с дверью
+      if (
+        playerOrthX * CELL_WIDTH === door.x &&
+        playerOrthY * CELL_WIDTH === door.y
+      ) {
+        // Проверяет факт отсутствия противников
+        if (state.field.enemies.length === 0) {
+          // sendScore(state.field.)
+          // sendScore(1)
+          scene.stopGame()
+        }
+      }
+
       if (state.field.obstacles[lastPos.x][lastPos.y]) {
         // Добавляет объект с координатами бомбы в набор
         state.field.bombsSet.add({ x: lastPos.x, y: lastPos.y })
@@ -331,9 +348,6 @@ export const makeBombermanScene = (): SceneConfig => {
             (sprite.frame === 'wallSoft' || sprite.frame === 'wallHard')
         )
       )
-
-      // const door = new Point(640, 560)
-      const door = new Point(240, 240)
 
       makeDoor(scene, door)
       state.field.softWalls.add(makeSoftWall(scene, door))
@@ -484,7 +498,7 @@ export const makeBombermanScene = (): SceneConfig => {
             break
 
           case 'playerSpeedUp':
-            state.player.speedScale += 0.25
+            state.player.speedScale += 0.35
             state.field.buffStats.playerSpeedUp.spawned = false
             state.field.buffStats.playerSpeedUp.amount++
             break
@@ -598,8 +612,8 @@ export const makeBombermanScene = (): SceneConfig => {
         cell.y >= enemySpawnOffset.y &&
         state.field.enemies.length < MAX_ENEMY_COUNT
 
-      if (withChance(5) && canSpawnEnemy) {
-        const enemy = makeEnemy(scene, cell, 'droplet')
+      if (withChance(10) && canSpawnEnemy) {
+        const enemy = makeEnemy(scene, cell, 'baloon')
         state.field.enemies.add(enemy)
       }
     }
