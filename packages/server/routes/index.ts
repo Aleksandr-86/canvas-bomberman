@@ -2,18 +2,21 @@ import express, { Router } from 'express'
 import cookieParser from 'cookie-parser'
 import * as PostsController from '../controllers/post'
 import * as CommentsController from '../controllers/comment'
+import { proxyMiddleware } from '../middlewares/proxyMiddleware'
+import { themeRouter } from './theme'
 
-const appRoutes = Router()
+const appRouter = Router()
 
-appRoutes.use([express.json(), cookieParser()])
+appRouter.use([express.json(), cookieParser(), proxyMiddleware])
 
-appRoutes.get('/posts', PostsController.getAllPosts)
-appRoutes.post('/posts', PostsController.createNewPost)
-appRoutes.get('/posts/:id', PostsController.getTopicComments)
+appRouter.use(themeRouter)
+appRouter.get('/posts', PostsController.getAllPosts)
+appRouter.post('/posts', PostsController.createNewPost)
+appRouter.get('/posts/:id', PostsController.getTopicComments)
 
-appRoutes.post('/message', CommentsController.addTopicComment)
+appRouter.post('/message', CommentsController.addTopicComment)
 
-appRoutes.post('/likes', CommentsController.addTopicLike)
-appRoutes.post('/dislikes', CommentsController.addTopicDislike)
+appRouter.post('/likes', CommentsController.addTopicLike)
+appRouter.post('/dislikes', CommentsController.addTopicDislike)
 
-export { appRoutes }
+export { appRouter }
