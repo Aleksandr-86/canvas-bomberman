@@ -585,6 +585,8 @@ export const makeBombermanScene = (): SceneConfig => {
                 localScore = 100
               } else if (enemy.frame.startsWith('droplet')) {
                 localScore = 200
+              } else if (enemy.frame.startsWith('overtimeCoin')) {
+                localScore = 400
               }
 
               state.player.score += localScore

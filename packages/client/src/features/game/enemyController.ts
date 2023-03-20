@@ -237,7 +237,7 @@ export class EnemyController {
     if (enemy.changeDirPossibility) {
       let dirs: string[] = []
 
-      // Выбор направлений при ПОВОРОТЕ
+      // Выбор направлений при ПОВОРОТЕ на развилке
       if (isOvertimeCoin && randomInRange(1, 100) <= 75) {
         dirs = this.playerHunting(enemyX, enemyY, obstacles, lastPlayerPos)
       } else {
