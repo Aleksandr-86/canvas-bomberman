@@ -1,5 +1,5 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
-import { UserTheme } from './models/userTheme'
+import { UserTheme, User, Topic, Comment } from './models'
 
 const {
   POSTGRES_HOST,
@@ -19,4 +19,4 @@ const sequelizeOptions: SequelizeOptions = {
 }
 
 export const sequelize = new Sequelize(sequelizeOptions)
-sequelize.addModels([UserTheme])
+sequelize.addModels([UserTheme, User, Topic, Comment])
