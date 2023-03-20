@@ -6,6 +6,7 @@ import {
   UPPER_BOUND_MILE_AGE,
   GRID_WIDTH,
   GRID_HEIGHT,
+  BASIC_ENEMY_VELOCITY,
 } from './const'
 import { type Sprite } from './lib'
 import type { Obstacles } from './bombermanScene'
@@ -41,8 +42,20 @@ const almostEqual = (p1: Point, p2: Point) => {
 export class EnemyController {
   private state: EnemyState[] = []
 
-  public addEnemies(sprites: Sprite[], velocity: number) {
+  public addEnemies(sprites: Sprite[]) {
     for (const sprite of sprites) {
+      const enemyName = sprite.frame.slice(0, sprite.frame.length - 1)
+
+      // TODO: Временное решение. Переделать. (комментарий Aleksandr-86)
+      let velocity = 0
+      if (enemyName === 'baloon') {
+        velocity = BASIC_ENEMY_VELOCITY
+      } else if (enemyName === 'droplet') {
+        velocity = BASIC_ENEMY_VELOCITY * 1.5
+      } else if (enemyName === 'overtimeCoin') {
+        velocity = BASIC_ENEMY_VELOCITY * 3
+      }
+
       this.state.push({
         ref: sprite,
         movementState: MovementState.Idle,
@@ -52,24 +65,48 @@ export class EnemyController {
     }
   }
 
-  // Поиск возможных направлений движения противника
+  /**
+   * Возвращает массив строк представляющих
+   * возможные направления движения противника.
+   */
   private possibleDirections(
     enemyX: number,
     enemyY: number,
-    obstacles: Obstacles
+    obstacles: Obstacles,
+    wallIgnore: boolean
   ) {
     const possibleDirections: string[] = []
 
-    if (!obstacles[enemyX][enemyY - 1]) {
+    const topSquare = obstacles[enemyX][enemyY - 1]
+    const rightSquare = obstacles[enemyX + 1][enemyY]
+    const bottomSquare = obstacles[enemyX][enemyY + 1]
+    const leftSquare = obstacles[enemyX - 1][enemyY]
+
+    if (
+      (!wallIgnore && !topSquare) ||
+      (wallIgnore && topSquare !== 'wallHard')
+    ) {
       possibleDirections.push('вверх')
     }
-    if (!obstacles[enemyX + 1][enemyY]) {
+
+    if (
+      (!wallIgnore && !rightSquare) ||
+      (wallIgnore && rightSquare !== 'wallHard')
+    ) {
       possibleDirections.push('вправо')
     }
-    if (!obstacles[enemyX][enemyY + 1]) {
+
+    if (
+      (!wallIgnore && !bottomSquare) ||
+      (wallIgnore && bottomSquare !== 'wallHard')
+    ) {
       possibleDirections.push('вниз')
     }
-    if (!obstacles[enemyX - 1][enemyY]) {
+
+    if (
+      (!wallIgnore && !leftSquare) ||
+      (wallIgnore && leftSquare !== 'wallHard')
+    ) {
       possibleDirections.push('влево')
     }
 
@@ -80,6 +117,10 @@ export class EnemyController {
    * Возвращает клетку к которой двинется противник.
    */
   private chooseNextPoint(enemy: Sprite, obstacles: Obstacles) {
+    // TODO: Временное решение. Переделать. (комментарий Aleksandr-86)
+    const enemyName = enemy.frame.slice(0, enemy.frame.length - 1)
+    const isOvertimeCoin = enemyName === 'overtimeCoin'
+
     const enemyOrthX = Math.floor(enemy.x / CELL_WIDTH)
     const enemyOrthY = Math.floor(enemy.y / CELL_WIDTH)
 
@@ -106,12 +147,27 @@ export class EnemyController {
      * а также случайного значения randomMileAge
      */
     if (enemy.movementDir === '') {
-      const possDirs = this.possibleDirections(enemyX, enemyY, obstacles)
+      let possDirs: string[] = []
+
+      if (isOvertimeCoin) {
+        possDirs = this.possibleDirections(enemyX, enemyY, obstacles, true)
+      } else {
+        possDirs = this.possibleDirections(enemyX, enemyY, obstacles, false)
+      }
       enemy.movementDir = possDirs[randomInRange(0, possDirs.length - 1)]
-      enemy.randomMileAge = randomInRange(
-        LOWER_BOUND_MILE_AGE,
-        UPPER_BOUND_MILE_AGE
-      )
+
+      // TODO: Временное решение. Переделать. (комментарий Aleksandr-86)
+      if (isOvertimeCoin) {
+        enemy.randomMileAge = randomInRange(
+          LOWER_BOUND_MILE_AGE + 30,
+          UPPER_BOUND_MILE_AGE + 30
+        )
+      } else {
+        enemy.randomMileAge = randomInRange(
+          LOWER_BOUND_MILE_AGE,
+          UPPER_BOUND_MILE_AGE
+        )
+      }
     }
 
     // Определение возможности изменения направления
@@ -125,9 +181,16 @@ export class EnemyController {
     }
 
     if (enemy.changeDirPossibility) {
-      const dirs = this.possibleDirections(enemyX, enemyY, obstacles)
+      let dirs: string[] = []
+      if (isOvertimeCoin) {
+        dirs = this.possibleDirections(enemyX, enemyY, obstacles, true)
+      } else {
+        dirs = this.possibleDirections(enemyX, enemyY, obstacles, false)
+      }
+
       let filteredDirs: string[] = []
 
+      // Разворот
       if (randomInRange(1, 100) <= U_TURN_CHANCE) {
         filteredDirs = dirs.filter(d => d !== enemy.movementDir)
       } else {
@@ -152,6 +215,7 @@ export class EnemyController {
         }
 
         enemy.totalMileAge = 0
+
         enemy.randomMileAge = randomInRange(
           LOWER_BOUND_MILE_AGE,
           UPPER_BOUND_MILE_AGE
@@ -161,9 +225,14 @@ export class EnemyController {
       }
     }
 
+    const topSquare = obstacles[enemyX][enemyY - 1]
+    const rightSquare = obstacles[enemyX + 1][enemyY]
+    const bottomSquare = obstacles[enemyX][enemyY + 1]
+    const leftSquare = obstacles[enemyX - 1][enemyY]
+
     // Движение вверх
     if (enemy.movementDir === 'вверх') {
-      if (!obstacles[enemyX][enemyY - 1]) {
+      if (!topSquare || (isOvertimeCoin && topSquare !== 'wallHard')) {
         target = Point.from(enemy).add(new Point(0, -CELL_WIDTH))
       } else {
         enemy.movementDir = 'вниз'
@@ -171,7 +240,7 @@ export class EnemyController {
     }
     // Движение вправо
     else if (enemy.movementDir === 'вправо') {
-      if (!obstacles[enemyX + 1][enemyY]) {
+      if (!rightSquare || (isOvertimeCoin && rightSquare !== 'wallHard')) {
         target = Point.from(enemy).add(new Point(CELL_WIDTH, 0))
       } else {
         enemy.movementDir = 'влево'
@@ -179,7 +248,7 @@ export class EnemyController {
     }
     // Движение вниз
     else if (enemy.movementDir === 'вниз') {
-      if (!obstacles[enemyX][enemyY + 1]) {
+      if (!bottomSquare || (isOvertimeCoin && bottomSquare !== 'wallHard')) {
         target = Point.from(enemy).add(new Point(0, CELL_WIDTH))
       } else {
         enemy.movementDir = 'вверх'
@@ -187,7 +256,7 @@ export class EnemyController {
     }
     // Движение влево
     else if (enemy.movementDir === 'влево') {
-      if (!obstacles[enemyX - 1][enemyY]) {
+      if (!leftSquare || (isOvertimeCoin && leftSquare !== 'wallHard')) {
         target = Point.from(enemy).add(new Point(-CELL_WIDTH, 0))
       } else {
         enemy.movementDir = 'вправо'

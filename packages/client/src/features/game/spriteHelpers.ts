@@ -61,7 +61,7 @@ export function makeBomb(scene: SceneContext, position: PointLike) {
   return bomb
 }
 
-type EnemyName = 'droplet' | 'baloon'
+type EnemyName = 'droplet' | 'baloon' | 'overtimeCoin'
 
 export function makeEnemy(
   scene: SceneContext,

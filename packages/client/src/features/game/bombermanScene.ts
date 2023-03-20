@@ -105,7 +105,7 @@ export const makeBombermanScene = (): SceneConfig => {
         bombAmountUp: { spawned: false, amount: 0 },
         bombRangeUp: { spawned: false, amount: 0 },
         playerSpeedUp: { spawned: false, amount: 0 },
-        detonator: { spawned: false, amount: 0 },
+        detonator: { spawned: false, amount: 1 },
         bombPass: { spawned: false, amount: 0 },
         flamePass: { spawned: false, amount: 0 },
       },
@@ -174,6 +174,7 @@ export const makeBombermanScene = (): SceneConfig => {
     const nextPlayerPosition = Point.from(state.player.ref).add(
       state.player.direction.scale(velocity)
     )
+    
 
     const staticCells = state.field.softWalls
       .toArray()
@@ -359,7 +360,7 @@ export const makeBombermanScene = (): SceneConfig => {
       const softWalls = scene.displayList.filter(v => v.frame === 'wallSoft')
       registerSoftWalls(softWalls)
 
-      controller.addEnemies(state.field.enemies.toArray(), BASIC_ENEMY_VELOCITY)
+      controller.addEnemies(state.field.enemies.toArray())
 
       gameStarted()
     },
@@ -559,8 +560,19 @@ export const makeBombermanScene = (): SceneConfig => {
             const destroyed = state.field.enemies.destroyByPoint(enemy)
 
             if (destroyed) {
-              state.player.score += 100
-              pointsAdded(100)
+              /**
+               * TODO: Временное решение. Переделать с использованием
+               * констант. (комментарий Aleksandr-86)
+               */
+              let localScore = 0
+              if (enemy.frame.startsWith('baloon')) {
+                localScore = 100
+              } else if (enemy.frame.startsWith('droplet')) {
+                localScore = 200
+              }
+
+              state.player.score += localScore
+              pointsAdded(localScore)
             }
           })
         } else {
@@ -625,7 +637,12 @@ export const makeBombermanScene = (): SceneConfig => {
         state.field.enemies.length < MAX_ENEMY_COUNT
 
       if (withChance(10) && canSpawnEnemy) {
-        const enemy = makeEnemy(scene, cell, 'baloon')
+        const enemy = makeEnemy(scene, cell, 'overtimeCoin')
+        state.field.enemies.add(enemy)
+      }
+
+      if (withChance(5) && canSpawnEnemy) {
+        const enemy = makeEnemy(scene, cell, 'droplet')
         state.field.enemies.add(enemy)
       }
     }
