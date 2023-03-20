@@ -7,10 +7,11 @@ import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
 import * as path from 'path'
+import express from 'express'
+import { sequelize } from './db'
+import { themeRouter } from './routes/themeRoutes'
 
 dotenv.config()
-
-import express from 'express'
 
 export const isDev = () => process.env.NODE_ENV === 'development'
 
@@ -18,6 +19,10 @@ async function startServer() {
   const app = express()
 
   const port = Number(process.env.SERVER_PORT) || 3001
+
+  app.use(express.json())
+  app.use(cors())
+  app.use(themeRouter)
 
   let vite: ViteDevServer | undefined
 
@@ -51,6 +56,8 @@ async function startServer() {
   }
 
   app.use('*', authMiddleware, ssrMiddleware({ vite, srcPath, distPath }))
+
+  await sequelize.sync()
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Сервер слушает порт: ${port}`)

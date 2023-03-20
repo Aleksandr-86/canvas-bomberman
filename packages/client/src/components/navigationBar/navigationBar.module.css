@@ -15,4 +15,5 @@
 
 .link {
   text-decoration: none;
+  color: var(--text-link-color);
 }

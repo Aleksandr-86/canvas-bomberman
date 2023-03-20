@@ -1,0 +1,64 @@
+.switch {
+  position: absolute;
+  top: 18px;
+  left: 25px;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 34px;
+  background-color: #ccc;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.slider::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  margin: auto 0;
+  background: white url('../../assets/images/lightIcon.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 15px #2020203d;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider::before {
+  background: white url('../../assets/images/darkIcon.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: translateX(24px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round::before {
+  border-radius: 50%;
+}

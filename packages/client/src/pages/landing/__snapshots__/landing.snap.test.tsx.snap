@@ -29,6 +29,18 @@ exports[`<Landing/> snapshot test cases <Landing/> should render <div className=
   <div
     className="wrapper"
   >
+    <label
+      className="switch"
+    >
+      <input
+        checked={false}
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <span
+        className="slider round"
+      />
+    </label>
     <img
       alt="bomberman-logo"
       className="logo"
@@ -97,6 +109,18 @@ exports[`<Landing/> snapshot test cases <Landing/> should render <div className=
   <div
     className="wrapper"
   >
+    <label
+      className="switch"
+    >
+      <input
+        checked={false}
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <span
+        className="slider round"
+      />
+    </label>
     <img
       alt="bomberman-logo"
       className="logo"

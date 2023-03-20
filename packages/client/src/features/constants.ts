@@ -22,6 +22,7 @@ export const TEAM_NAME = 'alt+f4v2'
  *  */
 export const LEADERBOARD_LENGTH = 5
 
+export const THEME_LOCAL_STORAGE_KEY = `theme`
 // !!! настоящий url хоста, которым нужно пользоваться
 export const API_URL = APIHost()
 
