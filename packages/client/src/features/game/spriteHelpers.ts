@@ -127,11 +127,8 @@ export function makeBuff(
 
   let buffKind = ''
 
-  if (
-    !buffStats.playerSpeedUp.spawned &&
-    buffStats.playerSpeedUp.amount === 0
-  ) {
-    buffKind = 'playerSpeedUp'
+  if (!buffStats.bombRangeUp.spawned && buffStats.bombRangeUp.amount === 0) {
+    buffKind = 'bombRangeUp'
   } else {
     // Ограничение набора улучшений
     if (
@@ -157,7 +154,9 @@ export function makeBuff(
   }
 
   // Учёт улучшения
-  if (buffKind === 'playerSpeedUp') {
+  if (buffKind === 'bombRangeUp') {
+    buffStats.bombRangeUp.spawned = true
+  } else if (buffKind === 'playerSpeedUp') {
     buffStats.playerSpeedUp.spawned = true
   } else if (buffKind === 'detonator') {
     buffStats.detonator.spawned = true

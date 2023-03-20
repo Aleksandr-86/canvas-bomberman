@@ -19,7 +19,7 @@ import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
 import { Kind } from './types'
 import { Point, type PointLike, delay, withChance } from './utils'
-import { gameStarted, pointsAdded, pointsClear } from './gameActions'
+import { gameStarted, pointsAdded, pointsClear, sendScore } from './gameActions'
 import nesBomberman from '../../assets/images/nesBomberman5xTransparent.png'
 import nesBombermanFrames from '../../assets/images/nesBomberman5x.json'
 import { generateWallSoftPositions } from './createSoftWalls'
@@ -53,6 +53,7 @@ export type Obstacles = ('wallHard' | 'wallSoft' | 'bomb' | null)[][]
 type GameState = {
   player: {
     ref: null | Sprite
+    score: number
     direction: Point
     isDead: boolean
     lastFacing: 'left' | 'right' | 'up' | 'down'
@@ -79,6 +80,7 @@ export const makeBombermanScene = (): SceneConfig => {
   const state: GameState = {
     player: {
       ref: null,
+      score: 0,
       direction: new Point(),
       isDead: false,
       lastFacing: 'down',
@@ -112,6 +114,8 @@ export const makeBombermanScene = (): SceneConfig => {
 
   // Обнуление накопленных очков
   pointsClear()
+
+  let stopGameFlag = true
 
   // TODO: Инициализировать переменные при каждом создании игры
   const controller = new EnemyController()
@@ -205,8 +209,7 @@ export const makeBombermanScene = (): SceneConfig => {
       ) {
         // Проверяет факт отсутствия противников
         if (state.field.enemies.length === 0) {
-          // sendScore(state.field.)
-          // sendScore(1)
+          sendScore(state.player.score)
           scene.stopGame()
         }
       }
@@ -368,7 +371,13 @@ export const makeBombermanScene = (): SceneConfig => {
 
       if (state.player.isDead) {
         scene.anims.run(playerRef, 'die', frame.delta, true)
-        delay(500).then(() => scene.stopGame())
+        delay(500).then(() => {
+          if (stopGameFlag) {
+            stopGameFlag = false
+            sendScore(state.player.score)
+            scene.stopGame()
+          }
+        })
       } else {
         if (kbd.left) {
           state.player.direction.x -= 1
@@ -390,7 +399,7 @@ export const makeBombermanScene = (): SceneConfig => {
           scene.anims.run(playerRef, 'down', frame.delta)
         }
 
-        if (kbd.control && state.field.buffStats.detonator.amount === 1) {
+        if (kbd.enter && state.field.buffStats.detonator.amount === 1) {
           const bombCell = state.field.bombPlanted.shift()
           if (bombCell) {
             bombDetonation(bombCell, scene)
@@ -445,6 +454,7 @@ export const makeBombermanScene = (): SceneConfig => {
           delay(EXPLOSION_DURATION).then(() => {
             const destroyed = state.field.softWalls.destroyByPoint(explosion)
             if (destroyed) {
+              state.player.score += 25
               pointsAdded(25)
             }
           })
@@ -486,6 +496,7 @@ export const makeBombermanScene = (): SceneConfig => {
       const playerPickBuff = state.field.buffs.byPoint(nearestCell(playerRef))
 
       if (playerPickBuff) {
+        state.player.score += 500
         pointsAdded(500)
 
         switch (playerPickBuff.frame) {
@@ -548,6 +559,7 @@ export const makeBombermanScene = (): SceneConfig => {
             const destroyed = state.field.enemies.destroyByPoint(enemy)
 
             if (destroyed) {
+              state.player.score += 100
               pointsAdded(100)
             }
           })

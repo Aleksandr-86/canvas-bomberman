@@ -1,3 +1,4 @@
+import { leaderboardThunks } from './../../store/leaderboardThunks'
 import { store } from '../../store'
 import {
   setStatus,
@@ -22,6 +23,10 @@ export function pointsAdded(points: number) {
 
 export function pointsClear() {
   store.dispatch(scoreClear())
+}
+
+export function sendScore(score: number) {
+  store.dispatch(leaderboardThunks.sendLeaderStats(score))
 }
 
 export function gameEnded() {
