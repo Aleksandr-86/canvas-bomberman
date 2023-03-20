@@ -27,6 +27,7 @@ import { resolveExplosion } from './resolveExplosionAround'
 import { circleCircleCollision, rectCircleResolve } from './collision'
 import { nearestCell, selectNearbyCells, scaleAtlasFrames } from './gridHelpers'
 import {
+  EnemyName,
   makeBomb,
   makeBuff,
   makeDoor,
@@ -86,8 +87,8 @@ export const makeBombermanScene = (): SceneConfig => {
       lastFacing: 'down',
       // Координаты последний покинутой игроком клетки
       lastPos: { x: 1, y: 1 },
-      bombLimit: 1,
-      bombRange: 1,
+      bombLimit: 10,
+      bombRange: 10,
       speedScale: 1,
     },
     field: {
@@ -106,8 +107,8 @@ export const makeBombermanScene = (): SceneConfig => {
         bombRangeUp: { spawned: false, amount: 0 },
         playerSpeedUp: { spawned: false, amount: 0 },
         detonator: { spawned: false, amount: 1 },
-        bombPass: { spawned: false, amount: 0 },
-        flamePass: { spawned: false, amount: 0 },
+        bombPass: { spawned: false, amount: 1 },
+        flamePass: { spawned: false, amount: 1 },
       },
     },
   }
@@ -174,7 +175,6 @@ export const makeBombermanScene = (): SceneConfig => {
     const nextPlayerPosition = Point.from(state.player.ref).add(
       state.player.direction.scale(velocity)
     )
-    
 
     const staticCells = state.field.softWalls
       .toArray()
@@ -340,7 +340,21 @@ export const makeBombermanScene = (): SceneConfig => {
 
       state.player.ref = makePlayer(scene, PLAYER_STARTING_POSITION)
       addSoftWalls(scene, state, SOFT_WALL_SPAWN_OFFSET)
-      spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET)
+
+      spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
+        { enemyName: 'baloon', chance: 10 },
+        { enemyName: 'droplet', chance: 4 },
+      ])
+
+      // Появление монеток по истечении на уровень времени
+      delay(2000).then(() => {
+        state.field.enemies.destroyAll()
+        spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
+          { enemyName: 'overtimeCoin', chance: 10 },
+        ])
+
+        controller.addEnemies(state.field.enemies.toArray())
+      })
 
       scene.camera.bind(state.player.ref)
 
@@ -400,7 +414,7 @@ export const makeBombermanScene = (): SceneConfig => {
           scene.anims.run(playerRef, 'down', frame.delta)
         }
 
-        if (kbd.enter && state.field.buffStats.detonator.amount === 1) {
+        if (kbd.control && state.field.buffStats.detonator.amount === 1) {
           const bombCell = state.field.bombPlanted.shift()
           if (bombCell) {
             bombDetonation(bombCell, scene)
@@ -579,8 +593,7 @@ export const makeBombermanScene = (): SceneConfig => {
           scene.anims.run(enemy, 'right', frame.delta)
         }
       }
-
-      controller.run(frame.delta, state.field.obstacles)
+      controller.run(frame.delta, state.field.obstacles, state.player.lastPos)
     },
   }
 
@@ -621,7 +634,8 @@ export const makeBombermanScene = (): SceneConfig => {
   function spawnEnemies(
     scene: SceneContext,
     state: GameState,
-    enemySpawnOffset: PointLike
+    enemySpawnOffset: PointLike,
+    config: { enemyName: EnemyName; chance: number }[]
   ) {
     const vacantCells = state.field.backgroundTiles
       .toArray()
@@ -636,15 +650,24 @@ export const makeBombermanScene = (): SceneConfig => {
         cell.y >= enemySpawnOffset.y &&
         state.field.enemies.length < MAX_ENEMY_COUNT
 
-      if (withChance(10) && canSpawnEnemy) {
-        const enemy = makeEnemy(scene, cell, 'overtimeCoin')
-        state.field.enemies.add(enemy)
+      for (let i = 0; i < config.length; i++) {
+        const { enemyName, chance } = config[i]
+
+        if (withChance(chance) && canSpawnEnemy) {
+          const enemy = makeEnemy(scene, cell, enemyName)
+          state.field.enemies.add(enemy)
+        }
       }
 
-      if (withChance(5) && canSpawnEnemy) {
-        const enemy = makeEnemy(scene, cell, 'droplet')
-        state.field.enemies.add(enemy)
-      }
+      // if (withChance(10) && canSpawnEnemy) {
+      //   const enemy = makeEnemy(scene, cell, 'baloon')
+      //   state.field.enemies.add(enemy)
+      // }
+
+      // if (withChance(4) && canSpawnEnemy) {
+      //   const enemy = makeEnemy(scene, cell, 'droplet')
+      //   state.field.enemies.add(enemy)
+      // }
     }
   }
 }

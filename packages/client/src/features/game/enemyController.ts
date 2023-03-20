@@ -10,7 +10,7 @@ import {
 } from './const'
 import { type Sprite } from './lib'
 import type { Obstacles } from './bombermanScene'
-import { Point, randomInRange } from './utils'
+import { Point, PointLike, randomInRange } from './utils'
 
 type EnemyState = {
   ref: Sprite
@@ -53,7 +53,7 @@ export class EnemyController {
       } else if (enemyName === 'droplet') {
         velocity = BASIC_ENEMY_VELOCITY * 1.5
       } else if (enemyName === 'overtimeCoin') {
-        velocity = BASIC_ENEMY_VELOCITY * 3
+        velocity = BASIC_ENEMY_VELOCITY * 2.5
       }
 
       this.state.push({
@@ -84,28 +84,28 @@ export class EnemyController {
 
     if (
       (!wallIgnore && !topSquare) ||
-      (wallIgnore && topSquare !== 'wallHard')
+      (wallIgnore && topSquare !== 'wallHard' && topSquare !== 'bomb')
     ) {
       possibleDirections.push('вверх')
     }
 
     if (
       (!wallIgnore && !rightSquare) ||
-      (wallIgnore && rightSquare !== 'wallHard')
+      (wallIgnore && rightSquare !== 'wallHard' && rightSquare !== 'bomb')
     ) {
       possibleDirections.push('вправо')
     }
 
     if (
       (!wallIgnore && !bottomSquare) ||
-      (wallIgnore && bottomSquare !== 'wallHard')
+      (wallIgnore && bottomSquare !== 'wallHard' && bottomSquare !== 'bomb')
     ) {
       possibleDirections.push('вниз')
     }
 
     if (
       (!wallIgnore && !leftSquare) ||
-      (wallIgnore && leftSquare !== 'wallHard')
+      (wallIgnore && leftSquare !== 'wallHard' && leftSquare !== 'bomb')
     ) {
       possibleDirections.push('влево')
     }
@@ -116,7 +116,11 @@ export class EnemyController {
   /**
    * Возвращает клетку к которой двинется противник.
    */
-  private chooseNextPoint(enemy: Sprite, obstacles: Obstacles) {
+  private chooseNextPoint(
+    enemy: Sprite,
+    obstacles: Obstacles,
+    lastPlayerPos: PointLike
+  ) {
     // TODO: Временное решение. Переделать. (комментарий Aleksandr-86)
     const enemyName = enemy.frame.slice(0, enemy.frame.length - 1)
     const isOvertimeCoin = enemyName === 'overtimeCoin'
@@ -182,6 +186,26 @@ export class EnemyController {
 
     if (enemy.changeDirPossibility) {
       let dirs: string[] = []
+
+      // Выбор направлений при развороте
+      // if (randomInRange(1, 100) <= 100 && isOvertimeCoin) {
+      //   console.warn('охота!')
+      //   if (enemyX > lastPlayerPos.x && enemyY > lastPlayerPos.y) {
+      //     randomInRange(1, 100) <= 50 ? (dirs = ['влево']) : (dirs = ['вверх'])
+      //   }
+
+      //   if (enemyX > lastPlayerPos.x && enemyY < lastPlayerPos.y) {
+      //     randomInRange(1, 100) <= 50 ? (dirs = ['влево']) : (dirs = ['вниз'])
+      //   }
+
+      //   if (enemyX < lastPlayerPos.x && enemyY < lastPlayerPos.y) {
+      //     randomInRange(1, 100) <= 50 ? (dirs = ['вправо']) : (dirs = ['вверх'])
+      //   }
+
+      //   if (enemyX < lastPlayerPos.x && enemyY > lastPlayerPos.y) {
+      //     randomInRange(1, 100) <= 50 ? (dirs = ['вправо']) : (dirs = ['вверх'])
+      //   }
+      // } else
       if (isOvertimeCoin) {
         dirs = this.possibleDirections(enemyX, enemyY, obstacles, true)
       } else {
@@ -230,9 +254,15 @@ export class EnemyController {
     const bottomSquare = obstacles[enemyX][enemyY + 1]
     const leftSquare = obstacles[enemyX - 1][enemyY]
 
+    /**
+     * Разворот в тупике
+     */
     // Движение вверх
     if (enemy.movementDir === 'вверх') {
-      if (!topSquare || (isOvertimeCoin && topSquare !== 'wallHard')) {
+      if (
+        !topSquare ||
+        (isOvertimeCoin && topSquare !== 'wallHard' && topSquare !== 'bomb')
+      ) {
         target = Point.from(enemy).add(new Point(0, -CELL_WIDTH))
       } else {
         enemy.movementDir = 'вниз'
@@ -240,7 +270,10 @@ export class EnemyController {
     }
     // Движение вправо
     else if (enemy.movementDir === 'вправо') {
-      if (!rightSquare || (isOvertimeCoin && rightSquare !== 'wallHard')) {
+      if (
+        !rightSquare ||
+        (isOvertimeCoin && rightSquare !== 'wallHard' && rightSquare !== 'bomb')
+      ) {
         target = Point.from(enemy).add(new Point(CELL_WIDTH, 0))
       } else {
         enemy.movementDir = 'влево'
@@ -248,7 +281,12 @@ export class EnemyController {
     }
     // Движение вниз
     else if (enemy.movementDir === 'вниз') {
-      if (!bottomSquare || (isOvertimeCoin && bottomSquare !== 'wallHard')) {
+      if (
+        !bottomSquare ||
+        (isOvertimeCoin &&
+          bottomSquare !== 'wallHard' &&
+          bottomSquare !== 'bomb')
+      ) {
         target = Point.from(enemy).add(new Point(0, CELL_WIDTH))
       } else {
         enemy.movementDir = 'вверх'
@@ -256,7 +294,10 @@ export class EnemyController {
     }
     // Движение влево
     else if (enemy.movementDir === 'влево') {
-      if (!leftSquare || (isOvertimeCoin && leftSquare !== 'wallHard')) {
+      if (
+        !leftSquare ||
+        (isOvertimeCoin && leftSquare !== 'wallHard' && leftSquare !== 'bomb')
+      ) {
         target = Point.from(enemy).add(new Point(-CELL_WIDTH, 0))
       } else {
         enemy.movementDir = 'вправо'
@@ -266,10 +307,14 @@ export class EnemyController {
     return target
   }
 
-  run(delta: number, obstacles: Obstacles) {
+  run(delta: number, obstacles: Obstacles, lastPlayerPos: PointLike) {
     for (const entry of this.state) {
       if (entry.movementState === MovementState.Idle) {
-        const candidate = this.chooseNextPoint(entry.ref, obstacles)
+        const candidate = this.chooseNextPoint(
+          entry.ref,
+          obstacles,
+          lastPlayerPos
+        )
 
         if (!candidate) {
           continue
