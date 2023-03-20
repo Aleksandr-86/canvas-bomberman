@@ -8,7 +8,7 @@ const Keys = {
   ArrowDown: 'down',
   KeyS: 'down',
   Space: 'space',
-  Enter: 'enter'
+  Enter: 'enter',
 } as const
 
 export class Keyboard {
