@@ -84,7 +84,7 @@
 
 .progress {
   height: 20px;
-  animation: count-down 60s linear forwards;
+  animation: count-down 200s linear forwards;
 }
 
 .panelScore {
@@ -95,23 +95,23 @@
 
 @media all and (display-mode: fullscreen) {
   .panel {
-    height: 140px;
-    padding: 10px;
-    box-shadow: 0 -4px 14px 4px #004a99 inset;
-    font-size: 100px;
+    height: 8vh;
+    padding: 1vh;
+    box-shadow: 0 0 2vh 0.2vh #004a99 inset;
+    font-size: 6vh;
   }
 
   .progressBar {
-    height: 40px;
-    border-radius: 40px;
+    height: 2vh;
+    border-radius: 2vh;
   }
 
   .bar {
-    border-radius: 40px;
-    box-shadow: 4px 4px 8px 0 rgb(0 0 0 / 30%) inset;
+    border-radius: 2vh;
+    box-shadow: 1vh 1vh 2vh 0 rgb(0 0 0 / 30%) inset;
   }
 
   .progress {
-    height: 40px;
+    height: 2vh;
   }
 }

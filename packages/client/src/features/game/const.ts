@@ -25,7 +25,7 @@ export const ENEMY_ANIMATION_DURATION = PLAYER_ANIMATION_DURATION
 export const BOMB_FUSE = 3000
 export const GAME_DURATION = 200
 export const BOMB_PLACEMENT_COOLDOWN = 200
-export const LEVEL_COUNTER = 60000
+export const LEVEL_COUNTER = 1000
 
 /* --- Velocity --- */
 export const PLAYER_VELOCITY = CELL_WIDTH * 2.65
