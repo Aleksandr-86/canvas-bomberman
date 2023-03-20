@@ -13,7 +13,7 @@ import {
   BUFF_CHANCE,
   BOMB_PLACEMENT_COOLDOWN,
   GRID_HEIGHT,
-  BASIC_ENEMY_VELOCITY,
+  LEVEL_COUNTER,
 } from './const'
 import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
@@ -87,8 +87,8 @@ export const makeBombermanScene = (): SceneConfig => {
       lastFacing: 'down',
       // Координаты последний покинутой игроком клетки
       lastPos: { x: 1, y: 1 },
-      bombLimit: 10,
-      bombRange: 10,
+      bombLimit: 1,
+      bombRange: 1,
       speedScale: 1,
     },
     field: {
@@ -106,9 +106,9 @@ export const makeBombermanScene = (): SceneConfig => {
         bombAmountUp: { spawned: false, amount: 0 },
         bombRangeUp: { spawned: false, amount: 0 },
         playerSpeedUp: { spawned: false, amount: 0 },
-        detonator: { spawned: false, amount: 1 },
-        bombPass: { spawned: false, amount: 1 },
-        flamePass: { spawned: false, amount: 1 },
+        detonator: { spawned: false, amount: 0 },
+        bombPass: { spawned: false, amount: 0 },
+        flamePass: { spawned: false, amount: 0 },
       },
     },
   }
@@ -208,7 +208,6 @@ export const makeBombermanScene = (): SceneConfig => {
         playerOrthX * CELL_WIDTH === door.x &&
         playerOrthY * CELL_WIDTH === door.y
       ) {
-        // Проверяет факт отсутствия противников
         if (state.field.enemies.length === 0) {
           sendScore(state.player.score)
           scene.stopGame()
@@ -346,8 +345,11 @@ export const makeBombermanScene = (): SceneConfig => {
         { enemyName: 'droplet', chance: 4 },
       ])
 
-      // Появление монеток по истечении на уровень времени
-      delay(2000).then(() => {
+      /**
+       * Появление монеток по истечении времени выделяемого
+       * на уровень.
+       */
+      delay(LEVEL_COUNTER).then(() => {
         state.field.enemies.destroyAll()
         spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
           { enemyName: 'overtimeCoin', chance: 10 },
@@ -658,16 +660,6 @@ export const makeBombermanScene = (): SceneConfig => {
           state.field.enemies.add(enemy)
         }
       }
-
-      // if (withChance(10) && canSpawnEnemy) {
-      //   const enemy = makeEnemy(scene, cell, 'baloon')
-      //   state.field.enemies.add(enemy)
-      // }
-
-      // if (withChance(4) && canSpawnEnemy) {
-      //   const enemy = makeEnemy(scene, cell, 'droplet')
-      //   state.field.enemies.add(enemy)
-      // }
     }
   }
 }

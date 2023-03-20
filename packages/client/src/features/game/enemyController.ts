@@ -113,6 +113,51 @@ export class EnemyController {
     return possibleDirections
   }
 
+  private playerHunting(
+    enemyX: number,
+    enemyY: number,
+    obstacles: Obstacles,
+    lastPlayerPos: PointLike
+  ) {
+    const dirs: string[] = []
+
+    const topSquare = obstacles[enemyX][enemyY - 1]
+    const rightSquare = obstacles[enemyX + 1][enemyY]
+    const bottomSquare = obstacles[enemyX][enemyY + 1]
+    const leftSquare = obstacles[enemyX - 1][enemyY]
+
+    if (enemyX > lastPlayerPos.x) {
+      if (leftSquare !== 'wallHard' && leftSquare !== 'bomb') {
+        dirs.push('влево')
+      }
+
+      if (enemyY > lastPlayerPos.y) {
+        if (topSquare !== 'wallHard' && topSquare !== 'bomb') {
+          dirs.push('вверх')
+        }
+      } else if (enemyY < lastPlayerPos.y) {
+        if (bottomSquare !== 'wallHard' && bottomSquare !== 'bomb') {
+          dirs.push('вниз')
+        }
+      }
+    } else if (enemyX < lastPlayerPos.x) {
+      if (rightSquare !== 'wallHard' && rightSquare !== 'bomb') {
+        dirs.push('вправо')
+      }
+
+      if (enemyY > lastPlayerPos.y) {
+        if (topSquare !== 'wallHard' && topSquare !== 'bomb') {
+          dirs.push('вверх')
+        }
+      } else if (enemyY < lastPlayerPos.y) {
+        if (bottomSquare !== 'wallHard' && bottomSquare !== 'bomb') {
+          dirs.push('вниз')
+        }
+      }
+    }
+    return dirs
+  }
+
   /**
    * Возвращает клетку к которой двинется противник.
    */
@@ -163,8 +208,8 @@ export class EnemyController {
       // TODO: Временное решение. Переделать. (комментарий Aleksandr-86)
       if (isOvertimeCoin) {
         enemy.randomMileAge = randomInRange(
-          LOWER_BOUND_MILE_AGE + 30,
-          UPPER_BOUND_MILE_AGE + 30
+          LOWER_BOUND_MILE_AGE + 40,
+          UPPER_BOUND_MILE_AGE + 40
         )
       } else {
         enemy.randomMileAge = randomInRange(
@@ -184,37 +229,23 @@ export class EnemyController {
       }
     }
 
+    const topSquare = obstacles[enemyX][enemyY - 1]
+    const rightSquare = obstacles[enemyX + 1][enemyY]
+    const bottomSquare = obstacles[enemyX][enemyY + 1]
+    const leftSquare = obstacles[enemyX - 1][enemyY]
+
     if (enemy.changeDirPossibility) {
       let dirs: string[] = []
 
-      // Выбор направлений при развороте
-      // if (randomInRange(1, 100) <= 100 && isOvertimeCoin) {
-      //   console.warn('охота!')
-      //   if (enemyX > lastPlayerPos.x && enemyY > lastPlayerPos.y) {
-      //     randomInRange(1, 100) <= 50 ? (dirs = ['влево']) : (dirs = ['вверх'])
-      //   }
-
-      //   if (enemyX > lastPlayerPos.x && enemyY < lastPlayerPos.y) {
-      //     randomInRange(1, 100) <= 50 ? (dirs = ['влево']) : (dirs = ['вниз'])
-      //   }
-
-      //   if (enemyX < lastPlayerPos.x && enemyY < lastPlayerPos.y) {
-      //     randomInRange(1, 100) <= 50 ? (dirs = ['вправо']) : (dirs = ['вверх'])
-      //   }
-
-      //   if (enemyX < lastPlayerPos.x && enemyY > lastPlayerPos.y) {
-      //     randomInRange(1, 100) <= 50 ? (dirs = ['вправо']) : (dirs = ['вверх'])
-      //   }
-      // } else
-      if (isOvertimeCoin) {
-        dirs = this.possibleDirections(enemyX, enemyY, obstacles, true)
+      // Выбор направлений при ПОВОРОТЕ
+      if (isOvertimeCoin && randomInRange(1, 100) <= 75) {
+        dirs = this.playerHunting(enemyX, enemyY, obstacles, lastPlayerPos)
       } else {
         dirs = this.possibleDirections(enemyX, enemyY, obstacles, false)
       }
 
       let filteredDirs: string[] = []
-
-      // Разворот
+      // РАЗВОРОТ на 180 градусов
       if (randomInRange(1, 100) <= U_TURN_CHANCE) {
         filteredDirs = dirs.filter(d => d !== enemy.movementDir)
       } else {
@@ -249,13 +280,8 @@ export class EnemyController {
       }
     }
 
-    const topSquare = obstacles[enemyX][enemyY - 1]
-    const rightSquare = obstacles[enemyX + 1][enemyY]
-    const bottomSquare = obstacles[enemyX][enemyY + 1]
-    const leftSquare = obstacles[enemyX - 1][enemyY]
-
     /**
-     * Разворот в тупике
+     * РАЗВОРОТ В ТУПИКЕ
      */
     // Движение вверх
     if (enemy.movementDir === 'вверх') {
