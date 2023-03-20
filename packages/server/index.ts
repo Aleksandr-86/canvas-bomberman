@@ -1,32 +1,32 @@
-import { cspMiddleware } from './middlewares/cspMiddleware'
-import { proxyMiddleware } from './middlewares/proxyMiddleware'
-import { authMiddleware } from './middlewares/authMiddleware'
-import { ssrMiddleware } from './middlewares/ssrMiddleware'
 import * as dotenv from 'dotenv'
 dotenv.config()
+
+import { cspMiddleware } from './middlewares/cspMiddleware'
+import { authMiddleware } from './middlewares/authMiddleware'
+import { ssrMiddleware } from './middlewares/ssrMiddleware'
 import cors from 'cors'
-import { createServer as createViteServer } from 'vite'
-import type { ViteDevServer } from 'vite'
-import path from 'node:path'
-
+import { createServer as createViteServer, type ViteDevServer } from 'vite'
+import path from 'path'
 import express from 'express'
-import { postgressConnect } from './db'
+import { sequelize } from './db'
+import { appRouter } from './routes'
 
-const PORT = Number(process.env.SERVER_PORT) || 3001
+const PORT = Number(process.env.SERVER_PORT) || 3002
+
 export const isDev = () => process.env.NODE_ENV === 'development'
 
 async function createServer() {
   const app = express()
 
+  app.use(cors())
+  app.use(cspMiddleware())
+
   let vite: ViteDevServer | undefined
 
   const distPath = path.dirname(require.resolve('client/dist/index.html'))
   const srcPath = path.dirname(require.resolve('client'))
-  const assetDir = path.join(distPath, 'assets')
 
-  app.use(cors())
-  app.use(cspMiddleware())
-  app.use('/api', proxyMiddleware)
+  app.use('/api', appRouter)
 
   /**
    * Подключение vite middleware для горячей перезагрузки
@@ -45,27 +45,16 @@ async function createServer() {
   /**
    * Проброс статичных файлов из папки assets
    */
-  app.use('/assets', express.static(assetDir))
-
-  if (isDev()) {
-    vite = await (
-      await import('vite')
-    ).createServer({
-      server: { middlewareMode: true },
-      root: distPath,
-      appType: 'custom',
-    })
-    app.use(vite.middlewares)
-  }
+  app.use('/assets', express.static('assets'))
 
   app.use('*', authMiddleware, ssrMiddleware({ vite, srcPath, distPath }))
+
+  await sequelize.sync()
 
   return app
 }
 
-async function startServer() {
-  await postgressConnect()
-
+async function start() {
   const server = await createServer()
 
   server.listen(PORT, () => {
@@ -73,4 +62,4 @@ async function startServer() {
   })
 }
 
-startServer()
+start()

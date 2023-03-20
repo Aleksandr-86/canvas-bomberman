@@ -1,5 +1,5 @@
 import type { Optional } from 'sequelize'
-import { Column, HasMany, Model, Table } from 'sequelize-typescript'
+import { Column, HasMany, Model, Table, Unique } from 'sequelize-typescript'
 import { Comment } from './comment'
 import { Topic } from './topic'
 
@@ -16,6 +16,7 @@ type ICreateUser = Optional<IUser, 'createdAt' | 'updatedAt' | 'id'>
 
 @Table({ tableName: 'users', timestamps: true })
 export class User extends Model<IUser, ICreateUser> {
+  @Unique
   @Column
   yandexId!: number
 

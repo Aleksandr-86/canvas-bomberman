@@ -17,6 +17,9 @@ const store = mockStore({
       phone: 8900000000,
     },
   },
+  theme: {
+    current: `mockLight`,
+  },
 })
 
 describe(`<Landing/> snapshot test cases`, () => {
@@ -34,7 +37,10 @@ describe(`<Landing/> snapshot test cases`, () => {
   })
 
   test(`<Landing/> should render <div className=landing> parent with child elements (NO_AUTH)`, () => {
-    const store = mockStore({ user: { isAuth: false } })
+    const store = mockStore({
+      user: { isAuth: false, user: { id: 1 } },
+      theme: { current: `light` },
+    })
 
     const tree = renderer
       .create(

@@ -24,8 +24,9 @@ WORKDIR /app
 COPY --from=builder /build/packages/server/dist/ /app/
 COPY --from=builder /build/packages/server/package.json /app/package.json
 COPY --from=builder /build/yarn.lock /app/yarn.lock
+COPY .env .
 
-RUN yarn install --production=true
+RUN yarn install --production=true --frozen-lockfile
 
 # Link client
 COPY --from=builder /build/packages/client /app/node_modules/client
@@ -41,6 +42,7 @@ WORKDIR /app
 
 COPY --from=builder /build/packages/client/dist/ /app/
 COPY --from=builder /build/packages/client/nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /build/.env /app/.env
 
 EXPOSE $CLIENT_PORT
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
