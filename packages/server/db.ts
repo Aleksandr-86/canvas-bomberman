@@ -1,9 +1,5 @@
-import dotenv from 'dotenv'
-
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { UserTheme } from './models/userTheme'
-
-dotenv.config()
 
 const {
   POSTGRES_HOST,
