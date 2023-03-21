@@ -6,9 +6,6 @@ import { setStatus, GameStatus } from '../../store/gameSlice'
 import { Game } from '../game/lib'
 import { GameConfig } from './lib'
 import { gameEnded } from './gameActions'
-import { playAudio } from '../utils/playAudio'
-import stageStartAudio from '../../assets/audio/stageStart.mp3'
-import mainThemeAudio from '../../assets/audio/mainTheme.mp3'
 
 export function createGame(config: GameConfig) {
   return new Game(config)
@@ -43,14 +40,6 @@ export function useGame() {
 
     gameRef.current.start()
     dispatch(setStatus(GameStatus.START))
-
-    // Зацикленное проигрывание главной темы
-    const loopedMainTheme = () => {
-      playAudio(audioCtx, mainThemeAudio).then(loopedMainTheme)
-    }
-
-    // Проигрывание вступительной аудио дорожки
-    playAudio(audioCtx, stageStartAudio).then(() => loopedMainTheme())
   }
 
   useEffect(() => {

@@ -49,6 +49,9 @@ import failAudio from '../../assets/audio/fail.mp3'
 import buffTakenAudio from '../../assets/audio/buffTaken.mp3'
 import stageClearAudio from '../../assets/audio/stageClear.mp3'
 
+import stageStartAudio from '../../assets/audio/stageStart.mp3'
+import mainThemeAudio from '../../assets/audio/mainTheme.mp3'
+
 export interface BuffStats {
   bombAmountUp: { spawned: boolean; amount: number }
   bombRangeUp: { spawned: boolean; amount: number }
@@ -90,11 +93,29 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
   /**
    * Переменные не допускающие срабатывание аудио дорожки
    * до тех пор пока предыдущая аналогичная дорожка
-   * не будет проиграна до конца. (комментарий Aleksandr-86)
+   * не будет проиграна до конца. (Aleksandr-86)
    */
   let horizontalMoveAudioFlag = true
   let verticalMoveAudioFlag = true
   let bombAudioFlag = true
+
+  // Зацикленное проигрывание главной темы
+  const loopedMainTheme = () => {
+    if (audioCtx) {
+      playAudio(audioCtx, mainThemeAudio).then(loopedMainTheme)
+    }
+  }
+
+  // Проигрывание вступительной аудио дорожки
+  if (audioCtx) {
+    playAudio(audioCtx, stageStartAudio).then(() => {
+      creaturesCanMove = true
+      loopedMainTheme()
+    })
+  }
+
+  // Переменная контролирующая возможность передвижения противников
+  let creaturesCanMove = false
 
   const state: GameState = {
     player: {
@@ -416,6 +437,8 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       gameStarted()
     },
     update: (scene, frame, kbd) => {
+      if (!creaturesCanMove) return
+
       // player certainly defined in create()
       const playerRef = state.player.ref!
 
@@ -431,15 +454,16 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
            */
           stopGameFlag = false
           playAudio(audioCtx, playerWasHitAudio).then(() => {
+            creaturesCanMove = false
             audioCtx.close()
 
-            const playerDeadAudioCtx = new AudioContext()
-            playAudio(playerDeadAudioCtx, failAudio).then(() =>
-              playerDeadAudioCtx.close()
-            )
-
-            sendScore(state.player.score)
-            scene.stopGame()
+            const failAudioCtx = new AudioContext()
+            playAudio(failAudioCtx, failAudio)
+              .then(() => failAudioCtx.close())
+              .finally(() => {
+                sendScore(state.player.score)
+                scene.stopGame()
+              })
           })
         }
       } else {
@@ -693,6 +717,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
           scene.anims.run(enemy, 'right', frame.delta)
         }
       }
+
       controller.run(frame.delta, state.field.obstacles, state.player.lastPos)
     },
   }
