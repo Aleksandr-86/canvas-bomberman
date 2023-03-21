@@ -19,7 +19,7 @@ export const SOFT_WALL_SPAWN_OFFSET = {
 }
 
 /* --- Timings --- */
-export const PLAYER_ANIMATION_DURATION = 450
+export const PLAYER_ANIMATION_DURATION = 300
 export const EXPLOSION_DURATION = 600
 export const ENEMY_ANIMATION_DURATION = PLAYER_ANIMATION_DURATION
 export const BOMB_FUSE = 3000
@@ -32,7 +32,7 @@ export const PLAYER_VELOCITY = CELL_WIDTH * 2.65
 export const BASIC_ENEMY_VELOCITY = CELL_WIDTH * 3
 
 /* --- Chance --- */
-export const BUFF_CHANCE = 15
+export const BUFF_CHANCE = 20
 export const WALL_GENERATION_CHANCE = 30
 
 /**

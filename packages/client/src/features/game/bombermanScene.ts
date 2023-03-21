@@ -39,6 +39,15 @@ import {
 import { SpriteList } from './spriteList'
 import { SceneContext } from './lib/sceneContext'
 import { EnemyController } from './enemyController'
+import { playAudio } from '../utils/playAudio'
+import horizontalMoveAudio from '../../assets/audio/horizontalMove.mp3'
+import verticalMoveAudio from '../../assets/audio/verticalMove.mp3'
+import bombPlantedAudio from '../../assets/audio/bombPlanted.mp3'
+import bombExplodeAudio from '../../assets/audio/bombExplode.mp3'
+import playerWasHitAudio from '../../assets/audio/playerWasHit.mp3'
+import failAudio from '../../assets/audio/fail.mp3'
+import buffTakenAudio from '../../assets/audio/buffTaken.mp3'
+import stageClearAudio from '../../assets/audio/stageClear.mp3'
 
 export interface BuffStats {
   bombAmountUp: { spawned: boolean; amount: number }
@@ -77,7 +86,16 @@ type GameState = {
   }
 }
 
-export const makeBombermanScene = (): SceneConfig => {
+export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
+  /**
+   * Переменные не допускающие срабатывание аудио дорожки
+   * до тех пор пока предыдущая аналогичная дорожка
+   * не будет проиграна до конца. (комментарий Aleksandr-86)
+   */
+  let horizontalMoveAudioFlag = true
+  let verticalMoveAudioFlag = true
+  let bombAudioFlag = true
+
   const state: GameState = {
     player: {
       ref: null,
@@ -120,7 +138,7 @@ export const makeBombermanScene = (): SceneConfig => {
 
   // TODO: Инициализировать переменные при каждом создании игры
   const controller = new EnemyController()
-  const door = new Point(160, 560)
+  const door = new Point(400, 160)
 
   let lastBombPlacementTime = performance.now()
   const collidableCells = new SpriteList()
@@ -134,6 +152,14 @@ export const makeBombermanScene = (): SceneConfig => {
         set.delete(b)
       }
     })
+
+    if (bombAudioFlag) {
+      bombAudioFlag = false
+
+      if (audioCtx) {
+        playAudio(audioCtx, bombExplodeAudio).then(() => (bombAudioFlag = true))
+      }
+    }
 
     state.field.explosions.add(
       ...resolveExplosion(
@@ -209,6 +235,15 @@ export const makeBombermanScene = (): SceneConfig => {
         playerOrthY * CELL_WIDTH === door.y
       ) {
         if (state.field.enemies.length === 0) {
+          if (audioCtx) {
+            audioCtx.close()
+          }
+
+          const stageClearAudioCtx = new AudioContext()
+          playAudio(stageClearAudioCtx, stageClearAudio).then(() =>
+            stageClearAudioCtx.close()
+          )
+
           sendScore(state.player.score)
           scene.stopGame()
         }
@@ -388,32 +423,84 @@ export const makeBombermanScene = (): SceneConfig => {
 
       if (state.player.isDead) {
         scene.anims.run(playerRef, 'die', frame.delta, true)
-        delay(500).then(() => {
-          if (stopGameFlag) {
-            stopGameFlag = false
+
+        if (stopGameFlag && audioCtx) {
+          /**
+           * TODO: Предотвратить множественные срабатывания другим
+           * способом. (комментарий Aleksandr-86)
+           */
+          stopGameFlag = false
+          playAudio(audioCtx, playerWasHitAudio).then(() => {
+            audioCtx.close()
+
+            const playerDeadAudioCtx = new AudioContext()
+            playAudio(playerDeadAudioCtx, failAudio).then(() =>
+              playerDeadAudioCtx.close()
+            )
+
             sendScore(state.player.score)
             scene.stopGame()
-          }
-        })
+          })
+        }
       } else {
         if (kbd.left) {
           state.player.direction.x -= 1
           scene.anims.run(playerRef, 'left', frame.delta)
+
+          if (horizontalMoveAudioFlag && verticalMoveAudioFlag) {
+            horizontalMoveAudioFlag = false
+
+            if (audioCtx) {
+              playAudio(audioCtx, horizontalMoveAudio).then(
+                () => (horizontalMoveAudioFlag = true)
+              )
+            }
+          }
         }
 
         if (kbd.right) {
           state.player.direction.x += 1
           scene.anims.run(playerRef, 'right', frame.delta)
+
+          if (horizontalMoveAudioFlag && verticalMoveAudioFlag) {
+            horizontalMoveAudioFlag = false
+
+            if (audioCtx) {
+              playAudio(audioCtx, horizontalMoveAudio).then(
+                () => (horizontalMoveAudioFlag = true)
+              )
+            }
+          }
         }
 
         if (kbd.up) {
           state.player.direction.y -= 1
           scene.anims.run(playerRef, 'up', frame.delta)
+
+          if (verticalMoveAudioFlag && horizontalMoveAudioFlag) {
+            verticalMoveAudioFlag = false
+
+            if (audioCtx) {
+              playAudio(audioCtx, verticalMoveAudio).then(
+                () => (verticalMoveAudioFlag = true)
+              )
+            }
+          }
         }
 
         if (kbd.down) {
           state.player.direction.y += 1
           scene.anims.run(playerRef, 'down', frame.delta)
+
+          if (verticalMoveAudioFlag && horizontalMoveAudioFlag) {
+            verticalMoveAudioFlag = false
+
+            if (audioCtx) {
+              playAudio(audioCtx, verticalMoveAudio).then(
+                () => (verticalMoveAudioFlag = true)
+              )
+            }
+          }
         }
 
         if (kbd.control && state.field.buffStats.detonator.amount === 1) {
@@ -450,6 +537,11 @@ export const makeBombermanScene = (): SceneConfig => {
 
           registerBombObstacle(bombCell)
           state.field.bombPlanted.push(bombCell)
+
+          if (audioCtx) {
+            playAudio(audioCtx, bombPlantedAudio)
+          }
+
           state.field.bombs.unshift(makeBomb(scene, bombCell))
 
           if (state.field.buffStats.detonator.amount === 1) return
@@ -515,6 +607,10 @@ export const makeBombermanScene = (): SceneConfig => {
       if (playerPickBuff) {
         state.player.score += 500
         pointsAdded(500)
+
+        if (audioCtx) {
+          playAudio(audioCtx, buffTakenAudio)
+        }
 
         switch (playerPickBuff.frame) {
           case 'bombAmountUp':
