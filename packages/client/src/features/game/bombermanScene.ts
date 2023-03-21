@@ -40,6 +40,8 @@ import { SpriteList } from './spriteList'
 import { SceneContext } from './lib/sceneContext'
 import { EnemyController } from './enemyController'
 import { playAudio } from '../utils/playAudio'
+import stageStartAudio from '../../assets/audio/stageStart.mp3'
+import mainThemeAudio from '../../assets/audio/mainTheme.mp3'
 import horizontalMoveAudio from '../../assets/audio/horizontalMove.mp3'
 import verticalMoveAudio from '../../assets/audio/verticalMove.mp3'
 import bombPlantedAudio from '../../assets/audio/bombPlanted.mp3'
@@ -48,9 +50,6 @@ import playerWasHitAudio from '../../assets/audio/playerWasHit.mp3'
 import failAudio from '../../assets/audio/fail.mp3'
 import buffTakenAudio from '../../assets/audio/buffTaken.mp3'
 import stageClearAudio from '../../assets/audio/stageClear.mp3'
-
-import stageStartAudio from '../../assets/audio/stageStart.mp3'
-import mainThemeAudio from '../../assets/audio/mainTheme.mp3'
 
 export interface BuffStats {
   bombAmountUp: { spawned: boolean; amount: number }
@@ -115,7 +114,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
   }
 
   // Переменная контролирующая возможность передвижения противников
-  let creaturesCanMove = false
+  let creaturesCanMove = true
 
   const state: GameState = {
     player: {
@@ -164,35 +163,68 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
   let lastBombPlacementTime = performance.now()
   const collidableCells = new SpriteList()
 
-  // Детонация бомб
-  const bombDetonation = (bombCell: Point, scene: SceneContext) => {
-    unregisterObstacle(bombCell)
-    // Исключает координаты бомб из набора
-    state.field.bombsSet.forEach((b, _, set) => {
-      if (b.x * CELL_WIDTH === bombCell.x && b.y * CELL_WIDTH === bombCell.y) {
-        set.delete(b)
-      }
-    })
+  /**
+   * Функция обеспечивающая детонацию бомб.
+   * Работает с двумя ситуациями: детонация по
+   * нажатию на кнопку детонация через время.
+   */
+  const bombDetonation = (scene: SceneContext, bombCell: Point | null) => {
+    // Дистанционный подрыв
+    if (!bombCell) {
+      state.field.bombPlanted.forEach(bomb => {
+        unregisterObstacle(bomb)
 
-    if (bombAudioFlag) {
-      bombAudioFlag = false
+        state.field.explosions.add(
+          ...resolveExplosion(
+            bomb,
+            state.player.bombRange,
+            state.field.obstacles
+          ).map(({ point, orientation }) => {
+            return makeExplosion(scene, point, orientation)
+          })
+        )
+
+        state.field.bombs.destroyLast()
+      })
+
+      if (audioCtx && state.field.bombPlanted.length > 0) {
+        playAudio(audioCtx, bombExplodeAudio)
+      }
+
+      state.field.bombsSet.clear()
+      state.field.bombPlanted = []
+
+      // Подрыв через время
+    } else {
+      unregisterObstacle(bombCell)
+      state.field.bombPlanted.shift()
+      console.warn(state.field.bombPlanted)
+      // Исключает координаты бомбы из набора
+      state.field.bombsSet.forEach((b, _, set) => {
+        if (
+          b.x * CELL_WIDTH === bombCell.x &&
+          b.y * CELL_WIDTH === bombCell.y
+        ) {
+          set.delete(b)
+        }
+      })
 
       if (audioCtx) {
         playAudio(audioCtx, bombExplodeAudio).then(() => (bombAudioFlag = true))
       }
+
+      state.field.explosions.add(
+        ...resolveExplosion(
+          bombCell,
+          state.player.bombRange,
+          state.field.obstacles
+        ).map(({ point, orientation }) => {
+          return makeExplosion(scene, point, orientation)
+        })
+      )
+
+      state.field.bombs.destroyLast()
     }
-
-    state.field.explosions.add(
-      ...resolveExplosion(
-        bombCell,
-        state.player.bombRange,
-        state.field.obstacles
-      ).map(({ point, orientation }) => {
-        return makeExplosion(scene, point, orientation)
-      })
-    )
-
-    state.field.bombs.destroyLast()
 
     delay(EXPLOSION_DURATION).then(() => {
       for (const wall of state.field.softWalls) {
@@ -260,13 +292,14 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
             audioCtx.close()
           }
 
-          const stageClearAudioCtx = new AudioContext()
-          playAudio(stageClearAudioCtx, stageClearAudio).then(() =>
-            stageClearAudioCtx.close()
-          )
+          creaturesCanMove = false
 
-          sendScore(state.player.score)
-          scene.stopGame()
+          const stageClearAudioCtx = new AudioContext()
+          playAudio(stageClearAudioCtx, stageClearAudio).then(() => {
+            stageClearAudioCtx.close()
+            sendScore(state.player.score)
+            scene.stopGame()
+          })
         }
       }
 
@@ -528,10 +561,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
         }
 
         if (kbd.control && state.field.buffStats.detonator.amount === 1) {
-          const bombCell = state.field.bombPlanted.shift()
-          if (bombCell) {
-            bombDetonation(bombCell, scene)
-          }
+          bombDetonation(scene, null)
         }
 
         const playerMovingDiagonally =
@@ -571,8 +601,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
           if (state.field.buffStats.detonator.amount === 1) return
 
           delay(BOMB_FUSE).then(() => {
-            state.field.bombPlanted.shift()
-            bombDetonation(bombCell, scene)
+            bombDetonation(scene, bombCell)
           })
         }
       }
