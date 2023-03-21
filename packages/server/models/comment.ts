@@ -1,5 +1,7 @@
 import {
+  BelongsTo,
   Column,
+  Default,
   ForeignKey,
   Min,
   Model,
@@ -14,9 +16,9 @@ interface IComment {
   id: number
   topicId: number
   authorId: number
-  body: number
-  likeCount: number
-  dislikeCount: number
+  body: string
+  likeCount?: number
+  dislikeCount?: number
   createdAt: Date
   updatedAt: Date
 }
@@ -25,21 +27,26 @@ type ICreateComment = Optional<IComment, 'id' | 'createdAt' | 'updatedAt'>
 
 @Table({ tableName: 'comments', timestamps: true })
 export class Comment extends Model<IComment, ICreateComment> {
+  @BelongsTo(() => Topic)
+  topic!: Topic
+
   @ForeignKey(() => Topic)
-  topicId!: number
+  topic_id!: number
 
   @ForeignKey(() => User)
-  authorId!: number
+  author_id!: number
 
   @NotEmpty
   @Column
   body!: string
 
   @Min(0)
+  @Default(0)
   @Column
-  likeCount!: number
+  like_count!: number
 
   @Min(0)
+  @Default(0)
   @Column
-  dislikeCount!: number
+  dislike_count!: number
 }

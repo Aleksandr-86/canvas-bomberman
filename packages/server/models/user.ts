@@ -18,7 +18,7 @@ type ICreateUser = Optional<IUser, 'createdAt' | 'updatedAt' | 'id'>
 export class User extends Model<IUser, ICreateUser> {
   @Unique
   @Column
-  yandexId!: number
+  yandex_id!: number
 
   @HasMany(() => Comment)
   comments!: Comment[]
