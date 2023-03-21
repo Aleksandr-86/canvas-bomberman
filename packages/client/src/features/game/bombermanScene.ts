@@ -96,7 +96,9 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
    */
   let horizontalMoveAudioFlag = true
   let verticalMoveAudioFlag = true
-  let bombAudioFlag = true
+
+  // Переменная контролирующая возможность передвижения противников
+  let creaturesCanMove = false
 
   // Зацикленное проигрывание главной темы
   const loopedMainTheme = () => {
@@ -112,9 +114,6 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       loopedMainTheme()
     })
   }
-
-  // Переменная контролирующая возможность передвижения противников
-  let creaturesCanMove = true
 
   const state: GameState = {
     player: {
@@ -210,7 +209,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       })
 
       if (audioCtx) {
-        playAudio(audioCtx, bombExplodeAudio).then(() => (bombAudioFlag = true))
+        playAudio(audioCtx, bombExplodeAudio)
       }
 
       state.field.explosions.add(
