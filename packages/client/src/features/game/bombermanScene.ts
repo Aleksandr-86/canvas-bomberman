@@ -197,7 +197,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
     } else {
       unregisterObstacle(bombCell)
       state.field.bombPlanted.shift()
-      console.warn(state.field.bombPlanted)
+
       // Исключает координаты бомбы из набора
       state.field.bombsSet.forEach((b, _, set) => {
         if (
