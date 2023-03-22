@@ -6,7 +6,7 @@
     "build": "rimraf dist && tsc --p ./tsconfig.prod.json",
     "preview": "cross-env NODE_ENV=production node ./dist/index.js",
     "check-types": "tsc --project ./tsconfig.json --noEmit",
-    "dev": "cross-env NODE_ENV=development nodemon -r dotenv/config index.ts",
+    "dev": "cross-env NODE_ENV=development nodemon -r dotenv/config index.ts dotenv_config_path=./../../.env",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest ."
