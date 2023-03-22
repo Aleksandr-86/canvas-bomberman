@@ -734,7 +734,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
               } else if (enemy.frame.startsWith('droplet')) {
                 localScore = 200
               } else if (enemy.frame.startsWith('overtimeCoin')) {
-                localScore = 400
+                localScore = 800
               }
 
               state.player.score += localScore
