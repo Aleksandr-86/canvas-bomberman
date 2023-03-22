@@ -41,7 +41,7 @@ const sendDislike = async (id: number) => {
   }
 }
 
-const getMessages = async (id: string) => {
+const getMessages = async (id: number) => {
   try {
     const response = await axios.get(`${FORUM_API_URL}/posts/${id}`)
 
@@ -51,7 +51,13 @@ const getMessages = async (id: string) => {
   }
 }
 
-const sendMessage = async (text: string, topicId: number) => {
+const sendMessage = async ({
+  text,
+  topicId,
+}: {
+  text: string
+  topicId: number
+}) => {
   try {
     const response = await axios.post(`${FORUM_API_URL}/comments`, {
       data: {
