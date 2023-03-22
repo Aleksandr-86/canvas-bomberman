@@ -453,7 +453,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       //       controller.addEnemies(state.field.enemies.toArray())
       //     })
 
-          creaturesCanMove = true
+      creaturesCanMove = true
       //     loopedMainTheme()
       //   })
       // }
