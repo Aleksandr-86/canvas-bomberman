@@ -5,7 +5,7 @@ import {
   GameStatus,
   scoreIncreased,
   scoreClear,
-  incrementTime,
+  setProgress,
 } from '../../store/gameSlice'
 
 export function gameStarted() {
@@ -24,8 +24,8 @@ export function sendScore(score: number) {
   store.dispatch(leaderboardThunks.sendLeaderStats(score))
 }
 
-export function updateTimer() {
-  store.dispatch(incrementTime())
+export function inProgress(status: boolean) {
+  store.dispatch(setProgress(status))
 }
 
 export function gameEnded() {

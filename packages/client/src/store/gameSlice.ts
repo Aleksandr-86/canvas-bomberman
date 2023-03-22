@@ -11,7 +11,7 @@ const gameSlice = createSlice({
   initialState: {
     status: GameStatus.START,
     currentScore: 0,
-    time: 0,
+    inProgress: true,
   },
   reducers: {
     setStatus: (state, action: PayloadAction<GameStatus>) => {
@@ -26,8 +26,8 @@ const gameSlice = createSlice({
     scoreClear: state => {
       state.currentScore = 0
     },
-    incrementTime: state => {
-      state.time++
+    setProgress: (state, { payload }: PayloadAction<boolean>) => {
+      state.inProgress = payload
     },
   },
 })
@@ -38,5 +38,5 @@ export const {
   setCurrentScore,
   scoreIncreased,
   scoreClear,
-  incrementTime,
+  setProgress,
 } = gameSlice.actions

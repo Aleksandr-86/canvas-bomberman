@@ -24,7 +24,7 @@ import {
   pointsAdded,
   pointsClear,
   sendScore,
-  updateTimer,
+  inProgress,
 } from './gameActions'
 import nesBomberman from '../../assets/images/nesBomberman5xTransparent.png'
 import nesBombermanFrames from '../../assets/images/nesBomberman5x.json'
@@ -285,6 +285,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
           }
 
           creaturesCanMove = false
+          inProgress(false)
 
           const stageClearAudioCtx = new AudioContext()
           playAudio(stageClearAudioCtx, stageClearAudio).then(() => {
@@ -404,6 +405,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       })
     },
     create: scene => {
+      inProgress(true)
       // Регистрация границ уровня и колонн
       registerHardWalls()
 
@@ -437,9 +439,6 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       // Проигрывание вступительной аудио дорожки
       if (audioCtx) {
         playAudio(audioCtx, stageStartAudio).then(() => {
-          intervalId = window.setInterval(() => {
-            updateTimer()
-          }, 1000)
           /**
            * Появление монеток по истечении времени выделяемого
            * на уровень.
@@ -498,6 +497,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
            */
 
           window.clearInterval(intervalId)
+          inProgress(false)
 
           stopGameFlag = false
           playAudio(audioCtx, playerWasHitAudio).then(() => {
@@ -735,6 +735,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
 
         if (enemyInBlast) {
           scene.anims.run(enemy, 'die', frame.delta, true)
+
           delay(500).then(() => {
             const destroyed = state.field.enemies.destroyByPoint(enemy)
 

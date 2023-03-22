@@ -8,7 +8,7 @@ export const getCurrentScore = (state: RootState) => state.game.currentScore
 export const selectGameStats = (store: RootState) => {
   return {
     score: store.game.currentScore,
-    timeLeft: Math.trunc(store.game.time),
+    inProgress: store.game.inProgress,
   }
 }
 
