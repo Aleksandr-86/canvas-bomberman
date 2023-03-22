@@ -4,6 +4,9 @@ import { LEADERBOARD_LENGTH } from '../features/constants'
 export const getUser = (state: RootState) => state.user
 export const getGameStatus = (state: RootState) => state.game.status
 export const getCurrentScore = (state: RootState) => state.game.currentScore
+export const getTheme = (state: RootState) => state.theme.current
+export const getPosts = (state: RootState) => state.forum.posts
+export const getMessages = (state: RootState) => state.forum.messages
 
 export const selectGameStats = (store: RootState) => {
   return {
@@ -28,9 +31,3 @@ export const isLastPage = (state: RootState) => {
 
 export const isLeaderboardLoading = (state: RootState) =>
   state.leaderboard.isLoading
-
-export const getCurrentScore = (state: RootState) => state.game.currentScore
-export const getGameStatus = (state: RootState) => state.game.status
-export const getTheme = (state: RootState) => state.theme.current
-export const getPosts = (state: RootState) => state.forum.posts
-export const getMessages = (state: RootState) => state.forum.messages
