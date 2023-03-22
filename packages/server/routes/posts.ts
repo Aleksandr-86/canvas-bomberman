@@ -9,10 +9,4 @@ postRouter.put('/', PostController.createPost)
 
 postRouter.get('/:id', PostController.allComments)
 
-postRouter.put('/:id', CommentController.create)
-
-postRouter.post('/:id/like', CommentController.like)
-
-postRouter.post('/:id/dislike', CommentController.dislike)
-
 export { postRouter }
