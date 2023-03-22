@@ -220,7 +220,7 @@ const animations = {
 
 export function makeAnimation(key: keyof typeof animations) {
   if (!(key in animations)) {
-    console.error('animation not found')
+    console.error(`Анимация ${key} отсутствует!`)
   }
 
   const [frames, duration] = animations[key]

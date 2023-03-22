@@ -46,7 +46,11 @@ export class EnemyController {
     for (const sprite of sprites) {
       const enemyName = sprite.frame.slice(0, sprite.frame.length - 1)
 
-      // TODO: Временное решение. Переделать. (комментарий Aleksandr-86)
+      /**
+       * TODO (Aleksandr-86): Переделать. Спрайт противника должен содержать
+       * поле с его именем а также скорость передвижения данного типа
+       * противника. Задачу выполнять в ветке af-92-add-fields-to-the-sprite-class
+       */
       let velocity = 0
       if (enemyName === 'baloon') {
         velocity = BASIC_ENEMY_VELOCITY
