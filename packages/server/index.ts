@@ -1,37 +1,46 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-import { cspMiddleware } from './middlewares/cspMiddleware'
-import { authMiddleware } from './middlewares/authMiddleware'
-import { ssrMiddleware } from './middlewares/ssrMiddleware'
+import { cspMiddleware, ssrMiddleware } from './middlewares'
 import cors from 'cors'
 import { createServer as createViteServer, type ViteDevServer } from 'vite'
 import path from 'path'
 import express from 'express'
 import { sequelize } from './db'
-import { appRouter } from './routes'
+import { apiRoutes } from './routes'
+import cookieParser from 'cookie-parser'
 
 const PORT = Number(process.env.SERVER_PORT) || 3002
+const LOCAL_ORIGINS = [`http://127.0.0.1:${PORT}`, `http://localhost:${PORT}`]
 
 export const isDev = () => process.env.NODE_ENV === 'development'
 
 async function createServer() {
   const app = express()
 
-  app.use(cors())
-  app.use(cspMiddleware())
+  app.use(
+    cors({
+      credentials: true,
+      origin: [...LOCAL_ORIGINS],
+    })
+  )
 
-  let vite: ViteDevServer | undefined
+  if (!isDev()) {
+    app.use(cspMiddleware())
+  }
+
+  app.use(cookieParser())
 
   const distPath = path.dirname(require.resolve('client/dist/index.html'))
   const srcPath = path.dirname(require.resolve('client'))
 
-  app.use('/api', appRouter)
+  app.use('/api', apiRoutes)
 
   /**
    * Подключение vite middleware для горячей перезагрузки
    * модулей (HMR)
    */
+  let vite: ViteDevServer | undefined
   if (isDev()) {
     vite = await createViteServer({
       server: { middlewareMode: true },
@@ -47,12 +56,13 @@ async function createServer() {
    */
   app.use('/assets', express.static(path.resolve(distPath, 'assets')))
 
-  await sequelize.sync()
+  app.use('*', ssrMiddleware({ vite, srcPath, distPath }))
 
   return app
 }
 
 async function start() {
+  await sequelize.sync()
   const server = await createServer()
 
   server.listen(PORT, () => {
