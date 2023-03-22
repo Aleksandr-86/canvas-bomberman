@@ -64,9 +64,9 @@ async function start() {
 
   const server = await createServer()
 
-  // server.listen(PORT, () => {
-  //   console.log(`  ➜ 🎸 Сервер слушает порт: ${PORT}`)
-  // })
+  server.listen(PORT, () => {
+    console.log(`  ➜ 🎸 Сервер слушает порт: ${PORT}`)
+  })
 }
 
 start()
