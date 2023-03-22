@@ -1,7 +1,8 @@
 import { TEAM_NAME } from './../constants'
-import { API_URL, UserDTO } from '../../typings/api'
+import { UserDTO } from '../../typings/api'
 import defaultAvatar from '../../assets/images/avatar.png'
 import { PlayerStats } from '../../store/playersStatsSlice'
+import { API_URL } from '../constants'
 
 interface UserForm {
   login: string
@@ -14,7 +15,7 @@ interface UserForm {
 
 export const transformUser = (data: UserDTO) => {
   const avatar =
-    data.avatar !== null ? `${API_URL}resources${data.avatar}` : defaultAvatar
+    data.avatar !== null ? `${API_URL}/resources${data.avatar}` : defaultAvatar
 
   return {
     id: data.id,

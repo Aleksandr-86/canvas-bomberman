@@ -3,6 +3,7 @@ import { userReducer } from './userSlice'
 import { forumReducer } from './forumSlice'
 import { leaderboardReducer } from './playersStatsSlice'
 import { gameReducer } from './gameSlice'
+import { Theme, themeReducer } from './themeSlice'
 
 const initialState: Record<string, unknown> =
   typeof window !== 'undefined'
@@ -31,6 +32,9 @@ const initialState: Record<string, unknown> =
             phone: '',
           },
         },
+        theme: {
+          current: Theme.LIGHT,
+        },
       }
 
 export const createStore = (
@@ -41,6 +45,7 @@ export const createStore = (
       user: userReducer,
       leaderboard: leaderboardReducer,
       game: gameReducer,
+      theme: themeReducer,
       forum: forumReducer,
     },
     preloadedState,

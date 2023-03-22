@@ -22,11 +22,13 @@
   max-width: 250px;
   margin-bottom: 30px;
   padding: 10px 50px;
-  border: 5px solid black;
+  border: 5px solid var(--text-main-color);
   border-radius: 15px;
-  background: hsl(29deg 6% 89%);
-  color: black;
+  background: transparent;
+  color: var(--text-main-color);
   font-family: 'Rubik Bubbles', fantasy;
+  text-align: center;
+  text-decoration: none;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s linear;

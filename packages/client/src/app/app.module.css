@@ -18,6 +18,24 @@
     U+FEFF, U+FFFD;
 }
 
+:root {
+  --bg-color: hsl(40deg 5% 89%);
+  --text-main-color: hsl(0deg 100% 0%);
+  --text-link-color: hsl(241deg 83% 50%);
+}
+
+html[data-theme='light'] {
+  --bg-color: hsl(40deg 5% 89%);
+  --text-main-color: hsl(0deg 100% 0%);
+  --text-link-color: hsl(241deg 83% 50%);
+}
+
+html[data-theme='dark'] {
+  --bg-color: hsl(234deg 17% 15%);
+  --text-main-color: hsl(40deg 5% 89%);
+  --text-link-color: hsl(241deg 83% 50%);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -30,16 +48,17 @@ body {
   overflow: hidden;
   width: 100vw;
   height: 100vh;
-  background: hsl(40deg 5% 89%);
+  background: var(--bg-color);
+  color: var(--text-main-color);
   font-family: 'Rubik Bubbles', fantasy;
 }
 
 .linkButton {
   padding: 10px 50px;
-  border: 5px solid black;
+  border: 5px solid var(--text-main-color);
   border-radius: 15px;
-  background: hsl(29deg 6% 89%);
-  color: black;
+  background: transparent;
+  color: var(--text-main-color);
   font-size: 40px;
   font-family: 'Rubik Bubbles', fantasy;
   text-decoration: none;
