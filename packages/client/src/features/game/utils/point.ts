@@ -1,5 +1,5 @@
 export type PointLike = { x: number; y: number }
-import { lerp } from './lerp'
+import { linearInterpolation } from './linearInterpolation'
 
 export class Point {
   constructor(public x = 0, public y = 0) {}
@@ -67,13 +67,16 @@ export class Point {
     return this
   }
 
-  static lerp(from: Point, to: Point, t: number) {
+  static linearInterpolation(from: Point, to: Point, t: number) {
     if (t <= 0) {
       return from.copy()
     } else if (t >= 1) {
       return to.copy()
     } else {
-      return new Point(lerp(from.x, to.x, t), lerp(from.y, to.y, t))
+      return new Point(
+        linearInterpolation(from.x, to.x, t),
+        linearInterpolation(from.y, to.y, t)
+      )
     }
   }
 

@@ -12,7 +12,7 @@ export class AnimationRunner {
         sprite.frame = anim.currentFrame
       }
     } else {
-      console.error('no animation with this name')
+      console.error(`Анимация ${key} отсутствует!`)
     }
   }
 
@@ -23,7 +23,7 @@ export class AnimationRunner {
       anim.reset()
       sprite.frame = anim.currentFrame
     } else {
-      console.error('no animation with this name')
+      console.error(`Анимация ${key} отсутствует!`)
     }
   }
 }
