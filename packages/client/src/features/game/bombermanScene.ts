@@ -13,7 +13,7 @@ import {
   BUFF_CHANCE,
   BOMB_PLACEMENT_COOLDOWN,
   GRID_HEIGHT,
-  LEVEL_COUNTER,
+  GAME_DURATION,
 } from './const'
 import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
@@ -99,21 +99,6 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
 
   // Переменная контролирующая возможность передвижения противников
   let creaturesCanMove = false
-
-  // Зацикленное проигрывание главной темы
-  const loopedMainTheme = () => {
-    if (audioCtx) {
-      playAudio(audioCtx, mainThemeAudio).then(loopedMainTheme)
-    }
-  }
-
-  // Проигрывание вступительной аудио дорожки
-  if (audioCtx) {
-    playAudio(audioCtx, stageStartAudio).then(() => {
-      creaturesCanMove = true
-      loopedMainTheme()
-    })
-  }
 
   const state: GameState = {
     player: {
@@ -433,18 +418,33 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
         { enemyName: 'droplet', chance: 4 },
       ])
 
-      /**
-       * Появление монеток по истечении времени выделяемого
-       * на уровень.
-       */
-      delay(LEVEL_COUNTER).then(() => {
-        state.field.enemies.destroyAll()
-        spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
-          { enemyName: 'overtimeCoin', chance: 10 },
-        ])
+      // Зацикленное проигрывание главной темы
+      const loopedMainTheme = () => {
+        if (audioCtx) {
+          playAudio(audioCtx, mainThemeAudio).then(loopedMainTheme)
+        }
+      }
 
-        controller.addEnemies(state.field.enemies.toArray())
-      })
+      // Проигрывание вступительной аудио дорожки
+      if (audioCtx) {
+        playAudio(audioCtx, stageStartAudio).then(() => {
+          /**
+           * Появление монеток по истечении времени выделяемого
+           * на уровень.
+           */
+          delay(GAME_DURATION * 1000).then(() => {
+            state.field.enemies.destroyAll()
+            spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
+              { enemyName: 'overtimeCoin', chance: 10 },
+            ])
+
+            controller.addEnemies(state.field.enemies.toArray())
+          })
+
+          creaturesCanMove = true
+          loopedMainTheme()
+        })
+      }
 
       scene.camera.bind(state.player.ref)
 

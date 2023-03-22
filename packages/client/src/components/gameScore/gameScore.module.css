@@ -84,7 +84,8 @@
 
 .progress {
   height: 20px;
-  animation: count-down 60s linear forwards;
+  background-color: hsl(120deg 100% 50%);
+  animation: count-down var(--anim-duration) 2.7s linear forwards;
 }
 
 .panelScore {
