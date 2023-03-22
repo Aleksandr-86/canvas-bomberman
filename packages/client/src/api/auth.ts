@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { transformUser } from '../features/utils/apiTransformers'
 import { UserDTO } from '../typings/api'
-import { OAUTH_URL } from '../features/oauth/onOauthRequest'
+import { OAUTH_REDIRECT_URI } from '../features/constants'
 import { API_URL } from '../features/constants'
 
 interface LoginRequestData {
@@ -39,7 +39,7 @@ const login = async (data: LoginRequestData) => {
 }
 
 const oauth = async (data: OAuthRequestData) => {
-  const response = await axios.post(OAUTH_URL, data, {
+  const response = await axios.post(OAUTH_REDIRECT_URI, data, {
     ...options,
   })
 

@@ -4,10 +4,12 @@ export const SERVER_PORT = 3001
 // Базовый url Яндекс Практикума
 export const YANDEX_API = 'https://ya-praktikum.tech/api/v2'
 
+export const HOST_DOMAIN = 'https://alt-f4-bomberman-21.ya-praktikum.tech'
+
 // url хоста локального сервера
 export const LOCALHOST_API = `http://localhost:${SERVER_PORT}/api`
 
-export const FORUM_API_URL = 'https://alt-f4-bomberman-21.ya-praktikum.tech/api'
+export const FORUM_API_URL = `${HOST_DOMAIN}/api`
 
 // Список клиентских хостов
 export const CLIENT_HOSTS = [`localhost`, `127.0.0.1`]
@@ -23,6 +25,11 @@ export const TEAM_NAME = 'alt+f4v2'
  * на одной странице
  *  */
 export const LEADERBOARD_LENGTH = 5
+
+export const OAUTH_URL = 'https://ya-praktikum.tech/api/v2/oauth/yandex'
+export const OAUTH_REDIRECT_URI = import.meta.env.DEV
+  ? 'http://localhost:3000'
+  : HOST_DOMAIN
 
 export const THEME_LOCAL_STORAGE_KEY = `theme`
 // !!! настоящий url хоста, которым нужно пользоваться

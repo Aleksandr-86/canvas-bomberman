@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useAppDispatch } from '../store/hooks'
 import { oauth } from '../store/userActions'
-import { REDIRECT_URI } from '../features/oauth/onOauthRequest'
 import { getCurrentTheme } from '../store/themeActions'
+import { OAUTH_REDIRECT_URI } from '../features/constants'
 import { me } from '../store/userActions'
 import { THEME_LOCAL_STORAGE_KEY } from '../features/constants'
 import { Theme, setTheme } from '../store/themeSlice'
@@ -12,7 +12,7 @@ export const useLoadInitialData = (code: string | null) => {
 
   useEffect(() => {
     if (code) {
-      dispatch(oauth({ code, redirect_uri: REDIRECT_URI }))
+      dispatch(oauth({ code, redirect_uri: OAUTH_REDIRECT_URI }))
         .then(() => dispatch(me()).unwrap())
         .then(async ({ id }) => {
           dispatch(getCurrentTheme(id))
