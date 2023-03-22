@@ -1,24 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export enum GameStatus {
-  START = `start`,
-  IN_PROGRESS = `inProgress`,
-  END = `end`,
-}
-
-type State = {
-  status: GameStatus
-  currentScore: number
-}
-
-const INITIAL_STATE: State = {
-  status: GameStatus.START,
-  currentScore: 0,
+  START = 'START',
+  IN_PROGRESS = 'IN_PROGRESS',
+  END = 'END',
 }
 
 const gameSlice = createSlice({
   name: 'game',
-  initialState: INITIAL_STATE,
+  initialState: {
+    status: GameStatus.START,
+    currentScore: 0,
+    inProgress: true,
+  },
   reducers: {
     setStatus: (state, action: PayloadAction<GameStatus>) => {
       state.status = action.payload
@@ -26,8 +20,23 @@ const gameSlice = createSlice({
     setCurrentScore: (state, action: PayloadAction<number>) => {
       state.currentScore = action.payload
     },
+    scoreIncreased: (state, { payload }: PayloadAction<number>) => {
+      state.currentScore += payload
+    },
+    scoreClear: state => {
+      state.currentScore = 0
+    },
+    setProgress: (state, { payload }: PayloadAction<boolean>) => {
+      state.inProgress = payload
+    },
   },
 })
 
 export const gameReducer = gameSlice.reducer
-export const { setStatus, setCurrentScore } = gameSlice.actions
+export const {
+  setStatus,
+  setCurrentScore,
+  scoreIncreased,
+  scoreClear,
+  setProgress,
+} = gameSlice.actions
