@@ -2,6 +2,7 @@ import { Animation } from './lib/animation'
 import { PLAYER_ANIMATION_DURATION, ENEMY_ANIMATION_DURATION } from './const'
 
 const animations = {
+  // Игрок
   bombermanLeft: [
     ['bombermanLeft1', 'bombermanLeft2', 'bombermanLeft3'],
     PLAYER_ANIMATION_DURATION,
@@ -32,17 +33,8 @@ const animations = {
     ],
     PLAYER_ANIMATION_DURATION * 0.8,
   ],
-  dropletLeft: [['droplet1', 'droplet2', 'droplet3'], ENEMY_ANIMATION_DURATION],
-  dropletRight: [
-    ['droplet1', 'droplet2', 'droplet3'],
-    ENEMY_ANIMATION_DURATION,
-  ],
-  dropletUp: [['droplet1', 'droplet2', 'droplet3'], ENEMY_ANIMATION_DURATION],
-  dropletDown: [['droplet1', 'droplet2', 'droplet3'], ENEMY_ANIMATION_DURATION],
-  dropletDie: [
-    ['dropletHit', 'dieBlue1', 'dieBlue2', 'dieBlue3', 'dieBlue4', 'empty'],
-    ENEMY_ANIMATION_DURATION * 2,
-  ],
+
+  // Воздушный шар
   baloonLeft: [['baloon1', 'baloon2', 'baloon3'], ENEMY_ANIMATION_DURATION],
   baloonRight: [['baloon1', 'baloon2', 'baloon3'], ENEMY_ANIMATION_DURATION],
   baloonUp: [['baloon1', 'baloon2', 'baloon3'], ENEMY_ANIMATION_DURATION],
@@ -58,6 +50,50 @@ const animations = {
     ],
     ENEMY_ANIMATION_DURATION * 2,
   ],
+
+  // Капля
+  dropletLeft: [['droplet1', 'droplet2', 'droplet3'], ENEMY_ANIMATION_DURATION],
+  dropletRight: [
+    ['droplet1', 'droplet2', 'droplet3'],
+    ENEMY_ANIMATION_DURATION,
+  ],
+  dropletUp: [['droplet1', 'droplet2', 'droplet3'], ENEMY_ANIMATION_DURATION],
+  dropletDown: [['droplet1', 'droplet2', 'droplet3'], ENEMY_ANIMATION_DURATION],
+  dropletDie: [
+    ['dropletHit', 'dieBlue1', 'dieBlue2', 'dieBlue3', 'dieBlue4', 'empty'],
+    ENEMY_ANIMATION_DURATION * 2,
+  ],
+
+  // Монета
+  overtimeCoinLeft: [
+    ['overtimeCoin1', 'overtimeCoin2', 'overtimeCoin3', 'overtimeCoin4'],
+    ENEMY_ANIMATION_DURATION,
+  ],
+  overtimeCoinRight: [
+    ['overtimeCoin1', 'overtimeCoin2', 'overtimeCoin3', 'overtimeCoin4'],
+    ENEMY_ANIMATION_DURATION,
+  ],
+  overtimeCoinUp: [
+    ['overtimeCoin1', 'overtimeCoin2', 'overtimeCoin3', 'overtimeCoin4'],
+    ENEMY_ANIMATION_DURATION,
+  ],
+  overtimeCoinDown: [
+    ['overtimeCoin1', 'overtimeCoin2', 'overtimeCoin3', 'overtimeCoin4'],
+    ENEMY_ANIMATION_DURATION,
+  ],
+  overtimeCoinDie: [
+    [
+      'overtimeCoinHit',
+      'dieOrange1',
+      'dieOrange2',
+      'dieOrange3',
+      'dieOrange4',
+      'empty',
+    ],
+    ENEMY_ANIMATION_DURATION * 2,
+  ],
+
+  // Бомба
   bombPulse: [['bomb1', 'bomb2', 'bomb3'], 800],
   softWallDestroy: [
     [
@@ -184,7 +220,7 @@ const animations = {
 
 export function makeAnimation(key: keyof typeof animations) {
   if (!(key in animations)) {
-    console.error('animation not found')
+    console.error(`Анимация ${key} отсутствует!`)
   }
 
   const [frames, duration] = animations[key]

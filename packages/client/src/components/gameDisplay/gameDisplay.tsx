@@ -1,50 +1,25 @@
-import { useEffect, useRef } from 'react'
-import { Game } from '../../features/game/lib'
+import { useRef } from 'react'
+import { useGame } from '../../features/game'
 import { GameOverlay } from '../gameOverlay/gameOverlay'
 import { useFullScreen } from '../../hooks/useFullScreen'
 import styles from './gameDisplay.module.css'
-import { bombermanScene } from '../../features/game/bombermanScene'
-import { GameScore } from '../gameScore'
+import { useAppSelector } from '../../store/hooks'
+import { getGameStatus } from '../../store/selectors'
+import { GameStatus } from '../../store/gameSlice'
+import { GameScore } from '../gameScore/gameScore'
 
 export const GameDisplay: React.FC = () => {
-  const gameRef = useRef<null | HTMLCanvasElement>(null)
   const canvasWrapperRef = useRef<null | HTMLDivElement>(null)
-  const shouldRunSecondTime = useRef(true)
-
   useFullScreen(canvasWrapperRef)
-
-  useEffect(() => {
-    const canvas = gameRef.current
-
-    if (!canvas || !shouldRunSecondTime.current) {
-      return
-    }
-
-    shouldRunSecondTime.current = false
-    /**
-     * TODO: Данный участок следует обработать после доработки
-     * движка по задачи № 75. Ответственный - Aleksandr-86.
-     */
-    const game = new Game({
-      height: 720,
-      width: 1280,
-      backgroundColor: '#64b0ff',
-      root: canvas,
-      scene: bombermanScene,
-    })
-    game.start()
-
-    return () => {
-      game.stop()
-    }
-  }, [])
+  const status = useAppSelector(getGameStatus)
+  const { canvasRef, startGame } = useGame()
 
   return (
     <div className={styles.gameDisplay}>
       <div className={styles.gameDisplayCanvasWrapper} ref={canvasWrapperRef}>
-        <GameScore />
-        <canvas ref={gameRef} width={1280} height={720} />
-        <GameOverlay onReloadGame={() => undefined} />
+        {status === GameStatus.IN_PROGRESS && <GameScore />}
+        <canvas ref={canvasRef} width={1280} height={640} />
+        <GameOverlay startGame={startGame} />
       </div>
     </div>
   )

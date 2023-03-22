@@ -1,20 +1,18 @@
-import { type FrameData } from './ticker'
 import { type Texture } from './texture'
-import { GameObjectFactory } from './gameObjects'
-import { type SceneObject } from './gameObjects/types'
+import { GameObjectFactory, Sprite } from './gameObjects'
 import { Camera } from './camera'
 import { type PointLike } from '../utils'
 import { AnimationRunner } from './animationRunner'
 
 export class SceneContext {
-  public displayList: SceneObject[] = []
+  public displayList: Sprite[] = []
   public textures = new Map<string, Texture>()
   public add = new GameObjectFactory(this)
   public create = this.add.creator
   public anims = new AnimationRunner()
   public camera: Camera
 
-  constructor(private dimensions: PointLike) {
+  constructor(private dimensions: PointLike, public stopGame: () => void) {
     this.camera = new Camera(this.dimensions.x, this.dimensions.y)
   }
 
@@ -22,7 +20,7 @@ export class SceneContext {
     this.displayList.sort(({ z: za }, { z: zb }) => za - zb)
   }
 
-  public render(ctx: CanvasRenderingContext2D, time: FrameData) {
+  public render(ctx: CanvasRenderingContext2D) {
     ctx.clearRect(0, 0, this.dimensions.x, this.dimensions.y)
 
     ctx.save()
@@ -32,7 +30,7 @@ export class SceneContext {
 
     this.displayList = this.displayList.filter(obj => !obj.shouldDestroy)
 
-    this.displayList.forEach(obj => obj.exec(ctx, time))
+    this.displayList.forEach(obj => obj.exec(ctx))
     ctx.restore()
   }
 }

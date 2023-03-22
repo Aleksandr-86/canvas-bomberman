@@ -18,7 +18,7 @@ export type SceneConfig = {
   update: (scene: SceneContext, frame: FrameData, kbd: Keyboard) => void
 }
 
-interface GameConfig {
+export interface GameConfig {
   width: number
   height: number
   root: HTMLCanvasElement
@@ -52,7 +52,9 @@ export class Game {
     this.ctx = ctx
     this.setCanvasProps(width, height, backgroundColor)
     this.scene = scene
-    this.sceneContext = new SceneContext(new Point(width, height))
+    this.sceneContext = new SceneContext(new Point(width, height), () =>
+      this.stop()
+    )
     this.loader = new Loader(this.sceneContext)
   }
 
@@ -96,7 +98,7 @@ export class Game {
 
     this.ticker.add(frameData => {
       this.scene.update(this.sceneContext, frameData, this.kbd)
-      this.sceneContext.render(this.ctx, frameData)
+      this.sceneContext.render(this.ctx)
     })
 
     this.ticker.start()

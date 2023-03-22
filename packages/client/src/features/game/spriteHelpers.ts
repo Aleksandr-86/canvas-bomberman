@@ -1,8 +1,9 @@
 import { SceneContext } from './lib/sceneContext'
-import { Point, PointLike, randomInRange } from './utils'
+import { type PointLike, randomInRange } from './utils'
 import { CELL_WIDTH, Depth } from './const'
 import { ExplosionOrientation } from './types'
 import { makeAnimation } from './animationHelpers'
+import { BuffStats } from './bombermanScene'
 
 export function makePlayer(scene: SceneContext, position: PointLike) {
   const player = scene.add.sprite(
@@ -60,7 +61,7 @@ export function makeBomb(scene: SceneContext, position: PointLike) {
   return bomb
 }
 
-type EnemyName = 'droplet' | 'baloon'
+export type EnemyName = 'droplet' | 'baloon' | 'overtimeCoin'
 
 export function makeEnemy(
   scene: SceneContext,
@@ -110,10 +111,62 @@ export function makeExplosion(
   return explosion
 }
 
-const possibleBuffs = ['bombAmountUp', 'bombRangeUp', 'playerSpeedUp']
+export function makeBuff(
+  scene: SceneContext,
+  position: PointLike,
+  buffStats: BuffStats
+) {
+  let possibleBuffs = [
+    'bombAmountUp',
+    'bombRangeUp',
+    'playerSpeedUp',
+    'detonator',
+    'bombPass',
+    'flamePass',
+  ]
 
-export function makeBuff(scene: SceneContext, position: PointLike) {
-  const buffKind = possibleBuffs[randomInRange(0, possibleBuffs.length - 1)]
+  let buffKind = ''
+
+  if (!buffStats.bombRangeUp.spawned && buffStats.bombRangeUp.amount === 0) {
+    buffKind = 'bombRangeUp'
+  } else {
+    // Ограничение набора улучшений
+    if (
+      buffStats.playerSpeedUp.spawned ||
+      buffStats.playerSpeedUp.amount >= 2
+    ) {
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'playerSpeedUp')
+    }
+
+    if (buffStats.detonator.spawned || buffStats.detonator.amount > 0) {
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'detonator')
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'flamePass')
+    }
+
+    if (buffStats.bombPass.spawned || buffStats.bombPass.amount > 0) {
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'bombPass')
+    }
+
+    if (buffStats.flamePass.spawned || buffStats.flamePass.amount > 0) {
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'flamePass')
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'detonator')
+    }
+
+    buffKind = possibleBuffs[randomInRange(0, possibleBuffs.length)]
+  }
+
+  // Учёт улучшения
+  if (buffKind === 'bombRangeUp') {
+    buffStats.bombRangeUp.spawned = true
+  } else if (buffKind === 'playerSpeedUp') {
+    buffStats.playerSpeedUp.spawned = true
+  } else if (buffKind === 'detonator') {
+    buffStats.detonator.spawned = true
+  } else if (buffKind === 'bombPass') {
+    buffStats.bombPass.spawned = true
+  } else if (buffKind === 'flamePass') {
+    buffStats.flamePass.spawned = true
+  }
 
   const buff = scene.add.sprite(
     position.x,
@@ -124,6 +177,7 @@ export function makeBuff(scene: SceneContext, position: PointLike) {
     CELL_WIDTH,
     Depth.Buff
   )
+
   return buff
 }
 

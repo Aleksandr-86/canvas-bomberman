@@ -1,6 +1,6 @@
 export { delay } from './delay'
 export { clamp } from './clamp'
-export { lerp } from './lerp'
+export { linearInterpolation } from './linearInterpolation'
 export { loadImage } from './loadImage'
 export { randomInRange } from './randomInRange'
 export { roundDecimals } from './roundDecimals'

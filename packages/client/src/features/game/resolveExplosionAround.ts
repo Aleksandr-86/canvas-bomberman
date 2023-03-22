@@ -1,17 +1,17 @@
-import { EMPTY_FIELD, CELL_WIDTH, GRID_WIDTH } from './const'
+import { CELL_WIDTH, GRID_WIDTH } from './const'
 import { ExplosionOrientation } from './types'
-import { Kind } from './types'
+import type { Obstacles } from './bombermanScene'
 import { Point, type PointLike } from './utils'
 
 /**
  * Gets background cell value from point
  * @param p point (game space)
  */
-const cellCanExplode = ({ x, y }: PointLike) => {
-  return (
-    EMPTY_FIELD[(y / CELL_WIDTH) * GRID_WIDTH + x / CELL_WIDTH] !==
-    Kind.WallHard
-  )
+const cellCanExplode = ({ x, y }: PointLike, obstacles: Obstacles) => {
+  const xOrth = x / CELL_WIDTH
+  const yOrth = y / CELL_WIDTH
+
+  return obstacles[xOrth][yOrth] !== 'wallHard'
 }
 
 const unit = {
@@ -34,7 +34,11 @@ type ExplosionConfig = {
  * @param radius explosion radius (game space)
  * @returns
  */
-export function resolveExplosion(center: PointLike, radius: number) {
+export function resolveExplosion(
+  center: PointLike,
+  radius: number,
+  obstacles: Obstacles
+) {
   const cutoffs = {
     left: false,
     right: false,
@@ -58,13 +62,14 @@ export function resolveExplosion(center: PointLike, radius: number) {
         .copy()
         .add(unit[direction].copy().scale(i))
 
-      if (!cutoffs[direction] && cellCanExplode(pointInDirection)) {
+      if (!cutoffs[direction] && cellCanExplode(pointInDirection, obstacles)) {
         const capitalized = direction[0].toUpperCase() + direction.slice(1)
 
         const isLastInLine = i === radius
 
         const hasNextCell = cellCanExplode(
-          centerPoint.copy().add(unit[direction].copy().scale(i + 1))
+          centerPoint.copy().add(unit[direction].copy().scale(i + 1)),
+          obstacles
         )
 
         const orientation =
@@ -76,6 +81,16 @@ export function resolveExplosion(center: PointLike, radius: number) {
           point: pointInDirection,
           orientation: orientation as ExplosionOrientation,
         })
+
+        // Получение типа следующей клетки
+        const squareOrthX = pointInDirection.x / CELL_WIDTH
+        const squareOrthY = pointInDirection.y / CELL_WIDTH
+        const squareType = obstacles[squareOrthX][squareOrthY]
+        if (squareType === 'wallHard' || squareType === 'wallSoft') {
+          obstacles[squareOrthX][squareOrthY] = null
+          // Прерываем ударную волну, если была разрушена кирпичная стена
+          break
+        }
       } else {
         cutoffs[direction] = true
       }

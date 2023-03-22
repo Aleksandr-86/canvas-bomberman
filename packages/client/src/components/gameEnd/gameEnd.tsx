@@ -7,11 +7,10 @@ import styles from './gameEnd.module.css'
 import baseStyles from '../../app/app.module.css'
 
 interface Props {
-  onReloadGame: () => void
+  restartGame: () => void
 }
 
-export const GameEnd: React.FC<Props> = props => {
-  const { onReloadGame } = props
+export const GameEnd: React.FC<Props> = ({ restartGame }) => {
   const currentScore = useAppSelector(getCurrentScore)
 
   return (
@@ -26,8 +25,8 @@ export const GameEnd: React.FC<Props> = props => {
           className={`${baseStyles.linkButton} ${styles.gameEndButton}`}>
           На главную
         </Link>
-        <Button onClick={onReloadGame} className={styles.gameEndButton}>
-          Сыграть еще раз
+        <Button onClick={restartGame} className={styles.gameEndButton}>
+          Сыграть ещё раз
         </Button>
         <Link
           to="/leaderboard"

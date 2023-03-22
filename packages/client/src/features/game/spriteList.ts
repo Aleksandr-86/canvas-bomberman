@@ -1,7 +1,5 @@
 import { Sprite } from './lib'
 import { Point, type PointLike } from './utils'
-import { pointsAdded } from './gameActions'
-import { Points } from './const'
 
 /**
  * Container for manipulations withs sprites

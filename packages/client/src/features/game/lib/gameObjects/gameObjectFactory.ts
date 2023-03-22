@@ -1,13 +1,13 @@
+import { GRID_HEIGHT, GRID_WIDTH } from './../../const'
 import { type SceneContext } from '../sceneContext'
 import { type Texture } from '../texture'
 import { Rect } from './rect'
 import { Sprite } from './sprite'
-import { type SceneObject } from './types'
 
 type TextureFrame = `${string}:${string}:${number}`
 
 type TileGridConfig<C extends number = number> = {
-  grid: C[]
+  grid: ('wallHard' | 'wallSoft' | 'bomb' | null)[][]
   gridWidth: number
   cellSize: number
   cells: Record<C, TextureFrame | Omit<string, TextureFrame>>
@@ -53,26 +53,36 @@ export class GameObjectCreator {
   tileGrid({ grid, gridWidth, cellSize, cells }: TileGridConfig) {
     const tiles = []
 
-    for (let i = 0; i < grid.length; ++i) {
-      const col = i % gridWidth
-      const row = Math.trunc(i / gridWidth)
-      const entry = cells[grid[i]]
+    for (let x = 0; x < GRID_WIDTH; x++) {
+      for (let y = 0; y < GRID_HEIGHT; y++) {
+        const endToEndNum = x + y * GRID_WIDTH
 
-      const [textureKey, frameKey, spriteDepth] = entry.split(':')
-      const texture = this.scene.textures.get(textureKey)
-      if (!texture) continue
+        const col = endToEndNum % gridWidth
+        const row = Math.trunc(endToEndNum / gridWidth)
+        const squareType = grid[x][y]
+        let entry: any
+        if (squareType === 'wallHard') {
+          entry = cells[1]
+        } else {
+          entry = cells[0]
+        }
 
-      const sprite = new Sprite(
-        col * cellSize,
-        row * cellSize,
-        texture,
-        frameKey,
-        Number(spriteDepth)
-      )
+        const [textureKey, frameKey, spriteDepth] = entry.split(':')
+        const texture = this.scene.textures.get(textureKey)
+        if (!texture) continue
 
-      sprite.width = cellSize
-      sprite.height = cellSize
-      tiles.push(sprite)
+        const sprite = new Sprite(
+          col * cellSize,
+          row * cellSize,
+          texture,
+          frameKey,
+          Number(spriteDepth)
+        )
+
+        sprite.width = cellSize
+        sprite.height = cellSize
+        tiles.push(sprite)
+      }
     }
 
     return tiles
@@ -85,10 +95,8 @@ export class GameObjectFactory {
     this.creator = new GameObjectCreator(scene)
   }
 
-  private register(object: SceneObject | SceneObject[]) {
-    this.scene.displayList = Array.isArray(object)
-      ? this.scene.displayList.concat(object)
-      : [...this.scene.displayList, object]
+  private register(object: Sprite[]) {
+    this.scene.displayList = this.scene.displayList.concat(object)
   }
 
   /**
@@ -103,7 +111,7 @@ export class GameObjectFactory {
     z = 0
   ) {
     const gameObject = this.creator.rect(x, y, width, height, fill, z)
-    this.register(gameObject)
+    this.register([gameObject] as unknown as Sprite[])
     return gameObject
   }
 
@@ -144,7 +152,7 @@ export class GameObjectFactory {
       z
     )
 
-    this.register(gameObject)
+    this.register([gameObject])
     return gameObject
   }
 }
