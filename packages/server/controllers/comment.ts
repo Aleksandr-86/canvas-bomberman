@@ -1,5 +1,5 @@
 import type { Handler } from 'express'
-import { Comment, User } from '../models'
+import { Comment } from '../models'
 
 export const like: Handler = async (req, res) => {
   const { commentId } = req.params

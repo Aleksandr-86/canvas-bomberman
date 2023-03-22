@@ -32,7 +32,7 @@ export const proxyMiddleware: RequestHandler = (req, res, next) => {
     target: API_URL,
     pathRewrite: { '^/api': '' },
     changeOrigin: true,
-    cookieDomainRewrite: { 'ya-praktikum.tech': req.hostname },
+    cookieDomainRewrite: 'ya-praktikum.tech',
     selfHandleResponse: false,
     logLevel: 'info',
     onProxyReq: fixRequestBody,

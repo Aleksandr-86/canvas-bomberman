@@ -6,12 +6,10 @@ import cors from 'cors'
 import { createServer as createViteServer, type ViteDevServer } from 'vite'
 import path from 'path'
 import express from 'express'
-import { sequelize } from './db'
+import { postgresConnect } from './db'
 import { apiRoutes } from './routes'
 import cookieParser from 'cookie-parser'
-
-const PORT = Number(process.env.SERVER_PORT) || 3002
-const LOCAL_ORIGINS = [`http://127.0.0.1:${PORT}`, `http://localhost:${PORT}`]
+import { LOCAL_ORIGINS, PORT } from './constants'
 
 export const isDev = () => process.env.NODE_ENV === 'development'
 
@@ -62,12 +60,13 @@ async function createServer() {
 }
 
 async function start() {
-  await sequelize.sync()
+  await postgresConnect()
+
   const server = await createServer()
 
-  server.listen(PORT, () => {
-    console.log(`  ➜ 🎸 Сервер слушает порт: ${PORT}`)
-  })
+  // server.listen(PORT, () => {
+  //   console.log(`  ➜ 🎸 Сервер слушает порт: ${PORT}`)
+  // })
 }
 
 start()
