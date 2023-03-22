@@ -630,8 +630,8 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
           delay(EXPLOSION_DURATION).then(() => {
             const destroyed = state.field.softWalls.destroyByPoint(explosion)
             if (destroyed) {
-              state.player.score += 25
-              pointsAdded(25)
+              state.player.score += 3
+              pointsAdded(3)
             }
           })
         }
@@ -672,8 +672,8 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       const playerPickBuff = state.field.buffs.byPoint(nearestCell(playerRef))
 
       if (playerPickBuff) {
-        state.player.score += 500
-        pointsAdded(500)
+        state.player.score += 50
+        pointsAdded(50)
 
         if (audioCtx) {
           playAudio(audioCtx, buffTakenAudio)
@@ -746,11 +746,11 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
                */
               let localScore = 0
               if (enemy.frame.startsWith('baloon')) {
-                localScore = 100
+                localScore = 10
               } else if (enemy.frame.startsWith('droplet')) {
-                localScore = 200
+                localScore = 25
               } else if (enemy.frame.startsWith('overtimeCoin')) {
-                localScore = 800
+                localScore = 100
               }
 
               state.player.score += localScore
