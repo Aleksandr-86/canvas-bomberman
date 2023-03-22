@@ -113,6 +113,11 @@ exports[`<GameDisplay/> snapshot test cases <GameDisplay/> should render <div cl
         >
           <div
             className="progress"
+            style={
+              Object {
+                "--anim-duration": "45s",
+              }
+            }
           />
         </div>
       </div>

@@ -23,7 +23,7 @@ export const PLAYER_ANIMATION_DURATION = 300
 export const EXPLOSION_DURATION = 600
 export const ENEMY_ANIMATION_DURATION = PLAYER_ANIMATION_DURATION
 export const BOMB_FUSE = 3000
-export const GAME_DURATION = 10
+export const GAME_DURATION = 45
 export const BOMB_PLACEMENT_COOLDOWN = 200
 
 /* --- Velocity --- */

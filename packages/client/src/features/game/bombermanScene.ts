@@ -19,7 +19,13 @@ import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
 import { Kind } from './types'
 import { Point, type PointLike, delay, withChance } from './utils'
-import { gameStarted, pointsAdded, pointsClear, sendScore } from './gameActions'
+import {
+  gameStarted,
+  pointsAdded,
+  pointsClear,
+  sendScore,
+  updateTimer,
+} from './gameActions'
 import nesBomberman from '../../assets/images/nesBomberman5xTransparent.png'
 import nesBombermanFrames from '../../assets/images/nesBomberman5x.json'
 import { generateWallSoftPositions } from './createSoftWalls'
@@ -96,6 +102,8 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
    */
   let horizontalMoveAudioFlag = true
   let verticalMoveAudioFlag = true
+
+  let intervalId: number
 
   // Переменная контролирующая возможность передвижения противников
   let creaturesCanMove = false
@@ -281,6 +289,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
           const stageClearAudioCtx = new AudioContext()
           playAudio(stageClearAudioCtx, stageClearAudio).then(() => {
             stageClearAudioCtx.close()
+            window.clearInterval(intervalId)
             sendScore(state.player.score)
             scene.stopGame()
           })
@@ -428,6 +437,9 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       // Проигрывание вступительной аудио дорожки
       if (audioCtx) {
         playAudio(audioCtx, stageStartAudio).then(() => {
+          intervalId = window.setInterval(() => {
+            updateTimer()
+          }, 1000)
           /**
            * Появление монеток по истечении времени выделяемого
            * на уровень.
@@ -484,6 +496,9 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
            * TODO: Предотвратить множественные срабатывания другим
            * способом. (комментарий Aleksandr-86)
            */
+
+          window.clearInterval(intervalId)
+
           stopGameFlag = false
           playAudio(audioCtx, playerWasHitAudio).then(() => {
             creaturesCanMove = false
