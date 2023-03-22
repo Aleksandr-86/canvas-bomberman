@@ -15,7 +15,6 @@ import { getUser } from '../../store/selectors'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { editData, logout } from '../../store/userActions'
 
-import { store } from '../../store'
 
 type FormType = {
   displayName: string
@@ -47,7 +46,7 @@ export const Profile: React.FC = () => {
     )
   }, [])
 
-  const { values, errors, register, isValid } = useForm<FormType>({
+  const { values, register, isValid } = useForm<FormType>({
     validations: validations,
     initialValues: user,
   })
