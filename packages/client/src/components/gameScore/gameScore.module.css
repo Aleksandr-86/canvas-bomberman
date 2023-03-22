@@ -59,6 +59,7 @@
 
 .panel {
   display: flex;
+  gap: 8px;
   justify-content: space-around;
   align-items: center;
   width: 100%;
@@ -66,12 +67,12 @@
   padding: 5px;
   background-color: #64b0ff;
   box-shadow: 0 -4px 14px 2px #006fe6 inset;
-  font-size: 50px;
+  font-size: 60px;
 }
 
 .progressBar {
   overflow: hidden;
-  width: 82%;
+  width: 1080px;
   height: 20px;
   border-radius: 20px;
 }
@@ -94,21 +95,41 @@
   background-color: hsl(120deg 100% 50%);
 }
 
+.buffs {
+  display: flex;
+  gap: 21px;
+  justify-content: center;
+  align-items: center;
+  width: 630px;
+}
+
+.buff {
+  display: flex;
+  align-items: center;
+}
+
+.img {
+  width: 56px;
+  height: 56px;
+}
+
 .panelScore {
   display: flex;
   justify-content: center;
-  width: 14%;
+  width: 210px;
 }
 
 @media all and (display-mode: fullscreen) {
   .panel {
+    gap: 2vh;
     height: 8vh;
     padding: 1vh;
     box-shadow: 0 0 2vh 0.2vh #004a99 inset;
     font-size: 6vh;
   }
-
+  
   .progressBar {
+    width: 80vh;
     height: 2vh;
     border-radius: 2vh;
   }
@@ -124,5 +145,19 @@
 
   .progressStopped {
     height: 2vh;
+  }
+
+  .buffs {
+    gap: 2.4vh;
+    width: 72vh;
+  }
+
+  .img {
+    width: 6.4vh;
+    height: 6.4vh;
+  }
+
+  .panelScore {
+    width: 24vh;
   }
 }

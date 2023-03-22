@@ -429,33 +429,34 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
         { enemyName: 'droplet', chance: 4 },
       ])
 
+      // !!
       // Зацикленное проигрывание главной темы
-      const loopedMainTheme = () => {
-        if (audioCtx) {
-          playAudio(audioCtx, mainThemeAudio).then(loopedMainTheme)
-        }
-      }
+      // const loopedMainTheme = () => {
+      //   if (audioCtx) {
+      //     playAudio(audioCtx, mainThemeAudio).then(loopedMainTheme)
+      //   }
+      // }
 
       // Проигрывание вступительной аудио дорожки
-      if (audioCtx) {
-        playAudio(audioCtx, stageStartAudio).then(() => {
-          /**
-           * Появление монеток по истечении времени выделяемого
-           * на уровень.
-           */
-          delay(GAME_DURATION * 1000).then(() => {
-            state.field.enemies.destroyAll()
-            spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
-              { enemyName: 'overtimeCoin', chance: 10 },
-            ])
+      // if (audioCtx) {
+      //   playAudio(audioCtx, stageStartAudio).then(() => {
+      //     /**
+      //      * Появление монеток по истечении времени выделяемого
+      //      * на уровень.
+      //      */
+      //     delay(GAME_DURATION * 1000).then(() => {
+      //       state.field.enemies.destroyAll()
+      //       spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
+      //         { enemyName: 'overtimeCoin', chance: 10 },
+      //       ])
 
-            controller.addEnemies(state.field.enemies.toArray())
-          })
+      //       controller.addEnemies(state.field.enemies.toArray())
+      //     })
 
           creaturesCanMove = true
-          loopedMainTheme()
-        })
-      }
+      //     loopedMainTheme()
+      //   })
+      // }
 
       scene.camera.bind(state.player.ref)
 

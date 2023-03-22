@@ -15,7 +15,6 @@ import { getUser } from '../../store/selectors'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { editData, logout } from '../../store/userActions'
 
-
 type FormType = {
   displayName: string
   login: string
