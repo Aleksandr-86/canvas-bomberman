@@ -1,6 +1,6 @@
 import {
   Column,
-  Default,
+  DataType,
   ForeignKey,
   HasMany,
   Model,
@@ -14,7 +14,7 @@ import type { Optional } from 'sequelize'
 interface ITopic {
   id: number
   body: string
-  authorId: number
+  user_id: number
   comments?: Comment[]
   createdAt: Date
   updatedAt: Date
@@ -28,7 +28,7 @@ export class Topic extends Model<ITopic, ICreateTopic> {
   user_id!: number
 
   @NotEmpty
-  @Column
+  @Column(DataType.STRING)
   body!: string
 
   @HasMany(() => Comment)

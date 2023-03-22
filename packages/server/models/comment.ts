@@ -14,16 +14,14 @@ import { User } from './user'
 
 interface IComment {
   id: number
-  topicId: number
-  authorId: number
+  topic_id: number
+  user_id: number
   body: string
-  likeCount?: number
-  dislikeCount?: number
-  createdAt: Date
-  updatedAt: Date
+  like_count?: number
+  dislike_count?: number
 }
 
-type ICreateComment = Optional<IComment, 'id' | 'createdAt' | 'updatedAt'>
+type ICreateComment = Optional<IComment, 'id'>
 
 @Table({ tableName: 'comments', timestamps: true })
 export class Comment extends Model<IComment, ICreateComment> {
