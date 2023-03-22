@@ -1,9 +1,9 @@
 import axios, { AxiosError } from 'axios'
+import { FORUM_API_URL } from '../features/constants'
+
 const getPosts = async () => {
   try {
-    const response = await axios.get(
-      'https://alt-f4-bomberman-21.ya-praktikum.tech/posts'
-    )
+    const response = await axios.get(`${FORUM_API_URL}posts`)
     return response.data
   } catch (e) {
     return e as AxiosError
@@ -12,12 +12,9 @@ const getPosts = async () => {
 
 const sendPost = async (formData: FormData) => {
   try {
-    const response = await axios.post(
-      'https://alt-f4-bomberman-21.ya-praktikum.tech/posts',
-      {
-        data: formData,
-      }
-    )
+    const response = await axios.put(`${FORUM_API_URL}/posts`, {
+      data: formData,
+    })
     return response.data
   } catch (e) {
     return e as AxiosError
@@ -26,9 +23,8 @@ const sendPost = async (formData: FormData) => {
 
 const sendLike = async (id: number) => {
   try {
-    await axios.post('https://alt-f4-bomberman-21.ya-praktikum.tech/likes', {
-      data: id,
-    })
+    await axios.post(`${FORUM_API_URL}/comments/${id}/like`)
+
     return id
   } catch (e) {
     return e as AxiosError
@@ -37,34 +33,33 @@ const sendLike = async (id: number) => {
 
 const sendDislike = async (id: number) => {
   try {
-    await axios.post('https://alt-f4-bomberman-21.ya-praktikum.tech/dislikes', {
-      data: id,
-    })
+    await axios.post(`${FORUM_API_URL}/comments/${id}/dislike`)
+
     return id
   } catch (e) {
     return e as AxiosError
   }
 }
 
-const getMessages = async (id: string | undefined) => {
+const getMessages = async (id: string) => {
   try {
-    const response = await axios.get(
-      `https://alt-f4-bomberman-21.ya-praktikum.tech/posts/${id}`
-    )
+    const response = await axios.get(`${FORUM_API_URL}/posts/${id}`)
+
     return response.data
   } catch (e) {
     return e as AxiosError
   }
 }
 
-const sendMessage = async (formData: FormData) => {
+const sendMessage = async (text: string, topicId: number) => {
   try {
-    const response = await axios.post(
-      `https://alt-f4-bomberman-21.ya-praktikum.tech/message/`,
-      {
-        data: formData,
-      }
-    )
+    const response = await axios.post(`${FORUM_API_URL}/comments`, {
+      data: {
+        body: text,
+        topicId,
+      },
+    })
+
     return response.data
   } catch (e) {
     return e as AxiosError
