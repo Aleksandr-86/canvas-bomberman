@@ -1,0 +1,26 @@
+.rules {
+  width: 1260px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto 0;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0 0 30px;
+  font-size: 36px;
+  text-align: center;
+}
+
+.text {
+  margin: 0 0 15px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 25px;
+  justify-content: center;
+  gap: 10px;
+}

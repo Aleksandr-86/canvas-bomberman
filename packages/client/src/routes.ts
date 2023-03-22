@@ -9,6 +9,7 @@ import { ForumMessages } from './pages/forumMessages/forumMessages'
 import { ForumNewPost } from './pages/forumNewPost/forumNewPost'
 import { ForumNewMessage } from './pages/forumNewMessage/forumNewMessage'
 import { Game } from './pages/game/game'
+import { Rules } from './pages/rules/rules'
 
 type Routes = {
   initStoreWithServer?: (slug: string) => []
@@ -64,5 +65,9 @@ export const routes: Routes = [
   {
     path: '/game',
     element: Game,
+  },
+  {
+    path: '/rules',
+    element: Rules,
   },
 ]
