@@ -17,6 +17,8 @@ services:
         environment:
           CLIENT_PORT: ${CLIENT_PORT}
           SERVER_PORT: ${SERVER_PORT}
+        volumes:
+          - /etc/nginx:/etc/nginx
 
     server:
         container_name: prakticum-server
@@ -51,8 +53,6 @@ services:
         - postgres
       volumes:
         - pgadmin-data:/var/lib/pgadmin
-      networks:
-        - bomberman-network
 
     postgres:
       image: postgres:14-alpine
@@ -67,12 +67,7 @@ services:
         POSTGRES_DB: ${POSTGRES_DB}
       volumes:
         - ./tmp/pgdata:/var/lib/postgresql/data
-      networks:
-        - bomberman-network
       
 
 volumes:
   pgadmin-data:
-
-networks:
-  bomberman-network:

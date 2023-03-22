@@ -25,12 +25,6 @@ module.exports = {
   rules: {
     '@typescript-eslint/ban-ts-comment': 1,
     'no-console': 'warn',
-    'react-hooks/exhaustive-deps': [
-      'warn',
-      {
-        additionalHooks: 'useAppDispatch',
-      },
-    ],
   },
   ignorePatterns: [
     'packages/client/public/**',
