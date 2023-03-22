@@ -45,9 +45,7 @@ async function createServer() {
   /**
    * Проброс статичных файлов из папки assets
    */
-  app.use('/assets', express.static('assets'))
-
-  app.use('*', authMiddleware, ssrMiddleware({ vite, srcPath, distPath }))
+  app.use('/assets', express.static(path.resolve(distPath, 'assets')))
 
   await sequelize.sync()
 
