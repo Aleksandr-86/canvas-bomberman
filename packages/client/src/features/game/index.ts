@@ -28,12 +28,14 @@ export function useGame() {
       return
     }
 
+    const audioCtx = new AudioContext()
+
     gameRef.current = createGame({
       width: CAMERA_WIDTH,
       height: CAMERA_HEIGHT,
       backgroundColor: '#64b0ff',
       root: canvasRef.current,
-      scene: makeBombermanScene(),
+      scene: makeBombermanScene(audioCtx),
     })
 
     gameRef.current.start()

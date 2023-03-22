@@ -13,13 +13,19 @@ import {
   BUFF_CHANCE,
   BOMB_PLACEMENT_COOLDOWN,
   GRID_HEIGHT,
-  LEVEL_COUNTER,
+  GAME_DURATION,
 } from './const'
 import { Sprite } from './lib/gameObjects'
 import { type SceneConfig } from './lib'
 import { Kind } from './types'
 import { Point, type PointLike, delay, withChance } from './utils'
-import { gameStarted, pointsAdded, pointsClear, sendScore } from './gameActions'
+import {
+  gameStarted,
+  pointsAdded,
+  pointsClear,
+  sendScore,
+  inProgress,
+} from './gameActions'
 import nesBomberman from '../../assets/images/nesBomberman5xTransparent.png'
 import nesBombermanFrames from '../../assets/images/nesBomberman5x.json'
 import { generateWallSoftPositions } from './createSoftWalls'
@@ -39,6 +45,17 @@ import {
 import { SpriteList } from './spriteList'
 import { SceneContext } from './lib/sceneContext'
 import { EnemyController } from './enemyController'
+import { playAudio } from '../utils/playAudio'
+import stageStartAudio from '../../assets/audio/stageStart.mp3'
+import mainThemeAudio from '../../assets/audio/mainTheme.mp3'
+import horizontalMoveAudio from '../../assets/audio/horizontalMove.mp3'
+import verticalMoveAudio from '../../assets/audio/verticalMove.mp3'
+import bombPlantedAudio from '../../assets/audio/bombPlanted.mp3'
+import bombExplodeAudio from '../../assets/audio/bombExplode.mp3'
+import playerWasHitAudio from '../../assets/audio/playerWasHit.mp3'
+import failAudio from '../../assets/audio/fail.mp3'
+import buffTakenAudio from '../../assets/audio/buffTaken.mp3'
+import stageClearAudio from '../../assets/audio/stageClear.mp3'
 
 export interface BuffStats {
   bombAmountUp: { spawned: boolean; amount: number }
@@ -77,7 +94,20 @@ type GameState = {
   }
 }
 
-export const makeBombermanScene = (): SceneConfig => {
+export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
+  /**
+   * Переменные не допускающие срабатывание аудио дорожки
+   * до тех пор пока предыдущая аналогичная дорожка
+   * не будет проиграна до конца. (Aleksandr-86)
+   */
+  let horizontalMoveAudioFlag = true
+  let verticalMoveAudioFlag = true
+
+  let intervalId: number
+
+  // Переменная контролирующая возможность передвижения противников
+  let creaturesCanMove = false
+
   const state: GameState = {
     player: {
       ref: null,
@@ -120,32 +150,73 @@ export const makeBombermanScene = (): SceneConfig => {
 
   // TODO: Инициализировать переменные при каждом создании игры
   const controller = new EnemyController()
-  const door = new Point(160, 560)
+  const door = new Point(400, 160)
 
   let lastBombPlacementTime = performance.now()
   const collidableCells = new SpriteList()
 
-  // Детонация бомб
-  const bombDetonation = (bombCell: Point, scene: SceneContext) => {
-    unregisterObstacle(bombCell)
-    // Исключает координаты бомб из набора
-    state.field.bombsSet.forEach((b, _, set) => {
-      if (b.x * CELL_WIDTH === bombCell.x && b.y * CELL_WIDTH === bombCell.y) {
-        set.delete(b)
-      }
-    })
+  /**
+   * Функция обеспечивающая детонацию бомб.
+   * Работает с двумя ситуациями: детонация по
+   * нажатию на кнопку детонация через время.
+   */
+  const bombDetonation = (scene: SceneContext, bombCell: Point | null) => {
+    // Дистанционный подрыв
+    if (!bombCell) {
+      state.field.bombPlanted.forEach(bomb => {
+        unregisterObstacle(bomb)
 
-    state.field.explosions.add(
-      ...resolveExplosion(
-        bombCell,
-        state.player.bombRange,
-        state.field.obstacles
-      ).map(({ point, orientation }) => {
-        return makeExplosion(scene, point, orientation)
+        state.field.explosions.add(
+          ...resolveExplosion(
+            bomb,
+            state.player.bombRange,
+            state.field.obstacles
+          ).map(({ point, orientation }) => {
+            return makeExplosion(scene, point, orientation)
+          })
+        )
+
+        state.field.bombs.destroyLast()
       })
-    )
 
-    state.field.bombs.destroyLast()
+      if (audioCtx && state.field.bombPlanted.length > 0) {
+        playAudio(audioCtx, bombExplodeAudio)
+      }
+
+      state.field.bombsSet.clear()
+      state.field.bombPlanted = []
+
+      // Подрыв через время
+    } else {
+      unregisterObstacle(bombCell)
+      state.field.bombPlanted.shift()
+
+      // Исключает координаты бомбы из набора
+      state.field.bombsSet.forEach((b, _, set) => {
+        if (
+          b.x * CELL_WIDTH === bombCell.x &&
+          b.y * CELL_WIDTH === bombCell.y
+        ) {
+          set.delete(b)
+        }
+      })
+
+      if (audioCtx) {
+        playAudio(audioCtx, bombExplodeAudio)
+      }
+
+      state.field.explosions.add(
+        ...resolveExplosion(
+          bombCell,
+          state.player.bombRange,
+          state.field.obstacles
+        ).map(({ point, orientation }) => {
+          return makeExplosion(scene, point, orientation)
+        })
+      )
+
+      state.field.bombs.destroyLast()
+    }
 
     delay(EXPLOSION_DURATION).then(() => {
       for (const wall of state.field.softWalls) {
@@ -209,8 +280,20 @@ export const makeBombermanScene = (): SceneConfig => {
         playerOrthY * CELL_WIDTH === door.y
       ) {
         if (state.field.enemies.length === 0) {
-          sendScore(state.player.score)
-          scene.stopGame()
+          if (audioCtx) {
+            audioCtx.close()
+          }
+
+          creaturesCanMove = false
+          inProgress(false)
+
+          const stageClearAudioCtx = new AudioContext()
+          playAudio(stageClearAudioCtx, stageClearAudio).then(() => {
+            stageClearAudioCtx.close()
+            window.clearInterval(intervalId)
+            sendScore(state.player.score)
+            scene.stopGame()
+          })
         }
       }
 
@@ -322,6 +405,7 @@ export const makeBombermanScene = (): SceneConfig => {
       })
     },
     create: scene => {
+      inProgress(true)
       // Регистрация границ уровня и колонн
       registerHardWalls()
 
@@ -345,18 +429,33 @@ export const makeBombermanScene = (): SceneConfig => {
         { enemyName: 'droplet', chance: 4 },
       ])
 
-      /**
-       * Появление монеток по истечении времени выделяемого
-       * на уровень.
-       */
-      delay(LEVEL_COUNTER).then(() => {
-        state.field.enemies.destroyAll()
-        spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
-          { enemyName: 'overtimeCoin', chance: 10 },
-        ])
+      // Зацикленное проигрывание главной темы
+      const loopedMainTheme = () => {
+        if (audioCtx) {
+          playAudio(audioCtx, mainThemeAudio).then(loopedMainTheme)
+        }
+      }
 
-        controller.addEnemies(state.field.enemies.toArray())
-      })
+      // Проигрывание вступительной аудио дорожки
+      if (audioCtx) {
+        playAudio(audioCtx, stageStartAudio).then(() => {
+          /**
+           * Появление монеток по истечении времени выделяемого
+           * на уровень.
+           */
+          delay(GAME_DURATION * 1000).then(() => {
+            state.field.enemies.destroyAll()
+            spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
+              { enemyName: 'overtimeCoin', chance: 10 },
+            ])
+
+            controller.addEnemies(state.field.enemies.toArray())
+          })
+
+          creaturesCanMove = true
+          loopedMainTheme()
+        })
+      }
 
       scene.camera.bind(state.player.ref)
 
@@ -381,6 +480,8 @@ export const makeBombermanScene = (): SceneConfig => {
       gameStarted()
     },
     update: (scene, frame, kbd) => {
+      if (!creaturesCanMove) return
+
       // player certainly defined in create()
       const playerRef = state.player.ref!
 
@@ -388,39 +489,93 @@ export const makeBombermanScene = (): SceneConfig => {
 
       if (state.player.isDead) {
         scene.anims.run(playerRef, 'die', frame.delta, true)
-        delay(500).then(() => {
-          if (stopGameFlag) {
-            stopGameFlag = false
-            sendScore(state.player.score)
-            scene.stopGame()
-          }
-        })
+
+        if (stopGameFlag && audioCtx) {
+          /**
+           * TODO: Предотвратить множественные срабатывания другим
+           * способом. (комментарий Aleksandr-86)
+           */
+
+          window.clearInterval(intervalId)
+          inProgress(false)
+
+          stopGameFlag = false
+          playAudio(audioCtx, playerWasHitAudio).then(() => {
+            creaturesCanMove = false
+            audioCtx.close()
+
+            const failAudioCtx = new AudioContext()
+            playAudio(failAudioCtx, failAudio)
+              .then(() => failAudioCtx.close())
+              .finally(() => {
+                sendScore(state.player.score)
+                scene.stopGame()
+              })
+          })
+        }
       } else {
         if (kbd.left) {
           state.player.direction.x -= 1
           scene.anims.run(playerRef, 'left', frame.delta)
+
+          if (horizontalMoveAudioFlag && verticalMoveAudioFlag) {
+            horizontalMoveAudioFlag = false
+
+            if (audioCtx) {
+              playAudio(audioCtx, horizontalMoveAudio).then(
+                () => (horizontalMoveAudioFlag = true)
+              )
+            }
+          }
         }
 
         if (kbd.right) {
           state.player.direction.x += 1
           scene.anims.run(playerRef, 'right', frame.delta)
+
+          if (horizontalMoveAudioFlag && verticalMoveAudioFlag) {
+            horizontalMoveAudioFlag = false
+
+            if (audioCtx) {
+              playAudio(audioCtx, horizontalMoveAudio).then(
+                () => (horizontalMoveAudioFlag = true)
+              )
+            }
+          }
         }
 
         if (kbd.up) {
           state.player.direction.y -= 1
           scene.anims.run(playerRef, 'up', frame.delta)
+
+          if (verticalMoveAudioFlag && horizontalMoveAudioFlag) {
+            verticalMoveAudioFlag = false
+
+            if (audioCtx) {
+              playAudio(audioCtx, verticalMoveAudio).then(
+                () => (verticalMoveAudioFlag = true)
+              )
+            }
+          }
         }
 
         if (kbd.down) {
           state.player.direction.y += 1
           scene.anims.run(playerRef, 'down', frame.delta)
+
+          if (verticalMoveAudioFlag && horizontalMoveAudioFlag) {
+            verticalMoveAudioFlag = false
+
+            if (audioCtx) {
+              playAudio(audioCtx, verticalMoveAudio).then(
+                () => (verticalMoveAudioFlag = true)
+              )
+            }
+          }
         }
 
         if (kbd.control && state.field.buffStats.detonator.amount === 1) {
-          const bombCell = state.field.bombPlanted.shift()
-          if (bombCell) {
-            bombDetonation(bombCell, scene)
-          }
+          bombDetonation(scene, null)
         }
 
         const playerMovingDiagonally =
@@ -450,13 +605,17 @@ export const makeBombermanScene = (): SceneConfig => {
 
           registerBombObstacle(bombCell)
           state.field.bombPlanted.push(bombCell)
+
+          if (audioCtx) {
+            playAudio(audioCtx, bombPlantedAudio)
+          }
+
           state.field.bombs.unshift(makeBomb(scene, bombCell))
 
           if (state.field.buffStats.detonator.amount === 1) return
 
           delay(BOMB_FUSE).then(() => {
-            state.field.bombPlanted.shift()
-            bombDetonation(bombCell, scene)
+            bombDetonation(scene, bombCell)
           })
         }
       }
@@ -516,6 +675,10 @@ export const makeBombermanScene = (): SceneConfig => {
         state.player.score += 500
         pointsAdded(500)
 
+        if (audioCtx) {
+          playAudio(audioCtx, buffTakenAudio)
+        }
+
         switch (playerPickBuff.frame) {
           case 'bombAmountUp':
             state.player.bombLimit += 1
@@ -572,6 +735,7 @@ export const makeBombermanScene = (): SceneConfig => {
 
         if (enemyInBlast) {
           scene.anims.run(enemy, 'die', frame.delta, true)
+
           delay(500).then(() => {
             const destroyed = state.field.enemies.destroyByPoint(enemy)
 
@@ -586,7 +750,7 @@ export const makeBombermanScene = (): SceneConfig => {
               } else if (enemy.frame.startsWith('droplet')) {
                 localScore = 200
               } else if (enemy.frame.startsWith('overtimeCoin')) {
-                localScore = 400
+                localScore = 800
               }
 
               state.player.score += localScore
@@ -597,6 +761,7 @@ export const makeBombermanScene = (): SceneConfig => {
           scene.anims.run(enemy, 'right', frame.delta)
         }
       }
+
       controller.run(frame.delta, state.field.obstacles, state.player.lastPos)
     },
   }

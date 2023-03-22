@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { GAME_DURATION } from '../features/game/const'
 
 export enum GameStatus {
   START = 'START',
@@ -12,7 +11,7 @@ const gameSlice = createSlice({
   initialState: {
     status: GameStatus.START,
     currentScore: 0,
-    time: GAME_DURATION,
+    inProgress: true,
   },
   reducers: {
     setStatus: (state, action: PayloadAction<GameStatus>) => {
@@ -27,10 +26,8 @@ const gameSlice = createSlice({
     scoreClear: state => {
       state.currentScore = 0
     },
-    timerUpdated: (state, { payload }: PayloadAction<number>) => {
-      // because of <StrictMode/>, this runs twice
-      state.time = state.time <= 0 ? 0 : state.time - payload * 0.001
-      // state.currentScore += state.time > 0 ? Points.Time : 0
+    setProgress: (state, { payload }: PayloadAction<boolean>) => {
+      state.inProgress = payload
     },
   },
 })
@@ -41,5 +38,5 @@ export const {
   setCurrentScore,
   scoreIncreased,
   scoreClear,
-  timerUpdated,
+  setProgress,
 } = gameSlice.actions

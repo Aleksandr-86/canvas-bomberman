@@ -140,6 +140,7 @@ export function makeBuff(
 
     if (buffStats.detonator.spawned || buffStats.detonator.amount > 0) {
       possibleBuffs = possibleBuffs.filter(buff => buff !== 'detonator')
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'flamePass')
     }
 
     if (buffStats.bombPass.spawned || buffStats.bombPass.amount > 0) {
@@ -148,6 +149,7 @@ export function makeBuff(
 
     if (buffStats.flamePass.spawned || buffStats.flamePass.amount > 0) {
       possibleBuffs = possibleBuffs.filter(buff => buff !== 'flamePass')
+      possibleBuffs = possibleBuffs.filter(buff => buff !== 'detonator')
     }
 
     buffKind = possibleBuffs[randomInRange(0, possibleBuffs.length)]
