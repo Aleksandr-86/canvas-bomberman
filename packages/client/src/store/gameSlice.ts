@@ -6,25 +6,24 @@ export enum GameStatus {
   END = 'END',
 }
 
-interface InitialState {
-  status: GameStatus
-  currentScore: number
-  inProgress: boolean
-  buffs: Record<string, number>
-}
+export type Buff =
+  | 'bombAmountUp'
+  | 'bombRangeUp'
+  | 'playerSpeedUp'
+  | 'detonator'
+  | 'bombPass'
+  | 'flamePass'
 
-const INITIAL_STATE: InitialState = {
+const INITIAL_STATE = {
   status: GameStatus.START,
   currentScore: 0,
   inProgress: true,
-  buffs: {
-    bombAmountUp: 0,
-    bombRangeUp: 0,
-    playerSpeedUp: 0,
-    detonator: 0,
-    bombPass: 0,
-    flamePass: 0,
-  },
+  bombAmountUp: 0,
+  bombRangeUp: 0,
+  playerSpeedUp: 0,
+  detonator: 0,
+  bombPass: 0,
+  flamePass: 0,
 }
 
 const gameSlice = createSlice({
@@ -46,13 +45,16 @@ const gameSlice = createSlice({
     setProgress: (state, { payload }: PayloadAction<boolean>) => {
       state.inProgress = payload
     },
-    incrementBuff: (state, { payload }: PayloadAction<string>) => {
-      state.buffs[payload]++
+    incrementBuff: (state, { payload }: PayloadAction<Buff>) => {
+      state[payload]++
     },
     resetBuffs: state => {
-      for (const key of Object.keys(state.buffs)) {
-        state.buffs[key] = 0
-      }
+      state.bombAmountUp = 0
+      state.bombRangeUp = 0
+      state.playerSpeedUp = 0
+      state.detonator = 0
+      state.bombPass = 0
+      state.flamePass = 0
     },
   },
 })

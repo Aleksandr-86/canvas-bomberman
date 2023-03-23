@@ -8,6 +8,7 @@ import {
   setProgress,
   incrementBuff,
   resetBuffs,
+  Buff,
 } from '../../store/gameSlice'
 
 export function gameStarted() {
@@ -30,7 +31,7 @@ export function inProgress(status: boolean) {
   store.dispatch(setProgress(status))
 }
 
-export function increaseBuff(buff: string) {
+export function increaseBuff(buff: Buff) {
   store.dispatch(incrementBuff(buff))
 }
 

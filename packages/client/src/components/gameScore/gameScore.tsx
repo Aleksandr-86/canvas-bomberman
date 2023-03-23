@@ -38,14 +38,14 @@ export const GameScore: React.FC = () => {
             className={styles.img}
             src={buffs.bombAmountUp > 0 ? bombAmountUpImg : bombAmountUpImgGray}
           />
-          <div>&times;{buffs.bombAmountUp}</div>
+          <div>&#43;{buffs.bombAmountUp}</div>
         </div>
         <div className={styles.buff}>
           <img
             className={styles.img}
-            src={buffs.bombRangeUp > 0 ? bombRangeUpImg : bombAmountUpImgGray}
+            src={buffs.bombRangeUp > 0 ? bombRangeUpImg : bombRangeUpImgGray}
           />
-          <div>&times;{buffs.bombRangeUp}</div>
+          <div>&#43;{buffs.bombRangeUp}</div>
         </div>
         <img
           className={styles.img}

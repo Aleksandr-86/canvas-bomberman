@@ -31,7 +31,7 @@ export const PLAYER_VELOCITY = CELL_WIDTH * 2.65
 export const BASIC_ENEMY_VELOCITY = CELL_WIDTH * 3
 
 /* --- Chance --- */
-export const BUFF_CHANCE = 30
+export const BUFF_CHANCE = 40
 export const WALL_GENERATION_CHANCE = 30
 
 /**
