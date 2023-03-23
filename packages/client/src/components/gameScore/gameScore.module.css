@@ -59,7 +59,6 @@
 
 .panel {
   display: flex;
-  gap: 8px;
   justify-content: space-around;
   align-items: center;
   width: 100%;
@@ -71,36 +70,38 @@
 }
 
 .progressBar {
+  position: relative;
   overflow: hidden;
-  width: 1080px;
-  height: 20px;
-  border-radius: 20px;
+  width: 57%;
+  height: 30px;
+  border-radius: 21px;
 }
 
 .bar {
-  border-radius: 20px;
+  border-radius: 30px;
   background: rgb(0 0 0 / 10%);
   box-shadow: 2px 2px 4px 0 rgb(0 0 0 / 30%) inset;
 }
 
 .progressGo {
-  height: 20px;
+  height: 30px;
   background-color: hsl(120deg 100% 50%);
   animation: count-down var(--anim-duration) 2.7s linear forwards;
 }
 
 .progressStopped {
   width: 0%;
-  height: 20px;
+  height: 30px;
   background-color: hsl(120deg 100% 50%);
 }
 
 .buffs {
+  position: relative;
   display: flex;
-  gap: 21px;
+  gap: 15px;
   justify-content: center;
   align-items: center;
-  width: 630px;
+  width: 28%;
 }
 
 .buff {
@@ -114,14 +115,14 @@
 }
 
 .panelScore {
+  position: relative;
   display: flex;
   justify-content: center;
-  width: 210px;
+  width: 10%;
 }
 
 @media all and (display-mode: fullscreen) {
   .panel {
-    gap: 2vh;
     height: 8vh;
     padding: 1vh;
     box-shadow: 0 0 2vh 0.2vh #004a99 inset;
@@ -129,18 +130,18 @@
   }
 
   .progressBar {
-    width: 80vh;
-    height: 2vh;
-    border-radius: 2vh;
+    width: 45%;
+    height: 3vh;
+    border-radius: 3vh;
   }
 
   .bar {
-    border-radius: 2vh;
-    box-shadow: 1vh 1vh 2vh 0 rgb(0 0 0 / 30%) inset;
+    border-radius: 3vh;
+    box-shadow: 0.3vh 0.3vh 0.3vh 0 rgb(0 0 0 / 30%) inset;
   }
 
   .progressGo {
-    height: 2vh;
+    height: 3vh;
   }
 
   .progressStopped {
@@ -148,8 +149,8 @@
   }
 
   .buffs {
-    gap: 2.4vh;
-    width: 72vh;
+    gap: 1.2vh;
+    width: 37%;
   }
 
   .img {
@@ -158,6 +159,7 @@
   }
 
   .panelScore {
-    width: 24vh;
+    width: 12%;
+    font-size: 7vh;
   }
 }

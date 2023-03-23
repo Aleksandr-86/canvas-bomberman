@@ -12,6 +12,7 @@ export const selectGameStats = (store: RootState) => {
   return {
     score: store.game.currentScore,
     inProgress: store.game.inProgress,
+    buffs: store.game.buffs,
   }
 }
 

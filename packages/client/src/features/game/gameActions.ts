@@ -28,6 +28,10 @@ export function inProgress(status: boolean) {
   store.dispatch(setProgress(status))
 }
 
+// export function incrBuff(buff: string) {
+//   store.dispatch(increaseBuff(buff))
+// }
+
 export function gameEnded() {
   store.dispatch(setStatus(GameStatus.END))
 }

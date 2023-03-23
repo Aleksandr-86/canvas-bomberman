@@ -675,6 +675,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       if (playerPickBuff) {
         state.player.score += 50
         pointsAdded(50)
+        // incrementBuff
 
         if (audioCtx) {
           playAudio(audioCtx, buffTakenAudio)

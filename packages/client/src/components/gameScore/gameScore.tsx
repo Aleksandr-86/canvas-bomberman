@@ -20,7 +20,7 @@ const cssVariables = {
 } as React.CSSProperties
 
 export const GameScore: React.FC = () => {
-  const { score, inProgress } = useAppSelector(selectGameStats)
+  const { score, inProgress, buffs } = useAppSelector(selectGameStats)
 
   return (
     <div className={styles.panel}>
@@ -34,21 +34,40 @@ export const GameScore: React.FC = () => {
 
       <div className={styles.buffs}>
         <div className={styles.buff}>
-          <img className={styles.img} src={bombAmountUpImg} />
-          <div>×2</div>
+          <img
+            className={styles.img}
+            src={buffs.bombAmountUp > 0 ? bombAmountUpImg : bombAmountUpImgGray}
+          />
+          <div>&times;{buffs.bombAmountUp}</div>
         </div>
         <div className={styles.buff}>
-          <img className={styles.img} src={bombRangeUpImg} />
-          <div>×2</div>
+          <img
+            className={styles.img}
+            src={buffs.bombRangeUp > 0 ? bombRangeUpImg : bombAmountUpImgGray}
+          />
+          <div>&times;{buffs.bombRangeUp}</div>
         </div>
-        <img className={styles.img} src={playerSpeedUpImg} />
-        <img className={styles.img} src={detonatorImg} />
-        <img className={styles.img} src={bombPassImg} />
-        <img className={styles.img} src={flamePassImg} />
+        <img
+          className={styles.img}
+          src={
+            buffs.playerSpeedUp > 0 ? playerSpeedUpImg : playerSpeedUpImgGray
+          }
+        />
+        <img
+          className={styles.img}
+          src={buffs.detonator > 0 ? detonatorImg : detonatorImgGray}
+        />
+        <img
+          className={styles.img}
+          src={buffs.bombPass > 0 ? bombPassImg : bombPassImgGray}
+        />
+        <img
+          className={styles.img}
+          src={buffs.flamePass > 0 ? flamePassImg : flamePassImgGray}
+        />
       </div>
 
-      {/* <div className={styles.panelScore}>{score}</div> */}
-      <div className={styles.panelScore}>88888</div>
+      <div className={styles.panelScore}>{score}</div>
     </div>
   )
 }
