@@ -12,6 +12,6 @@ apiRoutes.use([express.json(), cookieParser()])
 apiRoutes.use('/theme', themeRoutes)
 apiRoutes.use('/posts', postRouter)
 apiRoutes.use('/comments', commentRouter)
-apiRoutes.use('/', proxyMiddleware)
+// apiRoutes.use('/', proxyMiddleware)
 
 export { apiRoutes }
