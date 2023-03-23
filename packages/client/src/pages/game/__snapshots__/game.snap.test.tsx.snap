@@ -115,11 +115,47 @@ exports[`<Game/> snapshot test cases <Game/> should render <div className=gameDi
             className="progressStopped"
             style={
               Object {
-                "--anim-duration": "45s",
+                "--anim-duration": "60s",
               }
             }
           />
         </div>
+      </div>
+      <div
+        className="buffs"
+      >
+        <div
+          className="buff"
+        >
+          <img
+            className="img"
+          />
+          <div>
+            +
+          </div>
+        </div>
+        <div
+          className="buff"
+        >
+          <img
+            className="img"
+          />
+          <div>
+            +
+          </div>
+        </div>
+        <img
+          className="img"
+        />
+        <img
+          className="img"
+        />
+        <img
+          className="img"
+        />
+        <img
+          className="img"
+        />
       </div>
       <div
         className="panelScore"

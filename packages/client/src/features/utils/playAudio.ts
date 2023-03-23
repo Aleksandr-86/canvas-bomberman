@@ -9,6 +9,6 @@ export const playAudio = async (context: AudioContext, url: string) => {
   audioSource.start()
 
   return new Promise<void>(resolve => {
-    audioSource.addEventListener('ended', () => resolve(), { once: true })
+    audioSource.addEventListener('ended', () => resolve())
   })
 }

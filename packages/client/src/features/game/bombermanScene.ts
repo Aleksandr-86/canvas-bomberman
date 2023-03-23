@@ -25,6 +25,8 @@ import {
   pointsClear,
   sendScore,
   inProgress,
+  increaseBuff,
+  clearBuffs,
 } from './gameActions'
 import nesBomberman from '../../assets/images/nesBomberman5xTransparent.png'
 import nesBombermanFrames from '../../assets/images/nesBomberman5x.json'
@@ -429,6 +431,8 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
         { enemyName: 'droplet', chance: 4 },
       ])
 
+      clearBuffs()
+
       // Зацикленное проигрывание главной темы
       const loopedMainTheme = () => {
         if (audioCtx) {
@@ -574,7 +578,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
           }
         }
 
-        if (kbd.control && state.field.buffStats.detonator.amount === 1) {
+        if (kbd.plant && state.field.buffStats.detonator.amount === 1) {
           bombDetonation(scene, null)
         }
 
@@ -589,7 +593,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
         const belowMaxBombs = state.field.bombs.length < state.player.bombLimit
         const cooldown =
           frame.now - lastBombPlacementTime > BOMB_PLACEMENT_COOLDOWN
-        if (kbd.space && belowMaxBombs && cooldown) {
+        if (kbd.explode && belowMaxBombs && cooldown) {
           lastBombPlacementTime = frame.now
           const bombCell = nearestCell(playerRef).copy()
 
@@ -630,8 +634,8 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
           delay(EXPLOSION_DURATION).then(() => {
             const destroyed = state.field.softWalls.destroyByPoint(explosion)
             if (destroyed) {
-              state.player.score += 25
-              pointsAdded(25)
+              state.player.score += 3
+              pointsAdded(3)
             }
           })
         }
@@ -672,8 +676,8 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       const playerPickBuff = state.field.buffs.byPoint(nearestCell(playerRef))
 
       if (playerPickBuff) {
-        state.player.score += 500
-        pointsAdded(500)
+        state.player.score += 50
+        pointsAdded(50)
 
         if (audioCtx) {
           playAudio(audioCtx, buffTakenAudio)
@@ -682,28 +686,34 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
         switch (playerPickBuff.frame) {
           case 'bombAmountUp':
             state.player.bombLimit += 1
+            increaseBuff('bombAmountUp')
             break
 
           case 'bombRangeUp':
             state.player.bombRange += 1
+            increaseBuff('bombRangeUp')
             break
 
           case 'playerSpeedUp':
             state.player.speedScale += 0.35
+            increaseBuff('playerSpeedUp')
             state.field.buffStats.playerSpeedUp.spawned = false
             state.field.buffStats.playerSpeedUp.amount++
             break
 
           case 'detonator':
             state.field.buffStats.detonator.amount = 1
+            increaseBuff('detonator')
             break
 
           case 'bombPass':
             state.field.buffStats.bombPass.amount = 1
+            increaseBuff('bombPass')
             break
 
           case 'flamePass':
             state.field.buffStats.flamePass.amount = 1
+            increaseBuff('flamePass')
             break
 
           default:
@@ -738,19 +748,16 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
 
           delay(500).then(() => {
             const destroyed = state.field.enemies.destroyByPoint(enemy)
+            const enemyType = enemy.animations.get('die')?.frames[0]
 
-            if (destroyed) {
-              /**
-               * TODO: Временное решение. Переделать с использованием
-               * констант. (комментарий Aleksandr-86)
-               */
+            if (destroyed && enemyType) {
               let localScore = 0
-              if (enemy.frame.startsWith('baloon')) {
+              if (enemyType.startsWith('baloon')) {
+                localScore = 10
+              } else if (enemyType.startsWith('droplet')) {
+                localScore = 25
+              } else if (enemyType.startsWith('overtimeCoin')) {
                 localScore = 100
-              } else if (enemy.frame.startsWith('droplet')) {
-                localScore = 200
-              } else if (enemy.frame.startsWith('overtimeCoin')) {
-                localScore = 800
               }
 
               state.player.score += localScore

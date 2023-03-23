@@ -7,10 +7,13 @@ exports[`<Leaderboard/> snapshot test cases <Leaderboard/> should render <div cl
   <nav
     className="navigationBar"
   >
-    <img
-      alt="user-avatar"
-      draggable="false"
-    />
+    <div>
+      <img
+        alt="profile picture"
+        className="profileImg profileImgLarge"
+        onClick={[Function]}
+      />
+    </div>
     <a
       className="link"
       href="/profile"

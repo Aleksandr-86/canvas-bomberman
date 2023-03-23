@@ -6,6 +6,9 @@ import {
   scoreIncreased,
   scoreClear,
   setProgress,
+  incrementBuff,
+  resetBuffs,
+  Buff,
 } from '../../store/gameSlice'
 
 export function gameStarted() {
@@ -26,6 +29,14 @@ export function sendScore(score: number) {
 
 export function inProgress(status: boolean) {
   store.dispatch(setProgress(status))
+}
+
+export function increaseBuff(buff: Buff) {
+  store.dispatch(incrementBuff(buff))
+}
+
+export function clearBuffs() {
+  store.dispatch(resetBuffs())
 }
 
 export function gameEnded() {
