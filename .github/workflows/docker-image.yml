@@ -2,8 +2,8 @@ name: Docker Image CI
 
 on:
   workflow_dispatch:
+  push:
     branches:
-      - test-deploy
       - final-review
 
 jobs:
