@@ -16,12 +16,7 @@ export const isDev = () => process.env.NODE_ENV === 'development'
 async function createServer() {
   const app = express()
 
-  app.use(
-    cors({
-      credentials: true,
-      origin: [...LOCAL_ORIGINS],
-    })
-  )
+  app.use(cors())
 
   if (!isDev()) {
     app.use(cspMiddleware())
