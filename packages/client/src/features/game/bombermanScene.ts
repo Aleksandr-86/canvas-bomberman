@@ -578,7 +578,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
           }
         }
 
-        if (kbd.x && state.field.buffStats.detonator.amount === 1) {
+        if (kbd.plant && state.field.buffStats.detonator.amount === 1) {
           bombDetonation(scene, null)
         }
 
@@ -593,7 +593,7 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
         const belowMaxBombs = state.field.bombs.length < state.player.bombLimit
         const cooldown =
           frame.now - lastBombPlacementTime > BOMB_PLACEMENT_COOLDOWN
-        if (kbd.z && belowMaxBombs && cooldown) {
+        if (kbd.explode && belowMaxBombs && cooldown) {
           lastBombPlacementTime = frame.now
           const bombCell = nearestCell(playerRef).copy()
 
