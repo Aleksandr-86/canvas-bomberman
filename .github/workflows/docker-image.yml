@@ -3,7 +3,8 @@ name: Docker Image CI
 on:
   workflow_dispatch:
     branches:
-      test-deploy
+      - test-deploy
+      - final-review
 
 jobs:
 
@@ -13,5 +14,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Yandex Cloud CR Login
+      uses: yc-actions/yc-cr-login@v1
+      with:
+        yc-sa-json-credentials: ${{ secrets.YC_SERVICE_ACCOUNT_JSON_CREDENTIALS }}
+
     - name: Build the Docker image
-      run: docker build -t dpl-client --target=client -t dpl-server --target=server . --file Dockerfile --tag deploy:$(date +%s)
+      env:
+        CR_ID: ${{ secrets.YC_ID_CR }}
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build --target=client -t cr.yandex/$CR_ID/prakticum-client:$IMAGE_TAG .
+        docker push cr.yandex/$CR_ID/prakticum-client:$IMAGE_TAG
+        docker build --target=server -t cr.yandex/$CR_ID/prakticum-server:$IMAGE_TAG .
+        docker push cr.yandex/$CR_ID/prakticum-server:$IMAGE_TAG

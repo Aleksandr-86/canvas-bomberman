@@ -22,7 +22,7 @@ services:
         container_name: prakticum-server
         profiles:
           - production
-        image: prackicum-server
+        image: prakticum-server
         build:
             context: .
             dockerfile: ./Dockerfile

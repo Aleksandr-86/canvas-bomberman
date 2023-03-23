@@ -1,8 +1,8 @@
 ARG BUILD_IMAGE="node:16-alpine3.17"
 ARG SERVER_IMAGE=$BUILD_IMAGE
-ARG SERVER_PORT=3001
 ARG CLIENT_IMAGE="nginx:1.23.3-alpine"
-ARG CLIENT_PORT=3000
+ARG SERVER_PORT
+ARG CLIENT_PORT
 
 FROM $BUILD_IMAGE AS builder
 
@@ -24,7 +24,6 @@ WORKDIR /app
 COPY --from=builder /build/packages/server/dist/ /app/
 COPY --from=builder /build/packages/server/package.json /app/package.json
 COPY --from=builder /build/yarn.lock /app/yarn.lock
-COPY .env .
 
 RUN yarn install --production=true --frozen-lockfile
 
@@ -42,7 +41,6 @@ WORKDIR /app
 
 COPY --from=builder /build/packages/client/dist/ /app/
 COPY --from=builder /build/packages/client/nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder /build/.env /app/.env
 
 EXPOSE $CLIENT_PORT
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
