@@ -3,18 +3,18 @@
   border: 5px solid var(--text-main-color);
   border-radius: 15px;
   background: transparent;
+  color: var(--text-main-color);
   font-size: 40px;
   font-family: 'Rubik Bubbles', fantasy;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s linear;
-  color: var(--text-main-color);
 }
 
 .button:hover {
-  background: hsl(29deg 6% 74%);
+  background: hsl(30deg 76% 78%);
 }
 
 .button:active {
-  background: hsl(30deg 76% 64%);
+  background: hsl(120deg 52% 74%);
 }

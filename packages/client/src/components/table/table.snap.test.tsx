@@ -18,7 +18,7 @@ const mockProps = {
     },
     {
       id: 2,
-      author: 'sasha85',
+      author: 'Sasha85',
       body: 'Как создать новую тему',
       date: '8.01.22',
     },

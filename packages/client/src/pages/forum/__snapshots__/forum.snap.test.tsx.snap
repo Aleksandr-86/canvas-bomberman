@@ -4,93 +4,97 @@ exports[`<Forum/> snapshot test cases <Forum/> should render <div className=foru
 <div
   className="forum"
 >
-  <h2
-    className="forumTitle"
-  >
-    Форум
-  </h2>
-  <table
-    className="table"
-  >
-    <thead>
-      <tr>
-        <th
-          className="tableTitle"
-        >
-          Автор
-        </th>
-        <th
-          className="tableTitle"
-        >
-          Тема
-        </th>
-        <th
-          className="tableTitle"
-        >
-          Дата
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        className="tableItem"
-        onClick={[Function]}
-      >
-        <td
-          className="tableRow"
-        >
-          Kan
-        </td>
-        <td
-          className="tableRow"
-        >
-          Как пройти первый уровень
-        </td>
-        <td
-          className="tableRow"
-        >
-          8.01.22
-        </td>
-      </tr>
-      <tr
-        className="tableItem"
-        onClick={[Function]}
-      >
-        <td
-          className="tableRow"
-        >
-          sasha
-        </td>
-        <td
-          className="tableRow"
-        >
-          Как создать новую тему
-        </td>
-        <td
-          className="tableRow"
-        >
-          8.01.22
-        </td>
-      </tr>
-    </tbody>
-  </table>
   <div
     className="forumWrapper"
   >
-    <a
-      className="forumLink"
-      href="/forum-new-post"
-      onClick={[Function]}
+    <h2
+      className="forumTitle"
     >
-      Создать тему
-    </a>
-    <a
-      className="forumLink"
-      href="/"
-      onClick={[Function]}
+      Форум
+    </h2>
+    <table
+      className="table"
     >
-      на главную
-    </a>
+      <thead>
+        <tr>
+          <th
+            className="tableTitle"
+          >
+            Автор
+          </th>
+          <th
+            className="tableTitle"
+          >
+            Тема
+          </th>
+          <th
+            className="tableTitle"
+          >
+            Дата
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          className="tableItem"
+          onClick={[Function]}
+        >
+          <td
+            className="tableRow"
+          >
+            Kan
+          </td>
+          <td
+            className="tableRow leftAlignment"
+          >
+            Как пройти первый уровень
+          </td>
+          <td
+            className="tableRow"
+          >
+            8.01.22
+          </td>
+        </tr>
+        <tr
+          className="tableItem"
+          onClick={[Function]}
+        >
+          <td
+            className="tableRow"
+          >
+            sasha
+          </td>
+          <td
+            className="tableRow leftAlignment"
+          >
+            Как создать новую тему
+          </td>
+          <td
+            className="tableRow"
+          >
+            8.01.22
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div
+      className="buttonWrapper"
+    >
+      <a
+        className="linkButton"
+        href="/forum-new-post"
+        onClick={[Function]}
+      >
+        Создать тему
+      </a>
+      <a
+        className="linkButton"
+        href="/"
+        onClick={[Function]}
+      >
+        На главную
+      </a>
+    </div>
   </div>
 </div>
 `;

@@ -1,18 +1,18 @@
-import classes from './input.module.css'
+import styles from './input.module.css'
 
 interface Props {
   placeholder?: string
-  class?: string
+  className?: string
   type: string
   name?: string
   value?: string
 }
 
 export const Input = (props: Props) => {
-  const { placeholder = 'Инпут' } = props
-  const inputClasses = props.class
-    ? `${classes.form__input} ${props.class}`
-    : classes.form__input
+  const { placeholder = 'Поле' } = props
+  const inputClasses = props.className
+    ? `${styles.formInput} ${props.className}`
+    : styles.formInput
   return (
     <label>
       <input
