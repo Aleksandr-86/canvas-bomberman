@@ -25,6 +25,8 @@ import {
   pointsClear,
   sendScore,
   inProgress,
+  increaseBuff,
+  clearBuffs,
 } from './gameActions'
 import nesBomberman from '../../assets/images/nesBomberman5xTransparent.png'
 import nesBombermanFrames from '../../assets/images/nesBomberman5x.json'
@@ -429,34 +431,35 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
         { enemyName: 'droplet', chance: 4 },
       ])
 
-      // !!
+      clearBuffs()
+
       // Зацикленное проигрывание главной темы
-      // const loopedMainTheme = () => {
-      //   if (audioCtx) {
-      //     playAudio(audioCtx, mainThemeAudio).then(loopedMainTheme)
-      //   }
-      // }
+      const loopedMainTheme = () => {
+        if (audioCtx) {
+          playAudio(audioCtx, mainThemeAudio).then(loopedMainTheme)
+        }
+      }
 
       // Проигрывание вступительной аудио дорожки
-      // if (audioCtx) {
-      //   playAudio(audioCtx, stageStartAudio).then(() => {
-      //     /**
-      //      * Появление монеток по истечении времени выделяемого
-      //      * на уровень.
-      //      */
-      //     delay(GAME_DURATION * 1000).then(() => {
-      //       state.field.enemies.destroyAll()
-      //       spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
-      //         { enemyName: 'overtimeCoin', chance: 10 },
-      //       ])
+      if (audioCtx) {
+        playAudio(audioCtx, stageStartAudio).then(() => {
+          /**
+           * Появление монеток по истечении времени выделяемого
+           * на уровень.
+           */
+          delay(GAME_DURATION * 1000).then(() => {
+            state.field.enemies.destroyAll()
+            spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
+              { enemyName: 'overtimeCoin', chance: 10 },
+            ])
 
-      //       controller.addEnemies(state.field.enemies.toArray())
-      //     })
+            controller.addEnemies(state.field.enemies.toArray())
+          })
 
-      creaturesCanMove = true
-      //     loopedMainTheme()
-      //   })
-      // }
+          creaturesCanMove = true
+          loopedMainTheme()
+        })
+      }
 
       scene.camera.bind(state.player.ref)
 
@@ -675,7 +678,6 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       if (playerPickBuff) {
         state.player.score += 50
         pointsAdded(50)
-        // incrementBuff
 
         if (audioCtx) {
           playAudio(audioCtx, buffTakenAudio)
@@ -684,28 +686,34 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
         switch (playerPickBuff.frame) {
           case 'bombAmountUp':
             state.player.bombLimit += 1
+            increaseBuff('bombAmountUp')
             break
 
           case 'bombRangeUp':
             state.player.bombRange += 1
+            increaseBuff('bombRangeUp')
             break
 
           case 'playerSpeedUp':
             state.player.speedScale += 0.35
+            increaseBuff('playerSpeedUp')
             state.field.buffStats.playerSpeedUp.spawned = false
             state.field.buffStats.playerSpeedUp.amount++
             break
 
           case 'detonator':
             state.field.buffStats.detonator.amount = 1
+            increaseBuff('detonator')
             break
 
           case 'bombPass':
             state.field.buffStats.bombPass.amount = 1
+            increaseBuff('bombPass')
             break
 
           case 'flamePass':
             state.field.buffStats.flamePass.amount = 1
+            increaseBuff('flamePass')
             break
 
           default:

@@ -6,30 +6,30 @@ export enum GameStatus {
   END = 'END',
 }
 
-// interface Buffs {
-//        bombAmountUp: number,
-//       bombRangeUp: number,
-//       playerSpeedUp: number,
-//       detonator: nu,
-//       bombPass: 0,
-//       flamePass: 0,
-// }
+interface InitialState {
+  status: GameStatus
+  currentScore: number
+  inProgress: boolean
+  buffs: Record<string, number>
+}
+
+const INITIAL_STATE: InitialState = {
+  status: GameStatus.START,
+  currentScore: 0,
+  inProgress: true,
+  buffs: {
+    bombAmountUp: 0,
+    bombRangeUp: 0,
+    playerSpeedUp: 0,
+    detonator: 0,
+    bombPass: 0,
+    flamePass: 0,
+  },
+}
 
 const gameSlice = createSlice({
   name: 'game',
-  initialState: {
-    status: GameStatus.START,
-    currentScore: 0,
-    inProgress: true,
-    buffs: {
-      bombAmountUp: 0,
-      bombRangeUp: 0,
-      playerSpeedUp: 0,
-      detonator: 0,
-      bombPass: 0,
-      flamePass: 0,
-    },
-  },
+  initialState: INITIAL_STATE,
   reducers: {
     setStatus: (state, action: PayloadAction<GameStatus>) => {
       state.status = action.payload
@@ -46,11 +46,14 @@ const gameSlice = createSlice({
     setProgress: (state, { payload }: PayloadAction<boolean>) => {
       state.inProgress = payload
     },
-    // incrementBuff: (state, { payload: unknown }: PayloadAction<string>) => {
-    //   console.warn(payload)
-    //   // state.buffs['bombAmountUp'] = 1
-    //   state.buffs[payload] = 1
-    // },
+    incrementBuff: (state, { payload }: PayloadAction<string>) => {
+      state.buffs[payload]++
+    },
+    resetBuffs: state => {
+      for (const key of Object.keys(state.buffs)) {
+        state.buffs[key] = 0
+      }
+    },
   },
 })
 
@@ -61,4 +64,6 @@ export const {
   scoreIncreased,
   scoreClear,
   setProgress,
+  incrementBuff,
+  resetBuffs,
 } = gameSlice.actions
