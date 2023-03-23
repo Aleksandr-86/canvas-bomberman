@@ -9,7 +9,7 @@ FROM $BUILD_IMAGE AS builder
 WORKDIR /build
 
 COPY package.json yarn.lock ./
-RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn  yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile
 
 COPY . .
 
