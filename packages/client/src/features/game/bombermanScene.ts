@@ -119,8 +119,8 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       lastFacing: 'down',
       // Координаты последний покинутой игроком клетки
       lastPos: { x: 1, y: 1 },
-      bombLimit: 1,
-      bombRange: 1,
+      bombLimit: 2,
+      bombRange: 2,
       speedScale: 1,
     },
     field: {
@@ -138,9 +138,9 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
         bombAmountUp: { spawned: false, amount: 0 },
         bombRangeUp: { spawned: false, amount: 0 },
         playerSpeedUp: { spawned: false, amount: 0 },
-        detonator: { spawned: false, amount: 0 },
+        detonator: { spawned: false, amount: 1 },
         bombPass: { spawned: false, amount: 0 },
-        flamePass: { spawned: false, amount: 0 },
+        flamePass: { spawned: false, amount: 1 },
       },
     },
   }
@@ -434,32 +434,32 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
       clearBuffs()
 
       // Зацикленное проигрывание главной темы
-      const loopedMainTheme = () => {
-        if (audioCtx) {
-          playAudio(audioCtx, mainThemeAudio).then(loopedMainTheme)
-        }
-      }
+      // const loopedMainTheme = () => {
+      //   if (audioCtx) {
+      //     playAudio(audioCtx, mainThemeAudio).then(loopedMainTheme)
+      //   }
+      // }
 
       // Проигрывание вступительной аудио дорожки
-      if (audioCtx) {
-        playAudio(audioCtx, stageStartAudio).then(() => {
-          /**
-           * Появление монеток по истечении времени выделяемого
-           * на уровень.
-           */
-          delay(GAME_DURATION * 1000).then(() => {
-            state.field.enemies.destroyAll()
-            spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
-              { enemyName: 'overtimeCoin', chance: 10 },
-            ])
+      // if (audioCtx) {
+      //   playAudio(audioCtx, stageStartAudio).then(() => {
+      //     /**
+      //      * Появление монеток по истечении времени выделяемого
+      //      * на уровень.
+      //      */
+      //     delay(GAME_DURATION * 1000).then(() => {
+      //       state.field.enemies.destroyAll()
+      //       spawnEnemies(scene, state, ENEMY_SPAWN_OFFSET, [
+      //         { enemyName: 'overtimeCoin', chance: 10 },
+      //       ])
 
-            controller.addEnemies(state.field.enemies.toArray())
-          })
+      //       controller.addEnemies(state.field.enemies.toArray())
+      //     })
 
           creaturesCanMove = true
-          loopedMainTheme()
-        })
-      }
+      //     loopedMainTheme()
+      //   })
+      // }
 
       scene.camera.bind(state.player.ref)
 
@@ -634,8 +634,8 @@ export const makeBombermanScene = (audioCtx?: AudioContext): SceneConfig => {
           delay(EXPLOSION_DURATION).then(() => {
             const destroyed = state.field.softWalls.destroyByPoint(explosion)
             if (destroyed) {
-              state.player.score += 3
-              pointsAdded(3)
+              // state.player.score += 3
+              // pointsAdded(3)
             }
           })
         }
