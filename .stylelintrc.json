@@ -12,7 +12,6 @@
     "packages/client/public/**",
     "packages/client/dist/**",
     "packages/client/dist-ssr/**",
-    "packages/server/dist/**",
-    "packages/client/docs/**"
+    "packages/server/dist/**"
   ]
 }

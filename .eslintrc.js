@@ -31,6 +31,5 @@ module.exports = {
     'packages/client/dist/**',
     'packages/client/dist-ssr/**',
     'packages/server/dist/**',
-    'packages/client/docs/**',
   ],
 }
