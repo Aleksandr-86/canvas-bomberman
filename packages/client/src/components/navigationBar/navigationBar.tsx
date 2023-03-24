@@ -15,8 +15,6 @@ export const NavigationBar = () => {
 
   return (
     <nav className={styles.navigationBar}>
-      {/* <img src={avatarImg} alt="user-avatar" draggable="false" /> */}
-
       <Avatar size="Large" src={user.avatar} />
 
       <Link className={styles.link} to="/profile">

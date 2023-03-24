@@ -56,17 +56,6 @@ export const U_TURN_CHANCE = 15 // Шанс разворота противни�
 export const EXPLOSION_RADIUS = 1
 export const MAX_ENEMY_COUNT = 10
 
-// !Не используется! (Aleksandr-86)
-export const Points = {
-  Enemy: {
-    Droplet: 200,
-    Baloon: 100,
-  },
-  Time: 1,
-  Wall: 20,
-  Buff: 50,
-}
-
 export enum Depth {
   Ground = 1,
   Door = 2,
