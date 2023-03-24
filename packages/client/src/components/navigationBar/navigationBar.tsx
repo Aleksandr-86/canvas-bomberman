@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import { getUser } from '../../store/selectors'
-import avatarImg from '../../assets/images/avatar.png'
 
 import styles from './navigationBar.module.css'
 import { logout } from '../../store/userActions'
