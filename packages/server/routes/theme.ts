@@ -1,12 +1,12 @@
 import express from 'express'
-import * as ThemeController from '../controllers/themeControllers'
+import { ThemeController } from '../controllers'
 
-const themeRouter = express.Router()
+const themeRoutes = express.Router()
 
-themeRouter.get('/theme/:id', ThemeController.getTheme)
+themeRoutes.get('/:id', ThemeController.getTheme)
 
-themeRouter.post('/theme', ThemeController.postTheme)
+themeRoutes.post('/', ThemeController.postTheme)
 
-themeRouter.put('/theme', ThemeController.putTheme)
+themeRoutes.put('/', ThemeController.putTheme)
 
-export { themeRouter }
+export { themeRoutes }

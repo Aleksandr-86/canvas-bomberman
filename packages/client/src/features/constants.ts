@@ -7,6 +7,8 @@ export const YANDEX_API = 'https://ya-praktikum.tech/api/v2'
 // url хоста локального сервера
 export const LOCALHOST_API = `http://localhost:${SERVER_PORT}/api`
 
+export const FORUM_API_URL = 'https://alt-f4-bomberman-21.ya-praktikum.tech/api'
+
 // Список клиентских хостов
 export const CLIENT_HOSTS = [`localhost`, `127.0.0.1`]
 

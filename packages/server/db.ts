@@ -18,5 +18,16 @@ const sequelizeOptions: SequelizeOptions = {
   dialect: 'postgres',
 }
 
-export const sequelize = new Sequelize(sequelizeOptions)
-sequelize.addModels([UserTheme, User, Topic, Comment])
+export async function postgresConnect() {
+  const sequelize = new Sequelize(sequelizeOptions)
+  sequelize.addModels([UserTheme, User, Topic, Comment])
+
+  try {
+    await sequelize.authenticate()
+
+    await sequelize.sync()
+  } catch (error) {
+    console.error(error)
+  }
+  return sequelize
+}

@@ -1,0 +1,17 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch:
+    branches:
+      test-deploy
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build -t dpl-client --target=client -t dpl-server --target=server . --file Dockerfile --tag deploy:$(date +%s)
