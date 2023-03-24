@@ -10,7 +10,7 @@ exports[`<TableRow/> snapshot test cases <TableRow/> should render <tr> parent w
     Kan88
   </td>
   <td
-    className="tableRow"
+    className="tableRow leftAlignment"
   >
     Как пройти первый уровень
   </td>

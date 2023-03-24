@@ -1,33 +1,52 @@
 .forum {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../../assets/images/forumBackground.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.forumWrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-}
-
-.forum_Wrapper {
-  display: flex;
-  flex-direction: column;
-}
-
-.forumLink {
-  max-width: 250px;
-  margin-bottom: 30px;
-  padding: 10px 50px;
-  border: 5px solid black;
-  border-radius: 15px;
-  background: hsl(29deg 6% 89%);
-  color: black;
-  font-family: 'Rubik Bubbles', fantasy;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s linear;
+  width: 100vw;
+  height: 100vh;
+  background: hsl(120deg 1% 45% / 75%);
+  backdrop-filter: blur(0.5vh);
 }
 
 .forumTitle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
   font-weight: 400;
   font-size: 44px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.textArea {
+  width: 1200px;
+  height: 400px;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: hsl(30deg 34% 84%);
+  box-shadow: 2px 2px 5px 1px hsl(30deg 20% 20%) inset;
+  outline: none;
+  font-weight: 300;
+  font-size: 40px;
   font-family: 'Rubik Bubbles', fantasy;
-  line-height: 49px;
-  text-align: center;
+}
+
+.button {
+  width: 400px;
+  margin-top: 20px;
+  background-color: hsl(30deg 34% 84%);
+  outline: none;
 }

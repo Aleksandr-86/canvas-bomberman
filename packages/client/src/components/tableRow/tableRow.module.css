@@ -1,13 +1,19 @@
-.tableItem:hover {
-  background-color: grey;
-  color: white;
-  cursor: pointer;
-}
-
 .tableRow {
   font-weight: 400;
-  font-size: 24px;
+  font-size: 30px;
   font-family: 'Rubik Bubbles', fantasy;
-  line-height: 29px;
+  line-height: 40px;
   text-align: center;
+}
+
+.tableItem:hover {
+  border: 1px solid rgb(255 255 255 / 30%);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px hsl(120deg 50% 0% / 50%);
+  cursor: pointer;
+  transform: scale(1.02);
+}
+
+.leftAlignment {
+  text-align: left;
 }

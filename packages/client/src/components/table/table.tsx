@@ -1,7 +1,6 @@
 import { TableRow } from '../tableRow/tableRow'
-import classes from './table.module.css'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import styles from './table.module.css'
 
 interface Props {
   headers: string[]
@@ -20,17 +19,17 @@ export const Table: React.FC<Props> = props => {
   const { headers, rows } = props
   if (rows) {
     return (
-      <table className={classes.table}>
+      <table className={styles.table}>
         <thead>
           <tr>
             {headers.map(header => (
-              <th key={header} className={classes.tableTitle}>
+              <th key={header} className={styles.tableTitle}>
                 {header}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className={styles.tableBody}>
           {rows.map(item => (
             <TableRow
               id={item.id}
@@ -47,6 +46,6 @@ export const Table: React.FC<Props> = props => {
       </table>
     )
   } else {
-    return <h1>Нет Постов</h1>
+    return <h1>Сообщения отсутствуют</h1>
   }
 }

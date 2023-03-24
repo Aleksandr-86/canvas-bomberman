@@ -1,12 +1,14 @@
 .table {
-  width: 100%;
+  width: 1200px;
   margin-bottom: 30px;
 }
 
 .tableTitle {
+  width: fit-content;
+  border-bottom: 5px solid black;
   font-weight: 400;
   font-size: 40px;
   font-family: 'Rubik Bubbles', fantasy;
-  line-height: 47px;
+  line-height: 55px;
   text-align: center;
 }

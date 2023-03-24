@@ -33,7 +33,7 @@ exports[`<Table/> snapshot test cases <Table/> should render <table className=ta
         Kan88
       </td>
       <td
-        className="tableRow"
+        className="tableRow leftAlignment"
       >
         Как пройти первый уровень
       </td>
@@ -49,10 +49,10 @@ exports[`<Table/> snapshot test cases <Table/> should render <table className=ta
       <td
         className="tableRow"
       >
-        sasha85
+        Sasha85
       </td>
       <td
-        className="tableRow"
+        className="tableRow leftAlignment"
       >
         Как создать новую тему
       </td>

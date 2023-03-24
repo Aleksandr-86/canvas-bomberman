@@ -3,7 +3,7 @@
 exports[`<Input/> snapshot test cases <Input/> should render <input> 1`] = `
 <label>
   <input
-    className="form__input mockClass"
+    className="formInput"
     placeholder="mockPlaceholder"
     type="text"
   />
