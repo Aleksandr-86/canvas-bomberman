@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { userReducer } from './userSlice'
 import { forumReducer } from './forumSlice'
-import { leaderboardReducer } from './playersStatsSlice'
+import { leaderboardReducer } from './leaderboardSlice'
 import { gameReducer } from './gameSlice'
 import { Theme, themeReducer } from './themeSlice'
 

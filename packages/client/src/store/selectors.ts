@@ -12,6 +12,14 @@ export const selectGameStats = (store: RootState) => {
   return {
     score: store.game.currentScore,
     inProgress: store.game.inProgress,
+    buffs: {
+      bombAmountUp: store.game.bombAmountUp,
+      bombRangeUp: store.game.bombRangeUp,
+      playerSpeedUp: store.game.playerSpeedUp,
+      detonator: store.game.detonator,
+      bombPass: store.game.bombPass,
+      flamePass: store.game.flamePass,
+    },
   }
 }
 

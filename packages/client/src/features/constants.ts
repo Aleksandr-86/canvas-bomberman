@@ -16,7 +16,7 @@ export const CLIENT_HOSTS = [`localhost`, `127.0.0.1`]
  * Название команды за которой будет закреплена
  * статистка по игрокам.
  */
-export const TEAM_NAME = 'alt+f4v2'
+export const TEAM_NAME = 'alt+f4v4'
 
 /**
  * Количество строк таблицы лидеров отображаемых

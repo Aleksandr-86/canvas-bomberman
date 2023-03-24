@@ -66,38 +66,59 @@
   padding: 5px;
   background-color: #64b0ff;
   box-shadow: 0 -4px 14px 2px #006fe6 inset;
-  font-size: 50px;
+  font-size: 60px;
 }
 
 .progressBar {
+  position: relative;
   overflow: hidden;
-  width: 82%;
-  height: 20px;
-  border-radius: 20px;
+  width: 57%;
+  height: 30px;
+  border-radius: 21px;
 }
 
 .bar {
-  border-radius: 20px;
+  border-radius: 30px;
   background: rgb(0 0 0 / 10%);
   box-shadow: 2px 2px 4px 0 rgb(0 0 0 / 30%) inset;
 }
 
 .progressGo {
-  height: 20px;
+  height: 30px;
   background-color: hsl(120deg 100% 50%);
   animation: count-down var(--anim-duration) 2.7s linear forwards;
 }
 
 .progressStopped {
   width: 0%;
-  height: 20px;
+  height: 30px;
   background-color: hsl(120deg 100% 50%);
 }
 
+.buffs {
+  position: relative;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  width: 28%;
+}
+
+.buff {
+  display: flex;
+  align-items: center;
+}
+
+.img {
+  width: 56px;
+  height: 56px;
+}
+
 .panelScore {
+  position: relative;
   display: flex;
   justify-content: center;
-  width: 14%;
+  width: 10%;
 }
 
 @media all and (display-mode: fullscreen) {
@@ -109,20 +130,36 @@
   }
 
   .progressBar {
-    height: 2vh;
-    border-radius: 2vh;
+    width: 45%;
+    height: 3vh;
+    border-radius: 3vh;
   }
 
   .bar {
-    border-radius: 2vh;
-    box-shadow: 1vh 1vh 2vh 0 rgb(0 0 0 / 30%) inset;
+    border-radius: 3vh;
+    box-shadow: 0.3vh 0.3vh 0.3vh 0 rgb(0 0 0 / 30%) inset;
   }
 
   .progressGo {
-    height: 2vh;
+    height: 3vh;
   }
 
   .progressStopped {
     height: 2vh;
+  }
+
+  .buffs {
+    gap: 1.2vh;
+    width: 37%;
+  }
+
+  .img {
+    width: 6.4vh;
+    height: 6.4vh;
+  }
+
+  .panelScore {
+    width: 12%;
+    font-size: 7vh;
   }
 }
