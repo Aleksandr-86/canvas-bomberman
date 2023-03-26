@@ -5,7 +5,8 @@ export const SERVER_PORT = 3001
 export const YANDEX_API = 'https://ya-praktikum.tech/api/v2'
 
 // url хоста локального сервера
-export const LOCALHOST_API = `http://localhost:${SERVER_PORT}/api`
+// export const LOCALHOST_API = `http://localhost:${SERVER_PORT}/api`
+export const LOCALHOST_API = `https://aleksandr-86.github.io/canvas-bomberman/api`
 
 export const FORUM_API_URL = 'https://alt-f4-bomberman-21.ya-praktikum.tech/api'
 
