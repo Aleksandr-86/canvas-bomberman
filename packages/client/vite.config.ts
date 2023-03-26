@@ -31,7 +31,11 @@ export default defineConfig({
      */
     copy({
       targets: [
-        { src: '../../docs/index.html', dest: '../../docs/', rename: '404.html' },
+        {
+          src: '../../docs/index.html',
+          dest: '../../docs/',
+          rename: '404.html',
+        },
       ],
       hook: 'writeBundle', // запускается после записи бандла на диск
       verbose: true,
