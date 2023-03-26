@@ -8,6 +8,7 @@
 
 <details>
 <summary>Добавление зависимостей</summary>
+
 В этом проекте используется `monorepo` на основе [`lerna`](https://github.com/lerna/lerna)
 
 Чтобы добавить зависимость для клиента
@@ -26,6 +27,7 @@
 
 <details>
 <summary>Тестирование</summary>
+
 Для запуска всех тестов используйте команду:
 
 `yarn test`
@@ -58,16 +60,21 @@
 
 <details>
 <summary>Linters</summary>
+
 `yarn lint`
+
 </details>
 
 <details>
 <summary>Prettier</summary>
+
 `yarn format`
+
 </details>
 
 <details>
 <summary>Сборка и предварительный просмотр проекта</summary>
+
 Сборка:
 `yarn build`
 
@@ -79,12 +86,15 @@
 
 <details>
 <summary>Hooks</summary>
+
 В проекте используется [lefthook](https://github.com/evilmartians/lefthook)
 Для пропуска проверок используйте `--no-verify`
+
 </details>
 
 <details>
 <summary>Автоматическое развёртывание статики на vercel</summary>
+
 Зарегистрируйте аккаунт на [vercel](https://vercel.com/)
 Следуйте [инструкции](https://vitejs.dev/guide/static-deploy.html#vercel-for-git)
 В качестве `root directory` укажите `packages/client`
@@ -95,6 +105,7 @@
 
 <details>
 <summary>Окружение в docker</summary>
+
 Перед первым запуском выполните `node init.js`
 
 `docker compose up` - запустит три сервиса
@@ -110,7 +121,9 @@
 
 <details>
 <summary>Яндекс Облако</summary>
+
 1. Создан сервер на платформе яндекс cloud
 2. Создана виртуальная машина на UBUNTU
 3. Серверу присвоен статический адрес 158.160.51.238
+
 </details>
