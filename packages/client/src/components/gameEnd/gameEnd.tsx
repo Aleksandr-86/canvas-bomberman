@@ -19,9 +19,7 @@ export const GameEnd: React.FC<Props> = ({ restartGame }) => {
         Количество набранных очков: {currentScore}
       </p>
       <div className={styles.gameEndButtons}>
-        <Link
-          to="/"
-          className={`${styles.linkButton} ${styles.gameEndButton}`}>
+        <Link to="/" className={`${styles.linkButton} ${styles.gameEndButton}`}>
           На главную
         </Link>
         <Button onClick={restartGame} className={styles.gameEndButton}>
