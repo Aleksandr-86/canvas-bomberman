@@ -1,6 +1,6 @@
-<h2 align="center">
+<h3 align="center">
 Аналог двухмерной Dandy (NES) игры «Bomberman»
-</h2>
+</h3>
 
 <p align="center">
   <a href="https://www.w3schools.com/html/html5_canvas.asp">
