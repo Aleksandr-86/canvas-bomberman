@@ -11,7 +11,7 @@
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
-![bomberman-snaphot](https://user-images.githubusercontent.com/96790009/227786384-5795d3f1-218f-4e14-b21b-bcb471a8b51c.png)
+![image](https://user-images.githubusercontent.com/96790009/227793281-58facffe-7200-49ab-8978-1616dc070c81.png)
 
 ### Запуск:
 
