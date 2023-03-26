@@ -12,6 +12,9 @@
   <a href="https://redux-toolkit.js.org/">
     <img src="https://img.shields.io/badge/Redux Toolkit-1.9.1-blue?style=plastic&logo=redux"/>
   </a>
+  <a href="https://github.com/css-modules/css-modules">
+    <img src="https://img.shields.io/badge/CSS Modules-gray?style=plastic&logo=cssmodules"/>
+  </a>
   <a href="https://www.postgresql.org/">
     <img src="https://img.shields.io/badge/PostgreSQL-gray?style=plastic&logo=postgresql"/>
   </a>
