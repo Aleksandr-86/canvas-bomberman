@@ -2,14 +2,54 @@
 Аналог двухмерной Dandy (NES) игры «Bomberman»
 </h2>
 
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
-![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
-![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
-![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
-![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+<p align="center">
+  <a href="https://www.w3schools.com/html/html5_canvas.asp">
+    <img src="https://img.shields.io/badge/Canvas-blueviolet?style=plastic"/>
+  </a>
+  <a href="https://react.dev/">
+    <img src="https://img.shields.io/badge/React-18.2.0-blue?style=plastic&logo=react"/>
+  </a>
+  <a href="https://redux-toolkit.js.org/">
+    <img src="https://img.shields.io/badge/Redux Toolkit-1.9.1-blue?style=plastic&logo=redux"/>
+  </a>
+  <a href="https://github.com/css-modules/css-modules">
+    <img src="https://img.shields.io/badge/CSS Modules-gray?style=plastic&logo=cssmodules"/>
+  </a>
+  <a href="https://www.postgresql.org/">
+    <img src="https://img.shields.io/badge/PostgreSQL-gray?style=plastic&logo=postgresql"/>
+  </a>
+  <a href="https://sequelize.org/">
+    <img src="https://img.shields.io/badge/Sequelize-gray?style=plastic&logo=sequelize"/>
+  </a>
+  <a href="https://axios-http.com/docs/intro">
+    <img src="https://img.shields.io/badge/Axios-1.3.4-blue?style=plastic&logo=axios"/>
+  </a>
+  <a href="https://expressjs.com/">
+    <img src="https://img.shields.io/badge/Express.js-4.18.1-blue?style=plastic&logo=express"/>
+  </a>
+  <a href="https://jestjs.io/">
+  <img src="https://img.shields.io/badge/Jest-^28-blue?style=plastic&logo=jest"/>
+  </a></br>
+  
+  <a href="https://eslint.org/">
+    <img src="https://img.shields.io/badge/ESLint-8.23.0-blue?style=plastic&logo=eslint"/>
+  </a>
+  <a href="https://stylelint.io/">
+    <img src="https://img.shields.io/badge/Stylelint-14.16.1-blue?style=plastic&logo=stylelint"/>
+  </a>
+  <a href="https://vitejs.dev/">
+    <img src="https://img.shields.io/badge/Vite-3.0.7-blue?style=plastic&logo=vite"/>
+  </a>
+  <a href="https://lerna.js.org/">
+    <img src="https://img.shields.io/badge/Lerna-^5.4.3-blue?style=plastic&logo=lerna"/>
+  </a>
+  <a href="https://www.docker.com/">
+    <img src="https://img.shields.io/badge/Docker-gray?style=plastic&logo=docker"/>
+  </a>
+  <a href="https://nginx.org/ru/">
+    <img src="https://img.shields.io/badge/Nginx-gray?style=plastic&logo=nginx"/>
+  </a>
+</p>
 
 ![image](https://user-images.githubusercontent.com/96790009/227793281-58facffe-7200-49ab-8978-1616dc070c81.png)
 
