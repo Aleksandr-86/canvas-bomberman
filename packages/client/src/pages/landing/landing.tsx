@@ -56,10 +56,10 @@ const ContentNotLogged = () => (
       <Link className={baseStyles.linkButton} to="/sign-in">
         Войти
       </Link>
-      <Button className={styles.buttonYandex} onClick={onOauthRequest}>
+      {/* <Button className={styles.buttonYandex} onClick={onOauthRequest}>
         <img src={yandexLogo} alt="Логотип Яндекса" width={40} />
         ID
-      </Button>
+      </Button> */}
       <Link className={baseStyles.linkButton} to="/sign-up">
         Зарегистрироваться
       </Link>

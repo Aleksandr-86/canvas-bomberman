@@ -26,7 +26,8 @@ export const LEADERBOARD_LENGTH = 5
 
 export const THEME_LOCAL_STORAGE_KEY = `theme`
 // !!! настоящий url хоста, которым нужно пользоваться
-export const API_URL = APIHost()
+// export const API_URL = APIHost()
+export const API_URL = 'https://ya-praktikum.tech/api/v2'
 
 function APIHost() {
   //ToDo: пробросить имя хоста с сервера и от него уже выдавать нужный url
