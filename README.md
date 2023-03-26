@@ -1,3 +1,5 @@
+![bomberman-snaphot](https://user-images.githubusercontent.com/96790009/227786384-5795d3f1-218f-4e14-b21b-bcb471a8b51c.png)
+
 ### Запуск:
 
 1. Убедитесь что у вас установлен `node` и `docker`
