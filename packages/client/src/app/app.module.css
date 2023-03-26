@@ -75,3 +75,17 @@ body {
 .linkButton:active {
   background: hsl(120deg 52% 74%);
 }
+
+.gameEndButton {
+  border-color: #fff;
+  background-color: transparent;
+  color: #fff;
+  text-align: center;
+}
+
+.gameEndButton:hover {
+  border-radius: 16px;
+  background: rgb(255 255 255 / 23%);
+  box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+  backdrop-filter: blur(5px);
+}

@@ -20,6 +20,20 @@
   gap: 20px;
 }
 
+.linkButton {
+  padding: 10px 50px;
+  border: 5px solid var(--text-main-color);
+  border-radius: 15px;
+  background: transparent;
+  color: var(--text-main-color);
+  font-size: 40px;
+  font-family: 'Rubik Bubbles', fantasy;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
 .gameEndButton {
   border-color: #fff;
   background-color: transparent;
