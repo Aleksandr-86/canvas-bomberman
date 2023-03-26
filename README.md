@@ -29,8 +29,7 @@
   </a>
   <a href="https://jestjs.io/">
   <img src="https://img.shields.io/badge/Jest-^28-blue?style=plastic&logo=jest"/>
-  </a></br>
-  
+  </a>
   <a href="https://eslint.org/">
     <img src="https://img.shields.io/badge/ESLint-8.23.0-blue?style=plastic&logo=eslint"/>
   </a>
