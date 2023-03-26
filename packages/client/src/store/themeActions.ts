@@ -69,24 +69,24 @@ export const updateCurrentTheme = createAsyncThunk(
   `theme/updateCurrentTheme`,
   async ({ id, theme }: UpdateThemeData, { rejectWithValue }) => {
     try {
-      if (id) {
-        const {
-          data: { theme: updatedTheme },
-        } = await ThemeAPI.updateCurrentTheme({
-          id,
-          theme,
-        })
+      // if (id) {
+      //   const {
+      //     data: { theme: updatedTheme },
+      //   } = await ThemeAPI.updateCurrentTheme({
+      //     id,
+      //     theme,
+      //   })
 
-        document.documentElement.dataset.theme = updatedTheme
-        localStorage.setItem(THEME_LOCAL_STORAGE_KEY, updatedTheme)
+      //   document.documentElement.dataset.theme = updatedTheme
+      //   localStorage.setItem(THEME_LOCAL_STORAGE_KEY, updatedTheme)
 
-        return updatedTheme
-      } else {
-        document.documentElement.dataset.theme = theme
-        localStorage.setItem(THEME_LOCAL_STORAGE_KEY, theme)
+      //   return updatedTheme
+      // } else {
+      document.documentElement.dataset.theme = theme
+      localStorage.setItem(THEME_LOCAL_STORAGE_KEY, theme)
 
-        return theme
-      }
+      return theme
+      // }
     } catch (error: unknown | AxiosError) {
       if (isAxiosError(error)) {
         return rejectWithValue(axiosErrorHandler(error))
