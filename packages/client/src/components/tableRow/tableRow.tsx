@@ -1,7 +1,7 @@
-import classes from './tableRow.module.css'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../store/hooks'
 import { sendDislike, sendLike } from '../../store/forumSlice'
+import styles from './tableRow.module.css'
 
 export interface Post {
   id: number
@@ -30,22 +30,22 @@ export const TableRow: React.FC<Post> = (props: Post) => {
 
   return (
     <tr
-      className={classes.tableItem}
+      className={styles.tableItem}
       onClick={props.redirect ? () => handleRedirect(props.id) : undefined}>
-      <td className={classes.tableRow}>{props.author}</td>
-      <td className={classes.tableRow}>{props.body}</td>
-      <td className={classes.tableRow}>{props.date}</td>
+      <td className={styles.tableRow}>{props.author}</td>
+      <td className={`${styles.tableRow} ${styles.leftAlignment}`}>
+        {props.body}
+      </td>
+      <td className={styles.tableRow}>{props.date}</td>
       {props.likes && (
-        <td
-          onClick={() => incrementLike(props.id)}
-          className={classes.tableRow}>
+        <td onClick={() => incrementLike(props.id)} className={styles.tableRow}>
           {props.likes}
         </td>
       )}
       {props.dislikes && (
         <td
           onClick={() => incrementDislike(props.id)}
-          className={classes.tableRow}>
+          className={styles.tableRow}>
           {props.dislikes}
         </td>
       )}

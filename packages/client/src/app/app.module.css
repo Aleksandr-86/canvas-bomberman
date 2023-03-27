@@ -61,6 +61,7 @@ body {
   color: var(--text-main-color);
   font-size: 40px;
   font-family: 'Rubik Bubbles', fantasy;
+  text-align: center;
   text-decoration: none;
   text-transform: uppercase;
   cursor: pointer;
@@ -68,9 +69,9 @@ body {
 }
 
 .linkButton:hover {
-  background: hsl(29deg 6% 74%);
+  background: hsl(30deg 76% 78%);
 }
 
 .linkButton:active {
-  background: hsl(30deg 76% 64%);
+  background: hsl(120deg 52% 74%);
 }

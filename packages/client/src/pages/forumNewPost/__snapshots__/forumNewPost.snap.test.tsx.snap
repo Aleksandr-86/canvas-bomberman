@@ -4,34 +4,35 @@ exports[`<ForumNewPost/> snapshot test cases <ForumNewPost/> should render <div 
 <div
   className="forum"
 >
-  <h2
-    className="forumTitle"
-  >
-    Новая тема
-  </h2>
   <div
     className="forumWrapper"
   >
+    <h2
+      className="forumTitle"
+    >
+      Новая тема
+    </h2>
     <form
+      className="form"
       onSubmit={[Function]}
     >
       <label>
         <input
-          className="form__input"
+          className="formInput input"
           name="body"
           placeholder="Название темы"
           type="text"
         />
       </label>
       <button
-        className="button forumBtnCreate"
+        className="button button"
         type="submit"
       >
         создать тему
       </button>
     </form>
     <a
-      className="forumLink"
+      className="linkButton button"
       href="/forum"
       onClick={[Function]}
     >

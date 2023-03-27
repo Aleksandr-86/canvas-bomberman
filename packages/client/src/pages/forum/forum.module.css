@@ -1,35 +1,35 @@
 .forum {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../../assets/images/forumBackground.png');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .forumWrapper {
   display: flex;
   flex-direction: column;
+  gap: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: hsl(120deg 10% 78% / 75%);
+  backdrop-filter: blur(0.5vh);
+}
+
+.buttonWrapper {
+  position: relative;
+  top: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 500px;
 }
 
 .forumTitle {
+  display: flex;
+  align-items: center;
   font-weight: 400;
   font-size: 44px;
-  font-family: 'Rubik Bubbles', fantasy;
-  line-height: 49px;
-  text-align: center;
-}
-
-.forumLink {
-  max-width: 250px;
-  margin-bottom: 30px;
-  padding: 10px 50px;
-  border: 5px solid var(--text-main-color);
-  border-radius: 15px;
-  background: transparent;
-  color: var(--text-main-color);
-  font-family: 'Rubik Bubbles', fantasy;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s linear;
 }

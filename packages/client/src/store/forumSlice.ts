@@ -33,7 +33,7 @@ const FORUM_DATA = {
     },
     {
       id: 2,
-      author: 'sasha',
+      author: 'Саня',
       body: 'Как создать новую тему',
       date: '8.01.22',
     },
@@ -55,8 +55,8 @@ const FORUM_MESSAGES = {
     {
       id: 2,
       postid: 1,
-      author: 'sasha85',
-      body: 'Я прошел на изи, надо лишь быстро двигать пальцами',
+      author: 'Саня',
+      body: 'Проще простого, нужно лишь быстро двигать пальцами',
       date: '8.01.22',
       likes: 2,
       dislikes: 12,
