@@ -1,5 +1,5 @@
 <h3 align="center">
-Двухмерная игра «Bomberman»
+🎮 Двухмерная игра «Bomberman»
 </h3>
 
 <p align="center">
