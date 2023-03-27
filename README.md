@@ -58,7 +58,12 @@
 
 ### Описание:
 
-Аналог двухмерной Dandy (NES) игры «Bomberman». Веб приложение с игрой написано командой из пяти разработчиков в рамках курса от Яндекс Практикума «Middle Frontend-разработчик».
+Аналог двухмерной Dandy (NES) игры «Bomberman». Веб приложение с игрой написано командой из пяти разработчиков в рамках курса от Яндекс Практикума «Middle Frontend-разработчик».  
+Другие члены команды:  
+- Андрей - [archebaldo77](https://github.com/archebaldo77)
+- Дмитрий - [garbageCodeMaster](https://github.com/garbageCodeMaster)
+- Евгений - [kan88](https://github.com/kan88)
+- Герман - [remove-checksum](https://github.com/remove-checksum)
 
 ### Установка и запуск:
 
