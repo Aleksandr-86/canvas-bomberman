@@ -85,6 +85,7 @@ export const ssrMiddleware = ({
         .replace(`<!--ssr-outlet-->`, appHtml)
         .replace(`<!--ssr-store-->`, appStore)
         .replace(/<script/g, `<script nonce="${req.nonce}"`)
+        .replace(/<style/g, `<style nonce="${req.nonce}"`)
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {

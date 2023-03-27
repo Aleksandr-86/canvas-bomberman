@@ -11,9 +11,11 @@ export const ForumMessages: React.FC = () => {
   const { id } = useParams()
 
   const dispatch = useAppDispatch()
+
   useEffect(() => {
-    dispatch(getAll(id))
+    dispatch(getAll(Number(id)))
   }, [])
+
   const messages = useAppSelector(getMessages)
 
   return (

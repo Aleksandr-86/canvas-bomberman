@@ -10,9 +10,14 @@ import baseStyles from '../../app/app.module.css'
 export const ForumNewMessage = () => {
   const { id } = useParams()
   const dispatch = useAppDispatch()
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     const formData = new FormData(evt.currentTarget)
-    dispatch(sendMessage(formData))
+    const text = formData.get('body') as string
+
+    if (text) {
+      dispatch(sendMessage({ text, topicId: Number(id) }))
+    }
   }
 
   return (

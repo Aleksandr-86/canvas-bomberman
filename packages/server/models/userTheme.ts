@@ -1,11 +1,11 @@
 import {
   Model,
   Table,
-  PrimaryKey,
   Column,
   DataType,
-  AllowNull,
+  ForeignKey,
 } from 'sequelize-typescript'
+import { User } from './user'
 
 @Table({
   timestamps: false,
@@ -13,12 +13,14 @@ import {
   tableName: 'user_theme',
 })
 export class UserTheme extends Model<UserTheme> {
-  @PrimaryKey
-  @AllowNull(false)
-  @Column(DataType.INTEGER)
+  @ForeignKey(() => User)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+    unique: true,
+  })
   user_id!: number
 
-  @AllowNull(false)
-  @Column(DataType.STRING)
+  @Column({ type: DataType.ENUM('light', 'dark'), allowNull: false })
   value!: string
 }
