@@ -64,6 +64,8 @@
 - Дмитрий - [garbageCodeMaster](https://github.com/garbageCodeMaster)
 - Евгений - [kan88](https://github.com/kan88)
 - Герман - [remove-checksum](https://github.com/remove-checksum)
+Рецензент от Яндекс Практикума:
+- Вячеслав - [DazzlingFame](https://github.com/DazzlingFame)
 
 ### Установка и запуск:
 
