@@ -50,7 +50,9 @@
   </a>
 </p>
 
-![image](https://user-images.githubusercontent.com/96790009/227793281-58facffe-7200-49ab-8978-1616dc070c81.png)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/96790009/227902136-3c0d5fc1-ba6b-40a6-aeaf-3d9fdb06cadf.png"/>
+</p>
 
 ### Запуск:
 
