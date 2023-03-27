@@ -1,5 +1,5 @@
 import { CAMERA_WIDTH, CAMERA_HEIGHT } from './const'
-import { useRef, useEffect } from 'react'
+import { useRef } from 'react'
 import { useAppDispatch } from '../../store/hooks'
 import { makeBombermanScene } from './bombermanScene'
 import { setStatus, GameStatus } from '../../store/gameSlice'
@@ -14,7 +14,6 @@ export function createGame(config: GameConfig) {
 export function useGame() {
   const canvasRef = useRef<null | HTMLCanvasElement>(null)
   const gameRef = useRef<null | Game>(null)
-  const shouldRunSecondTime = useRef(true)
   const dispatch = useAppDispatch()
 
   const endGame = () => {
@@ -41,24 +40,6 @@ export function useGame() {
     gameRef.current.start()
     dispatch(setStatus(GameStatus.START))
   }
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-
-    if (!canvas || !shouldRunSecondTime.current) {
-      return
-    }
-
-    shouldRunSecondTime.current = false
-
-    gameRef.current = new Game({
-      height: 640,
-      width: 1280,
-      backgroundColor: '#64b0ff',
-      root: canvas,
-      scene: makeBombermanScene(),
-    })
-  }, [])
 
   return {
     endGame,

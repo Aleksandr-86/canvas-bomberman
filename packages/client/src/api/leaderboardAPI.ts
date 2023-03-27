@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-import { PlayerStats } from '../store/playersStatsSlice'
+import { PlayerStats } from '../store/leaderboardSlice'
 import { TEAM_NAME, API_URL } from '../features/constants'
 import { transformLeaderboardDTO } from '../features/utils/apiTransformers'
 
