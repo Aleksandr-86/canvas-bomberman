@@ -1,5 +1,7 @@
 <h3 align="center">
-🎮 Двухмерная игра «Bomberman»
+  <a href="https://aleksandr-86.github.io/canvas-bomberman/">
+    🎮 Двухмерная игра «Bomberman»
+  </a>
 </h3>
 
 <p align="center">
